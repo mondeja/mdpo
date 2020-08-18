@@ -1,0 +1,15 @@
+#
+msgid ""
+msgstr ""
+
+msgid "I just love **bold text**."
+msgstr ""
+
+msgid "I just hate **bold text**."
+msgstr ""
+
+msgid "Love**is**bold"
+msgstr ""
+
+msgid "Malformatted__bold__text"
+msgstr ""

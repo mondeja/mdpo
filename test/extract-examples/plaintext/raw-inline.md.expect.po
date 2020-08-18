@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Some text before raw inline"
+msgstr ""
+
+msgid "Some text after raw inline"
+msgstr ""

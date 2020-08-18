@@ -1,0 +1,21 @@
+#
+msgid ""
+msgstr ""
+
+msgid "This text is really important."
+msgstr ""
+
+msgid "This text is very important."
+msgstr ""
+
+msgid "This text is important."
+msgstr ""
+
+msgid "This text has importance."
+msgstr ""
+
+msgid "This is reallyveryimportant text."
+msgstr ""
+
+msgid "Some malformatted_very_important text."
+msgstr ""

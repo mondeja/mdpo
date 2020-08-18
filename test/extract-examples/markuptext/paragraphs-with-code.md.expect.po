@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid ""
+"Check that you have added Ubuntu `main`, `restricted`, `universe` and "
+"`multiverse` repositories in the file `/etc/apt/sources.list`."
+msgstr ""
+
+msgid ""
+"Tests are developed using `pytest`, that is a Python testing framework."
+msgstr ""

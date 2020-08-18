@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Tux, the Linux mascot"
+msgstr ""
+
+msgid "Hail Tux!"
+msgstr ""
+
+msgid "Use linux, don't be crazy"
+msgstr ""

@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Italicized text is the *cat's meow*."
+msgstr ""
+
+msgid "A*cat*meow"
+msgstr ""
+
+msgid "Malformatted_italic_text"
+msgstr ""

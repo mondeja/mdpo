@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Command for foo"
+msgstr ""
+
+msgid "Command for bar"
+msgstr ""
+
+msgid "Command for baz"
+msgstr ""

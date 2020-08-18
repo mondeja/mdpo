@@ -1,0 +1,15 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Foo bar baz"
+msgstr ""
+
+msgid "Foo bar baz 2"
+msgstr ""
+
+msgid "Foo bar baz 3"
+msgstr ""
+
+msgid "Foo bar baz 4"
+msgstr ""

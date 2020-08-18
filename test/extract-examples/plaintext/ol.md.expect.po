@@ -1,0 +1,33 @@
+#
+msgid ""
+msgstr ""
+
+msgid "First item"
+msgstr ""
+
+msgid "Second item"
+msgstr ""
+
+msgid "Third item"
+msgstr ""
+
+msgid "Indented item 1"
+msgstr ""
+
+msgid "Indented item 2"
+msgstr ""
+
+msgid "Fourth item"
+msgstr ""
+
+msgid "A"
+msgstr ""
+
+msgid "B"
+msgstr ""
+
+msgid "C"
+msgstr ""
+
+msgid "D"
+msgstr ""

@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Some text that must be included"
+msgstr ""
+
+msgid "Another text that must be included"
+msgstr ""
+
+msgid "Another text before HTML comment"
+msgstr ""

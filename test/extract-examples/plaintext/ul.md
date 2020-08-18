@@ -1,0 +1,4 @@
+- Command for foo
+- Command for bar
+- Command for baz
+- Command for foo

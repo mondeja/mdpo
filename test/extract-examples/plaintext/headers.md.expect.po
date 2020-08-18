@@ -1,0 +1,27 @@
+#
+msgid ""
+msgstr ""
+
+msgid "The quick brown fox jumps over the lazy dog"
+msgstr ""
+
+msgid "1. The quick brown fox jumps over the lazy dog"
+msgstr ""
+
+msgid "2. The quick brown fox jumps over the lazy dog"
+msgstr ""
+
+msgid "C. The quick brown fox jumps over the lazy dog"
+msgstr ""
+
+msgid "IV. The quick brown fox jumps over the lazy dog"
+msgstr ""
+
+msgid "V. The quick brown fox jumps over the lazy dog"
+msgstr ""
+
+msgid "Heading level 1"
+msgstr ""
+
+msgid "Heading level 2"
+msgstr ""

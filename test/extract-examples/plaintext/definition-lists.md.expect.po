@@ -1,0 +1,18 @@
+#
+msgid ""
+msgstr ""
+
+msgid "First Term"
+msgstr ""
+
+msgid "This is the definition of the first term."
+msgstr ""
+
+msgid "Second Term"
+msgstr ""
+
+msgid "This is one definition of the second term."
+msgstr ""
+
+msgid "This is another definition of the second term."
+msgstr ""

@@ -1,0 +1,26 @@
+language: python
+os: linux
+dist: focal
+cache: false
+install:
+  - travis_retry pip install -U tox-travis
+matrix:
+  include:
+    - python: 3.6
+      env: TOXENV=py36
+      dist: xenial
+    - python: 3.7
+      env: TOXENV=coveralls
+      dist: bionic
+      before_script:
+        - pip install pypandoc coveralls && python -c "import pypandoc as p;p.download_pandoc(version='2.5');"
+      after_success:
+        - coveralls
+    - python: 3.8
+      env: TOXENV=py38
+      dist: focal
+    - python: 3.7
+      env: TOXENV=flake8
+      dist: focal
+before_script: pip install pypandoc && python -c "import pypandoc as p;p.download_pandoc(version='2.5');"
+script: tox
