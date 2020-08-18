@@ -11,11 +11,11 @@ msgstr ""
 msgid "Command for baz"
 msgstr ""
 
-msgid "List item with bold markup"
+msgid "List item with **bold markup**"
 msgstr ""
 
-msgid "List item with italic markup"
+msgid "List item with *italic markup*"
 msgstr ""
 
-msgid "List item with inline code"
+msgid "List item with `inline code`"
 msgstr ""

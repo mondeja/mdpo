@@ -9,3 +9,6 @@ msgstr ""
 
 msgid "Tests are developed using pytest, that is a Python testing framework."
 msgstr ""
+
+msgid "this is a paragraph andthe next line starts with bold markup"
+msgstr ""
