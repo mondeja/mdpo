@@ -26,15 +26,19 @@ FORBIDDEN_MSGIDS = [
 
 class Md2PoExtractor:
     def __init__(self, _glob, ignore=[], msgstr='', plaintext=True,
-                 forbidden_chars=FORBIDDEN_CHARS,
+                 wrapwidth=78, forbidden_chars=FORBIDDEN_CHARS,
                  replacement_chars=REPLACEMENT_CHARS,
-                 forbidden_msgids=FORBIDDEN_MSGIDS):
+                 forbidden_msgids=FORBIDDEN_MSGIDS,
+                 mark_not_found_as_absolete=True):
         self.ignore = ignore
         self.filepaths = self._ignore_files(glob.glob(_glob))
 
         self.pofile = None
         self.msgstr = ''
+        self.msgids = []
         self._current_msgid = ''
+        self.wrapwidth = wrapwidth
+        self.mark_not_found_as_absolete = mark_not_found_as_absolete
 
         # If False, include some markup in response
         self.plaintext = plaintext
@@ -69,6 +73,7 @@ class Md2PoExtractor:
             if polib.POEntry(msgid=msgid) not in self.pofile:
                 self.pofile.append(
                     polib.POEntry(msgid=msgid, msgstr=self.msgstr))
+                self.msgids.append(msgid)
 
     def _save_current_msgid(self):
         self._save_msgid(self._current_msgid.strip(' '))
@@ -182,7 +187,7 @@ class Md2PoExtractor:
                 else:
                     self._append_text_to_current_msgid(elem.text)
 
-    def extract(self, po_filepath=None, save=False, **kwargs):
+    def extract(self, po_filepath=None, save=False):
         _po_filepath = None
         if not po_filepath:
             po_filepath = ''
@@ -191,13 +196,17 @@ class Md2PoExtractor:
             if not os.path.exists(po_filepath):
                 po_filepath = ''
 
-        self.pofile = polib.pofile(po_filepath,
-                                   wrapwidth=kwargs.get('wrapwidth', 78))
+        self.pofile = polib.pofile(po_filepath, wrapwidth=self.wrapwidth)
 
         for filepath in self.filepaths:
             data = pypandoc.convert_file(filepath, 'json')
             doc = pf.load(io.StringIO(data))
             doc.walk(self._extract_messages)
+
+        if self.mark_not_found_as_absolete:
+            for entry in self.pofile:
+                if entry.msgid not in self.msgids:
+                    entry.obsolete = True
 
         if save and _po_filepath:
             self.pofile.save(fpath=_po_filepath)
@@ -205,7 +214,10 @@ class Md2PoExtractor:
 
 
 def markdown_to_pofile(_glob, ignore=[], msgstr='', po_filepath=None,
-                       save=False, plaintext=True, **kwargs):
+                       save=False, plaintext=True, wrapwidth=78,
+                       mark_not_found_as_absolete=False):
     return Md2PoExtractor(
-        _glob, ignore=ignore, msgstr=msgstr, plaintext=plaintext
-    ).extract(po_filepath=po_filepath, save=save, **kwargs)
+        _glob, ignore=ignore, msgstr=msgstr,
+        plaintext=plaintext, wrapwidth=wrapwidth,
+        mark_not_found_as_absolete=mark_not_found_as_absolete,
+    ).extract(po_filepath=po_filepath, save=save)
