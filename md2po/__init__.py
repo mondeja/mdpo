@@ -73,7 +73,7 @@ class Md2PoExtractor:
             if polib.POEntry(msgid=msgid) not in self.pofile:
                 self.pofile.append(
                     polib.POEntry(msgid=msgid, msgstr=self.msgstr))
-                self.msgids.append(msgid)
+            self.msgids.append(msgid)
 
     def _save_current_msgid(self):
         self._save_msgid(self._current_msgid.strip(' '))
