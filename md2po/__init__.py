@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.5'
+__version__ = '0.0.6'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = 'Extract the contents of a set of Markdown files' \
@@ -218,10 +218,10 @@ class Md2PoExtractor:
             doc = pf.load(io.StringIO(data))
             doc.walk(self._extract_messages)
 
-        if not self.mark_not_found_as_absolete:
+        if self.mark_not_found_as_absolete:
             for entry in self.pofile:
                 if entry.msgid not in self.msgids:
-                    entry.obsolete = False
+                    entry.obsolete = True
 
         if save and _po_filepath:
             self.pofile.save(fpath=_po_filepath)

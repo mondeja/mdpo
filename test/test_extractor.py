@@ -92,18 +92,18 @@ msgstr ""
 '''
 
     md2po_extractor = Md2PoExtractor(new_md_filepath,
-                                     mark_not_found_as_absolete=False)
+                                     mark_not_found_as_absolete=True)
     pofile = md2po_extractor.extract(po_filepath=po_filepath)
     assert pofile.__unicode__() == '''#
 msgid ""
 msgstr ""
 
-msgid "Some string in the markdown"
-msgstr ""
-
-msgid "Another string"
-msgstr ""
-
 msgid "A new string"
 msgstr ""
+
+#~ msgid "Some string in the markdown"
+#~ msgstr ""
+
+#~ msgid "Another string"
+#~ msgstr ""
 '''
