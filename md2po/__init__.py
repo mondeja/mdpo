@@ -201,10 +201,10 @@ class Md2PoExtractor:
             doc = pf.load(io.StringIO(data))
             doc.walk(self._extract_messages)
 
-        if self.mark_not_found_as_absolete:
+        if not self.mark_not_found_as_absolete:
             for entry in self.pofile:
                 if entry.msgid not in self.msgids:
-                    entry.obsolete = True
+                    entry.obsolete = False
 
         if save and _po_filepath:
             self.pofile.save(fpath=_po_filepath)
@@ -213,7 +213,7 @@ class Md2PoExtractor:
 
 def markdown_to_pofile(_glob, ignore=[], msgstr='', po_filepath=None,
                        save=False, plaintext=True, wrapwidth=78,
-                       mark_not_found_as_absolete=False):
+                       mark_not_found_as_absolete=True):
     return Md2PoExtractor(
         _glob, ignore=ignore, msgstr=msgstr,
         plaintext=plaintext, wrapwidth=wrapwidth,

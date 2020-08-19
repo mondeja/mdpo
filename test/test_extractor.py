@@ -64,3 +64,46 @@ msgstr ""
 msgid "...'"
 msgstr ""
 '''
+
+
+def test_mark_not_found_as_absolete(markdown_tff, po_tff):
+    tmpdir = tempfile.gettempdir()
+    original_md_filepath = os.path.join(tmpdir, uuid4().hex + '.md')
+    new_md_filepath = os.path.join(tmpdir, uuid4().hex + '.md')
+    po_filepath = os.path.join(tmpdir, uuid4().hex + '.po')
+
+    with open(original_md_filepath, "w") as f:
+        f.write('Some string in the markdown\n\nAnother string\n\n')
+
+    with open(new_md_filepath, "w") as f:
+        f.write('A new string\n')
+
+    md2po_extractor = Md2PoExtractor(original_md_filepath)
+    pofile = md2po_extractor.extract(po_filepath=po_filepath, save=True)
+    assert pofile.__unicode__() == '''#
+msgid ""
+msgstr ""
+
+msgid "Some string in the markdown"
+msgstr ""
+
+msgid "Another string"
+msgstr ""
+'''
+
+    md2po_extractor = Md2PoExtractor(new_md_filepath,
+                                     mark_not_found_as_absolete=False)
+    pofile = md2po_extractor.extract(po_filepath=po_filepath)
+    assert pofile.__unicode__() == '''#
+msgid ""
+msgstr ""
+
+msgid "Some string in the markdown"
+msgstr ""
+
+msgid "Another string"
+msgstr ""
+
+msgid "A new string"
+msgstr ""
+'''
