@@ -10,3 +10,9 @@ msgstr ""
 
 msgid "Use linux, don't be crazy"
 msgstr ""
+
+msgid "Alt text"
+msgstr ""
+
+msgid "Optional title attribute"
+msgstr ""

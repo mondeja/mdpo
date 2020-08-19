@@ -12,3 +12,10 @@
 [//]: # (Image with title)
 
 ![Hail Tux!](/assets/images/tux.png "Use linux, don't be crazy")
+
+
+[//]: # (Image by reference)
+  
+![Alt text][id]
+
+[id]: url/to/image  "Optional title attribute"
