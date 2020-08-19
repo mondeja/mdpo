@@ -12,7 +12,7 @@ You must install Pandoc 2.5 first:
 
 ```bash
 pip install pypandoc
-python -c "import pypandoc as p;p.download_pandoc(version='2.5');"
+python -c "import pypandoc as p;p.download_pandoc(version='2.5', delete_installer=True);"
 ```
 
 ...and then:
@@ -48,14 +48,18 @@ If you doesn't pass the argument `save` to `True`, you will get a new [POFile](h
 
 ## Plain vs markup text mode
 
-If you pass the argument `plaintext` as `False`, the converter does not will remove some text markup (like `inline code`, **bold text** and other elements). These characters can be used, for example as separators translating other markup formats like HTML. The conversion will follow next table as default:
+If you pass the argument `plaintext` as `False`, the converter does not will remove some text markup (like `inline code`, **bold text** and other elements). These characters can be used, for example as separators translating other markup formats like HTML. The conversion will follow next correspondences:
 
-| **Markdown**             | **`.po` file text**      |
-|--------------------------|--------------------------|
-| ``Some `inline code```   | ``Some `inline code```   |
-| ``Some **bold text**``   | ``Some **bold text**``   |
-| ``Some *italic text*``   | ``Some *italic text*``   |
-| ``A simple <link>``      | ``A `[simple link]```    |
+```
+Markdown --------------------------------> .po file text
+
+`inline code` ---------------------------> `inline code`
+``inline code ` with backtick`` ---------> `inline code \\` with backtick`
+**bold text** ---------------------------> **bold text**
+*italic text* ---------------------------> *italic text*
+<simple/link> ---------------------------> `[simple link]`
+paragraph with \* asterisk --------------> paragraph with \\* asterisk
+```
 
 ## Known limitations
 
