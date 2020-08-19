@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.6'
+__version__ = '0.0.7'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = 'Extract the contents of a set of Markdown files' \
@@ -114,12 +114,9 @@ class Md2PoExtractor:
             if isinstance(elem.content, pf.ListContainer):
                 _text = ''
                 for container in elem.content:
-                    if isinstance(container, pf.Space):
-                        _text += ' '
-                    else:
-                        _text += container.text
+                    _text += ' ' if isinstance(container, pf.Space) else \
+                        container.text
                 self._save_msgid(_text)
-
             if elem.title and elem.title != 'fig:':
                 self._save_msgid(elem.title.lstrip(':fig'))
             return

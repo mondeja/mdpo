@@ -48,7 +48,7 @@ If you doesn't pass the argument `save` to `True`, you will get a new [POFile](h
 
 ## Plain vs markup text mode
 
-If you pass the argument `plaintext` as `False`, the converter does not will remove some text markup (like `inline code`, **bold text** and other elements). These characters can be used, for example as separators translating other markup formats like HTML. The conversion will follow next correspondences:
+If you pass the argument `plaintext` as `False`, the converter does not will remove some text markup (like `inline code`, **bold text** and other elements). These characters can be used, for example as separators translating other markup formats like HTML or to indicate translators that some strings must not be translated. The conversion will follow next correspondences:
 
 ```
 Markdown --------------------------------> .po file text
