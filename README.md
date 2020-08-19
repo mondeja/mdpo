@@ -8,11 +8,11 @@ Markdown to `.po` file messages extractor. Extract the contents of a set of Mark
 
 ## Install
 
-You must install Pandoc 2.5 first:
+You must install Pandoc<=2.9 first:
 
 ```bash
 pip install pypandoc
-python -c "import pypandoc as p;p.download_pandoc(version='2.5', delete_installer=True);"
+python -c "import pypandoc as p;p.download_pandoc(version='2.9', delete_installer=True);"
 ```
 
 ...and then:
@@ -87,4 +87,4 @@ paragraph with \* asterisk --------------> paragraph with \\* asterisk
 
 ## Known limitations
 
-- Tables are not supported with `Pandoc 2.10` (and maybe some other recent versions) because [panflute](https://github.com/sergiocorreia/panflute) dependency does not support tables with captions (pandoc >= 2.10), as has been addressed in [panflute/issues/#142](https://github.com/sergiocorreia/panflute/issues/142).
+- Tables are not supported with `Pandoc 2.10` because [panflute](https://github.com/sergiocorreia/panflute) dependency does not support tables with captions (pandoc >= 2.10), as has been addressed in [panflute/issues/#142](https://github.com/sergiocorreia/panflute/issues/142).
