@@ -22,7 +22,6 @@ REQUIRED = [
 TEST_EXTRAS = [
     "pytest>=6.0.1",
     "pytest-cov",
-    "pytest-xdist>=2.0.0",
     "flake8>=3.8.3",
     "flake8-print",
     "tox",
