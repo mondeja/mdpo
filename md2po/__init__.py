@@ -40,12 +40,16 @@ class Md2PoExtractor:
         self.wrapwidth = wrapwidth
         self.mark_not_found_as_absolete = mark_not_found_as_absolete
 
-        # If False, include some markup in response
-        self.plaintext = plaintext
-
         self.forbidden_chars = forbidden_chars
         self.replacement_chars = replacement_chars
         self.forbidden_msgids = forbidden_msgids
+
+        # If False, include some markup in response
+        self.plaintext = plaintext
+
+        if not self.plaintext:
+            self._current_italic_markup_chars = 0
+            self._current_bold_markup_chars = 0
 
     def _ignore_files(self, filepaths):
         response = []
@@ -78,10 +82,12 @@ class Md2PoExtractor:
     def _save_current_msgid(self):
         self._save_msgid(self._current_msgid.strip(' '))
         self._current_msgid = ''
+        self._current_italic_markup_chars = 0
+        self._current_bold_markup_chars = 0
 
     def _extract_messages(self, elem, doc):
         # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
-        #    elem, type(elem), type(elem.next), type(elem.parent)))
+        #      elem, type(elem), type(elem.next), type(elem.parent)))
 
         if isinstance(elem, (pf.Header, pf.Para)):
             return self._save_current_msgid()
@@ -121,9 +127,22 @@ class Md2PoExtractor:
                 isinstance(elem.parent, (pf.TableCell, pf.Definition)):
             return self._save_current_msgid()
 
-        if isinstance(elem.parent, (pf.Para, pf.Header, pf.DefinitionItem)):
+        if isinstance(elem.parent, (pf.Para, pf.Header,
+                                    pf.DefinitionItem, pf.Plain)):
             if isinstance(elem, pf.Str):
-                self._append_text_to_current_msgid(elem.text)
+                if not self.plaintext:
+                    if '**' in elem.text:
+                        self._current_bold_markup_chars += 1
+                        self._append_text_to_current_msgid(
+                            elem.text.replace('**', R'\*\*'))
+                    elif '*' in elem.text:
+                        self._current_italic_markup_chars += 1
+                        self._append_text_to_current_msgid(
+                            elem.text.replace('*', R'\*'))
+                    else:
+                        self._append_text_to_current_msgid(elem.text)
+                else:
+                    self._append_text_to_current_msgid(elem.text)
             elif isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
             elif isinstance(elem, pf.Code):
@@ -148,37 +167,33 @@ class Md2PoExtractor:
                 self._append_text_to_current_msgid(elem.text)
             elif isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
-        elif isinstance(elem.parent, pf.Plain):
-            if isinstance(elem, pf.Str):
-                self._append_text_to_current_msgid(elem.text)
-            elif isinstance(elem, pf.Space):
-                self._append_text_to_current_msgid(' ')
-            elif isinstance(elem, pf.Code):
-                if not self.plaintext:
-                    self._append_text_to_current_msgid('`' + elem.text + '`')
-                else:
-                    self._append_text_to_current_msgid(elem.text)
         elif isinstance(elem.parent, pf.Emph):
             if isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
             else:
-                if not self.plaintext and \
-                        self._current_msgid.count('*') % 2 == 0:
+                if not self.plaintext and (
+                        self._current_msgid.count('*') == 0 or (
+                        self._current_msgid.count('*') -
+                        self._current_italic_markup_chars) % 2 == 0):
                     self._append_text_to_current_msgid('*')
                     if isinstance(elem.parent.parent, pf.Strong):
                         self._append_text_to_current_msgid('**')
                 self._append_text_to_current_msgid(elem.text)
         elif isinstance(elem.parent, pf.Strong):
             if isinstance(elem, pf.Str):
-                if not self.plaintext and \
-                        self._current_msgid.count('**') % 2 == 0:
+                if not self.plaintext and (
+                        self._current_msgid.count('**') == 0 or (
+                        self._current_msgid.count('**') -
+                        self._current_bold_markup_chars) % 2 == 0):
                     self._append_text_to_current_msgid('**')
                 self._append_text_to_current_msgid(elem.text)
             elif isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
             elif isinstance(elem, pf.Code):
-                if not self.plaintext and \
-                        self._current_msgid.count('**') % 2 == 0:
+                if not self.plaintext and (
+                        self._current_msgid.count('**') == 0 or (
+                        self._current_msgid.count('**') -
+                        self._current_bold_markup_chars) % 2 == 0):
                     self._append_text_to_current_msgid('**')
                 if not self.plaintext:
                     self._append_text_to_current_msgid('`' + elem.text + '`')

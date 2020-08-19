@@ -66,7 +66,7 @@ msgstr ""
 '''
 
 
-def test_mark_not_found_as_absolete(markdown_tff, po_tff):
+def test_mark_not_found_as_absolete():
     tmpdir = tempfile.gettempdir()
     original_md_filepath = os.path.join(tmpdir, uuid4().hex + '.md')
     new_md_filepath = os.path.join(tmpdir, uuid4().hex + '.md')
