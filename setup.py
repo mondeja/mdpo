@@ -60,7 +60,7 @@ class UploadCommand(Command):
     @staticmethod
     def status(s):
         """Prints things in bold."""
-        sys.stdout.write("\033[1m{0}\033[0m".format(s))
+        sys.stdout.write("\033[1m{0}\033[0m\n".format(s))
 
     def initialize_options(self):
         self.test = None
