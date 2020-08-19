@@ -23,7 +23,7 @@ pip install md2po
 
 ## Quickstart
 
-Create a new `po` file extracting strings from markdown files:
+Create a new `.po` file extracting strings from markdown files:
 
 ```python
 from md2po import markdown_to_pofile
@@ -45,6 +45,30 @@ markdown_to_pofile('doc/src/**/**.md',
 ```
 
 If you doesn't pass the argument `save` to `True`, you will get a new [POFile](https://polib.readthedocs.io/en/latest/api.html#polib.POFile) instance with new and old message strings merged.
+
+Also, you can pass Markdown content as a string to extract messages from it:
+
+```python
+>>> from md2po import markdown_to_pofile
+
+>>> md_content = '''# Header
+... 
+... Some text
+... '''
+>>>
+>>> pofile = markdown_to_pofile(md_content))
+>>> print(pofile)
+#
+msgid ""
+msgstr ""
+
+msgid "Header"
+msgstr ""
+
+msgid "Some text"
+msgstr ""
+
+```
 
 ## Plain vs markup text mode
 

@@ -2,46 +2,72 @@ import os
 import tempfile
 from uuid import uuid4
 
+import pytest
+
 from md2po import (
     Md2PoExtractor,
     FORBIDDEN_CHARS,
     REPLACEMENT_CHARS,
 )
 
-FILES_DIRNAME = 'empty-files'
-FILES_GLOB = os.path.join('test', FILES_DIRNAME, '**', '**.md')
+EMPTY_FILES_DIR = 'empty-files'
+EMPTY_FILES_GLOB = os.path.join('test', EMPTY_FILES_DIR, '**', '**.md')
+
+
+def empty_file_path(directory, filename):
+    return 'test' + os.sep + EMPTY_FILES_DIR + \
+        os.sep + directory + os.sep + filename
 
 
 def test_ignore_files():
-    md2po_extractor = Md2PoExtractor(FILES_GLOB,
+    md2po_extractor = Md2PoExtractor(EMPTY_FILES_GLOB,
                                      ignore=['foo04.md', 'bar02.md'])
 
-    assert md2po_extractor.filepaths == [
-        'test' + os.sep + FILES_DIRNAME + os.sep + 'bar' + os.sep + 'bar01.md',
-        'test' + os.sep + FILES_DIRNAME + os.sep + 'bar' + os.sep + 'bar03.md',
-        'test' + os.sep + FILES_DIRNAME + os.sep + 'foo' + os.sep + 'foo01.md',
-        'test' + os.sep + FILES_DIRNAME + os.sep + 'foo' + os.sep + 'foo02.md',
-        'test' + os.sep + FILES_DIRNAME + os.sep + 'foo' + os.sep + 'foo03.md',
-    ]
+    assert md2po_extractor.filepaths == [empty_file_path('bar', 'bar01.md'),
+                                         empty_file_path('bar', 'bar03.md'),
+                                         empty_file_path('foo', 'foo01.md'),
+                                         empty_file_path('foo', 'foo02.md'),
+                                         empty_file_path('foo', 'foo03.md')]
 
 
 def test_ignore_directory():
-    md2po_extractor = Md2PoExtractor(FILES_GLOB, ignore=['foo'])
+    md2po_extractor = Md2PoExtractor(EMPTY_FILES_GLOB, ignore=['foo'])
 
-    assert md2po_extractor.filepaths == [
-        'test' + os.sep + FILES_DIRNAME + os.sep + 'bar' + os.sep + 'bar01.md',
-        'test' + os.sep + FILES_DIRNAME + os.sep + 'bar' + os.sep + 'bar02.md',
-        'test' + os.sep + FILES_DIRNAME + os.sep + 'bar' + os.sep + 'bar03.md',
-    ]
+    assert md2po_extractor.filepaths == [empty_file_path('bar', 'bar01.md'),
+                                         empty_file_path('bar', 'bar02.md'),
+                                         empty_file_path('bar', 'bar03.md')]
+
+
+def test_content_extractor():
+    markdown_content = '''# Header 1
+
+Some awesome text
+
+```fakelanguage
+code block
+```
+'''
+
+    md2po_extractor = Md2PoExtractor(markdown_content)
+    assert md2po_extractor.extract().__unicode__() == '''#
+msgid ""
+msgstr ""
+
+msgid "Header 1"
+msgstr ""
+
+msgid "Some awesome text"
+msgstr ""
+'''
+
+
+def test_init_invalid_content():
+    with pytest.raises(ValueError):
+        Md2PoExtractor('')
 
 
 def test_forbidden_chars():
-    filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.md')
-
-    with open(filepath, 'w') as f:
-        f.write(''.join(FORBIDDEN_CHARS) + "\n")
-
-    md2po_extractor = Md2PoExtractor(filepath)
+    md2po_extractor = Md2PoExtractor(''.join(FORBIDDEN_CHARS) + "\n")
 
     assert md2po_extractor.extract().__unicode__() == '''#
 msgid ""
@@ -50,12 +76,7 @@ msgstr ""
 
 
 def test_replacement_chars():
-    filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.md')
-
-    with open(filepath, 'w') as f:
-        f.write(''.join(REPLACEMENT_CHARS.keys()) + "\n")
-
-    md2po_extractor = Md2PoExtractor(filepath)
+    md2po_extractor = Md2PoExtractor(''.join(REPLACEMENT_CHARS.keys()) + "\n")
 
     assert md2po_extractor.extract().__unicode__() == '''#
 msgid ""

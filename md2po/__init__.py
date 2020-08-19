@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = 'Extract the contents of a set of Markdown files' \
@@ -25,13 +25,21 @@ FORBIDDEN_MSGIDS = [
 
 
 class Md2PoExtractor:
-    def __init__(self, _glob, ignore=[], msgstr='', plaintext=True,
+    def __init__(self, glob_or_content, ignore=[], msgstr='', plaintext=True,
                  wrapwidth=78, forbidden_chars=FORBIDDEN_CHARS,
                  replacement_chars=REPLACEMENT_CHARS,
                  forbidden_msgids=FORBIDDEN_MSGIDS,
                  mark_not_found_as_absolete=True):
-        self.ignore = ignore
-        self.filepaths = self._ignore_files(glob.glob(_glob))
+        if not glob_or_content:
+            raise ValueError("You need to pass a glob or valid markdown"
+                             " string as first argument.")
+        _glob = glob.glob(glob_or_content)
+        if not _glob:
+            # assumes it is content
+            self.content = glob_or_content
+        else:
+            self.ignore = ignore
+            self.filepaths = self._ignore_files(_glob)
 
         self.pofile = None
         self.msgstr = ''
@@ -210,10 +218,17 @@ class Md2PoExtractor:
 
         self.pofile = polib.pofile(po_filepath, wrapwidth=self.wrapwidth)
 
-        for filepath in self.filepaths:
-            data = pypandoc.convert_file(filepath, 'json')
+        def _load_walk(data):
             doc = pf.load(io.StringIO(data))
             doc.walk(self._extract_messages)
+
+        if hasattr(self, 'content'):
+            data = pypandoc.convert_text(self.content, format='md', to='json')
+            _load_walk(data)
+        else:
+            for filepath in self.filepaths:
+                data = pypandoc.convert_file(filepath, 'json')
+                _load_walk(data)
 
         if self.mark_not_found_as_absolete:
             for entry in self.pofile:
@@ -225,11 +240,11 @@ class Md2PoExtractor:
         return self.pofile
 
 
-def markdown_to_pofile(_glob, ignore=[], msgstr='', po_filepath=None,
+def markdown_to_pofile(glob_or_content, ignore=[], msgstr='', po_filepath=None,
                        save=False, plaintext=True, wrapwidth=78,
                        mark_not_found_as_absolete=True):
     return Md2PoExtractor(
-        _glob, ignore=ignore, msgstr=msgstr,
+        glob_or_content, ignore=ignore, msgstr=msgstr,
         plaintext=plaintext, wrapwidth=wrapwidth,
         mark_not_found_as_absolete=mark_not_found_as_absolete,
     ).extract(po_filepath=po_filepath, save=save)
