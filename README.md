@@ -56,7 +56,7 @@ Also, you can pass Markdown content as a string to extract messages from it:
 ... Some text
 ... '''
 >>>
->>> pofile = markdown_to_pofile(md_content))
+>>> pofile = markdown_to_pofile(md_content)
 >>> print(pofile)
 #
 msgid ""
