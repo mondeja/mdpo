@@ -147,7 +147,8 @@ class Md2PoExtractor:
                 self._append_text_to_current_msgid(' ')
             elif isinstance(elem, pf.Code):
                 if not self.plaintext:
-                    self._append_text_to_current_msgid('`' + elem.text + '`')
+                    self._append_text_to_current_msgid(
+                        '`' + elem.text.replace('`', R'\`') + '`')
                 else:
                     self._append_text_to_current_msgid(elem.text)
             if isinstance(elem.next, pf.Link):
@@ -196,7 +197,8 @@ class Md2PoExtractor:
                         self._current_bold_markup_chars) % 2 == 0):
                     self._append_text_to_current_msgid('**')
                 if not self.plaintext:
-                    self._append_text_to_current_msgid('`' + elem.text + '`')
+                    self._append_text_to_current_msgid(
+                        '`' + elem.text.replace('`', R'\`') + '`')
                 else:
                     self._append_text_to_current_msgid(elem.text)
 

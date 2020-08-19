@@ -13,3 +13,9 @@ msgstr ""
 
 msgid "Foo bar baz 4"
 msgstr ""
+
+msgid "Foo bar baz 5"
+msgstr ""
+
+msgid "Foo bar baz 6"
+msgstr ""

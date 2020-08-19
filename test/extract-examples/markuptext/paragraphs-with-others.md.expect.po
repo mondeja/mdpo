@@ -13,3 +13,6 @@ msgstr ""
 
 msgid "this is a paragraph and**the next line starts with bold markup**"
 msgstr ""
+
+msgid "This is a line with `code that \\`contains \\` backticks`, as you see"
+msgstr ""
