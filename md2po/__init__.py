@@ -166,9 +166,9 @@ class Md2PoExtractor:
             elif isinstance(elem, pf.Code):
                 if not self.plaintext:
                     self._append_text_to_current_msgid(
-                        self.code_string + \
+                        self.code_string +
                         elem.text.replace(self.code_string,
-                                          self.code_string_replacer) + \
+                                          self.code_string_replacer) +
                         self.code_string)
                 else:
                     self._append_text_to_current_msgid(elem.text)
@@ -220,9 +220,9 @@ class Md2PoExtractor:
                     self._append_text_to_current_msgid(self.bold_string)
                 if not self.plaintext:
                     self._append_text_to_current_msgid(
-                        self.code_string + \
+                        self.code_string +
                         elem.text.replace(self.code_string,
-                                          self.code_string_replacer) + \
+                                          self.code_string_replacer) +
                         self.code_string)
                 else:
                     self._append_text_to_current_msgid(elem.text)
