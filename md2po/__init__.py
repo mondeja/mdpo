@@ -80,9 +80,8 @@ class Md2PoExtractor:
         self._current_msgid = ''
 
     def _extract_messages(self, elem, doc):
-        # print(elem, '---', 'TYPE:', type(elem),
-        #            '---', 'NEXT TYPE:', type(elem.next),
-        #            '---', 'PARENT TYPE:', type(elem.parent))
+        # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
+        #    elem, type(elem), type(elem.next), type(elem.parent)))
 
         if isinstance(elem, (pf.Header, pf.Para)):
             return self._save_current_msgid()
@@ -159,28 +158,27 @@ class Md2PoExtractor:
                     self._append_text_to_current_msgid('`' + elem.text + '`')
                 else:
                     self._append_text_to_current_msgid(elem.text)
-
         elif isinstance(elem.parent, pf.Emph):
             if isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
             else:
-                if not self.plaintext and (not self._current_msgid or
-                                           '*' not in self._current_msgid):
+                if not self.plaintext and \
+                        self._current_msgid.count('*') % 2 == 0:
                     self._append_text_to_current_msgid('*')
                     if isinstance(elem.parent.parent, pf.Strong):
                         self._append_text_to_current_msgid('**')
                 self._append_text_to_current_msgid(elem.text)
         elif isinstance(elem.parent, pf.Strong):
             if isinstance(elem, pf.Str):
-                if not self.plaintext and (not self._current_msgid or
-                                           '**' not in self._current_msgid):
+                if not self.plaintext and \
+                        self._current_msgid.count('**') % 2 == 0:
                     self._append_text_to_current_msgid('**')
                 self._append_text_to_current_msgid(elem.text)
             elif isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
             elif isinstance(elem, pf.Code):
-                if not self.plaintext and (not self._current_msgid or
-                                           '**' not in self._current_msgid):
+                if not self.plaintext and \
+                        self._current_msgid.count('**') % 2 == 0:
                     self._append_text_to_current_msgid('**')
                 if not self.plaintext:
                     self._append_text_to_current_msgid('`' + elem.text + '`')
