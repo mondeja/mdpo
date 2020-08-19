@@ -1,4 +1,4 @@
-# md2po (WIP)
+# md2po
 
 [![PyPI](https://img.shields.io/pypi/v/md2po)](https://pypi.org/project/md2po/) [![PyPI versions](https://img.shields.io/pypi/pyversions/md2po)](https://pypi.org/project/md2po/) [![Tests](https://img.shields.io/travis/mondeja/md2po?label=tests)](https://travis-ci.com/github/mondeja/md2po) [![Coverage Status](https://coveralls.io/repos/github/mondeja/md2po/badge.svg)](https://coveralls.io/github/mondeja/md2po)
 
