@@ -6,22 +6,15 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.9'
+__version__ = '0.0.10'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = 'Extract the contents of a set of Markdown files' \
                 + ' to one .po file.'
 
-FORBIDDEN_CHARS = [
-    '☒',
-    '☐']
-REPLACEMENT_CHARS = {
-    '…': '...',
-    '’': '\'',
-}
-FORBIDDEN_MSGIDS = [
-    '.', '', ']`',
-]
+FORBIDDEN_CHARS = ['☒', '☐']
+REPLACEMENT_CHARS = {'…': '...', '’': '\''}
+FORBIDDEN_MSGIDS = ['', ' ']
 
 
 class Md2PoExtractor:
@@ -29,7 +22,10 @@ class Md2PoExtractor:
                  wrapwidth=78, forbidden_chars=FORBIDDEN_CHARS,
                  replacement_chars=REPLACEMENT_CHARS,
                  forbidden_msgids=FORBIDDEN_MSGIDS,
-                 mark_not_found_as_absolete=True):
+                 mark_not_found_as_absolete=True,
+                 bold_string='**', italic_string='*',
+                 link_start_string='`[', link_end_string=']`',
+                 code_string='`'):
         if not glob_or_content:
             raise ValueError("You need to pass a glob or valid markdown"
                              " string as first argument.")
@@ -56,8 +52,23 @@ class Md2PoExtractor:
         self.plaintext = plaintext
 
         if not self.plaintext:
-            self._current_italic_markup_chars = 0
-            self._current_bold_markup_chars = 0
+            self.bold_string = bold_string
+            self.bold_string_replacer = ''.join([
+                "\\%s" % c for c in self.bold_string])
+
+            self.italic_string = italic_string
+            self.italic_string_replacer = ''.join([
+                "\\%s" % c for c in self.italic_string])
+
+            self._current_italic_chars = 0
+            self._current_bold_chars = 0
+
+            self.link_start_string = link_start_string
+            self.link_end_string = link_end_string
+
+            self.code_string = code_string
+            self.code_string_replacer = ''.join([
+                "\\%s" % c for c in self.code_string])
 
     def _ignore_files(self, filepaths):
         response = []
@@ -90,8 +101,8 @@ class Md2PoExtractor:
     def _save_current_msgid(self):
         self._save_msgid(self._current_msgid.strip(' '))
         self._current_msgid = ''
-        self._current_italic_markup_chars = 0
-        self._current_bold_markup_chars = 0
+        self._current_italic_chars = 0
+        self._current_bold_chars = 0
 
     def _extract_messages(self, elem, doc):
         # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
@@ -101,7 +112,7 @@ class Md2PoExtractor:
             return self._save_current_msgid()
         elif isinstance(elem, pf.Link):
             if not self.plaintext:
-                self._append_text_to_current_msgid(']`')
+                self._append_text_to_current_msgid(self.link_end_string)
             if elem.title:
                 self._save_msgid(elem.title)
             return
@@ -110,11 +121,11 @@ class Md2PoExtractor:
             return self._save_current_msgid()
         elif isinstance(elem, pf.Emph):
             if not self.plaintext:
-                self._append_text_to_current_msgid('*')
+                self._append_text_to_current_msgid(self.italic_string)
             return
         elif isinstance(elem, pf.Strong):
             if not self.plaintext:
-                self._append_text_to_current_msgid('**')
+                self._append_text_to_current_msgid(self.bold_string)
             return
         elif isinstance(elem, pf.LineBreak):
             return self._save_current_msgid()
@@ -136,14 +147,16 @@ class Md2PoExtractor:
                                     pf.DefinitionItem, pf.Plain)):
             if isinstance(elem, pf.Str):
                 if not self.plaintext:
-                    if '**' in elem.text:
-                        self._current_bold_markup_chars += 1
+                    if self.bold_string in elem.text:
+                        self._current_bold_chars += 1
                         self._append_text_to_current_msgid(
-                            elem.text.replace('**', R'\*\*'))
-                    elif '*' in elem.text:
-                        self._current_italic_markup_chars += 1
+                            elem.text.replace(self.bold_string,
+                                              self.bold_string_replacer))
+                    elif self.italic_string in elem.text:
+                        self._current_italic_chars += 1
                         self._append_text_to_current_msgid(
-                            elem.text.replace('*', R'\*'))
+                            elem.text.replace(self.italic_string,
+                                              self.italic_string_replacer))
                     else:
                         self._append_text_to_current_msgid(elem.text)
                 else:
@@ -153,23 +166,27 @@ class Md2PoExtractor:
             elif isinstance(elem, pf.Code):
                 if not self.plaintext:
                     self._append_text_to_current_msgid(
-                        '`' + elem.text.replace('`', R'\`') + '`')
+                        self.code_string + \
+                        elem.text.replace(self.code_string,
+                                          self.code_string_replacer) + \
+                        self.code_string)
                 else:
                     self._append_text_to_current_msgid(elem.text)
             if isinstance(elem.next, pf.Link):
                 if not self.plaintext:
-                    self._append_text_to_current_msgid('`[')
+                    self._append_text_to_current_msgid(self.link_start_string)
             elif isinstance(elem.next, pf.Emph):
                 if not self.plaintext:
-                    self._append_text_to_current_msgid('*')
+                    self._append_text_to_current_msgid(self.italic_string)
             elif not elem.next and isinstance(elem.parent, pf.DefinitionItem):
                 self._save_current_msgid()
 
         elif isinstance(elem.parent, pf.Link):
             if isinstance(elem, pf.Str):
-                if not self.plaintext and (not self._current_msgid or
-                                           '`[' not in self._current_msgid):
-                    self._append_text_to_current_msgid('`[')
+                if not self.plaintext and (
+                        not self._current_msgid or
+                        self.link_start_string not in self._current_msgid):
+                    self._append_text_to_current_msgid(self.link_start_string)
                 self._append_text_to_current_msgid(elem.text)
             elif isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
@@ -178,32 +195,35 @@ class Md2PoExtractor:
                 self._append_text_to_current_msgid(' ')
             else:
                 if not self.plaintext and (
-                        self._current_msgid.count('*') == 0 or (
-                        self._current_msgid.count('*') -
-                        self._current_italic_markup_chars) % 2 == 0):
-                    self._append_text_to_current_msgid('*')
+                        self._current_msgid.count(self.italic_string) == 0 or (
+                        self._current_msgid.count(self.italic_string) -
+                        self._current_italic_chars) % 2 == 0):
+                    self._append_text_to_current_msgid(self.italic_string)
                     if isinstance(elem.parent.parent, pf.Strong):
-                        self._append_text_to_current_msgid('**')
+                        self._append_text_to_current_msgid(self.bold_string)
                 self._append_text_to_current_msgid(elem.text)
         elif isinstance(elem.parent, pf.Strong):
             if isinstance(elem, pf.Str):
                 if not self.plaintext and (
-                        self._current_msgid.count('**') == 0 or (
-                        self._current_msgid.count('**') -
-                        self._current_bold_markup_chars) % 2 == 0):
-                    self._append_text_to_current_msgid('**')
+                        self._current_msgid.count(self.bold_string) == 0 or (
+                        self._current_msgid.count(self.bold_string) -
+                        self._current_bold_chars) % 2 == 0):
+                    self._append_text_to_current_msgid(self.bold_string)
                 self._append_text_to_current_msgid(elem.text)
             elif isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
             elif isinstance(elem, pf.Code):
                 if not self.plaintext and (
-                        self._current_msgid.count('**') == 0 or (
-                        self._current_msgid.count('**') -
-                        self._current_bold_markup_chars) % 2 == 0):
-                    self._append_text_to_current_msgid('**')
+                        self._current_msgid.count(self.bold_string) == 0 or (
+                        self._current_msgid.count(self.bold_string) -
+                        self._current_bold_chars) % 2 == 0):
+                    self._append_text_to_current_msgid(self.bold_string)
                 if not self.plaintext:
                     self._append_text_to_current_msgid(
-                        '`' + elem.text.replace('`', R'\`') + '`')
+                        self.code_string + \
+                        elem.text.replace(self.code_string,
+                                          self.code_string_replacer) + \
+                        self.code_string)
                 else:
                     self._append_text_to_current_msgid(elem.text)
 
@@ -242,9 +262,10 @@ class Md2PoExtractor:
 
 def markdown_to_pofile(glob_or_content, ignore=[], msgstr='', po_filepath=None,
                        save=False, plaintext=True, wrapwidth=78,
-                       mark_not_found_as_absolete=True):
+                       mark_not_found_as_absolete=True, **kwargs):
     return Md2PoExtractor(
         glob_or_content, ignore=ignore, msgstr=msgstr,
         plaintext=plaintext, wrapwidth=wrapwidth,
         mark_not_found_as_absolete=mark_not_found_as_absolete,
+        **kwargs
     ).extract(po_filepath=po_filepath, save=save)
