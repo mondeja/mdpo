@@ -1,8 +1,8 @@
 # md2po
 
-[![PyPI](https://img.shields.io/pypi/v/md2po)](https://pypi.org/project/md2po/) [![Python versions](https://img.shields.io/pypi/pyversions/md2po)](https://pypi.org/project/md2po/) [![License](https://img.shields.io/pypi/l/md2po?color=light-green)](https://github.com/mondeja/md2po/blob/master/LICENSE) [![Tests](https://img.shields.io/travis/mondeja/md2po?label=tests)](https://travis-ci.com/github/mondeja/md2po) [![Coverage Status](https://coveralls.io/repos/github/mondeja/md2po/badge.svg)](https://coveralls.io/github/mondeja/md2po)
+[![PyPI](https://img.shields.io/pypi/v/md2po)](https://pypi.org/project/md2po/) [![Python versions](https://img.shields.io/pypi/pyversions/md2po?logo=python&logoColor=aaaaaa&labelColor=333333)](https://pypi.org/project/md2po/) [![License](https://img.shields.io/pypi/l/md2po?color=light-green)](https://github.com/mondeja/md2po/blob/master/LICENSE) [![Tests](https://img.shields.io/travis/mondeja/md2po?label=tests)](https://travis-ci.com/github/mondeja/md2po) [![Coverage Status](https://coveralls.io/repos/github/mondeja/md2po/badge.svg)](https://coveralls.io/github/mondeja/md2po) [![Documentation Status](https://readthedocs.org/projects/md2po/badge/?version=latest)](https://md2po.readthedocs.io/en/latest/?badge=latest)
 
-Markdown to `.po` file messages extractor. Extract the contents of a set of Markdown files to one `.po` file.
+Library to extract contents of a set of Markdown files and save into one or multiples `.po` files. Is like a tiny gettext utility for Markdown files written in Python.
 
 > I've written only those functionalities that have needed, so if you want to see more added to this package, [send a pull request](https://github.com/mondeja/md2po/pulls) or [open an issue](https://github.com/mondeja/md2po/issues/new) with a minimal example.
 
@@ -52,7 +52,7 @@ Also, you can pass Markdown content as a string to extract messages from it:
 >>> from md2po import markdown_to_pofile
 
 >>> md_content = '''# Header
-... 
+...
 ... Some text
 ... '''
 >>>
@@ -70,20 +70,7 @@ msgstr ""
 
 ```
 
-## Plain vs markup text mode
-
-If you pass the argument `plaintext` as `False`, the converter does not will remove some text markup (like `inline code`, **bold text** and other elements). These characters can be used, for example as separators translating other markup formats like HTML or to indicate translators that some strings must not be translated. The conversion will follow next correspondences:
-
-```
-Markdown --------------------------------> .po file text
-
-`inline code` ---------------------------> `inline code`
-``inline code ` with backtick`` ---------> `inline code \\` with backtick`
-**bold text** ---------------------------> **bold text**
-*italic text* ---------------------------> *italic text*
-<simple/link> ---------------------------> `[simple link]`
-paragraph with \* asterisk --------------> paragraph with \\* asterisk
-```
+For a full list of parameters supported see [the API documentation on ReadTheDocs](https://md2po.readthedocs.io/en/latest/api.html).
 
 ## Known limitations
 

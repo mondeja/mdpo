@@ -13,21 +13,21 @@ URL = 'https://github.com/mondeja/md2po'
 EMAIL = 'mondejar1994@gmail.com'
 AUTHOR = 'Álvaro Mondéjar Rubio'
 REQUIRES_PYTHON = '>=3'
-REQUIRED = [
-    'panflute>=1.12.5',
-    'polib>=1.1.0',
-    'pypandoc>=1.5',
-]
+REQUIRED = []
 
 TEST_EXTRAS = [
     'pytest>=6.0.1',
     'pytest-cov',
-    'flake8>=3.8.3',
+    'flake8',
     'flake8-print',
     'tox',
 ]
+DOC_EXTRAS = [
+    'Sphinx>=3.2.1',
+    'sphinx-rtd-theme==0.4.3'
+]
 EXTRAS = {
-    'dev': ['twine', 'bump2version'] + TEST_EXTRAS,
+    'dev': ['twine', 'bump2version'] + TEST_EXTRAS + DOC_EXTRAS,
     'test': TEST_EXTRAS,
 }
 
@@ -41,11 +41,11 @@ INIT_FILEPATH = os.path.join(HERE, 'md2po', '__init__.py')
 with io.open(INIT_FILEPATH, encoding='utf-8') as f:
     content = f.read()
     ABOUT['__title__'] = \
-        re.search(r'__title__\s=\s[\'']([^\'']+)[\'']', content).group(1)
+        re.search(r'__title__\s=\s[\'"]([^\'"]+)[\'"]', content).group(1)
     ABOUT['__version__'] = \
-        re.search(r'__version__\s=\s[\'']([^\'']+)[\'']', content).group(1)
+        re.search(r'__version__\s=\s[\'"]([^\'"]+)[\'"]', content).group(1)
     ABOUT['__description__'] = \
-        re.search(r'__description__\s=\s[\'']([^\'']+)[\'']', content).group(1)
+        re.search(r'__description__\s=\s[\'"]([^\'"]+)[\'"]', content).group(1)
 
 
 class UploadCommand(Command):
@@ -81,7 +81,7 @@ class UploadCommand(Command):
         self.status('Uploading the package to PyPI via Twine…')
         cmd = 'twine upload%s dist/*' % (
             ' --repository-url https://test.pypi.org/legacy/' if self.test
-            else '
+            else ''
         )
         os.system(cmd)
         sys.exit()
@@ -97,7 +97,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(exclude=['test']),
     install_requires=REQUIRED,
     extras_require=EXTRAS,
     include_package_data=True,
@@ -117,7 +117,7 @@ setup(
         'Topic :: Software Development :: Internationalization',
         'Topic :: Software Development :: Localization',
         'Topic :: Text Processing',
-        # 'Topic :: Text Processing :: Markup :: Markdown',
+        # 'Topic :: Text Processing :: Markup :: HTML',
     ],
     cmdclass={
         'upload': UploadCommand,

@@ -8,7 +8,7 @@ import pytest
 
 from md2po import markdown_to_pofile
 
-EXAMPLES_DIR = os.path.join('test', 'extract-examples')
+EXAMPLES_DIR = os.path.join('test', 'convert-examples')
 
 PT_EXAMPLES_DIR = os.path.join(EXAMPLES_DIR, 'plaintext')
 PT_EXAMPLES_GLOB = glob.glob(PT_EXAMPLES_DIR + os.sep + '*.md')
@@ -20,7 +20,7 @@ MT_EXAMPLES = sorted([os.path.basename(fp) for fp in MT_EXAMPLES_GLOB])
 
 
 @pytest.mark.parametrize('filename', PT_EXAMPLES)
-def test_extract_plaintext(filename):
+def test_convert_plaintext(filename):
     filepath = os.path.join(PT_EXAMPLES_DIR, filename)
     pofile = markdown_to_pofile(filepath, plaintext=True)
 
@@ -29,7 +29,7 @@ def test_extract_plaintext(filename):
 
 
 @pytest.mark.parametrize('filename', MT_EXAMPLES)
-def test_extract_markuptext(filename):
+def test_convert_markuptext(filename):
     filepath = os.path.join(MT_EXAMPLES_DIR, filename)
     pofile = markdown_to_pofile(filepath, plaintext=False)
 
@@ -38,7 +38,7 @@ def test_extract_markuptext(filename):
 
 
 @pytest.mark.parametrize('filename', [random.choice(PT_EXAMPLES)])
-def test_extract_save(filename):
+def test_convert_save(filename):
     filepath = os.path.join(PT_EXAMPLES_DIR, filename)
 
     save_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')

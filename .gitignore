@@ -1,5 +1,6 @@
 # Package custom ignores
 /__main__.py
+doc/_build/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -5,8 +5,7 @@ from uuid import uuid4
 import pytest
 
 from md2po import (
-    Md2PoExtractor,
-    FORBIDDEN_CHARS,
+    Md2PoConverter,
     REPLACEMENT_CHARS,
 )
 
@@ -20,10 +19,10 @@ def empty_file_path(directory, filename):
 
 
 def test_ignore_files():
-    md2po_extractor = Md2PoExtractor(EMPTY_FILES_GLOB,
+    md2po_converter = Md2PoConverter(EMPTY_FILES_GLOB,
                                      ignore=['foo04.md', 'bar02.md'])
 
-    assert md2po_extractor.filepaths == [empty_file_path('bar', 'bar01.md'),
+    assert md2po_converter.filepaths == [empty_file_path('bar', 'bar01.md'),
                                          empty_file_path('bar', 'bar03.md'),
                                          empty_file_path('foo', 'foo01.md'),
                                          empty_file_path('foo', 'foo02.md'),
@@ -31,14 +30,14 @@ def test_ignore_files():
 
 
 def test_ignore_directory():
-    md2po_extractor = Md2PoExtractor(EMPTY_FILES_GLOB, ignore=['foo'])
+    md2po_converter = Md2PoConverter(EMPTY_FILES_GLOB, ignore=['foo'])
 
-    assert md2po_extractor.filepaths == [empty_file_path('bar', 'bar01.md'),
+    assert md2po_converter.filepaths == [empty_file_path('bar', 'bar01.md'),
                                          empty_file_path('bar', 'bar02.md'),
                                          empty_file_path('bar', 'bar03.md')]
 
 
-def test_content_extractor():
+def test_content_converter():
     markdown_content = '''# Header 1
 
 Some awesome text
@@ -48,8 +47,8 @@ code block
 ```
 '''
 
-    md2po_extractor = Md2PoExtractor(markdown_content)
-    assert md2po_extractor.extract().__unicode__() == '''#
+    md2po_converter = Md2PoConverter(markdown_content)
+    assert md2po_converter.convert().__unicode__() == '''#
 msgid ""
 msgstr ""
 
@@ -63,26 +62,17 @@ msgstr ""
 
 def test_init_invalid_content():
     with pytest.raises(ValueError):
-        Md2PoExtractor('')
-
-
-def test_forbidden_chars():
-    md2po_extractor = Md2PoExtractor(''.join(FORBIDDEN_CHARS) + "\n")
-
-    assert md2po_extractor.extract().__unicode__() == '''#
-msgid ""
-msgstr ""
-'''
+        Md2PoConverter('')
 
 
 def test_replacement_chars():
-    md2po_extractor = Md2PoExtractor(''.join(REPLACEMENT_CHARS.keys()) + "\n")
+    md2po_converter = Md2PoConverter(''.join(REPLACEMENT_CHARS.keys()) + "\n")
 
-    assert md2po_extractor.extract().__unicode__() == '''#
+    assert md2po_converter.convert().__unicode__() == '''#
 msgid ""
 msgstr ""
 
-msgid "...'"
+msgid "'"
 msgstr ""
 '''
 
@@ -99,8 +89,8 @@ def test_mark_not_found_as_absolete():
     with open(new_md_filepath, "w") as f:
         f.write('A new string\n')
 
-    md2po_extractor = Md2PoExtractor(original_md_filepath)
-    pofile = md2po_extractor.extract(po_filepath=po_filepath, save=True)
+    md2po_converter = Md2PoConverter(original_md_filepath)
+    pofile = md2po_converter.convert(po_filepath=po_filepath, save=True)
     assert pofile.__unicode__() == '''#
 msgid ""
 msgstr ""
@@ -112,9 +102,9 @@ msgid "Another string"
 msgstr ""
 '''
 
-    md2po_extractor = Md2PoExtractor(new_md_filepath,
+    md2po_converter = Md2PoConverter(new_md_filepath,
                                      mark_not_found_as_absolete=True)
-    pofile = md2po_extractor.extract(po_filepath=po_filepath)
+    pofile = md2po_converter.convert(po_filepath=po_filepath)
     assert pofile.__unicode__() == '''#
 msgid ""
 msgstr ""
@@ -127,4 +117,16 @@ msgstr ""
 
 #~ msgid "Another string"
 #~ msgstr ""
+'''
+
+
+def test_msgstr():
+    content = 'Mensaje por defecto'
+    md2po_converter = Md2PoConverter(content, msgstr='Default message')
+    assert md2po_converter.convert(content).__unicode__() == '''#
+msgid ""
+msgstr ""
+
+msgid "Mensaje por defecto"
+msgstr "Default message"
 '''
