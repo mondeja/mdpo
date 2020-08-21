@@ -29,6 +29,7 @@ DOC_EXTRAS = [
 EXTRAS = {
     'dev': ['twine', 'bump2version'] + TEST_EXTRAS + DOC_EXTRAS,
     'test': TEST_EXTRAS,
+    'docs': DOC_EXTRAS,
 }
 
 HERE = os.path.abspath(os.path.dirname(__file__))
