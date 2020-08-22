@@ -9,16 +9,15 @@ from md2po import (
     REPLACEMENT_CHARS,
 )
 
-EMPTY_FILES_DIR = 'empty-files'
-EMPTY_FILES_GLOB = os.path.join('test', EMPTY_FILES_DIR, '**', '**.md')
+EMPTY_FILES_DIRNAME = 'empty-files'
+EMPTY_FILES_GLOB = os.path.join('test', EMPTY_FILES_DIRNAME, '**', '**.md')
 
 
 def empty_file_path(directory, filename):
-    return 'test' + os.sep + EMPTY_FILES_DIR + \
-        os.sep + directory + os.sep + filename
+    return os.path.join('test', EMPTY_FILES_DIRNAME, directory, filename)
 
 
-def test_ignore_files():
+def test_ignore_files_by_filename():
     md2po_converter = Md2PoConverter(EMPTY_FILES_GLOB,
                                      ignore=['foo04.md', 'bar02.md'])
 
@@ -29,8 +28,31 @@ def test_ignore_files():
                                          empty_file_path('foo', 'foo03.md')]
 
 
-def test_ignore_directory():
+def test_ignore_directory_by_dirname():
     md2po_converter = Md2PoConverter(EMPTY_FILES_GLOB, ignore=['foo'])
+
+    assert md2po_converter.filepaths == [empty_file_path('bar', 'bar01.md'),
+                                         empty_file_path('bar', 'bar02.md'),
+                                         empty_file_path('bar', 'bar03.md')]
+
+
+def test_ignore_files_by_filepath():
+    md2po_converter = Md2PoConverter(
+        EMPTY_FILES_GLOB,
+        ignore=[os.path.join('test', EMPTY_FILES_DIRNAME, 'foo', 'foo04.md'),
+                os.path.join('test', EMPTY_FILES_DIRNAME, 'bar', 'bar02.md')])
+
+    assert md2po_converter.filepaths == [empty_file_path('bar', 'bar01.md'),
+                                         empty_file_path('bar', 'bar03.md'),
+                                         empty_file_path('foo', 'foo01.md'),
+                                         empty_file_path('foo', 'foo02.md'),
+                                         empty_file_path('foo', 'foo03.md')]
+
+
+def test_ignore_files_by_dirpath():
+    md2po_converter = Md2PoConverter(
+        EMPTY_FILES_GLOB,
+        ignore=[os.path.join('test', EMPTY_FILES_DIRNAME, 'foo')])
 
     assert md2po_converter.filepaths == [empty_file_path('bar', 'bar01.md'),
                                          empty_file_path('bar', 'bar02.md'),

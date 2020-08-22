@@ -8,3 +8,4 @@ Library to extract contents of a set of Markdown files and save into one or mult
 
    install
    api
+   cli

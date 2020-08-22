@@ -68,9 +68,17 @@ class Md2PoConverter:
     def _ignore_files(self, filepaths):
         response = []
         for filepath in filepaths:
+            # ignore by filename
+            if os.path.basename(filepath) in self.ignore:
+                continue
+            # ignore by dirname
             if os.path.basename(os.path.dirname(filepath)) in self.ignore:
                 continue
-            if os.path.basename(filepath) in self.ignore:
+            # ignore by filepath
+            if filepath in self.ignore:
+                continue
+            # ignore by dirpath (relative or absolute)
+            if (os.sep).join(filepath.split(os.sep)[:-1]) in self.ignore:
                 continue
             response.append(filepath)
         response.sort()
@@ -99,7 +107,7 @@ class Md2PoConverter:
 
     def _extract_msgids(self, elem, doc):
         # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
-        #      elem, type(elem), type(elem.next), type(elem.parent)))
+        #       elem, type(elem), type(elem.next), type(elem.parent)))
 
         if isinstance(elem, (pf.Header, pf.Para)):
             return self._save_current_msgid()
@@ -270,7 +278,8 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
             with valid Markdown content.
         ignore (list): List of paths to files to ignore. Useful when
             a glob does not fit your requirements indicating the files
-            to extract content from them.
+            to extract content from them. Also, filename or a dirname
+            can be defined without indicate the full path.
         msgstr (str): Default message string for extracted msgids.
         po_filepath (str): File that will be used as :class:`polib.POFile`
             instance where to dump the new msgids and that will be used

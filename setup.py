@@ -28,7 +28,8 @@ TEST_EXTRAS = [
 ]
 DOC_EXTRAS = [
     'Sphinx>=3.2.1',
-    'sphinx-rtd-theme==0.4.3'
+    'sphinx-rtd-theme==0.4.3',
+    'sphinx-argparse>=0.2.5',
 ]
 EXTRAS = {
     'dev': ['twine', 'bump2version'] + TEST_EXTRAS + DOC_EXTRAS,
