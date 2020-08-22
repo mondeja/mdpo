@@ -1,6 +1,12 @@
 # md2po
 
-[![PyPI](https://img.shields.io/pypi/v/md2po)](https://pypi.org/project/md2po/) [![Python versions](https://img.shields.io/pypi/pyversions/md2po?logo=python&logoColor=aaaaaa&labelColor=333333)](https://pypi.org/project/md2po/) [![License](https://img.shields.io/pypi/l/md2po?color=light-green)](https://github.com/mondeja/md2po/blob/master/LICENSE) [![Tests](https://img.shields.io/travis/mondeja/md2po?label=tests)](https://travis-ci.com/github/mondeja/md2po) [![Coverage Status](https://coveralls.io/repos/github/mondeja/md2po/badge.svg)](https://coveralls.io/github/mondeja/md2po) [![Documentation Status](https://readthedocs.org/projects/md2po/badge/?version=latest)](https://md2po.readthedocs.io/en/latest/?badge=latest)
+[![PyPI][pypi-image]][pypi-link]
+[![PyPI Python versions][pypi-versions-image]][pypi-link]
+[![License][license-image]][license-link]
+[![Tests][tests-image]][tests-link]
+[![Coverage status][coverage-image]][coverage-link]
+[![Documentation status][doc-image]][doc-link]
+
 
 Library to extract contents of a set of Markdown files and save into one or multiples `.po` files. Is like a tiny gettext utility for Markdown files written in Python.
 
@@ -32,7 +38,9 @@ pofile = markdown_to_pofile('doc/src/**/**.md', ignore=['todo.md', 'changelog.md
 pofile.save('locale/doc.po')
 
 # in one line
-markdown_to_pofile('doc/src/**/**.md', ignore=['todo.md', 'changelog.md']).save('locale/doc.po')
+markdown_to_pofile('doc/src/**/**.md',
+                   ignore=['todo.md', 'changelog.md'],
+                   save='locale/doc.po')
 ```
 
 The function `markdown_to_pofile` returns a [POFile](https://polib.readthedocs.io/en/latest/api.html#polib.POFile) instance from the library [polib](https://polib.readthedocs.io/en/latest). If you indicates an existent `.po` file path for `po_filepath` optional argument, the new content will be merged into the file:
@@ -70,8 +78,27 @@ msgstr ""
 
 ```
 
+> If you want a solution to replace your extracted strings into a HTML file you can use [md2po-html-replacer](https://github.com/mondeja/md2po-html-replacer).
+
+
+## Documentation
 For a full list of parameters supported see [the API documentation on ReadTheDocs](https://md2po.readthedocs.io/en/latest/api.html).
+
 
 ## Known limitations
 
-- Tables are not supported with `Pandoc 2.10` because [panflute](https://github.com/sergiocorreia/panflute) dependency does not support tables with captions (pandoc >= 2.10), as has been addressed in [panflute/issues/#142](https://github.com/sergiocorreia/panflute/issues/142).
+- Tables are not supported with `Pandoc v2.10` because [panflute](https://github.com/sergiocorreia/panflute) dependency does not support tables with captions (pandoc >= 2.10), as has been addressed in [panflute/issues/#142](https://github.com/sergiocorreia/panflute/issues/142).
+
+
+
+[pypi-image]: https://img.shields.io/pypi/v/md2po
+[pypi-link]: https://pypi.org/project/md2po/
+[pypi-versions-image]: https://img.shields.io/pypi/pyversions/md2po?logo=python&logoColor=aaaaaa&labelColor=333333
+[license-image]: https://img.shields.io/pypi/l/md2po?color=light-green
+[license-link]: https://github.com/mondeja/md2po/blob/master/LICENSE
+[tests-image]: https://img.shields.io/travis/mondeja/md2po?label=tests
+[tests-link]: https://travis-ci.com/github/mondeja/md2po
+[coverage-image]: https://coveralls.io/repos/github/mondeja/md2po/badge.svg
+[coverage-link]: https://coveralls.io/github/mondeja/md2po
+[doc-image]: https://readthedocs.org/projects/md2po/badge/?version=latest
+[doc-link]: https://md2po.readthedocs.io/en/latest/?badge=latest

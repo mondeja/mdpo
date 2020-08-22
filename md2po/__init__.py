@@ -264,8 +264,8 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
     of files and returns a :class:`polib.POFile` instance.
 
     Args:
-        glob_or_content (str): String, glob path to the Markdown
-            files or a string with valid Markdown content.
+        glob_or_content (str): Glob path to Markdown files or a string
+            with valid Markdown content.
         ignore (list): List of paths to files to ignore. Useful when
             a glob does not fit your requirements indicating the files
             to extract content from them.
