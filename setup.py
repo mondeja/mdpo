@@ -13,7 +13,11 @@ URL = 'https://github.com/mondeja/md2po'
 EMAIL = 'mondejar1994@gmail.com'
 AUTHOR = 'Álvaro Mondéjar Rubio'
 REQUIRES_PYTHON = '>=3'
-REQUIRED = []
+REQUIRED = [
+    'panflute>=1.12.5',
+    'pypandoc>=1.5',
+    'polib>=1.1.0',
+]
 
 TEST_EXTRAS = [
     'pytest>=6.0.1',
