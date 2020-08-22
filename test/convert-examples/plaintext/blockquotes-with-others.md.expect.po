@@ -11,5 +11,5 @@ msgstr ""
 msgid "Profits were higher than https://ever.com has been"
 msgstr ""
 
-msgid "Everything is going according to plan."
+msgid "Everything is going according to the plan."
 msgstr ""

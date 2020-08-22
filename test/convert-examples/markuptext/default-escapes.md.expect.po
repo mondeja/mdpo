@@ -8,10 +8,19 @@ msgstr ""
 msgid "Some text with two literal asterisks \\* \\* and *italic* markup."
 msgstr ""
 
+msgid "Some text with literal asterisk inside *italic \\* markup* ."
+msgstr ""
+
+msgid "Some text with two literal asterisks inside *italic \\* \\*markup* ."
+msgstr ""
+
 msgid "Some text with double literal asterisk \\*\\* and **bold** markup."
 msgstr ""
 
 msgid "Some text with two double literal asterisks \\*\\* \\*\\* and **bold** markup."
+msgstr ""
+
+msgid "Some text with two literal asterisks inside **bold \\* \\*markup** ."
 msgstr ""
 
 msgid ""

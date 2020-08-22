@@ -4,11 +4,17 @@ Some text with literal asterisk \* and *italic* markup.
 
 Some text with two literal asterisks \* \* and *italic* markup.
 
+Some text with literal asterisk inside *italic \* markup* .
+
+Some text with two literal asterisks inside *italic \* \*markup* .
+
 
 [//]: # (Escape bold markup)
 Some text with double literal asterisk \*\* and **bold** markup.
 
 Some text with two double literal asterisks \*\* \*\* and **bold** markup.
+
+Some text with two literal asterisks inside **bold \* \*markup** .
 
 
 [//]: # (Escape italic + bold markups)

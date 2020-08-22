@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.18'
+__version__ = '0.0.19'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = 'Extract the contents of a set of Markdown files' \
@@ -55,15 +55,14 @@ class Md2PoConverter:
             self.italic_string_replacer = ''.join([
                 "\\%s" % c for c in self.italic_string])
 
-            self._current_italic_chars = 0
-            self._current_bold_chars = 0
-
             self.link_start_string = kwargs.get('link_start_string', '`[')
             self.link_end_string = kwargs.get('link_end_string', ']`')
 
             self.code_string = kwargs.get('code_string', '`')
             self.code_string_replacer = ''.join([
                 "\\%s" % c for c in self.code_string])
+
+            self._bold_italic_context = False
 
     def _ignore_files(self, filepaths):
         response = []
@@ -84,14 +83,6 @@ class Md2PoConverter:
         response.sort()
         return response
 
-    def _append_text_to_current_msgid(self, text):
-        _text_to_append = ''
-        for ch in text:
-            if ch in self.replacement_chars:
-                ch = self.replacement_chars[ch]
-            _text_to_append += ch
-        self._current_msgid += _text_to_append
-
     def _save_msgid(self, msgid):
         if isinstance(msgid, str) and msgid not in self.forbidden_msgids:
             if polib.POEntry(msgid=msgid) not in self.pofile:
@@ -102,8 +93,15 @@ class Md2PoConverter:
     def _save_current_msgid(self):
         self._save_msgid(self._current_msgid.strip(' '))
         self._current_msgid = ''
-        self._current_italic_chars = 0
-        self._current_bold_chars = 0
+
+    def _append_text_to_current_msgid(self, text):
+        # print("APPEND TO MSGID '%s'" % text)
+        _text_to_append = ''
+        for ch in text:
+            if ch in self.replacement_chars:
+                ch = self.replacement_chars[ch]
+            _text_to_append += ch
+        self._current_msgid += _text_to_append
 
     def _extract_msgids(self, elem, doc):
         # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
@@ -122,11 +120,14 @@ class Md2PoConverter:
             return self._save_current_msgid()
         elif isinstance(elem, pf.Emph):
             if not self.plaintext:
+                # Emph closing
                 self._append_text_to_current_msgid(self.italic_string)
             return
         elif isinstance(elem, pf.Strong):
             if not self.plaintext:
+                # Strong closing
                 self._append_text_to_current_msgid(self.bold_string)
+                self._bold_italic_context = False
             return
         elif isinstance(elem, pf.LineBreak):
             return self._save_current_msgid()
@@ -149,12 +150,10 @@ class Md2PoConverter:
             if isinstance(elem, pf.Str):
                 if not self.plaintext:
                     if self.bold_string in elem.text:
-                        self._current_bold_chars += 1
                         self._append_text_to_current_msgid(
                             elem.text.replace(self.bold_string,
                                               self.bold_string_replacer))
                     elif self.italic_string in elem.text:
-                        self._current_italic_chars += 1
                         self._append_text_to_current_msgid(
                             elem.text.replace(self.italic_string,
                                               self.italic_string_replacer))
@@ -179,6 +178,10 @@ class Md2PoConverter:
             elif isinstance(elem.next, pf.Emph):
                 if not self.plaintext:
                     self._append_text_to_current_msgid(self.italic_string)
+            elif isinstance(elem.next, pf.Strong):
+                if not self.plaintext:
+                    if not isinstance(elem.next.content[0], pf.Emph):
+                        self._append_text_to_current_msgid(self.bold_string)
             elif not elem.next and isinstance(elem.parent, pf.DefinitionItem):
                 self._save_current_msgid()
 
@@ -195,31 +198,45 @@ class Md2PoConverter:
             if isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
             else:
-                if not self.plaintext and (
-                        self._current_msgid.count(self.italic_string) == 0 or (
-                        self._current_msgid.count(self.italic_string) -
-                        self._current_italic_chars) % 2 == 0):
-                    self._append_text_to_current_msgid(self.italic_string)
+                if not self.plaintext:
+                    # Emph at start
+                    if not self._current_msgid:
+                        self._append_text_to_current_msgid(self.italic_string)
                     if isinstance(elem.parent.parent, pf.Strong):
-                        self._append_text_to_current_msgid(self.bold_string)
-                self._append_text_to_current_msgid(elem.text)
+                        if not self._bold_italic_context:
+                            self._append_text_to_current_msgid(
+                                self.italic_string)
+                            self._append_text_to_current_msgid(
+                                self.bold_string)
+                            self._bold_italic_context = True
+                    self._append_text_to_current_msgid(
+                        elem.text.replace(self.italic_string,
+                                          self.italic_string_replacer))
+                else:
+                    self._append_text_to_current_msgid(elem.text)
         elif isinstance(elem.parent, pf.Strong):
             if isinstance(elem, pf.Str):
-                if not self.plaintext and (
-                        self._current_msgid.count(self.bold_string) == 0 or (
-                        self._current_msgid.count(self.bold_string) -
-                        self._current_bold_chars) % 2 == 0):
-                    self._append_text_to_current_msgid(self.bold_string)
-                self._append_text_to_current_msgid(elem.text)
+                if not self.plaintext:
+                    if not self._current_msgid:
+                        self._append_text_to_current_msgid(self.bold_string)
+
+                    text = elem.text.replace(
+                        self.bold_string,
+                        self.bold_string_replacer
+                    ).replace(
+                        self.italic_string,
+                        self.italic_string_replacer
+                    )
+                    self._append_text_to_current_msgid(text)
+                else:
+                    self._append_text_to_current_msgid(elem.text)
             elif isinstance(elem, pf.Space):
                 self._append_text_to_current_msgid(' ')
             elif isinstance(elem, pf.Code):
-                if not self.plaintext and (
-                        self._current_msgid.count(self.bold_string) == 0 or (
-                        self._current_msgid.count(self.bold_string) -
-                        self._current_bold_chars) % 2 == 0):
-                    self._append_text_to_current_msgid(self.bold_string)
                 if not self.plaintext:
+                    if not self._current_msgid:
+                        self._append_text_to_current_msgid(self.bold_string)
+
                     self._append_text_to_current_msgid(
                         self.code_string +
                         elem.text.replace(self.code_string,
@@ -227,6 +244,12 @@ class Md2PoConverter:
                         self.code_string)
                 else:
                     self._append_text_to_current_msgid(elem.text)
+
+        if not self.plaintext:
+            if isinstance(elem, pf.Str):
+                if isinstance(elem.next, pf.Emph):
+                    if elem.next.content[0].text == elem.text:
+                        self._append_text_to_current_msgid(self.italic_string)
 
     def convert(self, po_filepath=None, save=False):
         _po_filepath = None
