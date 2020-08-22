@@ -8,7 +8,7 @@
 [![Documentation status][doc-image]][doc-link]
 
 
-Library to extract contents of a set of Markdown files and save into one or multiples `.po` files. Is like a tiny gettext utility for Markdown files written in Python.
+Library and command line interface to extract contents of a set of Markdown files and save into `.po` files. Is like a tiny xgettext utility for Markdown files written in Python.
 
 > I've written only those functionalities that have needed, so if you want to see more added to this package, [send a pull request](https://github.com/mondeja/md2po/pulls) or [open an issue](https://github.com/mondeja/md2po/issues/new) with a minimal example.
 
@@ -40,17 +40,11 @@ pofile.save('locale/doc.po')
 # in one line
 markdown_to_pofile('doc/src/**/**.md',
                    ignore=['todo.md', 'changelog.md'],
-                   save='locale/doc.po')
-```
-
-The function `markdown_to_pofile` returns a [POFile](https://polib.readthedocs.io/en/latest/api.html#polib.POFile) instance from the library [polib](https://polib.readthedocs.io/en/latest). If you indicates an existent `.po` file path for `po_filepath` optional argument, the new content will be merged into the file:
-
-```python
-markdown_to_pofile('doc/src/**/**.md',
-                   ignore=['todo.md', 'changelog.md'],
                    po_filepath='locale/doc.po',
                    save=True)
 ```
+
+> The function `markdown_to_pofile` returns a [POFile](https://polib.readthedocs.io/en/latest/api.html#polib.POFile) instance from the library [polib](https://polib.readthedocs.io/en/latest). If you indicates an existent `.po` file path for `po_filepath` optional argument, the new content will be merged into that file:
 
 If you doesn't pass the argument `save` to `True`, you will get a new [POFile](https://polib.readthedocs.io/en/latest/api.html#polib.POFile) instance with new and old message strings merged.
 
@@ -80,16 +74,22 @@ msgstr ""
 
 > If you want a solution to replace your extracted strings into a HTML file you can use [md2po-html-replacer](https://github.com/mondeja/md2po-html-replacer).
 
+## Command line interface
+
+Installation includes a command line utility named `md2po`:
+
+```bash
+md2po -f "locale/doc.po" -s -i "todo.md,changelog.md" "doc/src/**/**.md"
+```
+
 
 ## Documentation
-For a full list of parameters supported see [the API documentation on ReadTheDocs](https://md2po.readthedocs.io/en/latest/api.html).
+For a full list of parameters supported [see the documentation on ReadTheDocs][doc-link].
 
 
 ## Known limitations
 
 - Tables are not supported with `Pandoc v2.10` because [panflute](https://github.com/sergiocorreia/panflute) dependency does not support tables with captions (pandoc >= 2.10), as has been addressed in [panflute/issues/#142](https://github.com/sergiocorreia/panflute/issues/142).
-
-
 
 [pypi-image]: https://img.shields.io/pypi/v/md2po
 [pypi-link]: https://pypi.org/project/md2po/
@@ -101,4 +101,4 @@ For a full list of parameters supported see [the API documentation on ReadTheDoc
 [coverage-image]: https://coveralls.io/repos/github/mondeja/md2po/badge.svg
 [coverage-link]: https://coveralls.io/github/mondeja/md2po
 [doc-image]: https://readthedocs.org/projects/md2po/badge/?version=latest
-[doc-link]: https://md2po.readthedocs.io/en/latest/?badge=latest
+[doc-link]: https://md2po.readthedocs.io/en/latest/
