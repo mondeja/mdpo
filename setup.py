@@ -5,11 +5,11 @@ import io
 import os
 import re
 import sys
-from shutil import rmtree
 
 from setuptools import find_packages, setup, Command
 
-URL = 'https://github.com/mondeja/md2po'
+PROJECT_NAME = 'md2po'
+URL = 'https://github.com/mondeja/%s' % PROJECT_NAME
 EMAIL = 'mondejar1994@gmail.com'
 AUTHOR = 'Álvaro Mondéjar Rubio'
 REQUIRES_PYTHON = '>=3'
@@ -42,7 +42,7 @@ with io.open(os.path.join(HERE, 'README.md'), encoding='utf-8') as f:
     LONG_DESCRIPTION = '\n' + f.read()
 
 ABOUT = {}
-INIT_FILEPATH = os.path.join(HERE, 'md2po', '__init__.py')
+INIT_FILEPATH = os.path.join(HERE, PROJECT_NAME, '__init__.py')
 with io.open(INIT_FILEPATH, encoding='utf-8') as f:
     content = f.read()
     ABOUT['__title__'] = \
@@ -73,6 +73,7 @@ class UploadCommand(Command):
         pass
 
     def run(self):
+        from shutil import rmtree
         try:
             self.status('Removing previous builds…')
             rmtree(os.path.join(HERE, 'dist'))
@@ -102,6 +103,16 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
+    project_urls={
+        'Documentation': 'https://Python-Markdown.github.io/',
+        'GitHub Project': 'https://github.com/mondeja/md2po',
+        'Issue Tracker': 'https://github.com/mondeja/md2po/issues'
+    },
+    entry_points={
+        'console_scripts': [
+            '%s = %s.__main__:run' % (PROJECT_NAME, PROJECT_NAME),
+        ],
+    },
     packages=find_packages(exclude=['test']),
     install_requires=REQUIRED,
     extras_require=EXTRAS,
@@ -122,7 +133,7 @@ setup(
         'Topic :: Software Development :: Internationalization',
         'Topic :: Software Development :: Localization',
         'Topic :: Text Processing',
-        # 'Topic :: Text Processing :: Markup :: HTML',
+        # 'Topic :: Text Processing :: Markup :: Markdown',
     ],
     cmdclass={
         'upload': UploadCommand,

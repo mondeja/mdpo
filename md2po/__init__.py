@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.15'
+__version__ = '0.0.16'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = 'Extract the contents of a set of Markdown files' \
@@ -37,10 +37,12 @@ class Md2PoConverter:
         self.mark_not_found_as_absolete = kwargs.get(
             'mark_not_found_as_absolete', False)
 
-        self.replacement_chars = kwargs.get(
-            'replacement_chars', REPLACEMENT_CHARS)
-        self.forbidden_msgids = kwargs.get(
-            'forbidden_msgids', FORBIDDEN_MSGIDS)
+        self.replacement_chars = kwargs.get('replacement_chars', None)
+        if self.replacement_chars is None:
+            self.replacement_chars = REPLACEMENT_CHARS
+        self.forbidden_msgids = kwargs.get('forbidden_msgids', None)
+        if self.forbidden_msgids is None:
+            self.forbidden_msgids = FORBIDDEN_MSGIDS
 
         self.plaintext = kwargs.get('plaintext', True)
 
@@ -286,9 +288,9 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
                 ``*italic text*`` and ```[links]```, that might be useful
                 for you. It depends on the use you are going to give to
                 this library activate this mode (``plaintext=False``) or not.
-        wrapwidth (int): Integer, the wrap width for the po file
-            passed in ``po_filepath`` parameter, if any. Only useful
-            when the ``-w`` option was passed to xgettext.
+        wrapwidth (int): Wrap width for po file indicated at ``po_filepath``
+            parameter. Only useful when the ``-w`` option was passed
+            to xgettext.
         mark_not_found_as_absolete (bool): The strings extracted from markdown
             that will not be found inside the provided pofile will be marked
             as obsolete.
@@ -297,13 +299,13 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         forbidden_msgids (list) Set of msgids that, if found, will not be
             included in output.
         bold_string (str) String that represents the markup character/s at
-            start and the end of a chunk of bold text.
+            the beginning and the end of a chunk of bold text.
         italic_string (str) String that represents the markup character/s at
-            start and the end of an italic text.
+            the beginning and the end of an italic text.
         code_string (str) String that represents the markup character/s at
-            start and the end of an inline piece of code.
+            the beginning and the end of an inline piece of code.
         link_start_string (str) String that represents the markup character/s
-            at the start of a link.
+            at the beginning of a link.
         link_end_string (str) String that represents the markup character/s
             at the end of a link.
 
