@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Header with **bold characters**"
+msgstr ""
+
+msgid "Another header with **bold text**"
+msgstr ""

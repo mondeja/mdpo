@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Header with **italic characters**"
+msgstr ""
+
+msgid "Another header with **italic text**"
+msgstr ""
