@@ -104,8 +104,8 @@ class Md2PoConverter:
         self._current_msgid += _text_to_append
 
     def _extract_msgids(self, elem, doc):
-        # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
-        #       elem, type(elem), type(elem.next), type(elem.parent)))
+        #print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
+        #      elem, type(elem), type(elem.next), type(elem.parent)))
 
         if isinstance(elem, (pf.Header, pf.Para)):
             return self._save_current_msgid()

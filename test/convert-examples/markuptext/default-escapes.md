@@ -28,6 +28,20 @@ Some text with two literal asterisks \* \*, *italic* markup, double literal aste
 Some text with two literal asterisks \* \*, *italic* markup, two double literal asterisks \*\* \*\* and **bold** markup.
 
 
+[//]: # (Escape inline code)
+
+Some text with literal backtick inside ``inline ` code``.
+
+Some text with two literal backticks inside ```inline `` code```.
+
+Some text with three literal backticks inside ````inline ``` code````.
+
+
+[//]: # (Don't escape characters inside links)
+
+A [link with \`\[ and \]\` included](link-escapes).
+
+
 <!---
   All characters to escape supported by Markdown
 

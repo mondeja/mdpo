@@ -42,3 +42,15 @@ msgid ""
 "Some text with two literal asterisks \\* \\*, *italic* markup, two double "
 "literal asterisks \\*\\* \\*\\* and **bold** markup."
 msgstr ""
+
+msgid "Some text with literal backtick inside `inline \\` code`."
+msgstr ""
+
+msgid "Some text with two literal backticks inside `inline \\`\\` code`."
+msgstr ""
+
+msgid "Some text with three literal backticks inside `inline \\`\\`\\` code`."
+msgstr ""
+
+msgid "A `[link with `[ and ]` included]`."
+msgstr ""
