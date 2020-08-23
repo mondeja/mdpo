@@ -61,8 +61,8 @@ def build_parser():
                              ' as obsolete translations.')
     parser.add_argument('-F', '--from', '--format', default='markdown_mmd',
                         dest='format',
-                        help='Format for Markdown input. For a list of'
-                             ' supported formats, see '
+                        help='Markdown input format. For a list of supported'
+                             ' formats, run '
                              '``pandoc --list-input-formats | grep markdown``.'
                              ' Note that changing this parameter may return'
                              ' not tested results.')

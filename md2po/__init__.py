@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.21'
+__version__ = '0.0.22'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -304,9 +304,15 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         mark_not_found_as_absolete (bool): The strings extracted from markdown
             that will not be found inside the provided pofile will be marked
             as obsolete.
-        format (str): Format for Markdown input. For a list of supported
-            formats, see ``pandoc --list-input-formats | grep markdown``.
-            Note that changing this parameter may return not tested results.
+        format (str): Markdown input format. Note that changing this
+            parameter may return not tested results. For a list of supported
+            formats, run:
+            
+            .. code-block:: python
+               
+               >>> import pypandoc
+               >>> list(filter(lambda x: 'markdown' in x,
+               ...             pypandoc.get_pandoc_formats()[0]))
         forbidden_msgids (list): Set of msgids that, if found, will not be
             included in output.
         bold_string (str): String that represents the markup character/s at
