@@ -1,0 +1,6 @@
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.7.9
+  hooks:
+    - id: flake8
+      exclude: (conf.py)
+      additional_dependencies: [flake8-print, flake8-implicit-str-concat]

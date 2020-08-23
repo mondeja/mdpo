@@ -32,11 +32,9 @@ DOC_EXTRAS = [
     'sphinx-rtd-theme==0.4.3',
     'sphinx-argparse>=0.2.5',
 ]
-EXTRAS = {
-    'dev': ['twine', 'bump2version'] + TEST_EXTRAS + DOC_EXTRAS,
-    'test': TEST_EXTRAS,
-    'docs': DOC_EXTRAS,
-}
+DEV_EXTRAS = ['twine', 'bump2version', 'pre-commit'] + \
+    TEST_EXTRAS + \
+    DOC_EXTRAS
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
@@ -116,7 +114,11 @@ setup(
     },
     packages=find_packages(exclude=['test']),
     install_requires=REQUIRED,
-    extras_require=EXTRAS,
+    extras_require={
+        'dev': DEV_EXTRAS,
+        'test': TEST_EXTRAS,
+        'docs': DOC_EXTRAS,
+    },
     include_package_data=True,
     license='BSD License',
     classifiers=[
