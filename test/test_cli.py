@@ -183,9 +183,9 @@ msgstr ""
 
 @pytest.mark.parametrize('arg', ['-m', '--markuptext'])
 def test_markuptext(capsys, arg):
-    content = '# Header `with inline code`\n\n' \
-            + 'Some text with **bold characters**, *italic characters*' \
-            + ' and a [link](https://nowhere.nothing).\n'
+    content = ('# Header `with inline code`\n\n'
+               'Some text with **bold characters**, *italic characters*'
+               ' and a [link](https://nowhere.nothing).\n')
 
     pofile, exitcode = run([content, arg])
     out, err = capsys.readouterr()
@@ -209,8 +209,8 @@ msgstr ""
 
 @pytest.mark.parametrize('arg', ['-w', '--wrapwidth'])
 def test_wrapwidth(capsys, arg):
-    content = '# Some long header with **bold characters**, ' \
-            + '*italic characters* and a [link](https://nowhere.nothing).\n'
+    content = ('# Some long header with **bold characters**, '
+               '*italic characters* and a [link](https://nowhere.nothing).\n')
     width = 20
 
     pofile, exitcode = run([content, arg, str(width)])
@@ -270,25 +270,6 @@ msgstr ""
 #~ msgstr "Foo"
 '''
 
-    assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
-    assert striplastline(out) == expected_output
-
-
-@pytest.mark.parametrize('arg', ['-rc', '--replacement-chars'])
-def test_replacement_chars(capsys, arg):
-    content = 'Foo./'
-
-    pofile, exitcode = run([content, arg, '{".": "...", "/": "///"}'])
-    out, err = capsys.readouterr()
-
-    expected_output = '''#
-msgid ""
-msgstr ""
-
-msgid "Foo...///"
-msgstr ""
-'''
     assert exitcode == 0
     assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output

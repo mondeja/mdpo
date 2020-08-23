@@ -4,10 +4,7 @@ from uuid import uuid4
 
 import pytest
 
-from md2po import (
-    Md2PoConverter,
-    REPLACEMENT_CHARS,
-)
+from md2po import Md2PoConverter
 
 EMPTY_FILES_DIRNAME = 'empty-files'
 EMPTY_FILES_GLOB = os.path.join('test', EMPTY_FILES_DIRNAME, '**', '**.md')
@@ -85,18 +82,6 @@ msgstr ""
 def test_init_invalid_content():
     with pytest.raises(ValueError):
         Md2PoConverter('')
-
-
-def test_replacement_chars():
-    md2po_converter = Md2PoConverter(''.join(REPLACEMENT_CHARS.keys()) + "\n")
-
-    assert md2po_converter.convert().__unicode__() == '''#
-msgid ""
-msgstr ""
-
-msgid "'"
-msgstr ""
-'''
 
 
 def test_mark_not_found_as_absolete():

@@ -24,6 +24,7 @@ TEST_EXTRAS = [
     'pytest-cov',
     'flake8',
     'flake8-print',
+    'flake8-implicit-str-concat',
     'tox',
 ]
 DOC_EXTRAS = [
@@ -50,8 +51,6 @@ with io.open(INIT_FILEPATH, encoding='utf-8') as f:
         re.search(r'__title__\s=\s[\'"]([^\'"]+)[\'"]', content).group(1)
     ABOUT['__version__'] = \
         re.search(r'__version__\s=\s[\'"]([^\'"]+)[\'"]', content).group(1)
-    ABOUT['__description__'] = \
-        re.search(r'__description__\s=\s[\'"]([^\'"]+)[\'"]', content).group(1)
 
 
 class UploadCommand(Command):
@@ -97,7 +96,8 @@ class UploadCommand(Command):
 setup(
     name=ABOUT['__title__'],
     version=ABOUT['__version__'],
-    description=ABOUT['__version__'],
+    description='Tiny utility like xgettext for msgid extracting from'
+                ' Markdown content.',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
     author=AUTHOR,

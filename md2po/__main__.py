@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import argparse
-import json
 import io
 import sys
 
@@ -26,78 +25,82 @@ def build_parser():
                         help='Don\'t print output to STDOUT.')
     parser.add_argument('glob_or_content', metavar='GLOB_OR_CONTENT',
                         nargs='?', default=sys.stdin,
-                        help='Glob to markdown input files or markdown' +
-                             ' content as a string. If not provided,' +
+                        help='Glob to markdown input files or markdown'
+                             ' content as a string. If not provided,'
                              ' will be read from STDIN.')
     parser.add_argument('-i', '--ignore', dest='ignore', default=None,
-                        help='List of filepaths to ignore if' +
-                             ' ``GLOB_OR_CONTENT`` argument is a glob,' +
+                        help='List of filepaths to ignore if'
+                             ' ``GLOB_OR_CONTENT`` argument is a glob,'
                              ' as a list of comma separated values.',
                         metavar='PATH_1,PATH_2...')
     parser.add_argument('-f', '--filepath', dest='po_filepath', default=None,
-                        help='Merge new msgids in the po file indicated' +
-                             ' at this parameter (if ``--save`` argument' +
-                             ' is passed) or use the msgids of the file' +
-                             ' as reference for' +
+                        help='Merge new msgids in the po file indicated'
+                             ' at this parameter (if ``--save`` argument'
+                             ' is passed) or use the msgids of the file'
+                             ' as reference for'
                              ' ``--mark-not-found-as-obsolete`` parameter.',
                         metavar='OUTPUT_FILE')
     parser.add_argument('-s', '--save', dest='save', action='store_true',
-                        help='Save new found msgids to the po file' +
+                        help='Save new found msgids to the po file'
                              ' indicated as parameter ``--filepath``.')
     parser.add_argument('-m', '--markuptext', dest='markuptext',
                         action='store_true',
-                        help='Include markdown markup characters in' +
-                             ' extracted msgids for **bold text**,' +
+                        help='Include markdown markup characters in'
+                             ' extracted msgids for **bold text**,'
                              ' *italic text*, `inline code` and `[links]`.')
     parser.add_argument('-w', '--wrapwidth', dest='wrapwidth',
-                        help='Wrap width for po file indicated at' +
-                             ' ``--filepath`` parameter. Only useful when' +
+                        help='Wrap width for po file indicated at'
+                             ' ``--filepath`` parameter. Only useful when'
                              ' the ``-w`` option was passed to xgettext.',
                         metavar='N', type=int)
     parser.add_argument('-o', '--mark-not-found-as-obsolete',
                         dest='mark_not_found_as_absolete',
                         action='store_true',
-                        help='Mark new found msgids not present in the ' +
-                             ' pofile passed at ``--filepath`` parameter' +
+                        help='Mark new found msgids not present in the '
+                             ' pofile passed at ``--filepath`` parameter'
                              ' as obsolete translations.')
-    parser.add_argument('-rc', '--replacement-chars', dest='replacement_chars',
-                        default=None,
-                        metavar='{"CHAR_A":"CHAR_B","CHAR_C":"CHAR_D"...}',
-                        help='JSON key-value pairs of characters to replace' +
-                             ' in output msgids.')
+    parser.add_argument('-F', '--from', '--format', default='markdown_mmd',
+                        dest='format',
+                        help='Format for Markdown input. For a list of'
+                             ' supported formats, see '
+                             '``pandoc --list-input-formats | grep markdown``.'
+                             ' Note that changing this parameter may return'
+                             ' not tested results.')
     parser.add_argument('-fm', '--forbidden-msgids', dest='forbidden_msgids',
                         default=None,
                         metavar='CHAR_A,CHAR_B,CHAR_C...',
-                        help='List of comma separated values to ignore as' +
+                        help='List of comma separated values to ignore as'
                              ' msgids if are found.')
     parser.add_argument('-bs', '--bold-string', dest='bold_string',
                         default=None,
-                        help='String that represents the markup ' +
-                             ' character/s at start and the end of a chunk' +
-                             ' of bold text.',
+                        help='String that represents the markup '
+                             ' character/s at start and the end of a chunk'
+                             ' of bold text for outputted msgids.',
                         metavar='CHARS', type=str)
     parser.add_argument('-is', '--italic-string', dest='italic_string',
                         default=None,
-                        help='String that represents the markup ' +
-                             ' character/s at the beginning and the end' +
-                             ' of an italic text.',
+                        help='String that represents the markup '
+                             ' character/s at the beginning and the end'
+                             ' of an italic text for outputted msgids.',
                         metavar='CHARS', type=str)
     parser.add_argument('-cs', '--code-string', dest='code_string',
                         default=None,
-                        help='String that represents the markup ' +
-                             ' character/s at the beginning and the end' +
-                             ' of an inline piece of code.',
+                        help='String that represents the markup '
+                             ' character/s at the beginning and the end'
+                             ' of an inline piece of code for outputted'
+                             ' msgids.',
                         metavar='CHARS', type=str)
     parser.add_argument('-lss', '--link-start-string',
                         dest='link_start_string', default=None,
-                        help='String that represents the markup ' +
-                             ' character/s at the beggining of a link.',
+                        help='String that represents the markup '
+                             ' character/s at the beggining of a link'
+                             ' for outputted msgids.',
                         metavar='CHARS', type=str)
     parser.add_argument('-les', '--link-end-string', dest='link_end_string',
                         default=None,
-                        help='String that represents the markup ' +
-                             ' character/s at the beginning and the end' +
-                             ' of a link.',
+                        help='String that represents the markup '
+                             ' character/s at the beginning and the end'
+                             ' of a link for outputted msgids.',
                         metavar='CHARS', type=str)
     return parser
 
@@ -110,8 +113,6 @@ def parse_options(args):
         opts.glob_or_content = opts.glob_or_content.read().strip('\n')
     if opts.ignore:
         opts.ignore = parse_list_argument(opts.ignore)
-    if opts.replacement_chars:
-        opts.replacement_chars = json.loads(opts.replacement_chars)
     if opts.forbidden_msgids:
         opts.forbidden_msgids = parse_list_argument(opts.forbidden_msgids)
 
@@ -127,7 +128,6 @@ def run(args=[]):
         save=opts.save,
         plaintext=not opts.markuptext,
         mark_not_found_as_absolete=opts.mark_not_found_as_absolete,
-        replacement_chars=opts.replacement_chars,
         forbidden_msgids=opts.forbidden_msgids)
     if isinstance(opts.wrapwidth, int):
         kwargs['wrapwidth'] = opts.wrapwidth
