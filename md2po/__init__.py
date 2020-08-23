@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.19'
+__version__ = '0.0.20'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = 'Extract the contents of a set of Markdown files' \

@@ -22,7 +22,8 @@ def build_parser():
     parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s ' + md2po.__version__,
                         help='Show program version number and exit.')
-    parser.add_argument('-q', '--quiet', action='store_true')
+    parser.add_argument('-q', '--quiet', action='store_true',
+                        help='Don\'t print output to STDOUT.')
     parser.add_argument('glob_or_content', metavar='GLOB_OR_CONTENT',
                         nargs='?', default=sys.stdin,
                         help='Glob to markdown input files or markdown' +
@@ -74,30 +75,30 @@ def build_parser():
                         help='String that represents the markup ' +
                              ' character/s at start and the end of a chunk' +
                              ' of bold text.',
-                        metavar='CHAR/S', type=str)
+                        metavar='CHARS', type=str)
     parser.add_argument('-is', '--italic-string', dest='italic_string',
                         default=None,
                         help='String that represents the markup ' +
                              ' character/s at the beginning and the end' +
                              ' of an italic text.',
-                        metavar='CHAR/S', type=str)
+                        metavar='CHARS', type=str)
     parser.add_argument('-cs', '--code-string', dest='code_string',
                         default=None,
                         help='String that represents the markup ' +
                              ' character/s at the beginning and the end' +
                              ' of an inline piece of code.',
-                        metavar='CHAR/S', type=str)
+                        metavar='CHARS', type=str)
     parser.add_argument('-lss', '--link-start-string',
                         dest='link_start_string', default=None,
                         help='String that represents the markup ' +
                              ' character/s at the beggining of a link.',
-                        metavar='CHAR/S', type=str)
+                        metavar='CHARS', type=str)
     parser.add_argument('-les', '--link-end-string', dest='link_end_string',
                         default=None,
                         help='String that represents the markup ' +
                              ' character/s at the beginning and the end' +
                              ' of a link.',
-                        metavar='CHAR/S', type=str)
+                        metavar='CHARS', type=str)
     return parser
 
 

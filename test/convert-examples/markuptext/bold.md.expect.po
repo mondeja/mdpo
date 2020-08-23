@@ -13,3 +13,9 @@ msgstr ""
 
 msgid "Malformatted__bold__text"
 msgstr ""
+
+msgid "**Text that starts with bold** and ends normal"
+msgstr ""
+
+msgid "Text that **ends with bold**"
+msgstr ""
