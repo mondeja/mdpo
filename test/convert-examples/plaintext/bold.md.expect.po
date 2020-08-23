@@ -19,3 +19,6 @@ msgstr ""
 
 msgid "Text that ends with bold"
 msgstr ""
+
+msgid "All bold"
+msgstr ""

@@ -245,12 +245,6 @@ class Md2PoConverter:
                 else:
                     self._append_text_to_current_msgid(elem.text)
 
-        if not self.plaintext:
-            if isinstance(elem, pf.Str):
-                if isinstance(elem.next, pf.Emph):
-                    if elem.next.content[0].text == elem.text:
-                        self._append_text_to_current_msgid(self.italic_string)
-
     def convert(self, po_filepath=None, save=False):
         _po_filepath = None
         if not po_filepath:

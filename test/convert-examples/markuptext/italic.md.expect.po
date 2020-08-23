@@ -10,3 +10,12 @@ msgstr ""
 
 msgid "Malformatted_italic_text"
 msgstr ""
+
+msgid "*Text that starts with italics* and ends normal"
+msgstr ""
+
+msgid "Text that starts normal and ends *with italics*"
+msgstr ""
+
+msgid "*All italic*"
+msgstr ""

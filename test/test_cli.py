@@ -1,5 +1,6 @@
 import os
 import shutil
+import subprocess
 import tempfile
 from uuid import uuid4
 
@@ -44,6 +45,23 @@ def test_stdin(capsys, monkeypatch):
     assert exitcode == 0
     assert pofile.__unicode__() == MARKDOWN_CONTENT_EXAMPLE['output']
     assert striplastline(out) == MARKDOWN_CONTENT_EXAMPLE['output']
+
+
+def test_stdin_echo(capsys, monkeypatch):
+    proc = subprocess.Popen(os.path.join('md2po', '__main__.py'),
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            stdin=subprocess.PIPE)
+    stdout, stderr = proc.communicate(input=b'A line')
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "A line"
+msgstr ""
+'''
+    assert striplastline(stdout.decode()) == expected_output
 
 
 @pytest.mark.parametrize('arg', ['-f', '--filepath'])
