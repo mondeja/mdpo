@@ -307,9 +307,9 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         format (str): Markdown input format. Note that changing this
             parameter may return not tested results. For a list of supported
             formats, run:
-            
+
             .. code-block:: python
-               
+
                >>> import pypandoc
                >>> list(filter(lambda x: 'markdown' in x,
                ...             pypandoc.get_pandoc_formats()[0]))
