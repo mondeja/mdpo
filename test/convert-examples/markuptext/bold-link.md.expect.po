@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "**Bold text with `[link]`**"
+msgstr ""
+
+msgid "**`[link]` starting bold text**"
+msgstr ""

@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "*Italic text with `inline code`*"
+msgstr ""
+
+msgid "Some text plus *italic with `inline code`, some italic* and paragraph"
+msgstr ""

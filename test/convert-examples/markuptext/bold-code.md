@@ -7,3 +7,5 @@ New text with **strong code that ends in `code`**
 Other text with __strong code that ends in ``code``__
 
 Another new text with **`strong code`**
+
+**`start-end-with-code`**

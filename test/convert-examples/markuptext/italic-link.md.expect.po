@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "*Italic text with `[link]`*"
+msgstr ""
+
+msgid "*`[link]` starting italic text*"
+msgstr ""

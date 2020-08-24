@@ -16,3 +16,6 @@ msgstr ""
 
 msgid "Another new text with **`strong code`**"
 msgstr ""
+
+msgid "**`start-end-with-code`**"
+msgstr ""

@@ -1,4 +1,4 @@
-[//]: # (Link + italics)
+[//]: # (Link + inline code)
 
 [a link `with inline code`](http://example.org)
 
