@@ -10,7 +10,7 @@
 
 Library and command line interface to extract contents of a set of Markdown files and save into `.po` files. Is like a tiny xgettext utility for Markdown files written in Python.
 
-> I've written only those functionalities that have needed, so if you want to see more added to this package, [send a pull request](https://github.com/mondeja/md2po/pulls) or [open an issue](https://github.com/mondeja/md2po/issues/new) with a minimal example.
+> If you want a solution to replace your extracted strings into a HTML file you can use [md2po-html-replacer](https://github.com/mondeja/md2po-html-replacer).
 
 ## Install
 
@@ -107,8 +107,6 @@ msgstr ""
 msgid "This will be included also."
 msgstr ""
 ```
-
-> If you want a solution to replace your extracted strings into a HTML file you can use [md2po-html-replacer](https://github.com/mondeja/md2po-html-replacer).
 
 ## Command line interface
 
