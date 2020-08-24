@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.22'
+__version__ = '0.0.23'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -46,21 +46,24 @@ class Md2PoConverter:
 
         if not self.plaintext:
             self.bold_string = kwargs.get('bold_string', '**')
-            self.bold_string_replacer = ''.join([
-                "\\%s" % c for c in self.bold_string])
+            self.bold_string_replacer = self._build_string_replacer(
+                self.bold_string)
 
             self.italic_string = kwargs.get('italic_string', '*')
-            self.italic_string_replacer = ''.join([
-                "\\%s" % c for c in self.italic_string])
+            self.italic_string_replacer = self._build_string_replacer(
+                self.italic_string)
 
             self.link_start_string = kwargs.get('link_start_string', '`[')
             self.link_end_string = kwargs.get('link_end_string', ']`')
 
             self.code_string = kwargs.get('code_string', '`')
-            self.code_string_replacer = ''.join([
-                "\\%s" % c for c in self.code_string])
+            self.code_string_replacer = self._build_string_replacer(
+                self.code_string)
 
             self._bold_italic_context = False
+
+    def _build_string_replacer(self, char):
+        return ''.join(["%s%s" % ('\\', c) for c in char])
 
     def _ignore_files(self, filepaths):
         response = []
@@ -138,16 +141,17 @@ class Md2PoConverter:
                                     pf.DefinitionItem, pf.Plain)):
             if isinstance(elem, pf.Str):
                 if not self.plaintext:
-                    if self.bold_string in elem.text:
-                        self._current_msgid += elem.text.replace(
-                            self.bold_string, self.bold_string_replacer)
-                    elif self.italic_string in elem.text:
-                        self._current_msgid += elem.text.replace(
+                    _bold_markups_found = elem.text.count(self.bold_string)
+                    elem.text = elem.text.replace(
+                        self.bold_string, self.bold_string_replacer,
+                    )
+                    _bold_markups_found_escaped = elem.text.count(
+                        self.bold_string_replacer)
+                    if _bold_markups_found == 0 or _bold_markups_found - \
+                            _bold_markups_found_escaped > 0:
+                        elem.text = elem.text.replace(
                             self.italic_string, self.italic_string_replacer)
-                    else:
-                        self._current_msgid += elem.text
-                else:
-                    self._current_msgid += elem.text
+                self._current_msgid += elem.text
             elif isinstance(elem, pf.Space):
                 self._current_msgid += ' '
             elif isinstance(elem, pf.Code):
@@ -204,16 +208,18 @@ class Md2PoConverter:
                     if not self._current_msgid:
                         self._current_msgid += self.bold_string
 
-                    text = elem.text.replace(
-                        self.bold_string,
-                        self.bold_string_replacer
-                    ).replace(
-                        self.italic_string,
-                        self.italic_string_replacer
-                    )
-                    self._current_msgid += text
-                else:
-                    self._current_msgid += elem.text
+                    if len(self.bold_string) == 2 and (
+                            self.bold_string[0] == self.italic_string and
+                            self.bold_string[1] == self.italic_string):
+                        elem.text = elem.text.replace(
+                            self.bold_string, self.bold_string_replacer
+                        ).replace(
+                            self.italic_string, self.italic_string_replacer)
+                    else:
+                        elem.text = elem.text.replace(
+                            self.bold_string, self.bold_string_replacer
+                        )
+                self._current_msgid += elem.text
             elif isinstance(elem, pf.Space):
                 self._current_msgid += ' '
             elif isinstance(elem, pf.Code):
