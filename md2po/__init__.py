@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.23'
+__version__ = '0.0.24'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -107,20 +107,27 @@ class Md2PoConverter:
             if elem.title:
                 self._save_msgid(elem.title)
             return
-        elif isinstance(elem, pf.Plain) and \
-                isinstance(elem.parent, pf.ListItem):
-            return self._save_current_msgid()
-        elif isinstance(elem, pf.Emph):
-            if not self.plaintext:
-                # Emph closing
-                self._current_msgid += self.italic_string
-            return
         elif isinstance(elem, pf.Strong):
             if not self.plaintext:
                 # Strong closing
                 self._current_msgid += self.bold_string
                 self._bold_italic_context = False
             return
+        elif isinstance(elem, pf.Emph):
+            if not self.plaintext:
+                # Emph closing
+                self._current_msgid += self.italic_string
+            return
+        elif isinstance(elem, pf.Code):
+            if not self.plaintext:
+                if not self._current_msgid:
+                    self._current_msgid += self.bold_string
+                self._current_msgid += self.code_string + \
+                    elem.text.replace(self.code_string,
+                                      self.code_string_replacer) + \
+                    self.code_string
+            else:
+                self._current_msgid += elem.text
         elif isinstance(elem, pf.LineBreak):
             return self._save_current_msgid()
         elif isinstance(elem, pf.Image):
@@ -133,14 +140,19 @@ class Md2PoConverter:
             if elem.title and elem.title != 'fig:':
                 self._save_msgid(elem.title.lstrip(':fig'))
             return
-        elif isinstance(elem, pf.Plain) and \
-                isinstance(elem.parent, (pf.TableCell, pf.Definition)):
-            return self._save_current_msgid()
+        elif isinstance(elem, pf.Plain):
+            if isinstance(elem.parent, (pf.TableCell, pf.Definition,
+                                        pf.ListItem)):
+                return self._save_current_msgid()
 
         if isinstance(elem.parent, (pf.Para, pf.Header,
-                                    pf.DefinitionItem, pf.Plain)):
+                                    pf.DefinitionItem, pf.Plain, pf.Link)):
             if isinstance(elem, pf.Str):
                 if not self.plaintext:
+                    if isinstance(elem.parent, pf.Link):
+                        if not self._current_msgid:
+                            self._current_msgid += self.link_start_string
+
                     _bold_markups_found = elem.text.count(self.bold_string)
                     elem.text = elem.text.replace(
                         self.bold_string, self.bold_string_replacer,
@@ -154,14 +166,7 @@ class Md2PoConverter:
                 self._current_msgid += elem.text
             elif isinstance(elem, pf.Space):
                 self._current_msgid += ' '
-            elif isinstance(elem, pf.Code):
-                if not self.plaintext:
-                    self._current_msgid += self.code_string + \
-                        elem.text.replace(self.code_string,
-                                          self.code_string_replacer) + \
-                        self.code_string
-                else:
-                    self._current_msgid += elem.text
+
             if isinstance(elem.next, pf.Link):
                 if not self.plaintext:
                     self._current_msgid += self.link_start_string
@@ -175,15 +180,6 @@ class Md2PoConverter:
             elif not elem.next and isinstance(elem.parent, pf.DefinitionItem):
                 self._save_current_msgid()
 
-        elif isinstance(elem.parent, pf.Link):
-            if isinstance(elem, pf.Str):
-                if not self.plaintext and (
-                        not self._current_msgid or
-                        self.link_start_string not in self._current_msgid):
-                    self._current_msgid += self.link_start_string
-                self._current_msgid += elem.text
-            elif isinstance(elem, pf.Space):
-                self._current_msgid += ' '
         elif isinstance(elem.parent, pf.Emph):
             if isinstance(elem, pf.Space):
                 self._current_msgid += ' '
@@ -222,16 +218,15 @@ class Md2PoConverter:
                 self._current_msgid += elem.text
             elif isinstance(elem, pf.Space):
                 self._current_msgid += ' '
-            elif isinstance(elem, pf.Code):
-                if not self.plaintext:
-                    if not self._current_msgid:
-                        self._current_msgid += self.bold_string
-                    self._current_msgid += self.code_string + \
-                        elem.text.replace(self.code_string,
-                                          self.code_string_replacer) + \
-                        self.code_string
-                else:
-                    self._current_msgid += elem.text
+        """
+        elif isinstance(elem.parent, pf.Link):
+            if isinstance(elem, pf.Str):
+                if not self.plaintext and not self._current_msgid:
+                    self._current_msgid += self.link_start_string
+                self._current_msgid += elem.text
+            elif isinstance(elem, pf.Space):
+                self._current_msgid += ' '
+        """
 
     def convert(self, po_filepath=None, save=False):
         _po_filepath = None

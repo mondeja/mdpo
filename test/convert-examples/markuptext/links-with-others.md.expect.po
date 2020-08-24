@@ -1,0 +1,30 @@
+#
+msgid ""
+msgstr ""
+
+msgid "`[a link `with inline code`]`"
+msgstr ""
+
+msgid "Another `[link `with inline code`]`"
+msgstr ""
+
+msgid "Another `[link `with inline code`]` that ends in paragraph."
+msgstr ""
+
+msgid "`[a link *with italics*]`"
+msgstr ""
+
+msgid "Another `[link *with italics*]`"
+msgstr ""
+
+msgid "Another `[link *with italics*]` that ends in paragraph."
+msgstr ""
+
+msgid "`[a link **with bolds**]`"
+msgstr ""
+
+msgid "Another `[link **with bolds**]`"
+msgstr ""
+
+msgid "Another `[link **with bolds**]` that ends in paragraph."
+msgstr ""
