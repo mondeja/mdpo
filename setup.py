@@ -136,7 +136,7 @@ setup(
         'Topic :: Software Development :: Internationalization',
         'Topic :: Software Development :: Localization',
         'Topic :: Text Processing',
-        # 'Topic :: Text Processing :: Markup :: Markdown',
+        'Topic :: Text Processing :: Markup :: Markdown',
     ],
     cmdclass={
         'upload': UploadCommand,
