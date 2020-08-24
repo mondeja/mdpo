@@ -29,6 +29,8 @@ pip install md2po
 
 ## Quickstart
 
+### Basic usage
+
 Create a new `.po` file extracting strings from markdown files:
 
 ```python
@@ -69,7 +71,41 @@ msgstr ""
 
 msgid "Some text"
 msgstr ""
+```
 
+### Disabling extraction
+
+You can disable and enable the extraction of certain strings using next HTML commments:
+
+- `<!-- md2po-disable-next-line -->`
+- `<!-- md2po-disable -->`
+- `<!-- md2po-enable -->`
+
+For example:
+```python
+>>> from md2po import markdown_to_pofile
+
+>>> md_content = '''# Header
+...
+... This will be included
+...
+... <!-- md2po-disable-next-line -->
+... This will be ignored.
+...
+... This will be included also.
+... '''
+>>>
+>>> pofile = markdown_to_pofile(md_content)
+>>> print(pofile)
+#
+msgid ""
+msgstr ""
+
+msgid "This will be included."
+msgstr ""
+
+msgid "This will be included also."
+msgstr ""
 ```
 
 > If you want a solution to replace your extracted strings into a HTML file you can use [md2po-html-replacer](https://github.com/mondeja/md2po-html-replacer).

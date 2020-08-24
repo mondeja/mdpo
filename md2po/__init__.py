@@ -1,12 +1,13 @@
 import glob
 import io
 import os
+import re
 
 import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.26'
+__version__ = '0.0.27'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -43,6 +44,9 @@ class Md2PoConverter:
             self.forbidden_msgids = FORBIDDEN_MSGIDS
 
         self.plaintext = kwargs.get('plaintext', True)
+
+        self.disable = False
+        self.disable_next_line = False
 
         if not self.plaintext:
             self.bold_string = kwargs.get('bold_string', '**')
@@ -92,13 +96,30 @@ class Md2PoConverter:
             self.msgids.append(msgid)
 
     def _save_current_msgid(self):
-        self._save_msgid(self._current_msgid.strip(' '))
+        if not self.disable_next_line and not self.disable:
+            self._save_msgid(self._current_msgid.strip(' '))
+        else:
+            self.disable_next_line = False
         self._current_msgid = ''
 
     def _extract_msgids(self, elem, doc):
         # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
-        #       elem, type(elem), type(elem.next), type(elem.parent)))
+        #      elem, type(elem), type(elem.next), type(elem.parent)))
 
+        if isinstance(elem, pf.RawBlock):
+            if elem.text.startswith('<!--'):
+                disable_found = re.search(
+                    r'<\!\-\-\s{0,1}md2po\-([\w\-]+)\s{0,1}\-\->',
+                    elem.text)
+                if disable_found:
+                    disable_cmd = disable_found.group(1)
+                    if disable_cmd == 'disable-next-line':
+                        self.disable_next_line = True
+                    elif disable_cmd == 'disable':
+                        self.disable = True
+                    elif disable_cmd == 'enable':
+                        self.disable = False
+                return
         if isinstance(elem, (pf.Header, pf.Para)):
             return self._save_current_msgid()
         elif isinstance(elem, pf.Link):
