@@ -6,7 +6,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.25'
+__version__ = '0.0.26'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -120,9 +120,11 @@ class Md2PoConverter:
             return
         elif isinstance(elem, pf.Code):
             if not self.plaintext:
-                if isinstance(elem.parent, pf.Strong):
-                    if not self._current_msgid:
+                if not self._current_msgid:
+                    if isinstance(elem.parent, pf.Strong):
                         self._current_msgid += self.bold_string
+                    elif isinstance(elem.parent, pf.Link):
+                        self._current_msgid += self.link_start_string
                 self._current_msgid += self.code_string + \
                     elem.text.replace(self.code_string,
                                       self.code_string_replacer) + \
@@ -200,6 +202,8 @@ class Md2PoConverter:
                 if not self.plaintext:
                     # Emph at start
                     if not self._current_msgid:
+                        if isinstance(elem.parent.parent, pf.Link):
+                            self._current_msgid += self.link_start_string
                         self._current_msgid += self.italic_string
                     if isinstance(elem.parent.parent, pf.Strong):
                         if not self._bold_italic_context:
@@ -218,8 +222,9 @@ class Md2PoConverter:
                 if not self.plaintext:
                     # Strong at start
                     if not self._current_msgid:
+                        if isinstance(elem.parent.parent, pf.Link):
+                            self._current_msgid += self.link_start_string
                         self._current_msgid += self.bold_string
-
                     if len(self.bold_string) == 2 and (
                             self.bold_string[0] == self.italic_string and
                             self.bold_string[1] == self.italic_string):

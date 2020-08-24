@@ -37,11 +37,9 @@ def test_bold_string(char):
     assert pofile.__unicode__() == expected_output
 
 
-@pytest.mark.parametrize('char', CHARACTERS)
+@pytest.mark.parametrize('char',
+                         list(filter(lambda x: '*' not in x, CHARACTERS)))
 def test_escape_bold_inside_custom_bold_markup(char):
-    if '*' in char:
-        pytest.skip()
-
     content = ('I\'m a text with **bold \\*\\* \\*\\* characters escaped'
                ' and custom %s markups characters unescaped inside**') % (char)
     pofile = markdown_to_pofile(content, bold_string=char,
@@ -71,11 +69,9 @@ def test_italic_string(char):
     assert pofile.__unicode__() == expected_output
 
 
-@pytest.mark.parametrize('char', CHARACTERS)
+@pytest.mark.parametrize('char',
+                         list(filter(lambda x: '*' not in x, CHARACTERS)))
 def test_escape_italic_inside_custom_italic_markup(char):
-    if '*' in char:
-        pytest.skip()
-
     content = ('I\'m a text with *italic \\* \\* characters escaped'
                ' and custom %s markups characters unescaped inside*') % (char)
     pofile = markdown_to_pofile(content, italic_string=char,
@@ -105,10 +101,9 @@ def test_code_string(char):
     assert pofile.__unicode__() == expected_output
 
 
-@pytest.mark.parametrize('char', CHARACTERS)
+@pytest.mark.parametrize('char',
+                         list(filter(lambda x: '`' not in x, CHARACTERS)))
 def test_escape_code_inside_custom_code_markup(char):
-    if '`' in char:
-        pytest.skip()
 
     content = ('I\'m a text with ``inline code ` ` characters escaped'
                ' and custom %s markups characters unescaped inside``') % (char)
