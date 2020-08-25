@@ -80,6 +80,7 @@ You can disable and enable the extraction of certain strings using next HTML com
 - `<!-- md2po-disable-next-line -->`
 - `<!-- md2po-disable -->`
 - `<!-- md2po-enable -->`
+- `<!-- md2po-enable-next-line -->`
 
 For example:
 ```python

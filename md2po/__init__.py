@@ -7,7 +7,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.27'
+__version__ = '0.0.28'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -47,6 +47,7 @@ class Md2PoConverter:
 
         self.disable = False
         self.disable_next_line = False
+        self.enable_next_line = False
 
         if not self.plaintext:
             self.bold_string = kwargs.get('bold_string', '**')
@@ -96,31 +97,35 @@ class Md2PoConverter:
             self.msgids.append(msgid)
 
     def _save_current_msgid(self):
-        if not self.disable_next_line and not self.disable:
+        if (not self.disable_next_line and not self.disable) or \
+                self.enable_next_line:
             self._save_msgid(self._current_msgid.strip(' '))
-        else:
-            self.disable_next_line = False
+        self.disable_next_line = False
+        self.enable_next_line = False
         self._current_msgid = ''
+
+    def _process_command(self, elem):
+        command_search = re.search(
+            r'<\!\-\-\s{0,1}md2po\-([\w\-]+)\s{0,1}\-\->',
+            elem.text)
+        if command_search:
+            command = command_search.group(1)
+            if command == 'disable-next-line':
+                self.disable_next_line = True
+            elif command == 'disable':
+                self.disable = True
+            elif command == 'enable':
+                self.disable = False
+            elif command == 'enable-next-line':
+                self.enable_next_line = True
 
     def _extract_msgids(self, elem, doc):
         # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
-        #      elem, type(elem), type(elem.next), type(elem.parent)))
+        #       elem, type(elem), type(elem.next), type(elem.parent)))
 
-        if isinstance(elem, pf.RawBlock):
-            if elem.text.startswith('<!--'):
-                disable_found = re.search(
-                    r'<\!\-\-\s{0,1}md2po\-([\w\-]+)\s{0,1}\-\->',
-                    elem.text)
-                if disable_found:
-                    disable_cmd = disable_found.group(1)
-                    if disable_cmd == 'disable-next-line':
-                        self.disable_next_line = True
-                    elif disable_cmd == 'disable':
-                        self.disable = True
-                    elif disable_cmd == 'enable':
-                        self.disable = False
-                return
-        if isinstance(elem, (pf.Header, pf.Para)):
+        if isinstance(elem, (pf.RawBlock, pf.RawInline)):
+            return self._process_command(elem)
+        elif isinstance(elem, (pf.Header, pf.Para)):
             return self._save_current_msgid()
         elif isinstance(elem, pf.Link):
             if not self.plaintext:
@@ -287,6 +292,8 @@ class Md2PoConverter:
                 data = pypandoc.convert_file(filepath, to='json',
                                              format=self._from)
                 _load_walk(data)
+                self.disable_next_line = False
+                self.disable = False
 
         if self.mark_not_found_as_absolete:
             for entry in self.pofile:
