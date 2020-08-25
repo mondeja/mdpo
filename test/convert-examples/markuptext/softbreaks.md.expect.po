@@ -1,0 +1,32 @@
+#
+msgid ""
+msgstr ""
+
+msgid "This is a text in one line."
+msgstr ""
+
+msgid "This is a text in multiples lines which new lines starts with spaces."
+msgstr ""
+
+msgid ""
+"This is a text in multiples lines which new lines starts without spaces."
+msgstr ""
+
+msgid ""
+"`This is an inline code in multiples lines which new lines starts without "
+"spaces.`"
+msgstr ""
+
+msgid ""
+"*This is an italic text in multiples lines which new lines starts without "
+"spaces.*"
+msgstr ""
+
+msgid ""
+"**This is a bold text in multiples lines which new lines starts without "
+"spaces.**"
+msgstr ""
+
+msgid ""
+"`[This is a link in multiples lines which new lines starts without spaces.]`"
+msgstr ""

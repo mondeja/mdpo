@@ -7,7 +7,7 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.28'
+__version__ = '0.0.29'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -173,6 +173,8 @@ class Md2PoConverter:
             if isinstance(elem.parent, (pf.TableCell, pf.Definition,
                                         pf.ListItem)):
                 return self._save_current_msgid()
+        elif isinstance(elem, pf.SoftBreak):
+            self._current_msgid += ' '
 
         if isinstance(elem.parent, (pf.Para, pf.Header,
                                     pf.DefinitionItem, pf.Plain, pf.Link)):
@@ -224,7 +226,7 @@ class Md2PoConverter:
         elif isinstance(elem.parent, pf.Emph):
             if isinstance(elem, pf.Space):
                 self._current_msgid += ' '
-            elif not isinstance(elem, pf.Code):
+            elif not isinstance(elem, (pf.Code, pf.SoftBreak)):
                 if not self.plaintext:
                     # Emph at start
                     if not self._current_msgid:
