@@ -46,9 +46,7 @@ markdown_to_pofile('doc/src/**/**.md',
                    save=True)
 ```
 
-> The function `markdown_to_pofile` returns a [POFile](https://polib.readthedocs.io/en/latest/api.html#polib.POFile) instance from the library [polib](https://polib.readthedocs.io/en/latest). If you indicates an existent `.po` file path for `po_filepath` optional argument, the new content will be merged into that file:
-
-If you doesn't pass the argument `save` to `True`, you will get a new [POFile](https://polib.readthedocs.io/en/latest/api.html#polib.POFile) instance with new and old message strings merged.
+The function `markdown_to_pofile` returns a [POFile](https://polib.readthedocs.io/en/latest/api.html#polib.POFile) instance from the library [polib](https://polib.readthedocs.io/en/latest). If you indicates an existent `.po` file path for `po_filepath` optional argument, the new content will be merged into that file instance. If you pass also the argument `save` as `True`, the content will be saved in the pofile.
 
 Also, you can pass Markdown content as a string to extract messages from it:
 
@@ -116,7 +114,6 @@ Installation includes a command line utility named `md2po`:
 ```bash
 md2po -f "locale/doc.po" -s -i "todo.md,changelog.md" "doc/src/**/**.md"
 ```
-
 
 ## Documentation
 For a full list of parameters supported [see the documentation on ReadTheDocs][doc-link].
