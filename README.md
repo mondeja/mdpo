@@ -148,7 +148,7 @@ msgstr ""
 ### Including comments itself
 
 You can include the content of comments inside the pofile (don't ask me why
- you need this). Use next command:
+ you need this):
 
 - `<!-- md2po-include Message that you want to include -->`
 
