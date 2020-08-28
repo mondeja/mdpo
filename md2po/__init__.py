@@ -34,6 +34,8 @@ class Md2PoConverter:
         self.msgstr = kwargs.get('msgstr', '')
         self.msgids = []
         self._current_msgid = ''
+        self._current_tcomment = ''
+
         self.wrapwidth = kwargs.get('wrapwidth', 78)
         self.mark_not_found_as_absolete = kwargs.get(
             'mark_not_found_as_absolete', False)
@@ -90,24 +92,27 @@ class Md2PoConverter:
         response.sort()
         return response
 
-    def _save_msgid(self, msgid):
+    def _save_msgid(self, msgid, extracted_comment=None):
         if isinstance(msgid, str) and msgid not in self.forbidden_msgids:
             if polib.POEntry(msgid=msgid) not in self.pofile:
-                self.pofile.append(
-                    polib.POEntry(msgid=msgid, msgstr=self.msgstr))
+                entry = polib.POEntry(msgid=msgid, msgstr=self.msgstr,
+                                      comment=extracted_comment)
+                self.pofile.append(entry)
             self.msgids.append(msgid)
 
     def _save_current_msgid(self):
         if (not self.disable_next_line and not self.disable) or \
                 self.enable_next_line:
-            self._save_msgid(self._current_msgid.strip(' '))
+            self._save_msgid(self._current_msgid.strip(' '),
+                             extracted_comment=self._current_tcomment)
         self.disable_next_line = False
         self.enable_next_line = False
         self._current_msgid = ''
+        self._current_tcomment = ''
 
     def _process_command(self, elem):
         command_search = re.search(
-            r'<\!\-\-\s{0,1}md2po\-([\w\-]+)\s{0,1}\-\->',
+            r'<\!\-\-\s{0,1}md2po\-([\w\-]+)\s{0,1}([\w\s]+)?\-\->',
             elem.text)
         if command_search:
             command = command_search.group(1)
@@ -119,6 +124,13 @@ class Md2PoConverter:
                 self.disable = False
             elif command == 'enable-next-line':
                 self.enable_next_line = True
+            elif command == 'translator':
+                comment = command_search.group(2)
+                if comment is None:
+                    raise ValueError('You need to specify a string for the'
+                                     ' extracted comment with the command'
+                                     ' \'md2po-translator\'.')
+                self._current_tcomment = command_search.group(2).strip(" ")
 
     def _extract_msgids(self, elem, doc):
         # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (

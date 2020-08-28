@@ -8,7 +8,9 @@
 [![Documentation status][doc-image]][doc-link]
 
 
-Library and command line interface to extract contents of a set of Markdown files and save into `.po` files. Is like a tiny xgettext utility for Markdown files written in Python.
+Library and command line interface to extract contents of a set of Markdown
+ files and save into `.po` files. Is like a tiny xgettext utility for Markdown
+ files written in Python.
 
 > If you want a solution to replace your extracted strings into a HTML file you can use [mdpo2html](https://github.com/mondeja/mdpo2html).
 
@@ -46,7 +48,11 @@ markdown_to_pofile('doc/src/**/**.md',
                    save=True)
 ```
 
-The function `markdown_to_pofile` returns a [POFile](https://polib.readthedocs.io/en/latest/api.html#polib.POFile) instance from the library [polib](https://polib.readthedocs.io/en/latest). If you indicates an existent `.po` file path for `po_filepath` optional argument, the new content will be merged into that file instance. If you pass also the argument `save` as `True`, the content will be saved in the pofile.
+The function `markdown_to_pofile` returns a [POFile][pofile-doc-link] instance
+ from the library [polib][polib-doc-link]. If you indicates an existent `.po`
+ file path for `po_filepath` optional argument, the new content will be merged
+ into that file instance. If you pass also the argument `save` as `True`,
+ the content will be saved in the pofile.
 
 Also, you can pass Markdown content as a string to extract messages from it:
 
@@ -73,7 +79,8 @@ msgstr ""
 
 ### Disabling extraction
 
-You can disable and enable the extraction of certain strings using next HTML commments:
+You can disable and enable the extraction of certain strings using next
+ HTML commments:
 
 - `<!-- md2po-disable-next-line -->`
 - `<!-- md2po-disable -->`
@@ -107,6 +114,33 @@ msgid "This will be included also."
 msgstr ""
 ```
 
+### Including translator comments
+
+You can include comments for translators using the line
+ `<!-- md2po-translator Comment that you want to include -->` in the line
+ before of the message. For example:
+
+```python
+>>> content = '''<!-- md2po-translator This is a comment for a translator -->
+... Some text that needs to be clarified
+...
+... Some text without comment
+... '''
+
+>>> pofile = markdown_to_pofile(content)
+>>> print(pofile)
+#
+msgid ""
+msgstr ""
+
+#. This is a comment for a translator
+msgid "Some text that needs to be clarified"
+msgstr ""
+
+msgid "Some text without comment"
+msgstr ""
+```
+
 ## Command line interface
 
 Installation includes a command line utility named `md2po`:
@@ -116,12 +150,16 @@ md2po -f "locale/doc.po" -s -i "todo.md,changelog.md" "doc/src/**/**.md"
 ```
 
 ## Documentation
-For a full list of parameters supported [see the documentation on ReadTheDocs][doc-link].
+For a full list of parameters supported see the
+ [documentation on ReadTheDocs][doc-link].
 
 
 ## Known limitations
 
-- Tables are not supported with `Pandoc v2.10` because [panflute](https://github.com/sergiocorreia/panflute) dependency does not support tables with captions (pandoc >= 2.10), as has been addressed in [panflute/issues/#142](https://github.com/sergiocorreia/panflute/issues/142).
+- Tables are not supported with `Pandoc v2.10` because
+ [panflute][panflute-repo-link] dependency does not support tables with
+ captions (pandoc >= 2.10), as has been addressed in
+ [panflute/issues/#142][panflute-142-link].
 
 [pypi-image]: https://img.shields.io/pypi/v/md2po
 [pypi-link]: https://pypi.org/project/md2po/
@@ -134,3 +172,7 @@ For a full list of parameters supported [see the documentation on ReadTheDocs][d
 [coverage-link]: https://coveralls.io/github/mondeja/md2po
 [doc-image]: https://readthedocs.org/projects/md2po/badge/?version=latest
 [doc-link]: https://md2po.readthedocs.io/en/latest/
+[pofile-doc-link]: https://polib.readthedocs.io/en/latest/api.html#polib.POFile
+[polib-doc-link]: https://polib.readthedocs.io/en/latest
+[panflute-repo-link]: https://github.com/sergiocorreia/panflute
+[panflute-142-link]: https://github.com/sergiocorreia/panflute/issues/142
