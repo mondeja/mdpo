@@ -4,6 +4,7 @@ import argparse
 import io
 import sys
 
+
 try:
     from itertools import izip
 except ImportError:

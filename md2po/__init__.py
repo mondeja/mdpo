@@ -7,7 +7,8 @@ import panflute as pf
 import polib
 import pypandoc
 
-__version__ = '0.0.29'
+
+__version__ = '0.0.30'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'

@@ -1,7 +1,16 @@
 repos:
-- repo: https://gitlab.com/pycqa/flake8
-  rev: master
-  hooks:
-  - id: flake8
-    exclude: (conf.py)
-    additional_dependencies: [flake8-print, flake8-implicit-str-concat]
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: master
+    hooks:
+    - id: flake8
+      exclude: (conf.py)
+      additional_dependencies: [
+        flake8-print,
+        flake8-implicit-str-concat,
+      ]
+  - repo: https://github.com/PyCQA/isort
+    rev: master
+    hooks:
+    - id: isort
+      exclude: (conf.py)
+      args: ['--check-only']

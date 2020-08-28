@@ -8,6 +8,7 @@ import pytest
 
 from md2po import markdown_to_pofile
 
+
 EXAMPLES_DIR = os.path.join('test', 'convert-examples')
 
 PT_EXAMPLES_DIR = os.path.join(EXAMPLES_DIR, 'plaintext')

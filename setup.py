@@ -6,7 +6,8 @@ import os
 import re
 import sys
 
-from setuptools import find_packages, setup, Command
+from setuptools import Command, find_packages, setup
+
 
 PROJECT_NAME = 'md2po'
 URL = 'https://github.com/mondeja/%s' % PROJECT_NAME
@@ -25,6 +26,8 @@ TEST_EXTRAS = [
     'flake8',
     'flake8-print',
     'flake8-implicit-str-concat',
+    'flake8-isort',
+    'isort',
     'tox',
 ]
 DOC_EXTRAS = [

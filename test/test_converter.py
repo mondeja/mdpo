@@ -6,6 +6,7 @@ import pytest
 
 from md2po import Md2PoConverter
 
+
 EMPTY_FILES_DIRNAME = 'empty-files'
 EMPTY_FILES_GLOB = os.path.join('test', EMPTY_FILES_DIRNAME, '**', '**.md')
 

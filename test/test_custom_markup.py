@@ -4,6 +4,7 @@ import pytest
 
 from md2po import markdown_to_pofile
 
+
 INVALID_CHARACTERS = [' ', '\t', '\n', '"', '\'', '\r', '\\', '\x0b', '\x0c']
 SINGLE_CHARACTERS = [
     c for c in string.printable if (not c.isdigit() and

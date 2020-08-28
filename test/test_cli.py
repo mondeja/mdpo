@@ -9,6 +9,7 @@ import pytest
 
 from md2po.__main__ import run
 
+
 MARKDOWN_CONTENT_EXAMPLE = {
     'input': '# Header 1\n\nSome text here',
     'output': '''#
