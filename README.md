@@ -7,12 +7,12 @@
 [![Coverage status][coverage-image]][coverage-link]
 [![Documentation status][doc-image]][doc-link]
 
-
 Library and command line interface to extract contents of a set of Markdown
  files and save into `.po` files. Is like a tiny xgettext utility for Markdown
  files written in Python.
 
-> If you want a solution to replace your extracted strings into a HTML file you can use [mdpo2html](https://github.com/mondeja/mdpo2html).
+> If you want a solution to replace your extracted strings into a HTML file you
+ can use [mdpo2html][mdpo2html-link].
 
 ## Install
 
@@ -88,6 +88,7 @@ You can disable and enable the extraction of certain strings using next
 - `<!-- md2po-enable-next-line -->`
 
 For example:
+
 ```python
 >>> from md2po import markdown_to_pofile
 
@@ -116,9 +117,12 @@ msgstr ""
 
 ### Including translator comments
 
-You can include comments for translators using the line
- `<!-- md2po-translator Comment that you want to include -->` in the line
- before of the message. For example:
+You can include comments for translators using the next line in the line
+ before the message:
+
+- `<!-- md2po-translator Comment that you want to include -->`
+
+For example:
 
 ```python
 >>> content = '''<!-- md2po-translator This is a comment for a translator -->
@@ -150,9 +154,9 @@ md2po -f "locale/doc.po" -s -i "todo.md,changelog.md" "doc/src/**/**.md"
 ```
 
 ## Documentation
+
 For a full list of parameters supported see the
  [documentation on ReadTheDocs][doc-link].
-
 
 ## Known limitations
 
@@ -176,3 +180,4 @@ For a full list of parameters supported see the
 [polib-doc-link]: https://polib.readthedocs.io/en/latest
 [panflute-repo-link]: https://github.com/sergiocorreia/panflute
 [panflute-142-link]: https://github.com/sergiocorreia/panflute/issues/142
+[mdpo2html-link]: https://github.com/mondeja/mdpo2html
