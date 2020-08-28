@@ -145,6 +145,13 @@ msgid "Some text without comment"
 msgstr ""
 ```
 
+### Including comments itself
+
+You can include the content of comments inside the pofile (don't ask me why
+ you need this). Use next command:
+
+- `<!-- md2po-include Message that you want to include -->`
+
 ## Command line interface
 
 Installation includes a command line utility named `md2po`:

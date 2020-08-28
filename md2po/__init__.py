@@ -8,7 +8,7 @@ import polib
 import pypandoc
 
 
-__version__ = '0.0.31'
+__version__ = '0.0.32'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -112,7 +112,7 @@ class Md2PoConverter:
 
     def _process_command(self, elem):
         command_search = re.search(
-            r'<\!\-\-\s{0,1}md2po\-([\w\-]+)\s{0,1}([\w\s]+)?\-\->',
+            r'<\!\-\-\s{0,1}md2po\-([a-z\-]+)\s{0,1}([\w\s]+)?\-\->',
             elem.text)
         if command_search:
             command = command_search.group(1)
@@ -130,7 +130,15 @@ class Md2PoConverter:
                     raise ValueError('You need to specify a string for the'
                                      ' extracted comment with the command'
                                      ' \'md2po-translator\'.')
-                self._current_tcomment = command_search.group(2).strip(" ")
+                self._current_tcomment = comment.strip(" ")
+            elif command == 'include':
+                comment = command_search.group(2)
+                if comment is None:
+                    raise ValueError('You need to specify a message for the'
+                                     ' comment to include with the command'
+                                     ' \'md2po-include\'.')
+                self._current_msgid = comment.strip(" ")
+                self._save_current_msgid()
 
     def _extract_msgids(self, elem, doc):
         # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
