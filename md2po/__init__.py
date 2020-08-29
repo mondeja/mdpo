@@ -8,7 +8,7 @@ import polib
 import pypandoc
 
 
-__version__ = '0.0.32'
+__version__ = '0.0.33'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'

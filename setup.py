@@ -106,7 +106,7 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     project_urls={
-        'Documentation': 'https://Python-Markdown.github.io/',
+        'Documentation': 'https://md2po.readthedocs.io',
         'GitHub Project': 'https://github.com/mondeja/md2po',
         'Issue Tracker': 'https://github.com/mondeja/md2po/issues'
     },
