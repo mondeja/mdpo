@@ -36,10 +36,7 @@ Some text with two literal backticks inside ```inline `` code```.
 
 Some text with three literal backticks inside ````inline ``` code````.
 
-
-[//]: # (Don't escape characters inside links)
-
-A [link with \`\[ and \]\` included](link-escapes).
+Some text with literal backtick \`, `code` markup, double literal backtick \`\` and ``code with double backtick`` markup.
 
 
 <!---

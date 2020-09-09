@@ -1,7 +1,9 @@
 md2po's documentation
 =====================
 
-Library to extract contents of a set of Markdown files and save into one or multiples `.po` files. Is like a xgettext utility for Markdown files written in Python.
+Library to extract contents of a set of Markdown files and save into one or multiples `.po` files.
+Is like a xgettext utility for Markdown files written in Python.
+Fits almost completely the `CommonMark Specification`_.
 
 .. toctree::
    :maxdepth: 1
@@ -9,3 +11,6 @@ Library to extract contents of a set of Markdown files and save into one or mult
    install
    api
    cli
+
+
+.. _CommonMark Specification: https://spec.commonmark.org/0.29

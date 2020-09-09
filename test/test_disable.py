@@ -67,9 +67,6 @@ msgstr ""
 msgid "This must be included."
 msgstr ""
 
-msgid "config.production.yml"
-msgstr ""
-
 msgid "This must be included also."
 msgstr ""
 '''

@@ -33,3 +33,8 @@ msgid ""
 "Some text with two literal asterisks * *, italic markup, two double literal "
 "asterisks ** ** and bold markup."
 msgstr ""
+
+msgid ""
+"Some text with literal backtick `, code markup, double literal backtick `` "
+"and code with double backtick markup."
+msgstr ""

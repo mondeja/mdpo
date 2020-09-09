@@ -16,8 +16,5 @@ msgid ""
 "like Aldus PageMaker including versions of Lorem Ipsum."
 msgstr ""
 
-msgid "This is the first line."
-msgstr ""
-
-msgid "And this is the second line."
+msgid "This is the first line. And this is the second line."
 msgstr ""

@@ -13,10 +13,9 @@ PROJECT_NAME = 'md2po'
 URL = 'https://github.com/mondeja/%s' % PROJECT_NAME
 EMAIL = 'mondejar1994@gmail.com'
 AUTHOR = 'Álvaro Mondéjar Rubio'
-REQUIRES_PYTHON = '>=3'
+REQUIRES_PYTHON = '>=3.6'
 REQUIRED = [
-    'panflute>=1.12.5',
-    'pypandoc>=1.5',
+    'pymd4c==0.4.4.0b1',
     'polib>=1.1.0',
 ]
 
@@ -137,11 +136,14 @@ setup(
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Internationalization',
-        'Topic :: Software Development :: Localization',
         'Topic :: Text Processing',
         'Topic :: Text Processing :: Markup :: Markdown',
     ],
     cmdclass={
         'upload': UploadCommand,
     },
+    dependency_links=[
+        ('http://github.com/dominickpastore/pymd4c/'
+         'tarball/master#egg=md4c-0.4.4.0b1'),
+    ]
 )

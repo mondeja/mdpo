@@ -60,49 +60,17 @@ def build_parser():
                         help='Mark new found msgids not present in the '
                              ' pofile passed at ``--filepath`` parameter'
                              ' as obsolete translations.')
-    parser.add_argument('-F', '--from', '--format', default='markdown_mmd',
-                        dest='format',
-                        help='Markdown input format. For a list of supported'
-                             ' formats, run '
-                             '``pandoc --list-input-formats | grep markdown``.'
-                             ' Note that changing this parameter may return'
-                             ' not tested results.')
+    parser.add_argument('-F', '--flags',
+                        default=md2po.DEFAULT_MD4C_FLAGS, dest='flags',
+                        help='md4c extensions used to parse markdown'
+                             ' content, separated by ``|`` or ``+``'
+                             '  characters. You can see all available at http'
+                             's://github.com/mity/md4c#markdown-extensions')
     parser.add_argument('-fm', '--forbidden-msgids', dest='forbidden_msgids',
                         default=None,
                         metavar='CHAR_A,CHAR_B,CHAR_C...',
                         help='List of comma separated values to ignore as'
                              ' msgids if are found.')
-    parser.add_argument('-bs', '--bold-string', dest='bold_string',
-                        default=None,
-                        help='String that represents the markup '
-                             ' character/s at start and the end of a chunk'
-                             ' of bold text for outputted msgids.',
-                        metavar='CHARS', type=str)
-    parser.add_argument('-is', '--italic-string', dest='italic_string',
-                        default=None,
-                        help='String that represents the markup '
-                             ' character/s at the beginning and the end'
-                             ' of an italic text for outputted msgids.',
-                        metavar='CHARS', type=str)
-    parser.add_argument('-cs', '--code-string', dest='code_string',
-                        default=None,
-                        help='String that represents the markup '
-                             ' character/s at the beginning and the end'
-                             ' of an inline piece of code for outputted'
-                             ' msgids.',
-                        metavar='CHARS', type=str)
-    parser.add_argument('-lss', '--link-start-string',
-                        dest='link_start_string', default=None,
-                        help='String that represents the markup '
-                             ' character/s at the beggining of a link'
-                             ' for outputted msgids.',
-                        metavar='CHARS', type=str)
-    parser.add_argument('-les', '--link-end-string', dest='link_end_string',
-                        default=None,
-                        help='String that represents the markup '
-                             ' character/s at the beginning and the end'
-                             ' of a link for outputted msgids.',
-                        metavar='CHARS', type=str)
     return parser
 
 
@@ -129,16 +97,10 @@ def run(args=[]):
         save=opts.save,
         plaintext=not opts.markuptext,
         mark_not_found_as_absolete=opts.mark_not_found_as_absolete,
+        flags=opts.flags,
         forbidden_msgids=opts.forbidden_msgids)
     if isinstance(opts.wrapwidth, int):
         kwargs['wrapwidth'] = opts.wrapwidth
-
-    markup_parameters = ['bold_string', 'italic_string', 'code_string',
-                         'link_start_string', 'link_end_string']
-    for param in markup_parameters:
-        value = getattr(opts, param)
-        if value is not None:
-            kwargs[param] = value
 
     pofile = md2po.markdown_to_pofile(opts.glob_or_content, **kwargs)
 

@@ -17,5 +17,5 @@ msgstr ""
 msgid "This is reallyveryimportant text."
 msgstr ""
 
-msgid "Some malformatted_very_important text."
+msgid "Some malformatted___very___important text."
 msgstr ""

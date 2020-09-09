@@ -9,25 +9,23 @@
 
 Library and command line interface to extract contents of a set of Markdown
  files and save into `.po` files. Is like a tiny xgettext utility for Markdown
- files written in Python.
+ files written in Python. Fits almost completely the
+ [CommonMark Specification][commonmark-spec-link].
 
-> If you want a solution to replace your extracted strings into a HTML file you
- can use [mdpo2html][mdpo2html-link].
+> If you want a solution to replace your extracted strings into a HTML file
+ generated from your Markdown content you can use [mdpo2html][mdpo2html-link].
 
 ## Install
-
-You must install Pandoc<=2.9 first:
-
-```bash
-pip install pypandoc
-python -c "import pypandoc as p;p.download_pandoc(version='2.9', delete_installer=True);"
-```
-
-...and then:
 
 ```bash
 pip install md2po
 ```
+
+### MacOS and Windows users
+
+This library depends on [pymd4c][pymd4c-link], which is not installed
+ automatically in Windows and MacOS distributions, so you need to install it
+ [building from source][pymd4c-build-from-source-link].
 
 ## Quickstart
 
@@ -167,10 +165,7 @@ For a full list of parameters supported see the
 
 ## Known limitations
 
-- Tables are not supported with `Pandoc v2.10` because
- [panflute][panflute-repo-link] dependency does not support tables with
- captions (pandoc >= 2.10), as has been addressed in
- [panflute/issues/#142][panflute-142-link].
+- Indented code blocks are not supported well.
 
 [pypi-image]: https://img.shields.io/pypi/v/md2po
 [pypi-link]: https://pypi.org/project/md2po/
@@ -185,6 +180,7 @@ For a full list of parameters supported see the
 [doc-link]: https://md2po.readthedocs.io/en/latest/
 [pofile-doc-link]: https://polib.readthedocs.io/en/latest/api.html#polib.POFile
 [polib-doc-link]: https://polib.readthedocs.io/en/latest
-[panflute-repo-link]: https://github.com/sergiocorreia/panflute
-[panflute-142-link]: https://github.com/sergiocorreia/panflute/issues/142
+[pymd4c-link]: https://github.com/dominickpastore/pymd4c
+[pymd4c-build-from-source-link]: https://github.com/dominickpastore/pymd4c#build-and-install-from-source
 [mdpo2html-link]: https://github.com/mondeja/mdpo2html
+[commonmark-spec-link]: https://spec.commonmark.org/0.29

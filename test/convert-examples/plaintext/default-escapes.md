@@ -20,3 +20,8 @@ Some text with literal asterisk \*, *italic* markup, two double literal asterisk
 Some text with two literal asterisks \* \*, *italic* markup, double literal asterisk \*\* and **bold** markup.
 
 Some text with two literal asterisks \* \*, *italic* markup, two double literal asterisks \*\* \*\* and **bold** markup.
+
+
+[//]: # (Escape code markup)
+
+Some text with literal backtick \`, `code` markup, double literal backtick \`\` and ``code with double backtick`` markup.

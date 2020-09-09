@@ -1,20 +1,37 @@
 import glob
-import io
 import os
 import re
 
-import panflute as pf
+import md4c
 import polib
-import pypandoc
 
 
-__version__ = '0.0.33'
+__version__ = '0.1.0'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
                    ' Markdown content.')
 
-FORBIDDEN_MSGIDS = ('', ' ', '\n')
+FORBIDDEN_MSGIDS = (' ', '\n')
+
+DEFAULT_MD4C_FLAGS = ('MD_FLAG_COLLAPSEWHITESPACE|'
+                      'MD_FLAG_TABLES|'
+                      'MD_FLAG_STRIKETHROUGH|'
+                      'MD_FLAG_TASKLISTS|'
+                      'MD_FLAG_NOINDENTEDCODEBLOCKS')
+
+
+def _build_escaped_string(char):
+    return ''.join(["%s%s" % ('\\', c) for c in char])
+
+
+def _parse_md4c_flags(flags):
+    flags_string = flags.replace('+', '|').replace(' ', '')
+    flags_list = []
+    for flag in flags_string.split('|'):
+        if hasattr(md4c, flag):
+            flags_list.append(getattr(md4c, flag))
+    return sum(flags_list)
 
 
 class Md2PoConverter:
@@ -37,10 +54,11 @@ class Md2PoConverter:
         self._current_tcomment = ''
 
         self.wrapwidth = kwargs.get('wrapwidth', 78)
+
         self.mark_not_found_as_absolete = kwargs.get(
             'mark_not_found_as_absolete', False)
 
-        self._from = kwargs.get('_from', 'markdown_mmd')
+        self.flags = _parse_md4c_flags(kwargs.get('flags', DEFAULT_MD4C_FLAGS))
 
         self.forbidden_msgids = kwargs.get('forbidden_msgids', None)
         if self.forbidden_msgids is None:
@@ -54,24 +72,39 @@ class Md2PoConverter:
 
         if not self.plaintext:
             self.bold_string = kwargs.get('bold_string', '**')
-            self.bold_string_replacer = self._build_string_replacer(
+            self.bold_string_escaped = _build_escaped_string(
                 self.bold_string)
 
             self.italic_string = kwargs.get('italic_string', '*')
-            self.italic_string_replacer = self._build_string_replacer(
+            self.italic_string_escaped = _build_escaped_string(
                 self.italic_string)
 
             self.link_start_string = kwargs.get('link_start_string', '`[')
             self.link_end_string = kwargs.get('link_end_string', ']`')
 
             self.code_string = kwargs.get('code_string', '`')
-            self.code_string_replacer = self._build_string_replacer(
+            self.code_string_escaped = _build_escaped_string(
                 self.code_string)
 
             self._bold_italic_context = False
 
-    def _build_string_replacer(self, char):
-        return ''.join(["%s%s" % ('\\', c) for c in char])
+            self._enterspan_replacer = {
+                md4c.SpanType.STRONG: self.bold_string,
+                md4c.SpanType.EM: self.italic_string,
+                md4c.SpanType.CODE: self.code_string,
+                md4c.SpanType.A: self.link_start_string
+            }
+
+            self._leavespan_replacer = {
+                md4c.SpanType.STRONG: self.bold_string,
+                md4c.SpanType.EM: self.italic_string,
+                md4c.SpanType.CODE: self.code_string,
+                md4c.SpanType.A: self.link_end_string
+            }
+
+        self._inside_htmlblock = False
+        self._inside_codeblock = False
+        self._inside_codespan = False
 
     def _ignore_files(self, filepaths):
         response = []
@@ -101,8 +134,9 @@ class Md2PoConverter:
             self.msgids.append(msgid)
 
     def _save_current_msgid(self):
-        if (not self.disable_next_line and not self.disable) or \
-                self.enable_next_line:
+        if self._current_msgid and (
+                (not self.disable_next_line and not self.disable) or
+                self.enable_next_line):
             self._save_msgid(self._current_msgid.strip(' '),
                              extracted_comment=self._current_tcomment)
         self.disable_next_line = False
@@ -110,10 +144,9 @@ class Md2PoConverter:
         self._current_msgid = ''
         self._current_tcomment = ''
 
-    def _process_command(self, elem):
+    def _process_command(self, text):
         command_search = re.search(
-            r'<\!\-\-\s{0,1}md2po\-([a-z\-]+)\s{0,1}([\w\s]+)?\-\->',
-            elem.text)
+            r'<\!\-\-\s{0,1}md2po\-([a-z\-]+)\s{0,1}([\w\s]+)?\-\->', text)
         if command_search:
             command = command_search.group(1)
             if command == 'disable-next-line':
@@ -140,156 +173,67 @@ class Md2PoConverter:
                 self._current_msgid = comment.strip(" ")
                 self._save_current_msgid()
 
-    def _extract_msgids(self, elem, doc):
-        # print('\n%s | TYPE: %s\nNEXT TYPE: %s | PARENT TYPE %s' % (
-        #       elem, type(elem), type(elem.next), type(elem.parent)))
+    def enter_block(self, block, details):
+        # print("ENTER BLOCK:", block.name)
+        if block.value == md4c.BlockType.HTML:
+            self._inside_htmlblock = True
+        elif block.value == md4c.BlockType.CODE:
+            self._inside_codeblock = True
 
-        if isinstance(elem, (pf.RawBlock, pf.RawInline)):
-            return self._process_command(elem)
-        elif isinstance(elem, (pf.Header, pf.Para)):
-            return self._save_current_msgid()
-        elif isinstance(elem, pf.Link):
-            if not self.plaintext:
-                self._current_msgid += self.link_end_string
-            if elem.title:
-                self._save_msgid(elem.title)
-            return
-        elif isinstance(elem, pf.Strong):
-            if not self.plaintext:
-                # Strong closing
-                self._current_msgid += self.bold_string
-                self._bold_italic_context = False
-            return
-        elif isinstance(elem, pf.Emph):
-            if not self.plaintext:
-                # Emph closing
-                self._current_msgid += self.italic_string
-            return
-        elif isinstance(elem, pf.Code):
-            if not self.plaintext:
-                if not self._current_msgid:
-                    if isinstance(elem.parent, pf.Strong):
-                        self._current_msgid += self.bold_string
-                    elif isinstance(elem.parent, pf.Link):
-                        self._current_msgid += self.link_start_string
-                self._current_msgid += self.code_string + \
-                    elem.text.replace(self.code_string,
-                                      self.code_string_replacer) + \
-                    self.code_string
-            else:
-                self._current_msgid += elem.text
-        elif isinstance(elem, pf.LineBreak):
-            return self._save_current_msgid()
-        elif isinstance(elem, pf.Image):
-            if isinstance(elem.content, pf.ListContainer):
-                _text = ''
-                for container in elem.content:
-                    _text += ' ' if isinstance(container, pf.Space) else \
-                        container.text
-                self._save_msgid(_text)
-            if elem.title and elem.title != 'fig:':
-                self._save_msgid(elem.title.lstrip(':fig'))
-            return
-        elif isinstance(elem, pf.Plain):
-            if isinstance(elem.parent, (pf.TableCell, pf.Definition,
-                                        pf.ListItem)):
-                return self._save_current_msgid()
-        elif isinstance(elem, pf.SoftBreak):
-            self._current_msgid += ' '
+    def leave_block(self, block, details):
+        # print("LEAVE BLOCK:", block.name)
+        if block.value == md4c.BlockType.HTML:
+            self._inside_htmlblock = False
+        elif block.value == md4c.BlockType.CODE:
+            self._inside_codeblock = False
+        else:
+            self._save_current_msgid()
 
-        if isinstance(elem.parent, (pf.Para, pf.Header,
-                                    pf.DefinitionItem, pf.Plain, pf.Link)):
-            if isinstance(elem, pf.Str):
-                if not self.plaintext:
-                    if isinstance(elem.parent, pf.Link):
-                        _append_link = False
-                        if isinstance(elem.parent.parent, pf.Emph):
-                            if not self._current_msgid:
-                                _append_link = True
-                                self._current_msgid += self.italic_string
-                        elif isinstance(elem.parent.parent, pf.Strong):
-                            if not self._current_msgid:
-                                _append_link = True
-                                self._current_msgid += self.bold_string
-                        else:
-                            if not self._current_msgid:
-                                _append_link = True
+    def enter_span(self, span, details):
+        # print("ENTER SPAN:", span.name, details)
+        if not self.plaintext:
+            try:
+                self._current_msgid += self._enterspan_replacer[span.value]
+            except KeyError:
+                pass
 
-                        if _append_link:
-                            self._current_msgid += self.link_start_string
+            if span.value == md4c.SpanType.CODE:
+                self._inside_codespan = True
 
-                    _bold_markups_found = elem.text.count(self.bold_string)
-                    elem.text = elem.text.replace(
-                        self.bold_string, self.bold_string_replacer,
-                    )
-                    _bold_markups_found_escaped = elem.text.count(
-                        self.bold_string_replacer)
-                    if _bold_markups_found == 0 or _bold_markups_found - \
-                            _bold_markups_found_escaped > 0:
-                        elem.text = elem.text.replace(
-                            self.italic_string, self.italic_string_replacer)
-                self._current_msgid += elem.text
-            elif isinstance(elem, pf.Space):
-                self._current_msgid += ' '
+        if span.value in (md4c.SpanType.IMG, md4c.SpanType.A) and \
+                details['title']:
+            self._save_msgid(details['title'][0][1])
 
-            if isinstance(elem.next, pf.Link):
-                if not self.plaintext:
-                    self._current_msgid += self.link_start_string
-            elif isinstance(elem.next, pf.Emph):
-                if not self.plaintext:
-                    self._current_msgid += self.italic_string
-            elif isinstance(elem.next, pf.Strong):
-                if not self.plaintext:
-                    if not isinstance(elem.next.content[0], pf.Emph):
-                        self._current_msgid += self.bold_string
-            elif not elem.next and isinstance(elem.parent, pf.DefinitionItem):
-                self._save_current_msgid()
-        elif isinstance(elem.parent, pf.Emph):
-            if isinstance(elem, pf.Space):
-                self._current_msgid += ' '
-            elif not isinstance(elem, (pf.Code, pf.SoftBreak)):
-                if not self.plaintext:
-                    # Emph at start
-                    if not self._current_msgid:
-                        if isinstance(elem.parent.parent, pf.Link):
-                            self._current_msgid += self.link_start_string
-                        self._current_msgid += self.italic_string
-                    if isinstance(elem.parent.parent, pf.Strong):
-                        if not self._bold_italic_context:
-                            self._current_msgid += self.italic_string
-                            self._current_msgid += self.bold_string
-                            self._bold_italic_context = True
-                    self._current_msgid += elem.text.replace(
-                        self.italic_string, self.italic_string_replacer)
-                else:
-                    self._current_msgid += elem.text
+    def leave_span(self, span, details):
+        # print("LEAVE SPAN:", span.name)
+        if not self.plaintext:
+            try:
+                self._current_msgid += self._leavespan_replacer[span.value]
+            except KeyError:
+                pass
 
-            if isinstance(elem.next, pf.Link):
-                self._current_msgid += self.link_start_string
-        elif isinstance(elem.parent, pf.Strong):
-            if isinstance(elem, pf.Str):
+            if span.value == md4c.SpanType.CODE:
+                self._inside_codespan = False
+
+    def text(self, block, text):
+        # print("TEXT:", text)
+        if not self._inside_htmlblock:
+            if not self._inside_codeblock:
+                if text == "\n":
+                    text = ' '
                 if not self.plaintext:
-                    # Strong at start
-                    if not self._current_msgid:
-                        if isinstance(elem.parent.parent, pf.Link):
-                            self._current_msgid += self.link_start_string
-                        self._current_msgid += self.bold_string
-                    if len(self.bold_string) == 2 and (
-                            self.bold_string[0] == self.italic_string and
-                            self.bold_string[1] == self.italic_string):
-                        elem.text = elem.text.replace(
-                            self.bold_string, self.bold_string_replacer
-                        ).replace(
-                            self.italic_string, self.italic_string_replacer)
-                    else:
-                        elem.text = elem.text.replace(
-                            self.bold_string, self.bold_string_replacer
-                        )
-                self._current_msgid += elem.text
-            elif isinstance(elem, pf.Space):
-                self._current_msgid += ' '
-            if isinstance(elem.next, pf.Link):
-                self._current_msgid += self.link_start_string
+                    if self._inside_codespan:
+                        text = re.sub(self.code_string,
+                                      self.code_string_escaped, text)
+                    elif text == self.italic_string:
+                        text = self.italic_string_escaped
+                    elif text == self.bold_string:
+                        text = self.bold_string_escaped
+                    elif text == self.code_string:
+                        text = self.code_string_escaped
+                self._current_msgid += text
+        else:
+            self._process_command(text)
 
     def convert(self, po_filepath=None, save=False):
         _po_filepath = None
@@ -302,19 +246,23 @@ class Md2PoConverter:
 
         self.pofile = polib.pofile(po_filepath, wrapwidth=self.wrapwidth)
 
-        def _load_walk(data):
-            doc = pf.load(io.StringIO(data))
-            doc.walk(self._extract_msgids)
+        parser = md4c.GenericParser(self.flags)
+
+        def _parse(content):
+            parser.parse(content,
+                         self.enter_block,
+                         self.leave_block,
+                         self.enter_span,
+                         self.leave_span,
+                         self.text)
 
         if hasattr(self, 'content'):
-            data = pypandoc.convert_text(self.content, to='json',
-                                         format=self._from)
-            _load_walk(data)
+            _parse(self.content)
         else:
             for filepath in self.filepaths:
-                data = pypandoc.convert_file(filepath, to='json',
-                                             format=self._from)
-                _load_walk(data)
+                with open(filepath, "r") as f:
+                    content = f.read()
+                _parse(content)
                 self.disable_next_line = False
                 self.disable = False
 
@@ -332,13 +280,11 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
                        po_filepath=None, save=False,
                        plaintext=True, wrapwidth=78,
                        mark_not_found_as_absolete=False,
-                       format='markdown_mmd',
-                       forbidden_msgids=FORBIDDEN_MSGIDS,
-                       bold_string='**', italic_string='*', code_string='`',
-                       link_start_string='`[', link_end_string=']`'):
+                       flags=DEFAULT_MD4C_FLAGS,
+                       forbidden_msgids=FORBIDDEN_MSGIDS):
     """
     Extracts all the msgids from a string of Markdown content or a group
-    of files and returns a :class:`polib.POFile` instance.
+    of files.
 
     Args:
         glob_or_content (str): Glob path to Markdown files or a string
@@ -370,29 +316,12 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         mark_not_found_as_absolete (bool): The strings extracted from markdown
             that will not be found inside the provided pofile will be marked
             as obsolete.
-        format (str): Markdown input format. Note that changing this
-            parameter may return not tested results. For a list of supported
-            formats, run:
-
-            .. code-block:: python
-
-               >>> import pypandoc
-               >>> list(filter(lambda x: 'markdown' in x,
-               ...             pypandoc.get_pandoc_formats()[0]))
+        flags (str): md4c extensions used to parse markdown content, separated
+            by ``|`` or ``+`` characters. You can see all available at
+            `md4c repository <https://github.com/mity/md4c#markdown-
+            extensions>`_.
         forbidden_msgids (list): Set of msgids that, if found, will not be
             included in output.
-        bold_string (str): String that represents the markup character/s at
-            the beginning and the end of a chunk of bold text for outputted
-            msgids.
-        italic_string (str): String that represents the markup character/s at
-            the beginning and the end of an italic text for outputted msgids.
-        code_string (str): String that represents the markup character/s at
-            the beginning and the end of an inline piece of code for
-            outputted msgids.
-        link_start_string (str): String that represents the markup character/s
-            at the beginning of a link for outputted msgids.
-        link_end_string (str): String that represents the markup character/s
-            at the end of a link for outputted msgids.
 
     Examples:
         >>> content = 'Some text with `inline code`'
@@ -414,8 +343,5 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         glob_or_content, ignore=ignore, msgstr=msgstr,
         plaintext=plaintext, wrapwidth=wrapwidth,
         mark_not_found_as_absolete=mark_not_found_as_absolete,
-        _from=format, forbidden_msgids=forbidden_msgids,
-        bold_string=bold_string, italic_string=italic_string,
-        link_start_string=link_start_string,
-        link_end_string=link_end_string, code_string=code_string
+        flags=flags, forbidden_msgids=forbidden_msgids,
     ).convert(po_filepath=po_filepath, save=save)

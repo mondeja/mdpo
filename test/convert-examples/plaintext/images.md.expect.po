@@ -5,14 +5,14 @@ msgstr ""
 msgid "Tux, the Linux mascot"
 msgstr ""
 
-msgid "Hail Tux!"
-msgstr ""
-
 msgid "Use linux, don't be crazy"
 msgstr ""
 
-msgid "Alt text"
+msgid "Hail Tux!"
 msgstr ""
 
 msgid "Optional title attribute"
+msgstr ""
+
+msgid "Alt text"
 msgstr ""
