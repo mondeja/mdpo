@@ -227,8 +227,6 @@ class Md2PoConverter:
                                       self.code_string_escaped, text)
                     elif text == self.italic_string:
                         text = self.italic_string_escaped
-                    elif text == self.bold_string:
-                        text = self.bold_string_escaped
                     elif text == self.code_string:
                         text = self.code_string_escaped
                 self._current_msgid += text

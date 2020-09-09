@@ -16,3 +16,9 @@ msgstr ""
 
 msgid "Alt text"
 msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "My foo bar"
+msgstr ""

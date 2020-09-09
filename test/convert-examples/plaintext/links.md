@@ -39,3 +39,7 @@ Write an email to <fake@example.com> if you want help
 [6]: <https://github.com/mondeja/md2po> "Sixth reference"
 [7]: <https://github.com/mondeja/md2po> 'Seventh reference'
 [8]: <https://github.com/mondeja/md2po> (Eighth reference)
+
+[//]: # (Void link)
+
+![](/url)

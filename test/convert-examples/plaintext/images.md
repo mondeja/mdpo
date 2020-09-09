@@ -19,3 +19,8 @@
 ![Alt text][id]
 
 [id]: url/to/image  "Optional title attribute"
+
+
+[//]: # (Image inside paragraph)
+
+My ![foo bar](/path/to/train.jpg "title")
