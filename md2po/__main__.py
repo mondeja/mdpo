@@ -71,6 +71,9 @@ def build_parser():
                         metavar='CHAR_A,CHAR_B,CHAR_C...',
                         help='List of comma separated values to ignore as'
                              ' msgids if are found.')
+    parser.add_argument('-e', '--encoding', dest='encoding', default=None,
+                        help='Resulting pofile encoding (autodetected by'
+                             ' default)')
     return parser
 
 
@@ -98,7 +101,8 @@ def run(args=[]):
         plaintext=not opts.markuptext,
         mark_not_found_as_absolete=opts.mark_not_found_as_absolete,
         flags=opts.flags,
-        forbidden_msgids=opts.forbidden_msgids)
+        forbidden_msgids=opts.forbidden_msgids,
+        encoding=opts.encoding)
     if isinstance(opts.wrapwidth, int):
         kwargs['wrapwidth'] = opts.wrapwidth
 

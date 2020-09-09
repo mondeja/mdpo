@@ -1,7 +1,6 @@
 import os
 import shutil
 import subprocess
-import sys
 import tempfile
 from uuid import uuid4
 
@@ -49,10 +48,8 @@ def test_stdin(capsys, monkeypatch):
     assert striplastline(out) == MARKDOWN_CONTENT_EXAMPLE['output']
 
 
-@pytest.mark.skipif(not sys.platform.startswith('linux'),
-                    reason="requires Linux platform")
-def test_stdin_echo():
-    proc = subprocess.Popen(os.path.join('md2po', '__main__.py'),
+def test_stdin_communicate():
+    proc = subprocess.Popen('md2po',
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             stdin=subprocess.PIPE)

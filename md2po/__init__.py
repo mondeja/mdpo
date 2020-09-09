@@ -6,7 +6,7 @@ import md4c
 import polib
 
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -233,7 +233,7 @@ class Md2PoConverter:
         else:
             self._process_command(text)
 
-    def convert(self, po_filepath=None, save=False):
+    def convert(self, po_filepath=None, save=False, encoding=None):
         _po_filepath = None
         if not po_filepath:
             po_filepath = ''
@@ -242,7 +242,10 @@ class Md2PoConverter:
             if not os.path.exists(po_filepath):
                 po_filepath = ''
 
-        self.pofile = polib.pofile(po_filepath, wrapwidth=self.wrapwidth)
+        pofile_kwargs = (dict(autodetect_encoding=False, encoding=encoding) if
+                         encoding else {})
+        self.pofile = polib.pofile(po_filepath, wrapwidth=self.wrapwidth,
+                                   **pofile_kwargs)
 
         parser = md4c.GenericParser(self.flags)
 
@@ -279,7 +282,8 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
                        plaintext=True, wrapwidth=78,
                        mark_not_found_as_absolete=False,
                        flags=DEFAULT_MD4C_FLAGS,
-                       forbidden_msgids=FORBIDDEN_MSGIDS):
+                       forbidden_msgids=FORBIDDEN_MSGIDS,
+                       encoding=None):
     """
     Extracts all the msgids from a string of Markdown content or a group
     of files.
@@ -320,6 +324,7 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
             extensions>`_.
         forbidden_msgids (list): Set of msgids that, if found, will not be
             included in output.
+        encoding (bool): Resulting pofile encoding (autodetected by default).
 
     Examples:
         >>> content = 'Some text with `inline code`'
@@ -342,4 +347,4 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         plaintext=plaintext, wrapwidth=wrapwidth,
         mark_not_found_as_absolete=mark_not_found_as_absolete,
         flags=flags, forbidden_msgids=forbidden_msgids,
-    ).convert(po_filepath=po_filepath, save=save)
+    ).convert(po_filepath=po_filepath, save=save, encoding=encoding)
