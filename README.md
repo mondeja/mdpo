@@ -3,7 +3,7 @@
 [![PyPI][pypi-image]][pypi-link]
 [![PyPI Python versions][pypi-versions-image]][pypi-link]
 [![License][license-image]][license-link]
-[![Tests][tests-image]][tests-link]
+<!--[![Tests][tests-image]][tests-link]-->
 [![Coverage status][coverage-image]][coverage-link]
 [![Documentation status][doc-image]][doc-link]
 
@@ -18,7 +18,16 @@ Library and command line interface to extract contents of a set of Markdown
 ## Install
 
 ```bash
-pip install md2po
+python3 -m pip install \
+  -e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c \
+  && pip install md2po
+```
+
+### Specify in requirements
+
+```ini
+-e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c
+md2po>=0.1.3
 ```
 
 ### MacOS and Windows users
@@ -163,17 +172,13 @@ md2po -f "locale/doc.po" -s -i "todo.md,changelog.md" "doc/src/**/**.md"
 For a full list of parameters supported see the
  [documentation on ReadTheDocs][doc-link].
 
-## Known limitations
-
-- Indented code blocks are not supported well.
-
 [pypi-image]: https://img.shields.io/pypi/v/md2po
 [pypi-link]: https://pypi.org/project/md2po/
 [pypi-versions-image]: https://img.shields.io/pypi/pyversions/md2po?logo=python&logoColor=aaaaaa&labelColor=333333
 [license-image]: https://img.shields.io/pypi/l/md2po?color=light-green
 [license-link]: https://github.com/mondeja/md2po/blob/master/LICENSE
-[tests-image]: https://img.shields.io/travis/mondeja/md2po?label=tests
-[tests-link]: https://travis-ci.com/github/mondeja/md2po
+<!--[tests-image]: https://img.shields.io/travis/mondeja/md2po?label=tests-->
+<!--[tests-link]: https://travis-ci.com/github/mondeja/md2po-->
 [coverage-image]: https://coveralls.io/repos/github/mondeja/md2po/badge.svg
 [coverage-link]: https://coveralls.io/github/mondeja/md2po
 [doc-image]: https://readthedocs.org/projects/md2po/badge/?version=latest

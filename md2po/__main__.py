@@ -73,7 +73,7 @@ def build_parser():
                              ' msgids if are found.')
     parser.add_argument('-e', '--encoding', dest='encoding', default=None,
                         help='Resulting pofile encoding (autodetected by'
-                             ' default)')
+                             ' default).')
     return parser
 
 

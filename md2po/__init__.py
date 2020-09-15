@@ -6,7 +6,7 @@ import md4c
 import polib
 
 
-__version__ = '0.1.1'
+__version__ = '0.1.3'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -17,8 +17,7 @@ FORBIDDEN_MSGIDS = (' ', '\n')
 DEFAULT_MD4C_FLAGS = ('MD_FLAG_COLLAPSEWHITESPACE|'
                       'MD_FLAG_TABLES|'
                       'MD_FLAG_STRIKETHROUGH|'
-                      'MD_FLAG_TASKLISTS|'
-                      'MD_FLAG_NOINDENTEDCODEBLOCKS')
+                      'MD_FLAG_TASKLISTS')
 
 
 def _build_escaped_string(char):

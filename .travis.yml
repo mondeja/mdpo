@@ -3,7 +3,7 @@ os: linux
 dist: focal
 cache: false
 install:
-  - travis_retry pip install -U tox-travis
+  - travis_retry pip install -U tox pip
 matrix:
   include:
     - python: 3.6
@@ -13,7 +13,7 @@ matrix:
       env: TOXENV=coveralls
       dist: bionic
       before_script:
-        - pip install pypandoc coveralls && python -c "import pypandoc as p;p.download_pandoc(version='2.9', delete_installer=True);"
+        - pip install coveralls
       after_success:
         - coveralls
     - python: 3.8
@@ -22,5 +22,4 @@ matrix:
     - python: 3.7
       env: TOXENV=flake8
       dist: focal
-before_script: pip install pypandoc && python -c "import pypandoc as p;p.download_pandoc(version='2.9', delete_installer=True);"
 script: tox

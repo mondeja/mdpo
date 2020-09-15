@@ -20,7 +20,7 @@ REQUIRED = [
 ]
 
 TEST_EXTRAS = [
-    'pytest>=6.0.1',
+    'pytest>=6.0.2',
     'pytest-cov',
     'flake8',
     'flake8-print',
