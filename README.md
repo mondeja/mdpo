@@ -3,7 +3,7 @@
 [![PyPI][pypi-image]][pypi-link]
 [![PyPI Python versions][pypi-versions-image]][pypi-link]
 [![License][license-image]][license-link]
-<!--[![Tests][tests-image]][tests-link]-->
+[![Tests][tests-image]][tests-link]
 [![Coverage status][coverage-image]][coverage-link]
 [![Documentation status][doc-image]][doc-link]
 
@@ -18,7 +18,7 @@ Library and command line interface to extract contents of a set of Markdown
 ## Install
 
 ```bash
-python3 -m pip install \
+pip install \
   -e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c \
   && pip install md2po
 ```
@@ -177,8 +177,8 @@ For a full list of parameters supported see the
 [pypi-versions-image]: https://img.shields.io/pypi/pyversions/md2po?logo=python&logoColor=aaaaaa&labelColor=333333
 [license-image]: https://img.shields.io/pypi/l/md2po?color=light-green
 [license-link]: https://github.com/mondeja/md2po/blob/master/LICENSE
-<!--[tests-image]: https://img.shields.io/travis/mondeja/md2po?label=tests-->
-<!--[tests-link]: https://travis-ci.com/github/mondeja/md2po-->
+[tests-image]: https://img.shields.io/travis/mondeja/md2po?label=tests
+[tests-link]: https://travis-ci.com/github/mondeja/md2po
 [coverage-image]: https://coveralls.io/repos/github/mondeja/md2po/badge.svg
 [coverage-link]: https://coveralls.io/github/mondeja/md2po
 [doc-image]: https://readthedocs.org/projects/md2po/badge/?version=latest
