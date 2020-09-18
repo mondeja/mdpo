@@ -6,7 +6,7 @@ import md4c
 import polib
 
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -18,7 +18,8 @@ DEFAULT_MD4C_FLAGS = ('MD_FLAG_COLLAPSEWHITESPACE|'
                       'MD_FLAG_TABLES|'
                       'MD_FLAG_STRIKETHROUGH|'
                       'MD_FLAG_TASKLIST|'
-                      'MD_FLAG_LATEXMATHSPANS')
+                      'MD_FLAG_LATEXMATHSPANS|'
+                      'MD_FLAG_WIKILINKS')
 
 
 def _build_escaped_string(char):
@@ -29,6 +30,7 @@ def _parse_md4c_flags(flags):
     modes = {
         "strikethrough": False,
         "latexmathspans": False,
+        "wikilinks": False
     }
     flags_string = flags.replace('+', '|').replace(' ', '')
     flags_list = []
@@ -41,6 +43,8 @@ def _parse_md4c_flags(flags):
             modes["strikethrough"] = True
         elif md4c_attr == md4c.MD_FLAG_LATEXMATHSPANS:
             modes["latexmathspans"] = True
+        elif md4c_attr == md4c.MD_FLAG_WIKILINKS:
+            modes['wikilinks'] = True
     return (sum(flags_list), modes)
 
 
@@ -116,8 +120,6 @@ class Md2PoConverter:
             if self.modes["strikethrough"]:
                 self.strikethrough_string = kwargs.get(
                     'strikethrough_string', '~~')
-                self.strikethrough_string_escaped = _build_escaped_string(
-                    self.strikethrough_string)
                 self._enterspan_replacer[md4c.SpanType.DEL] = \
                     self.strikethrough_string
                 self._leavespan_replacer[md4c.SpanType.DEL] = \
@@ -126,8 +128,6 @@ class Md2PoConverter:
             if self.modes['latexmathspans']:
                 self.latexmath_string = kwargs.get(
                     'latexmath_string', '$')
-                self.latexmath_string_escaped = _build_escaped_string(
-                    self.latexmath_string)
                 self._enterspan_replacer[md4c.SpanType.LATEXMATH] = \
                     self.latexmath_string
                 self._leavespan_replacer[md4c.SpanType.LATEXMATH] = \
@@ -141,6 +141,12 @@ class Md2PoConverter:
                     self.latexmathdisplay_string
                 self._leavespan_replacer[md4c.SpanType.LATEXMATH_DISPLAY] = \
                     self.latexmathdisplay_string
+
+            if self.modes['wikilinks']:
+                self._enterspan_replacer[md4c.SpanType.WIKILINK] = \
+                    self.link_start_string
+                self._leavespan_replacer[md4c.SpanType.WIKILINK] = \
+                    self.link_end_string
 
         self._inside_htmlblock = False
         self._inside_codeblock = False
