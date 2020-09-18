@@ -1,0 +1,6 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Some text with $$fake latex maths$$."
+msgstr ""
