@@ -6,7 +6,7 @@ import md4c
 import polib
 
 
-__version__ = '0.1.7'
+__version__ = '0.1.8'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -30,7 +30,8 @@ def _parse_md4c_flags(flags):
     modes = {
         "strikethrough": False,
         "latexmathspans": False,
-        "wikilinks": False
+        "wikilinks": False,
+        "underline": False,  # unactive by default
     }
     flags_string = flags.replace('+', '|').replace(' ', '')
     flags_list = []
@@ -45,6 +46,8 @@ def _parse_md4c_flags(flags):
             modes["latexmathspans"] = True
         elif md4c_attr == md4c.MD_FLAG_WIKILINKS:
             modes['wikilinks'] = True
+        elif md4c_attr == md4c.MD_FLAG_UNDERLINE:
+            modes['underline'] = True
     return (sum(flags_list), modes)
 
 
@@ -135,8 +138,6 @@ class Md2PoConverter:
 
                 self.latexmathdisplay_string = kwargs.get(
                     'latexmathdisplay_string', '$$')
-                self.latexmathdisplay_string_escaped = _build_escaped_string(
-                    self.latexmathdisplay_string)
                 self._enterspan_replacer[md4c.SpanType.LATEXMATH_DISPLAY] = \
                     self.latexmathdisplay_string
                 self._leavespan_replacer[md4c.SpanType.LATEXMATH_DISPLAY] = \
@@ -147,6 +148,17 @@ class Md2PoConverter:
                     self.link_start_string
                 self._leavespan_replacer[md4c.SpanType.WIKILINK] = \
                     self.link_end_string
+
+            if self.modes['underline']:
+                # underline text is standarized with double '_'
+                self.underline_string = kwargs.get('underline_string', '__')
+                self._enterspan_replacer[md4c.SpanType.U] = \
+                    self.underline_string
+                self._leavespan_replacer[md4c.SpanType.U] = \
+                    self.underline_string
+            # optimization to skip checking for ``self.modes['underline']``
+            # inside spans
+            self._inside_uspan = False
 
         self._inside_htmlblock = False
         self._inside_codeblock = False
@@ -238,13 +250,17 @@ class Md2PoConverter:
     def enter_span(self, span, details):
         # print("ENTER SPAN:", span.name, details)
         if not self.plaintext:
-            try:
-                self._current_msgid += self._enterspan_replacer[span.value]
-            except KeyError:
-                pass
+            # underline spans for double '_' character enters two times
+            if not self._inside_uspan:
+                try:
+                    self._current_msgid += self._enterspan_replacer[span.value]
+                except KeyError:
+                    pass
 
             if span.value == md4c.SpanType.CODE:
                 self._inside_codespan = True
+            if span.value == md4c.SpanType.U:
+                self._inside_uspan = True
 
         if span.value in (md4c.SpanType.IMG, md4c.SpanType.A) and \
                 details['title']:
@@ -253,13 +269,16 @@ class Md2PoConverter:
     def leave_span(self, span, details):
         # print("LEAVE SPAN:", span.name)
         if not self.plaintext:
-            try:
-                self._current_msgid += self._leavespan_replacer[span.value]
-            except KeyError:
-                pass
+            if not self._inside_uspan:
+                try:
+                    self._current_msgid += self._leavespan_replacer[span.value]
+                except KeyError:
+                    pass
 
             if span.value == md4c.SpanType.CODE:
                 self._inside_codespan = False
+            if span.value == md4c.SpanType.U:
+                self._inside_uspan = False
 
     def text(self, block, text):
         # print("TEXT:", text)

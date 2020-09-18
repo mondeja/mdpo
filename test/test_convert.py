@@ -6,41 +6,62 @@ from uuid import uuid4
 
 import pytest
 
-from md2po import markdown_to_pofile
+from md2po import DEFAULT_MD4C_FLAGS, markdown_to_pofile
 
 
 EXAMPLES_DIR = os.path.join('test', 'convert-examples')
 
-PT_EXAMPLES_DIR = os.path.join(EXAMPLES_DIR, 'plaintext')
-PT_EXAMPLES_GLOB = glob.glob(PT_EXAMPLES_DIR + os.sep + '*.md')
-PT_EXAMPLES = sorted([os.path.basename(fp) for fp in PT_EXAMPLES_GLOB])
 
-MT_EXAMPLES_DIR = os.path.join(EXAMPLES_DIR, 'markuptext')
-MT_EXAMPLES_GLOB = glob.glob(MT_EXAMPLES_DIR + os.sep + '*.md')
-MT_EXAMPLES = sorted([os.path.basename(fp) for fp in MT_EXAMPLES_GLOB])
+def _build_examples(dirname):
+    examples_dir = os.path.join(EXAMPLES_DIR, dirname)
+    examples_glob = glob.glob(examples_dir + os.sep + '*.md')
+    examples_filenames = sorted([os.path.basename(fp) for fp in examples_glob])
+    return (examples_dir, examples_filenames)
 
 
-@pytest.mark.parametrize('filename', PT_EXAMPLES)
+EXAMPLES = {}
+for suite in os.listdir(EXAMPLES_DIR):
+    dirpath, filenames = _build_examples(suite)
+    EXAMPLES[suite] = {
+        "filenames": filenames,
+        "dirpath": dirpath
+    }
+
+
+@pytest.mark.parametrize('filename', EXAMPLES['plaintext']['filenames'])
 def test_convert_plaintext(filename):
-    filepath = os.path.join(PT_EXAMPLES_DIR, filename)
+    filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
     pofile = markdown_to_pofile(filepath, plaintext=True)
 
     with open(filepath + '.expect.po', 'r') as expect_file:
         assert pofile.__unicode__() == expect_file.read()
 
 
-@pytest.mark.parametrize('filename', MT_EXAMPLES)
+@pytest.mark.parametrize('filename', EXAMPLES['markuptext']['filenames'])
 def test_convert_markuptext(filename):
-    filepath = os.path.join(MT_EXAMPLES_DIR, filename)
+    filepath = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
     pofile = markdown_to_pofile(filepath, plaintext=False)
 
     with open(filepath + '.expect.po', 'r') as expect_file:
         assert pofile.__unicode__() == expect_file.read()
 
 
-@pytest.mark.parametrize('filename', [random.choice(PT_EXAMPLES)])
+@pytest.mark.parametrize('filename', EXAMPLES['underline']['filenames'])
+def test_convert_underline(filename):
+    filepath = os.path.join(EXAMPLES['underline']['dirpath'], filename)
+    pofile = markdown_to_pofile(
+        filepath, plaintext=False,
+        flags=DEFAULT_MD4C_FLAGS + '|MD_FLAG_UNDERLINE')
+
+    with open(filepath + '.expect.po', 'r') as expect_file:
+        assert pofile.__unicode__() == expect_file.read()
+
+
+@pytest.mark.parametrize(
+    'filename', [random.choice(EXAMPLES['plaintext']['filenames'])]
+)
 def test_convert_save(filename):
-    filepath = os.path.join(PT_EXAMPLES_DIR, filename)
+    filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
 
     save_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
 

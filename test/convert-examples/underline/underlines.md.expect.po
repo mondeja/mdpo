@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid "**bold text**"
+msgstr ""
+
+msgid "*italic text*"
+msgstr ""
+
+msgid "__underline text__"
+msgstr ""
