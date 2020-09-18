@@ -1,5 +1,6 @@
-md2po API
-=========
+***********
+md2po's API
+***********
 
 .. automodule:: md2po
    :members:

@@ -1,5 +1,6 @@
+**********************
 Command line interface
-======================
+**********************
 
 .. argparse::
    :module: md2po.__main__
