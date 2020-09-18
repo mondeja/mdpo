@@ -17,17 +17,19 @@ Library and command line interface to extract contents of a set of Markdown
 
 ## Install
 
+### Linux
+
 ```bash
 pip install \
   -e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c \
   && pip install md2po
 ```
 
-### Specify in requirements
+#### Specifying in requirements
 
 ```ini
 -e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c
-md2po>=0.1.3
+md2po
 ```
 
 ### MacOS and Windows users
@@ -152,10 +154,9 @@ msgid "Some text without comment"
 msgstr ""
 ```
 
-### Including comments itself
+### Extracting comments itself
 
-You can include the content of comments inside the pofile (don't ask me why
- you need this):
+You can extract comments inside the pofile (don't ask me why you need this):
 
 - `<!-- md2po-include Message that you want to include -->`
 

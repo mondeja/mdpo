@@ -6,7 +6,7 @@ import md4c
 import polib
 
 
-__version__ = '0.1.3'
+__version__ = '0.1.5'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -17,7 +17,7 @@ FORBIDDEN_MSGIDS = (' ', '\n')
 DEFAULT_MD4C_FLAGS = ('MD_FLAG_COLLAPSEWHITESPACE|'
                       'MD_FLAG_TABLES|'
                       'MD_FLAG_STRIKETHROUGH|'
-                      'MD_FLAG_TASKLISTS')
+                      'MD_FLAG_TASKLIST|')
 
 
 def _build_escaped_string(char):
@@ -85,20 +85,27 @@ class Md2PoConverter:
             self.code_string_escaped = _build_escaped_string(
                 self.code_string)
 
+            self.strikethrough_string = kwargs.get(
+                'strikethrough_string', '~~')
+            self.strikethrough_string_escaped = _build_escaped_string(
+                self.strikethrough_string)
+
             self._bold_italic_context = False
 
             self._enterspan_replacer = {
                 md4c.SpanType.STRONG: self.bold_string,
                 md4c.SpanType.EM: self.italic_string,
                 md4c.SpanType.CODE: self.code_string,
-                md4c.SpanType.A: self.link_start_string
+                md4c.SpanType.A: self.link_start_string,
+                md4c.SpanType.DEL: self.strikethrough_string,
             }
 
             self._leavespan_replacer = {
                 md4c.SpanType.STRONG: self.bold_string,
                 md4c.SpanType.EM: self.italic_string,
                 md4c.SpanType.CODE: self.code_string,
-                md4c.SpanType.A: self.link_end_string
+                md4c.SpanType.A: self.link_end_string,
+                md4c.SpanType.DEL: self.strikethrough_string,
             }
 
         self._inside_htmlblock = False
