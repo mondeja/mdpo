@@ -13,6 +13,7 @@ Fits completely the `CommonMark Specification`_.
    api
    cli
    commands
+   rationale
 
 
 .. _CommonMark Specification: https://spec.commonmark.org/0.29
