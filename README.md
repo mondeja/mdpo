@@ -8,12 +8,12 @@
 [![Documentation status][doc-image]][doc-link]
 
 Library and command line interface to extract contents of a set of Markdown
- files and save into `.po` files. Is like a tiny xgettext utility for Markdown
- files written in Python. Fits almost completely the
- [CommonMark Specification][commonmark-spec-link].
+ files and save into `.po` files. Fully complies with
+ [CommonMark Specification][commonmark-spec-link], supporting some additional
+ features.
 
 > If you want a solution to replace your extracted strings into a HTML file
- generated from your Markdown content you can use [mdpo2html][mdpo2html-link].
+ generated from your Markdown content you can try [mdpo2html][mdpo2html-link].
 
 ## Install
 
@@ -139,7 +139,7 @@ For example:
 ...
 ... Some text without comment
 ... '''
-
+>>>
 >>> pofile = markdown_to_pofile(content)
 >>> print(pofile)
 #
@@ -154,9 +154,40 @@ msgid "Some text without comment"
 msgstr ""
 ```
 
+### Contextual markers
+
+You can specify contexts for msgids using next command:
+
+- `<!-- md2po-context Context for your string -->`
+
+For example:
+
+```python
+>>> content = '''<!-- md2po-context month -->
+... May
+...
+... <!-- md2po-context might -->
+... May
+... '''
+>>>
+>>> pofile = markdown_to_pofile(content)
+>>> print(pofile)
+#
+msgid ""
+msgstr ""
+
+msgctxt "month"
+msgid "May"
+msgstr ""
+
+msgctxt "might"
+msgid "May"
+msgstr ""
+```
+
 ### Extracting comments itself
 
-You can extract comments inside the pofile (don't ask me why you need this):
+You can extract comments inside the pofile, but don't ask me why you need this:
 
 - `<!-- md2po-include Message that you want to include -->`
 

@@ -95,6 +95,39 @@ For example:
    msgstr ""
 
 
+Contextual markers
+==================
+
+You can specify contexts for msgids using next command:
+
+* ``<!-- md2po-context Context for your string -->``
+
+For example:
+
+.. code-block:: python
+
+   >>> content = '''<!-- md2po-context month -->
+   ... May
+   ...
+   ... <!-- md2po-context might -->
+   ... May
+   ... '''
+   >>>
+   >>> pofile = markdown_to_pofile(content)
+   >>> print(pofile)
+   #
+   msgid ""
+   msgstr ""
+
+   msgctxt "month"
+   msgid "May"
+   msgstr ""
+
+   msgctxt "might"
+   msgid "May"
+   msgstr ""
+
+
 Extracting comments itself
 ==========================
 

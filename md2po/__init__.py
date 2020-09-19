@@ -6,7 +6,7 @@ import md4c
 import polib
 
 
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'md2po'
 __description__ = ('Tiny utility like xgettext for msgid extracting from'
@@ -68,7 +68,8 @@ class Md2PoConverter:
         self.msgstr = kwargs.get('msgstr', '')
         self.msgids = []
         self._current_msgid = ''
-        self._current_tcomment = ''
+        self._current_tcomment = None
+        self._current_msgctxt = None
 
         self.wrapwidth = kwargs.get('wrapwidth', 78)
 
@@ -183,11 +184,12 @@ class Md2PoConverter:
         response.sort()
         return response
 
-    def _save_msgid(self, msgid, extracted_comment=None):
+    def _save_msgid(self, msgid, tcomment=None, msgctxt=None):
         if isinstance(msgid, str) and msgid not in self.forbidden_msgids:
             if polib.POEntry(msgid=msgid) not in self.pofile:
                 entry = polib.POEntry(msgid=msgid, msgstr=self.msgstr,
-                                      comment=extracted_comment)
+                                      comment=tcomment,
+                                      msgctxt=msgctxt)
                 self.pofile.append(entry)
             self.msgids.append(msgid)
 
@@ -196,11 +198,13 @@ class Md2PoConverter:
                 (not self.disable_next_line and not self.disable) or
                 self.enable_next_line):
             self._save_msgid(self._current_msgid.strip(' '),
-                             extracted_comment=self._current_tcomment)
+                             tcomment=self._current_tcomment,
+                             msgctxt=self._current_msgctxt)
         self.disable_next_line = False
         self.enable_next_line = False
         self._current_msgid = ''
-        self._current_tcomment = ''
+        self._current_tcomment = None
+        self._current_msgctxt = None
 
     def _process_command(self, text):
         command_search = re.search(
@@ -222,6 +226,13 @@ class Md2PoConverter:
                                      ' extracted comment with the command'
                                      ' \'md2po-translator\'.')
                 self._current_tcomment = comment.strip(" ")
+            elif command == 'context':
+                comment = command_search.group(2)
+                if comment is None:
+                    raise ValueError('You need to specify a string for the'
+                                     ' context with the command'
+                                     ' \'md2po-context\'.')
+                self._current_msgctxt = comment.strip(" ")
             elif command == 'include':
                 comment = command_search.group(2)
                 if comment is None:
