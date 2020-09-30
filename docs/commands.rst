@@ -1,6 +1,6 @@
-**************************
-Customizing the extraction
-**************************
+**********************
+Customizing extraction
+**********************
 
 You can customize the string extraction process using HTML comments in
 your Markdown files.
@@ -153,4 +153,44 @@ For example:
    msgstr ""
 
    msgid "Some text"
+   msgstr ""
+
+This command can be used along with ``mdpo-translator``:
+
+.. code-block:: python
+
+   >>> content = '''<!-- mdpo-translator Comment for translator in comment -->
+   ... <!-- mdpo-include This comment must be included -->
+   ... Some text that needs to be clarified
+   ... '''
+
+   >>> pofile = markdown_to_pofile(content)
+   >>> print(pofile)
+   #
+   msgid ""
+   msgstr ""
+
+   #. Comment for translator in comment
+   msgid "This comment must be included"
+   msgstr ""
+
+And with ``mdpo-context``, combining both:
+
+.. code-block:: python
+
+   >>> content = '''<!-- mdpo-context Some context for the included -->
+   ... <!-- mdpo-translator Comment for translator in comment -->
+   ... <!-- mdpo-include This comment must be included -->
+   ... Some text that needs to be clarified
+   ... '''
+
+   >>> pofile = markdown_to_pofile(content)
+   >>> print(pofile)
+   #
+   msgid ""
+   msgstr ""
+
+   #. Comment for translator in comment
+   msgctxt "Some context for the included"
+   msgid "This comment must be included"
    msgstr ""

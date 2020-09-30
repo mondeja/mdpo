@@ -94,8 +94,7 @@ class UploadCommand(Command):
 setup(
     name=ABOUT['__title__'],
     version=ABOUT['__version__'],
-    description='Tiny utility like xgettext for msgid extracting from'
-                ' Markdown content.',
+    description='Utilities for translate Markdown files using pofiles.',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
     author=AUTHOR,

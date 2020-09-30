@@ -4,9 +4,6 @@ Install
 
 You need to compile `md4c`_ before install, and then:
 
-Linux
-=====
-
 .. code-block:: bash
 
    pip install \

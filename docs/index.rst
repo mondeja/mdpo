@@ -2,17 +2,22 @@
 mdpo's documentation
 ####################
 
-Set of utilities to translate Markdown files using `.po` files.
+Utilities to translate Markdown files using `.po` files.
 Fully complies with `CommonMark Specification`_.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
+   :caption: Reference
 
    install
    cli
    api
    commands
-   rationale
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Advanced
+
+   rationale
 
 .. _CommonMark Specification: https://spec.commonmark.org/0.29
