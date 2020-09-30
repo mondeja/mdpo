@@ -15,7 +15,7 @@ install:
   - sudo ldconfig
   - cd ../..
   - python -m virtualenv venv
-  - . venv/bin/activate && python -m pip install -e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c && python -m pip install -e git+https://github.com/mondeja/md2po.git@master#egg=md2po && python -m pip install pytest
+  - . venv/bin/activate && python -m pip install -e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c && python -m pip install -e git+https://github.com/mondeja/mdpo.git@master#egg=mdpo && python -m pip install pytest
 matrix:
   include:
     - python: 3.6

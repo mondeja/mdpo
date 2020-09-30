@@ -1,6 +1,6 @@
-#####################
-md2po's documentation
-#####################
+####################
+mdpo's documentation
+####################
 
 Set of utilities to translate Markdown files using `.po` files.
 Fully complies with `CommonMark Specification`_.
