@@ -1,0 +1,21 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Some text and some strong text with inline code, easy peasy"
+msgstr ""
+
+msgid "Another text and strong text with inline code, easy peasy also"
+msgstr ""
+
+msgid "New text with strong text that ends in code"
+msgstr ""
+
+msgid "Other text with strong text that ends in code"
+msgstr ""
+
+msgid "Another new text with strong code"
+msgstr ""
+
+msgid "start-end-with-bold-code"
+msgstr ""

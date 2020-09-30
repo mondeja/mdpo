@@ -1,7 +1,17 @@
-***********
-md2po's API
-***********
+****************
+Public mdpo APIs
+****************
 
-.. automodule:: md2po
+md2po
+=====
+
+.. automodule:: mdpo.md2po
    :members:
-   :private-members: Md2PoConverter
+   :private-members: Md2Po
+
+po2md
+=====
+
+.. automodule:: mdpo.po2md
+   :members:
+   :private-members: Po2Md

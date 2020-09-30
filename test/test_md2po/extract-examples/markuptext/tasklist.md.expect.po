@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Non solved task."
+msgstr ""
+
+msgid "Solved task."
+msgstr ""
+
+msgid "Another solved task."
+msgstr ""

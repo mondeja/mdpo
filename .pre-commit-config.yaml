@@ -7,11 +7,6 @@ repos:
           flake8-print,
           flake8-implicit-str-concat,
         ]
-  - repo: https://github.com/PyCQA/isort
-    rev: master
-    hooks:
-      - id: isort
-        args: ['--check-only']
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: master
     hooks:

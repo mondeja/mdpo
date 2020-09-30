@@ -1,0 +1,3 @@
+- [ ] Tarea no resuelta.
+- [x] Tarea resuelta.
+- [X] Otra tarea resuelta.

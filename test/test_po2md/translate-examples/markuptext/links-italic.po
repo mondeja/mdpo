@@ -1,0 +1,17 @@
+#
+msgid ""
+msgstr ""
+
+msgid "[a link *with italics*](http://example.org)"
+msgstr "[un enlace *con cursivas*](http://example.org)"
+
+msgid "Another [link *with italics*](http://example.org)"
+msgstr "Otro [enlace *con cursivas*](http://example.org)"
+
+msgid ""
+"Another [link *with italics*](http://example.org) that ends in paragraph."
+msgstr ""
+"Otro [enlace *con cursivas*](http://example.org) que termina en párrafo."
+
+msgid "[*Link that is italic text also*](http://example.org)"
+msgstr "[*Enlace que también es texto en cursiva*](http://example.org)"

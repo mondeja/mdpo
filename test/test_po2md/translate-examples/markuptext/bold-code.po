@@ -1,0 +1,25 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Some text and **some strong text with `inline code`, easy** peasy"
+msgstr ""
+"Algo de texto y **algo de texto en negrita con `código en línea`, pan** "
+"comido"
+
+msgid "Another text and **strong text with `inline code`, easy** peasy also"
+msgstr ""
+"Otro texto y **texto en negrita con `código en línea`, pan** comido "
+"también"
+
+msgid "New text with **strong text that ends in `code`**"
+msgstr "Nuevo texto con **texto en negrita que termina en `código`**"
+
+msgid "Other text with **strong text that ends in `code`**"
+msgstr "Otro texto con **texto en negrita que termina en `código`**"
+
+msgid "Another new text with **`strong code`**"
+msgstr "Otro nuevo texto con **`código en negrita`**"
+
+msgid "**`start-end-with-bold-code`**"
+msgstr "**`comienzo-final-con-código-en-negrita`**"

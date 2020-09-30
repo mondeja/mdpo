@@ -1,0 +1,24 @@
+#
+msgid ""
+msgstr ""
+
+msgid "I just love **bold text**."
+msgstr "Simplemente me encanta el **texto en negrita**."
+
+msgid "I just hate **bold text**."
+msgstr "Simplemente odio el **texto en negrita**."
+
+msgid "Love**is**bold"
+msgstr "El amor**es**negrita"
+
+msgid "Malformatted__bold__text"
+msgstr "Texto__en negrita__malformateado"
+
+msgid "**Text that starts with bold** and ends normal"
+msgstr "**Texto que comienza en negrita** y termina normal"
+
+msgid "Text that **ends with bold**"
+msgstr "Texto que **acaba en negrita**"
+
+msgid "**All bold**"
+msgstr "**Todo en negrita**"

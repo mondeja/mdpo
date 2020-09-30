@@ -1,0 +1,89 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Some text with literal asterisk \\\\* and *italic* markup."
+msgstr "Algo de texto con asterisco literal \\\\* y texto *en cursiva*."
+
+msgid "Some text with two literal asterisks \\\\* \\\\* and *italic* markup."
+msgstr ""
+"Algo de texto con dos asteriscos literales \\\\* \\\\* y texto *en cursiva*."
+
+msgid "Some text with literal asterisk inside *italic \\\\* markup*."
+msgstr ""
+"Algo de texto con asterisco literal dentro de *marcado \\\\* en cursiva*."
+
+msgid "Some text with two literal asterisks inside *italic \\\\* \\\\*markup*."
+msgstr ""
+"Algo de texto con dos asteriscos literales dentro de *marcado \\\\* \\\\*"
+"en cursiva*."
+
+msgid "Some text with double literal asterisk \\\\*\\\\* and **bold** markup."
+msgstr ""
+"Algo de texto con doble asterisco literal \\\\*\\\\* y marcado en **negrita**."
+
+msgid "Some text with two double literal asterisks \\\\*\\\\* \\\\*\\\\* and **bold** markup."
+msgstr ""
+"Algo de texto con doble asteriscos literales \\\\*\\\\* \\\\*\\\\* y marcado "
+"en **negrita**."
+
+msgid "Some text with two literal asterisks inside **bold \\\\* \\\\*markup**."
+msgstr ""
+"Algo de texto con dos asteriscos literales dentro de **marcado \\\\* \\\\*"
+"en negrita**."
+
+msgid ""
+"Some text with literal asterisk \\\\*, *italic* markup, double literal "
+"asterisk \\\\*\\\\* and **bold** markup."
+msgstr ""
+"Algo de texto con asterisco literal \\\\*, marcado *en cursiva*, doble "
+"asterisco literal \\\\*\\\\* y marcado **en negrita**."
+
+msgid ""
+"Some text with literal asterisk \\\\*, *italic* markup, two double literal "
+"asterisks \\\\*\\\\* \\\\*\\\\* and **bold** markup."
+msgstr ""
+"Algo de texto con asterisco literal \\\\*, marcado *en cursiva*, dos dobles "
+"asteriscos literales \\\\*\\\\* \\\\*\\\\* y marcado **en negrita**."
+
+msgid ""
+"Some text with two literal asterisks \\\\* \\\\*, *italic* markup, double "
+"literal asterisk \\\\*\\\\* and **bold** markup."
+msgstr ""
+"Algo de texto con dos asteriscos literales \\\\* \\\\*, marcado *en cursiva*,"
+" doble asterisco literal \\\\*\\\\* y marcado **en negrita**."
+
+msgid ""
+"Some text with two literal asterisks \\\\* \\\\*, *italic* markup, two "
+"double literal asterisks \\\\*\\\\* \\\\*\\\\* and **bold** markup."
+msgstr ""
+"Algo de texto con dos asteriscos literales \\\\* \\\\*, marcado *en cursiva*,"
+" dos dobles asteriscos literales \\\\*\\\\* \\\\*\\\\* y marcado **en "
+"negrita**."
+
+msgid "Some text with literal backtick inside ``inline ` code``."
+msgstr ""
+"Algo de texto con tilde invertida literal dentro de ``código ` en "
+"línea``."
+
+msgid "Some text with two literal backticks inside `inline `` code`."
+msgstr ""
+"Algo de texto con dos tildes invertidas literales dentro de `código "
+"`` en línea`."
+
+
+msgid "Some text with three literal backticks inside `inline ``` code`."
+msgstr ""
+"Algo de texto con tres tildes invertidas literales dentro de `código "
+"``` en línea`."
+
+msgid ""
+"Some text with literal backtick \\\\`, `code` markup, double literal "
+"backtick \\\\`\\\\` and `code with double backtick` markup."
+msgstr ""
+"Algo de texto con tilde invertida literal \\\\`, marcado de `código`, "
+"doble tilde invertida literal \\\\`\\\\` y marcado de `código con doble "
+"tilde invertida`."
+
+msgid "[this is a link](href \"title with \\\" characters\")"
+msgstr "[esto es un link](hreferencia \"título con caracteres \\\"\")"

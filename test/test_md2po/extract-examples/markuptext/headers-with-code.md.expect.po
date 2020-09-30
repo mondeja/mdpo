@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "My favorite language is `Python`"
+msgstr ""
+
+msgid "I also like `Javascript`, `LaTeX` and `C`"
+msgstr ""

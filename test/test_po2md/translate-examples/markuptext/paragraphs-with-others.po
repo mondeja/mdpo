@@ -1,0 +1,25 @@
+#
+msgid ""
+msgstr ""
+
+msgid ""
+"Check that you have added Ubuntu `main`, `restricted`, `universe` and "
+"`multiverse` repositories in the file `/etc/apt/sources.list`."
+msgstr ""
+"Comprueba que has añadido los repositorios de Ubuntu `main`, `restricted`, "
+"`universe` and `multiverse` en el archivo `/etc/apt/sources.list`."
+
+msgid ""
+"Tests are developed using `pytest`, that is a Python testing framework."
+msgstr ""
+"Los tests son desarrollados usando `pytest`, que es un framework de testeo "
+"Python."
+
+msgid "this is a paragraph and **the next line starts with bold markup**"
+msgstr ""
+"esto es un párrafo y **la siguiente línea comienza con marcado en negrita**"
+
+msgid "This is a line with ``code that `contains ` backticks``, as you see"
+msgstr ""
+"Esto es una línea con ``código que `contiene` tildes invertidas``, como "
+"ves"

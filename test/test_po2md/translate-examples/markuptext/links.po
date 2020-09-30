@@ -1,0 +1,50 @@
+#
+msgid ""
+msgstr ""
+
+msgid "My favorite PEP is [PEP 0](https://www.python.org/dev/peps/)."
+msgstr "Mi PEP favorito es [PEP 0](https://www.python.org/dev/peps/)."
+
+msgid "The best search engine for privacy"
+msgstr "El mejor motor de búsqueda para privacidad"
+
+msgid ""
+"My favorite search engine is [Duck Duck Go](https://duckduckgo.com "
+"\"The best search engine for privacy\")."
+msgstr ""
+"Mi motor de búsqueda favorito es [Duck Duck Go](https://duckduckgo.com"
+" \"El mejor motor de búsqueda para privacidad\")."
+
+msgid "Visit [https://www.github.com/mondeja/mdpo]"
+msgstr "Visita [https://www.github.com/mondeja/mdpo]"
+
+msgid ""
+"Write an email to [fake@example.com](mailto:fake@example.com) if you want "
+"help"
+msgstr ""
+"Escribe un correo electrónico a [fake@example.com](mailto:fake@example.com) "
+"si quieres ayuda"
+
+msgid "[Reference A](https://github.com/mondeja/mdpo)"
+msgstr "[Referencia A](https://github.com/mondeja/mdpo)"
+
+msgid "[Reference B](https://github.com/mondeja/mdpo \"Second reference\")"
+msgstr "[Referencia B](https://github.com/mondeja/mdpo \"Segunda referencia\")"
+
+msgid "[Reference C](https://github.com/mondeja/mdpo \"Third reference\")"
+msgstr "[Referencia C](https://github.com/mondeja/mdpo \"Tercera referencia\")"
+
+msgid "[Reference D](https://github.com/mondeja/mdpo \"Fourth reference\")"
+msgstr "[Referencia D](https://github.com/mondeja/mdpo \"Cuarta referencia\")"
+
+msgid "[Reference E](https://github.com/mondeja/mdpo)"
+msgstr "[Referencia E](https://github.com/mondeja/mdpo)"
+
+msgid "[Reference F](https://github.com/mondeja/mdpo \"Sixth reference\")"
+msgstr "[Referencia F](https://github.com/mondeja/mdpo \"Sexta referencia\")"
+
+msgid "[Reference G](https://github.com/mondeja/mdpo \"Seventh reference\")"
+msgstr "[Referencia G](https://github.com/mondeja/mdpo \"Séptima referencia\")"
+
+msgid "[Reference H](https://github.com/mondeja/mdpo \"Eighth reference\")"
+msgstr "[Referencia H](https://github.com/mondeja/mdpo \"Octava referencia\")"

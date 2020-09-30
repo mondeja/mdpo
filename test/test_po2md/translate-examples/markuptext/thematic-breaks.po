@@ -1,0 +1,21 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Hello"
+msgstr "Hola"
+
+msgid "Goodbye"
+msgstr "Adiós"
+
+msgid "Interrupting"
+msgstr "Interrumpiendo"
+
+msgid "a paragraph"
+msgstr "un párrafo"
+
+msgid "Inside"
+msgstr "Dentro de"
+
+msgid "a list"
+msgstr "una lista"

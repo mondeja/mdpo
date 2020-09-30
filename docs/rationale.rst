@@ -1,19 +1,6 @@
-*********
-Rationale
-*********
-
-.. warning::
-
-   This is translating Markdown, **the hard way**.
-
-Why?
-====
-
-Using this library implies a complicated way for the programmer to prepare a
-translation workflow compared to other solutions. It is designed to make life
-easier for the translator and to unificate the translation process of Markdown
-files versus other source code files, using ``.po`` files for all, among other
-advantages.
+**************
+mdpo rationale
+**************
 
 Before start using this library, check if you can use the following
 approach to solve the problem of translating Markdown.
@@ -36,12 +23,6 @@ Advantages
 * **Programming vagueness**: The programmer don't need to deal with complicated
   translations workflows. He/she can sort files by translation directories or
   whatever. The use of plain files limits the responsibility of the programmer.
-* **L18n customization**: The translation can be customized for each language.
-  This could be interesting if we have to translate articles for different
-  market niches in different countries, but this can be achieved using another
-  approach in which those articles were unique for the countries that required
-  it, but this is a localization (l18n) problem rather than
-  internationalization (i18n).
 
 Disadvantages
 -------------
@@ -63,8 +44,8 @@ Disadvantages
   review each Markdown file, a format they don't have to be used to, looking
   for these parts that have been updated... It just doesn't make sense.
 * **Redundancy**: There are parts of Markdown files that don't need to be
-  translated like code blocks. You can tell to the translators that they must
-  not translate the content blocks of text wich starts and ends with triple
+  translated, like code blocks. You can tell to the translators that they must
+  not translate content inside blocks of text wich starts and ends with triple
   backticks (``\```), but at the end of the day, you will have blocks of code
   translated. These blocks, as well as other parts of the source file, must be
   hidden to the translator.
@@ -116,19 +97,16 @@ mdpo approach
 =============
 
 The solution proposed by this library is to extract from Markdown files only
-the text that needs to be translated, including markdown characters but
-simplifying them:
+the text that needs to be translated, including markdown characters:
 
 * ``**Bold text**`` is not changed, is dumped into msgids as ``**Bold text**``.
 * ``*Italic text*`` is not changed, is dumped into msgids as ``*Italic text*``.
 * ````Code text```` and ```Code text``` are unified to use one backtick
   for start and end characters and dumped into msgids as ```Code text```.
-* ``[Link text](target)`` are dumped into msgids removing the target and
-  changing markup characters a bit, as ```[Link text]```. The same behaviour
-  occurs for ``[referenced links][reference]`` and ``[wiki links]``.
-* From images like ``![Image alternative text](/target.ext "Image title text")``,
-  title text and alternative text are dumped into msgids, for this case
-  ``Image alternative text`` and ``Image title text``.
+* ``[Link text](target)`` is not changed, is dumped into msgids as is.
+  Also, if includes titles.
+* Images as ``![Image alternative text](/target.ext "Image title text")``,
+  are not changed, but included as is.
 * ``~~Strikethrough text~~`` is not changed, is dumped into msgids as
   ``~~Strikethrough text~~``.
 * ``$LaTeX maths$`` and ``$$LaTeX maths displays$$`` are not changed, are dumped
@@ -155,12 +133,10 @@ Advantages
 Disadvantages
 -------------
 
-* Msgids markup characters uses a new syntax that is not fully Markdown. This
-  is intentionally made for create translation editors that can work with
-  markup using template rules, simplifying them to be able to specify characters
-  at start and end for each markup type.
 * Message replacers needs to be written and depends on this specification.
 * Translation editors needs to be configured with this specification if they
   want to handle properly markup character templates.
+
+
 
 .. _jekyll-multiple-languages-plugin: https://github.com/kurtsson/jekyll-multiple-languages-plugin

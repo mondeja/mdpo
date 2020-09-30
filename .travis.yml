@@ -24,14 +24,14 @@ matrix:
       dist: bionic
       before_script:
         - pip install pytest-cov coveralls
-      script: pytest --cov=md2po --cov-config setup.cfg
+      script: pytest --cov=mdpo --cov-config=setup.cfg
       after_success:
         - coveralls
     - python: 3.8
       dist: focal
       before_script:
         - pip install flake8
-      script: flake8 test md2po docs setup.py
+      script: flake8 test mdpo docs setup.py
     - python: 3.7
       dist: focal
 script: . venv/bin/activate && python -m pytest -svv

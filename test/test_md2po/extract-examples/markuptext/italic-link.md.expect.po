@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid "*Italic text with [link](github.com/mondeja)*"
+msgstr ""
+
+msgid "*[link](github.com/mondeja) starting italic text*"
+msgstr ""
+
+msgid "*[Italic that is link also](github.com/mondeja)*"
+msgstr ""

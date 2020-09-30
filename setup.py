@@ -9,8 +9,7 @@ import sys
 from setuptools import Command, find_packages, setup
 
 
-PROJECT_NAME = 'md2po'
-URL = 'https://github.com/mondeja/%s' % PROJECT_NAME
+URL = 'https://github.com/mondeja/mdpo'
 EMAIL = 'mondejar1994@gmail.com'
 AUTHOR = 'Álvaro Mondéjar Rubio'
 REQUIRES_PYTHON = '>=3.6'
@@ -25,7 +24,6 @@ TEST_EXTRAS = [
     'flake8',
     'flake8-print',
     'flake8-implicit-str-concat',
-    'flake8-isort',
     'isort',
     'tox',
 ]
@@ -44,7 +42,7 @@ with io.open(os.path.join(HERE, 'README.md'), encoding='utf-8') as f:
     LONG_DESCRIPTION = '\n' + f.read()
 
 ABOUT = {}
-INIT_FILEPATH = os.path.join(HERE, PROJECT_NAME, '__init__.py')
+INIT_FILEPATH = os.path.join(HERE, 'mdpo', '__init__.py')
 with io.open(INIT_FILEPATH, encoding='utf-8') as f:
     content = f.read()
     ABOUT['__title__'] = \
@@ -111,7 +109,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            '%s = %s.__main__:run' % (PROJECT_NAME, PROJECT_NAME),
+            'md2po = mdpo.md2po.__main__:run',
+            'po2md = mdpo.po2md.__main__:run',
         ],
     },
     packages=find_packages(exclude=['test']),

@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "**Bold text with [link](github.com/mondeja)**"
+msgstr "**Texto en negrita con [enlace](github.com/mondeja)**"
+
+msgid "**[link](github.com/mondeja) starting bold text**"
+msgstr "**[enlace](github.com/mondeja) comenzando texto en negrita**"

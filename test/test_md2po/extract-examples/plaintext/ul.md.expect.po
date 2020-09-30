@@ -1,0 +1,37 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Command for foo"
+msgstr ""
+
+msgid "Command for bar"
+msgstr ""
+
+msgid "Command for baz"
+msgstr ""
+
+msgid "List item with bold markup"
+msgstr ""
+
+msgid "List item with italic markup"
+msgstr ""
+
+msgid "List item with inline code"
+msgstr ""
+
+msgid "List item with Link"
+msgstr ""
+
+msgid "A list item that does not exceed the maximum width linting."
+msgstr ""
+
+msgid ""
+"A list item that exceed the maximum width linting and, for example, in "
+"markdownlint will break MD013 rule."
+msgstr ""
+
+msgid ""
+"A list item that exceed the maximum width linting and, because of that, we "
+"decided insert a softbreak to avoid break line length markdown linting rule."
+msgstr ""

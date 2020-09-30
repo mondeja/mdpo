@@ -14,5 +14,5 @@ indent_size = 4
 [*.rst]
 indent_size = 3
 
-[*.py]
+[*.{py,md}]
 trim_trailing_whitespace = false

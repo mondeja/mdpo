@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Some text with [[a wikilink]]."
+msgstr ""
+
+msgid "Some text with [[wikilink target|wikilink text]]."
+msgstr ""

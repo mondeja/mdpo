@@ -1,0 +1,42 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Command for foo"
+msgstr "Comando para foo"
+
+msgid "Command for bar"
+msgstr "Comando para bar"
+
+msgid "Command for baz"
+msgstr "Comando para baz"
+
+msgid "List item with **bold markup**"
+msgstr "Elemento de lista con **marcado en negrita**"
+
+msgid "List item with *italic markup*"
+msgstr "Elemento de lista con **marcado en cursiva**"
+
+msgid "List item with `inline code`"
+msgstr "Elemento de lista con **código en línea**"
+
+msgid "List item with [Link](https://to-nowhere.com)"
+msgstr "Elemento de lista con [Enlace](https://to-nowhere.com)"
+
+msgid "A list item that does not exceed the maximum width linting."
+msgstr "Un elemento de lista que no excede el ancho máximo linteando."
+
+msgid ""
+"A list item that exceed the maximum width linting and, for example, in "
+"markdownlint will break MD013 rule."
+msgstr ""
+"Un elemento de lista que excede el ancho máximo linteando y, por ejemplo "
+"en markdownlint romperá la regla MD013."
+
+msgid ""
+"A list item that exceed the maximum width linting and, because of that, we "
+"decided insert a softbreak to avoid break line length markdown linting rule."
+msgstr ""
+"Un elemento de lista que excede el ancho máximo linteando y, debido a ello "
+"decidimos insertar un salto de línea para evitar romper la regla de linting "
+"markdown de largo de línea."

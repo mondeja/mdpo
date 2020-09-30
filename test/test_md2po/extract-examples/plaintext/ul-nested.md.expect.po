@@ -1,0 +1,21 @@
+#
+msgid ""
+msgstr ""
+
+msgid "A list item"
+msgstr ""
+
+msgid "A nested list item"
+msgstr ""
+
+msgid "A double nested list item"
+msgstr ""
+
+msgid "Another double nested list item"
+msgstr ""
+
+msgid "Another nested list item"
+msgstr ""
+
+msgid "Another list item"
+msgstr ""

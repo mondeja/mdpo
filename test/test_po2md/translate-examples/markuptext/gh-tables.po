@@ -1,0 +1,24 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Syntax"
+msgstr "Sintaxis"
+
+msgid "Description"
+msgstr "Desripción"
+
+msgid "Header"
+msgstr "Encabezado"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Paragraph"
+msgstr "Párrafo"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Style"
+msgstr "Estilo"

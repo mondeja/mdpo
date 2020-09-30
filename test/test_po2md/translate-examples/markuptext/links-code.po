@@ -1,0 +1,19 @@
+#
+msgid ""
+msgstr ""
+
+msgid "[a link `with inline code`](http://example.org)"
+msgstr "[un enlace `con código en línea`](http://example.org)"
+
+msgid "Another [link `with inline code`](http://example.org)"
+msgstr "Otro [enlace `con código en línea`](http://example.org)"
+
+msgid ""
+"Another [link `with inline code`](http://example.org) that ends in "
+"paragraph."
+msgstr ""
+"Otro [enlace `con código en línea`](http://example.org) que termina en "
+"párrafo."
+
+msgid "[`a link that is inline code also`](http://example.org)"
+msgstr "[`un enlace que también es código en línea`](http://example.org)"

@@ -1,0 +1,43 @@
+#
+msgid ""
+msgstr ""
+
+msgid "My favorite PEP is [PEP 0](https://www.python.org/dev/peps/)."
+msgstr ""
+
+msgid ""
+"My favorite search engine is [Duck Duck Go](https://duckduckgo.com \"The "
+"best search engine for privacy\")."
+msgstr ""
+
+msgid "Visit [https://www.github.com/mondeja/mdpo]"
+msgstr ""
+
+msgid ""
+"Write an email to [fake@example.com](mailto:fake@example.com) if you want "
+"help"
+msgstr ""
+
+msgid "[Reference A](https://github.com/mondeja/mdpo)"
+msgstr ""
+
+msgid "[Reference B](https://github.com/mondeja/mdpo \"Second reference\")"
+msgstr ""
+
+msgid "[Reference C](https://github.com/mondeja/mdpo \"Third reference\")"
+msgstr ""
+
+msgid "[Reference D](https://github.com/mondeja/mdpo \"Fourth reference\")"
+msgstr ""
+
+msgid "[Reference E](https://github.com/mondeja/mdpo)"
+msgstr ""
+
+msgid "[Reference F](https://github.com/mondeja/mdpo \"Sixth reference\")"
+msgstr ""
+
+msgid "[Reference G](https://github.com/mondeja/mdpo \"Seventh reference\")"
+msgstr ""
+
+msgid "[Reference H](https://github.com/mondeja/mdpo \"Eighth reference\")"
+msgstr ""

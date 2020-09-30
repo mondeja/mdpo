@@ -1,0 +1,17 @@
+#
+msgid ""
+msgstr ""
+
+msgid "[a link **with bolds**](http://example.org)"
+msgstr "[un enlace **con negritas**](http://example.org)"
+
+msgid "Another [link **with bolds**](http://example.org)"
+msgstr "Otro [enlace **con negritas**](http://example.org)"
+
+msgid ""
+"Another [link **with bolds**](http://example.org) that ends in paragraph."
+msgstr ""
+"Otro [enlace **con negritas**](http://example.org) que termina en párrafo."
+
+msgid "[**Link that is bold text also**](http://example.org)"
+msgstr "[**Enlace que también es texto en negrita**](http://example.org)"

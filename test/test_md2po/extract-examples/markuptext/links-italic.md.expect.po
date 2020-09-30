@@ -1,0 +1,16 @@
+#
+msgid ""
+msgstr ""
+
+msgid "[a link *with italics*](http://example.org)"
+msgstr ""
+
+msgid "Another [link *with italics*](http://example.org)"
+msgstr ""
+
+msgid ""
+"Another [link *with italics*](http://example.org) that ends in paragraph."
+msgstr ""
+
+msgid "[*Link that is italic text also*](http://example.org)"
+msgstr ""
