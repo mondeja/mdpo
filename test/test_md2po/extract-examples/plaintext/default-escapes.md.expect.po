@@ -48,8 +48,11 @@ msgid ""
 "and code with double backtick markup."
 msgstr ""
 
-msgid "title with \\\" characters"
+msgid "title with \" characters"
 msgstr ""
 
 msgid "this is a link"
+msgstr ""
+
+msgid "\"development\" and for production"
 msgstr ""

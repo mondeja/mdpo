@@ -329,15 +329,14 @@ class Md2Po:
         else:
             if span.value in (md4c.SpanType.IMG, md4c.SpanType.A) and \
                     details['title']:
-                self._save_msgid(polib.escape(details['title'][0][1]))
+                self._save_msgid(details['title'][0][1])
 
     def leave_span(self, span, details):
         # print("LEAVE SPAN:", span.name)
         if not self.plaintext:
             if not self._inside_uspan:
                 if span.value == md4c.SpanType.WIKILINK:
-                    self._current_msgid += polib.escape(
-                        self._current_wikilink_target)
+                    self._current_msgid += self._current_wikilink_target
                     self._current_wikilink_target = None
 
                 try:
@@ -348,9 +347,9 @@ class Md2Po:
             if span.value == md4c.SpanType.A:
                 if self._current_aspan_href:
                     self._current_msgid += "(%s%s)" % (
-                        polib.escape(self._current_aspan_href),
+                        self._current_aspan_href,
                         "" if not details['title'] else ' "%s"' % (
-                            polib.escape(details['title'][0][1]))
+                            details['title'][0][1])
                     )
                     self._current_aspan_href = None
             elif span.value == md4c.SpanType.CODE:
@@ -361,13 +360,12 @@ class Md2Po:
                     self._codespan_backticks * self.code_end_string)
                 self._codespan_backticks = None
             elif span.value == md4c.SpanType.IMG:
-                self._current_msgid += polib.escape('![%s](%s' % (
+                self._current_msgid += '![%s](%s' % (
                     self._current_imgspan['text'], self._current_imgspan['src']
-                ))
+                )
                 if self._current_imgspan['title']:
                     self._current_msgid += ' "%s"' % (
-                        polib.escape(self._current_imgspan['title'])
-                    )
+                        self._current_imgspan['title'])
                 self._current_msgid += ')'
                 self._current_imgspan = {}
             elif span.value == md4c.SpanType.U:
@@ -414,7 +412,7 @@ class Md2Po:
                             self._current_wikilink_target,
                             text)
                     return
-                self._current_msgid += polib.escape(text)
+                self._current_msgid += text
         else:
             self._process_command(text)
 
