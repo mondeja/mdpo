@@ -94,7 +94,7 @@ class UploadCommand(Command):
 setup(
     name=ABOUT['__title__'],
     version=ABOUT['__version__'],
-    description='Utilities for translate Markdown files using pofiles.',
+    description='Utilities for Markdown files translation using pofiles.',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
     author=AUTHOR,

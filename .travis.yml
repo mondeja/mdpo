@@ -24,7 +24,7 @@ matrix:
       dist: bionic
       before_script:
         - pip install pytest-cov coveralls
-      script: pytest --cov=mdpo --cov-config=setup.cfg
+      script: pytest -s --cov=mdpo --cov-config=setup.cfg
       after_success:
         - coveralls
     - python: 3.8

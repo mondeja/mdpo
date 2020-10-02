@@ -7,7 +7,7 @@
 [![Coverage status][coverage-image]][coverage-link]
 [![Documentation status][doc-image]][doc-link]
 
-Utilities for translate Markdown files using `.po` files. Fully complies
+Utilities for Markdown files translation using `.po` files. Fully complies
  with [CommonMark Specification][commonmark-spec-link], supporting some
  additional features.
 
