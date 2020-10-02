@@ -31,7 +31,7 @@ pip install \
 mdpo
 ```
 
-## [Documentation](doc-link)
+## [Documentation][doc-link]
 
 [pypi-image]: https://img.shields.io/pypi/v/mdpo
 [pypi-link]: https://pypi.org/project/mdpo/
