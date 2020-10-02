@@ -62,12 +62,15 @@ def build_parser():
                              ' ``--filepath`` parameter. Only useful when'
                              ' the ``-w`` option was passed to xgettext.',
                         metavar='N', type=int)
-    parser.add_argument('-o', '--mark-not-found-as-obsolete',
+    parser.add_argument('-m', '--merge-pofiles',
                         dest='mark_not_found_as_absolete',
-                        action='store_true',
-                        help='Mark new found msgids not present in the '
-                             ' pofile passed at ``--filepath`` parameter'
-                             ' as obsolete translations.')
+                        action='store_false',
+                        help='New found msgids not present in the pofile'
+                             ' passed at ``--po-filepath`` parameter will be'
+                             ' preserved in the new pofile, even when are not'
+                             ' been found in the current extraction.'
+                             ' If this argument is not passed, will be marked'
+                             ' as obsolete strings.')
     parser.add_argument('-f', '--flags',
                         default=DEFAULT_MD4C_FLAGS, dest='flags',
                         help='md4c extensions used to parse markdown'

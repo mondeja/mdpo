@@ -50,7 +50,7 @@ msgstr ""
 
     markdown_content = '# Bar\n'
 
-    pofile, exitcode = run([markdown_content, arg, pofile_path])
+    pofile, exitcode = run([markdown_content, arg, pofile_path, '-m'])
     out, err = capsys.readouterr()
 
     expected_output = '''#
@@ -87,7 +87,7 @@ msgstr ""
 
     markdown_content = '# Bar\n'
 
-    pofile, exitcode = run([markdown_content, arg, '-po', pofile_path])
+    pofile, exitcode = run([markdown_content, arg, '-po', pofile_path, '-m'])
     out, err = capsys.readouterr()
 
     expected_output = '''#
@@ -224,39 +224,6 @@ msgstr ""
             break
 
     assert _line_with_provided_width_found
-
-
-@pytest.mark.parametrize('arg', ['-o', '--mark-not-found-as-obsolete'])
-def test_mark_not_found_as_absolete(capsys, arg):
-    old_pofile_path = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
-    old_pofile_content = '''#
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr "Foo"
-'''
-    with open(old_pofile_path, 'w') as f:
-        f.write(old_pofile_content)
-
-    markdown_content = 'Bar\n'
-    pofile, exitcode = run([markdown_content, '-po', old_pofile_path, arg])
-    out, err = capsys.readouterr()
-
-    expected_output = '''#
-msgid ""
-msgstr ""
-
-msgid "Bar"
-msgstr ""
-
-#~ msgid ""
-#~ msgstr "Foo"
-'''
-
-    assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
-    assert striplastline(out) == expected_output
 
 
 @pytest.mark.parametrize('arg', ['-x', '--xheaders'])
