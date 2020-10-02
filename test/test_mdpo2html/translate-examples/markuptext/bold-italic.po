@@ -1,0 +1,10 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "Programming is not ***like magic***."
+msgstr "La programación no es ***como la magia***."
+
+msgid "***Starting with bold** and italic*."
+msgstr "***Comenzando con negrita** y cursiva*."

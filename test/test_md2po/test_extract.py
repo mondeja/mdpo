@@ -6,8 +6,8 @@ from uuid import uuid4
 
 import pytest
 
-from mdpo.md2po import DEFAULT_MD4C_FLAGS, markdown_to_pofile
-
+from mdpo.md2po import markdown_to_pofile
+from mdpo.md4c import DEFAULT_MD4C_FLAGS
 
 EXAMPLES_DIR = os.path.join('test', 'test_md2po', 'extract-examples')
 

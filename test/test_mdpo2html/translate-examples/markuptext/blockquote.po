@@ -1,0 +1,7 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "You are here because you are the best of the best."
+msgstr "Estáis aquí porque sois lo mejor entre lo mejor."

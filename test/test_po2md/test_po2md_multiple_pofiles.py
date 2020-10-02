@@ -3,7 +3,7 @@ import shutil
 import tempfile
 from uuid import uuid4
 
-from mdpo import pofile_to_markdown
+from mdpo.po2md import pofile_to_markdown
 
 
 def test_multiple_pofiles_glob():

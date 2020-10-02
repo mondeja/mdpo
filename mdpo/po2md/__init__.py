@@ -25,10 +25,8 @@ from mdpo.text import min_not_max_chars_in_a_row
 
 class Po2Md:
     def __init__(self, pofiles, ignore=[], **kwargs):
-        self.pofiles = []
-        for pofilepath in filter_paths(glob.glob(pofiles),
-                                       ignore_paths=ignore):
-            self.pofiles.append(polib.pofile(pofilepath))
+        self.pofiles = [polib.pofile(pofilepath) for pofilepath in
+                        filter_paths(glob.glob(pofiles), ignore_paths=ignore)]
 
         self.flags, self.modes = parse_md4c_flags_string(
             kwargs.get('flags', DEFAULT_MD4C_FLAGS))

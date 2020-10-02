@@ -1,0 +1,7 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "Here is the paragraph"
+msgstr "Aquí está el párrafo"

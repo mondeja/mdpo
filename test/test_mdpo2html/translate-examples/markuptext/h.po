@@ -1,0 +1,22 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "Header 1"
+msgstr "Encabezado 1"
+
+msgid "Header 2"
+msgstr "Encabezado 2"
+
+msgid "Header 3"
+msgstr "Encabezado 3"
+
+msgid "Header 4"
+msgstr "Encabezado 4"
+
+msgid "Header 5"
+msgstr "Encabezado 5"
+
+msgid "Header 6"
+msgstr "Encabezado 6"

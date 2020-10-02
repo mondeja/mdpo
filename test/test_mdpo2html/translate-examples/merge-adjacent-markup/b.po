@@ -1,0 +1,13 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "**Flexible** replacement"
+msgstr "Reemplazamiento **flexible**"
+
+msgid "**Flexible** replacement **again**"
+msgstr "Reemplazamiento **flexible de nuevo**"
+
+msgid "**Flexible** replacement **for** **lazy translators**"
+msgstr "Reemplazamiento **flexible** **para** **traductores perezosos**"

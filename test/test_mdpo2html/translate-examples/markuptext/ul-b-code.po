@@ -1,0 +1,10 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "**Some bold `code`** and some plain text"
+msgstr "**Algo de `código` en negrita** y algo de texto plano"
+
+msgid "**`bold-directory/`** and some text with `more code`."
+msgstr "**`directorio-negrita/`** y algo de texto con `más código`."

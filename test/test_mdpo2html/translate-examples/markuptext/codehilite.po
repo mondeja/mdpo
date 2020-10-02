@@ -1,0 +1,13 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "List after code"
+msgstr "Lista después de código"
+
+msgid "In Ubuntu 18 (Bionic) it would be:"
+msgstr "En Ubuntu 18 (Bionic) sería:"
+
+msgid "In Ubuntu 20 (Focal) it would be:"
+msgstr "En Ubuntu 20 (Focal) sería:"

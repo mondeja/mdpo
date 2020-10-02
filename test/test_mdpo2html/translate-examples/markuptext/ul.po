@@ -1,0 +1,13 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "Ubuntu 16 (Xenial)"
+msgstr "Ubuntu 16.04 (Xenial Xerus)"
+
+msgid "Ubuntu 18 (Bionic)"
+msgstr "Ubuntu 18.04 (Bionic Beaver)"
+
+msgid "Ubuntu 20 (Focal)"
+msgstr "Ubuntu 20.04 (Focal Fossa)"

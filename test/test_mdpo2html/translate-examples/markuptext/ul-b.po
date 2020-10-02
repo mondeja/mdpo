@@ -1,0 +1,10 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "Code **linting**"
+msgstr "**Linteado** de código"
+
+msgid "Continuous integration **testing**"
+msgstr "**Testeo** de integración contínua"

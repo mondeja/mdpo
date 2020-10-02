@@ -1,0 +1,19 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "I just love **bold text**."
+msgstr "Simplemente me encanta el **texto en negrita**."
+
+msgid "I just hate **bold text**."
+msgstr "Simplemente odio el **texto en negrita**."
+
+msgid "**Flexible** replacement"
+msgstr "Reemplazamiento **flexible**"
+
+msgid "**Flexible** replacement **again**"
+msgstr "Reemplazamiento **flexible de nuevo**"
+
+msgid "**Flexible** replacement **for** **lazy translators**"
+msgstr "Reemplazamiento **flexible** **para** **traductores perezosos**"

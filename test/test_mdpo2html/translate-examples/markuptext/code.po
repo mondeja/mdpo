@@ -1,0 +1,20 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "Some `code` inside a paragraph"
+msgstr "Algo de `código` en un párrafo"
+
+msgid "`Flexible` replacement"
+msgstr "Reemplazamiento `flexible`"
+
+msgid "`Flexible` replacement `again`"
+msgstr "Reemplazamiento `flexible` `de nuevo`"
+
+msgid ""
+"Check that you have added Ubuntu `main`, `restricted`, `universe` and "
+"`multiverse` repositories in the file `/etc/apt/sources.list`."
+msgstr ""
+"Comprueba que has añadido los repositorios `main`, `restricted`, `universe` "
+"y `multiverse` en el archivo `/etc/apt/sources.list`."
