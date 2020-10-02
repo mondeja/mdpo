@@ -3,7 +3,6 @@
 """po2md command line interface."""
 
 import argparse
-import io
 import sys
 
 from mdpo import __version__
@@ -21,7 +20,6 @@ def build_parser():
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Don\'t print output to STDOUT.')
     parser.add_argument('filepath_or_content', metavar='FILEPATH_OR_CONTENT',
-                        nargs='?', default=sys.stdin,
                         help='Markdown filepath or content to translate.')
     parser.add_argument('-p', '--pofiles', metavar='POFILES',
                         help='Glob matching a set of pofiles from where to'
@@ -45,8 +43,8 @@ def parse_options(args):
         sys.exit(0)
     opts = parser.parse_args(args)
 
-    if isinstance(opts.pofiles, io.TextIOWrapper):
-        opts.filepath_or_content = opts.filepath_or_content.read().strip('\n')
+    if not sys.stdin.isatty():
+        opts.filepath_or_content = sys.stdin.read().strip('\n')
     if opts.ignore:
         opts.ignore = parse_list_argument(opts.ignore)
 
@@ -66,5 +64,9 @@ def run(args=[]):
     return (output, 0)
 
 
-if __name__ == '__main__':
+def main():
     sys.exit(run(args=sys.argv[1:])[1])
+
+
+if __name__ == '__main__':
+    main()

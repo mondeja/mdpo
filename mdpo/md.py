@@ -23,7 +23,7 @@ def escape_links_titles(text, link_start_string='[', link_end_string=']'):
 
 
 def inline_untexted_links(text, link_start_string='[', link_end_string=']'):
-    """Given a string like ``"String with `[self-referenced-link]`"``, replaces
+    """Given a string like ``"String with [self-referenced-link]"``, replaces
     self referenced links markup characters by new ones, in this case
     ``"String with <self-referenced-link>"``. Only replaces links that do not
     contains hrefs.

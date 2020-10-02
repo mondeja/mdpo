@@ -108,8 +108,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'md2po = mdpo.md2po.__main__:run',
-            'po2md = mdpo.po2md.__main__:run',
+            'md2po = mdpo.md2po.__main__:main',
+            'po2md = mdpo.po2md.__main__:main',
         ],
     },
     packages=find_packages(exclude=['test']),

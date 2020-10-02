@@ -49,17 +49,6 @@ def test_quiet(capsys, arg):
         assert out == ''
 
 
-def test_stdin(capsys, monkeypatch):
-    with tmp_pofile(EXAMPLE['pofile']) as po_filepath:
-        monkeypatch.setattr('sys.stdin', EXAMPLE['markdown-input'])
-        output, exitcode = run(['-p', po_filepath])
-        out, err = capsys.readouterr()
-
-        assert exitcode == 0
-        assert output == EXAMPLE['markdown-output']
-        assert striplastline(out) == EXAMPLE['markdown-output']
-
-
 @pytest.mark.parametrize('arg', ['-s', '--save'])
 def test_save(capsys, arg):
     with tmp_pofile(EXAMPLE['pofile']) as po_filepath:

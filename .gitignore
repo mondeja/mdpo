@@ -2,6 +2,7 @@
 /__main__.py
 /docs/_build/
 /dev.md
+/example-project
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

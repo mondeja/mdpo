@@ -37,7 +37,7 @@ class Md2Po:
         self.flags, self.modes = parse_md4c_flags_string(
             kwargs.get('flags', DEFAULT_MD4C_FLAGS))
 
-        self.plaintext = kwargs.get('plaintext', True)
+        self.plaintext = kwargs.get('plaintext', False)
 
         self.disable = False
         self.disable_next_line = False

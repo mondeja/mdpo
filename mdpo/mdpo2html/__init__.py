@@ -29,8 +29,7 @@ class MdPo2HTML(HTMLParser):
                  bold_escape_strings=['\\*\\*'], bold_tags=['b', 'strong'],
                  italic_start_string='*', italic_end_string='*',
                  italic_escape_strings=['\\*'], italic_tags=['em', 'i'],
-                 link_escape_strings=['\\`['], link_tags=['a'],
-                 ignore_grouper_tags=['div', 'hr']):
+                 link_tags=['a'], ignore_grouper_tags=['div', 'hr']):
         self.pofiles = [polib.pofile(pofilepath) for pofilepath in
                         filter_paths(glob.glob(pofiles), ignore_paths=ignore)]
         self.output = ''

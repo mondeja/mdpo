@@ -1,6 +1,5 @@
 import os
 import shutil
-import subprocess
 import tempfile
 from uuid import uuid4
 
@@ -35,27 +34,8 @@ def test_quiet(capsys, arg):
     assert out == ''
 
 
-def test_stdin(capsys, monkeypatch):
-    monkeypatch.setattr('sys.stdin', EXAMPLE['input'])
-    pofile, exitcode = run()
-    out, err = capsys.readouterr()
-
-    assert exitcode == 0
-    assert pofile.__unicode__() == EXAMPLE['output']
-    assert striplastline(out) == EXAMPLE['output']
-
-
-def test_stdin_communicate():
-    proc = subprocess.Popen('md2po',
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            stdin=subprocess.PIPE)
-    stdout, stderr = proc.communicate(input=EXAMPLE['input'].encode())
-    assert striplastline(stdout.decode()) == EXAMPLE['output']
-
-
-@pytest.mark.parametrize('arg', ['-f', '--filepath'])
-def test_filepath(capsys, arg):
+@pytest.mark.parametrize('arg', ['-po', '--po-filepath'])
+def test_po_filepath(capsys, arg):
     pofile_path = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
     pofile_content = '''#
 msgid ""
@@ -107,7 +87,7 @@ msgstr ""
 
     markdown_content = '# Bar\n'
 
-    pofile, exitcode = run([markdown_content, arg, '-f', pofile_path])
+    pofile, exitcode = run([markdown_content, arg, '-po', pofile_path])
     out, err = capsys.readouterr()
 
     expected_output = '''#
@@ -157,7 +137,7 @@ def test_ignore_files_by_filepath(capsys, arg):
 msgid ""
 msgstr ""
 
-msgid "Bar with inline code"
+msgid "Bar with `inline code`"
 msgstr ""
 
 msgid "Foo"
@@ -171,13 +151,12 @@ msgstr ""
     assert striplastline(out) == expected_output
 
 
-@pytest.mark.parametrize('arg', ['-m', '--markuptext'])
-def test_markuptext(capsys, arg):
+def test_markuptext(capsys):
     content = ('# Header `with inline code`\n\n'
                'Some text with **bold characters**, *italic characters*'
                ' and a [link](https://nowhere.nothing).\n')
 
-    pofile, exitcode = run([content, arg])
+    pofile, exitcode = run([content])
     out, err = capsys.readouterr()
 
     expected_output = '''#
@@ -204,7 +183,7 @@ def test_wrapwidth(capsys, arg):
                '*italic characters* and a [link](https://nowhere.nothing).\n')
     width = 20
 
-    pofile, exitcode = run([content, arg, str(width)])
+    pofile, exitcode = run([content, arg, str(width), '-p'])
     out, err = capsys.readouterr()
 
     expected_output = '''#
@@ -247,7 +226,7 @@ msgstr "Foo"
         f.write(old_pofile_content)
 
     markdown_content = 'Bar\n'
-    pofile, exitcode = run([markdown_content, '-f', old_pofile_path, arg])
+    pofile, exitcode = run([markdown_content, '-po', old_pofile_path, arg])
     out, err = capsys.readouterr()
 
     expected_output = '''#
@@ -270,7 +249,7 @@ msgstr ""
 def test_xheaders(capsys, arg):
     markdown_content = '# Foo'
 
-    pofile, exitcode = run([markdown_content, arg, '-m'])
+    pofile, exitcode = run([markdown_content, arg])
     out, err = capsys.readouterr()
 
     expected_output = '''#
