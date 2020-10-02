@@ -42,10 +42,16 @@ def build_parser():
                              ' is passed) or use the msgids of the file'
                              ' as reference for'
                              ' ``--mark-not-found-as-obsolete`` parameter.',
-                        metavar='OUTPUT_FILE')
+                        metavar='OUTPUT_PO_FILEPATH')
     parser.add_argument('-s', '--save', dest='save', action='store_true',
                         help='Save new found msgids to the po file'
                              ' indicated as parameter ``--filepath``.')
+    parser.add_argument('-mo', '--mo-filepath', dest='mo_filepath',
+                        default=None,
+                        help='The resulting pofile will be compiled to a'
+                             ' mofile and saved in the path specified at'
+                             ' this parameter.',
+                        metavar='OUTPUT_MO_FILEPATH')
     parser.add_argument('-p', '--plaintext', dest='plaintext',
                         action='store_true',
                         help='Do not include markdown markup characters in'
@@ -101,6 +107,7 @@ def run(args=[]):
         po_filepath=opts.po_filepath,
         ignore=opts.ignore,
         save=opts.save,
+        mo_filepath=opts.mo_filepath,
         plaintext=opts.plaintext,
         mark_not_found_as_absolete=opts.mark_not_found_as_absolete,
         flags=opts.flags,

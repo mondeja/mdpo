@@ -111,6 +111,20 @@ msgstr ""
     os.remove(pofile_path)
 
 
+@pytest.mark.parametrize('arg', ['-mo', '--mo-filepath'])
+def test_mo_filepath(capsys, arg):
+    mo_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.mo')
+
+    pofile, exitcode = run([EXAMPLE["input"], arg, mo_filepath])
+    out, err = capsys.readouterr()
+    assert exitcode == 0
+    assert pofile.__unicode__() == EXAMPLE["output"]
+    assert striplastline(out) == EXAMPLE["output"]
+    assert os.path.exists(mo_filepath)
+
+    os.remove(mo_filepath)
+
+
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
 def test_ignore_files_by_filepath(capsys, arg):
     filesdir = os.path.join(tempfile.gettempdir(), uuid4().hex)

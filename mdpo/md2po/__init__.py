@@ -32,7 +32,7 @@ class Md2Po:
         self.wrapwidth = kwargs.get('wrapwidth', 78)
 
         self.mark_not_found_as_absolete = kwargs.get(
-            'mark_not_found_as_absolete', False)
+            'mark_not_found_as_absolete', True)
 
         self.flags, self.modes = parse_md4c_flags_string(
             kwargs.get('flags', DEFAULT_MD4C_FLAGS))
@@ -416,7 +416,8 @@ class Md2Po:
         else:
             self._process_command(text)
 
-    def extract(self, po_filepath=None, save=False, encoding=None):
+    def extract(self, po_filepath=None, save=False, mo_filepath=None,
+                encoding=None):
         _po_filepath = None
         if not po_filepath:
             po_filepath = ''
@@ -460,12 +461,15 @@ class Md2Po:
 
         if save and _po_filepath:
             self.pofile.save(fpath=_po_filepath)
+        if mo_filepath:
+            self.pofile.save_as_mofile(mo_filepath)
         return self.pofile
 
 
 def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
-                       po_filepath=None, save=False, plaintext=True,
-                       wrapwidth=78, mark_not_found_as_absolete=False,
+                       po_filepath=None, save=False, mo_filepath=None,
+                       plaintext=False, wrapwidth=78,
+                       mark_not_found_as_absolete=True,
                        flags=DEFAULT_MD4C_FLAGS, encoding=None,
                        xheaders=False, **kwargs):
     """
@@ -487,6 +491,8 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
             ``mark_not_found_as_absolete`` optional parameters).
         save (bool): Save the new content to the pofile indicated in the
             parameter ``po_filepath``.
+        mo_filepath (str): The resulting pofile will be compiled to a mofile
+            and saved in the path specified at this parameter.
         plaintext (bool): If you pass ``True`` to this parameter (as default)
                 the content will be extracted as is, without markup characters
                 included.
@@ -532,4 +538,7 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         plaintext=plaintext, wrapwidth=wrapwidth,
         mark_not_found_as_absolete=mark_not_found_as_absolete,
         flags=flags, xheaders=xheaders, **kwargs
-    ).extract(po_filepath=po_filepath, save=save, encoding=encoding)
+    ).extract(
+        po_filepath=po_filepath, save=save,
+        mo_filepath=mo_filepath, encoding=encoding
+    )
