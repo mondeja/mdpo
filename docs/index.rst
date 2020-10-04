@@ -7,16 +7,23 @@ Fully complies with `CommonMark Specification`_.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Reference
+   :caption: Basic
 
    install
-   cli
-   api
+   before-using
+   tutorial
    commands
 
 .. toctree::
    :maxdepth: 2
-   :caption: Advanced
+   :caption: Reference
+
+   cli
+   api
+
+.. toctree::
+   :maxdepth: 2
+   :caption: For developers
 
    rationale
 

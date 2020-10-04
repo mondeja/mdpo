@@ -8,6 +8,8 @@ mdpo installation includes two command line interfaces:
 * ``po2md`` is used to produce a translated Markdown file from a source Markdown
   file and a pofile with extracted msgids and translated msgstrs.
 
+.. _md2po-cli:
+
 md2po
 =====
 
@@ -17,6 +19,8 @@ md2po
    :prog: md2po
    :nodefault:
 
+
+.. _po2md-cli:
 
 po2md
 =====

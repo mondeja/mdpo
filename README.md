@@ -37,6 +37,8 @@ mdpo
 
 ## [Documentation][doc-link]
 
+---
+
 <!-- mdpo-disable -->
 
 > You can see the README introduction translated to other languages using the

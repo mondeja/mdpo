@@ -207,6 +207,8 @@ class MdPo2HTML(HTMLParser):
 
         replacement = self.translations.get(
             _current_replacement, _current_replacement)
+        if not replacement:
+            replacement = _current_replacement
 
         for tt in template_tags:
             for tags_group in [self.bold_tags, self.italic_tags]:
