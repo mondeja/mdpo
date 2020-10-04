@@ -1,3 +1,5 @@
+"""HTML utilities for mdpo."""
+
 
 def html_attrs_tuple_to_string(attrs):
     """Converts a set of HTML attributes tuple to an HTML string."""

@@ -6,6 +6,7 @@ from collections import OrderedDict
 from html.parser import HTMLParser
 
 import polib
+import md4c
 
 from mdpo.html import (
     get_html_attrs_tuple_attr,
@@ -23,13 +24,9 @@ ALIGNMENT_CHARS = ['\n', ' ', '\t', '\r']
 
 class MdPo2HTML(HTMLParser):
     def __init__(self, pofiles, ignore=[], merge_adjacent_markups=False,
-                 code_start_string='`', code_end_string='`',
-                 code_escape_strings=['\\\''], code_tags=['code'],
-                 bold_start_string='**', bold_end_string='**',
-                 bold_escape_strings=['\\*\\*'], bold_tags=['b', 'strong'],
-                 italic_start_string='*', italic_end_string='*',
-                 italic_escape_strings=['\\*'], italic_tags=['em', 'i'],
-                 link_tags=['a'], ignore_grouper_tags=['div', 'hr']):
+                 code_tags=['code'], bold_tags=['b', 'strong'],
+                 italic_tags=['em', 'i'], link_tags=['a'],
+                 ignore_grouper_tags=['div', 'hr']):
         self.pofiles = [polib.pofile(pofilepath) for pofilepath in
                         filter_paths(glob.glob(pofiles), ignore_paths=ignore)]
         self.output = ''
@@ -41,41 +38,29 @@ class MdPo2HTML(HTMLParser):
         self.merge_adjacent_markups = merge_adjacent_markups
 
         # code markup
-        self.code_start_string = code_start_string
-        self.code_end_string = code_end_string
-        self.code_escape_strings = code_escape_strings
         self.code_tags = code_tags
 
         # bold markup
-        self.bold_start_string = bold_start_string
-        self.bold_end_string = bold_end_string
-        self.bold_escape_strings = bold_escape_strings
         self.bold_tags = bold_tags
 
         # italic markup
-        self.italic_start_string = italic_start_string
-        self.italic_end_string = italic_end_string
-        self.italic_escape_strings = italic_escape_strings
         self.italic_tags = italic_tags
 
         # link markup
         self.link_tags = link_tags
 
+        self.ignore_grouper_tags = ignore_grouper_tags
+
         self.markups_handler = OrderedDict(sorted(
             {
-                'code': {
-                    'start_string': self.code_start_string,
-                    'end_string': self.code_end_string,
-                    'tags': self.code_tags,
-                },
                 'bold': {
-                    'start_string': self.bold_start_string,
-                    'end_string': self.bold_end_string,
+                    'start_string': '**',
+                    'end_string': '**',
                     'tags': self.bold_tags,
                 },
                 'italic': {
-                    'start_string': self.italic_start_string,
-                    'end_string': self.italic_end_string,
+                    'start_string': '*',
+                    'end_string': '*',
                     'tags': self.italic_tags,
                 },
             }.items(),
@@ -83,22 +68,12 @@ class MdPo2HTML(HTMLParser):
                                 len(k[1]['end_string'])]),
         ))
 
-        self.markup_strings = []
-        for mk_data in self.markups_handler.values():
-            if mk_data['start_string'] not in self.markup_strings:
-                self.markup_strings.append(mk_data['start_string'])
-            if mk_data['end_string'] not in self.markup_strings:
-                self.markup_strings.append(mk_data['end_string'])
-
         self.markup_tags = []
         self.markup_tags.extend(self.code_tags)
         self.markup_tags.extend(self.bold_tags)
         self.markup_tags.extend(self.italic_tags)
 
-        self._template_splitter = self._build_template_splitter()
-        self._template_splitter_without_separators = \
-            self._template_splitter.replace('|', '')
-        self.ignore_grouper_tags = ignore_grouper_tags
+        self.html_renderer = md4c.HTMLRenderer(md4c.MD_FLAG_TABLES)
 
         super().__init__()
 
@@ -111,9 +86,6 @@ class MdPo2HTML(HTMLParser):
 
     def _merge_adyacent_tags(self, html, template_tags):
         for markup, mk_data in self.markups_handler.items():
-            if markup not in ['bold', 'italic']:
-                continue
-
             regexes = []
             for tag in mk_data['tags']:
                 if tag not in template_tags:
@@ -128,190 +100,6 @@ class MdPo2HTML(HTMLParser):
             for regex in regexes:
                 html = re.sub(regex, ' ', html)
         return html
-
-    def _ch_maybe_next_are_markup(self, i, buffer, possible_markups):
-        # handler for possible multiples characters in markup strings
-        if isinstance(possible_markups, str):
-            return len(possible_markups) if \
-                buffer[i:i+len(possible_markups)] == possible_markups else 0
-        else:  # isinstance(possible_markups (list, tuple)):
-            response = 0
-            for pm in possible_markups:
-                if buffer[i:i+len(pm)] == pm:
-                    response = len(pm)
-                    break
-            return response
-
-    def _build_html_template_by_replacement(self,
-                                            raw_html_template,
-                                            replacement,
-                                            template_tags):
-        # get open and close tags in raw template
-        open_tag = raw_html_template.split('>')[0] + '>'
-        close_tag = '<' + raw_html_template.split('<')[-1]
-
-        html_by_repl_schema = open_tag + '%s' + close_tag
-        html_by_repl_inner = ''
-
-        if re.search(r'<[^\s]+\s', raw_html_template):
-            tag_indexer = {}
-        else:
-            tag_indexer = None
-
-        def _get_valid_template_tag(_tags, start=False):
-            _tag = None
-            for tt in template_tags:
-                if tt not in _tags:
-                    continue
-
-                if not start or tag_indexer is None:
-                    _tag = tt
-                    break
-
-                if tt not in tag_indexer:
-                    tag_indexer[tt] = 1
-                else:
-                    tag_indexer[tt] += 1
-
-                _tag_regex = r'<(' + tt + r'[^>]*)>'
-
-                _max_attempts, _attempt = (50, 0)
-                while _attempt < _max_attempts:
-                    try:
-                        _tag = re.search(
-                            _tag_regex, raw_html_template
-                        ).group(tag_indexer[tt] - _attempt)
-                    except IndexError:
-                        _attempt += 1
-                    else:
-                        break
-                break
-            return _tag
-
-        # print("--------------------------------------")
-
-        # context and formatter {} added (True or False)
-        _context, _markupping_counter = ([['root', False]], 0)
-        for i, ch in enumerate(replacement):
-            if _markupping_counter:
-                _markupping_counter -= 1
-                continue
-
-            # not markup character case
-            if not self._ch_maybe_next_are_markup(i, replacement,
-                                                  self.markup_strings):
-                if not _context[-1][1]:
-                    html_by_repl_inner += '{}'
-                    _context[-1][1] = True
-                continue
-
-            # process the handler
-            for markup, mk_data in self.markups_handler.items():
-                # check if context markup found
-                markup_start_len = self._ch_maybe_next_are_markup(
-                    i, replacement, mk_data['start_string'])
-                if markup_start_len:
-                    # context start markup found
-
-                    # already in markup context?
-                    if _context[-1][0] == markup:
-
-                        # is the end of the context?
-                        if mk_data['start_string'] == mk_data['end_string']:
-                            markup_end_len = self._ch_maybe_next_are_markup(
-                                i, replacement, mk_data['end_string'])
-
-                            if markup_end_len:
-                                html_by_repl_inner += '</%s>' % \
-                                    _get_valid_template_tag(mk_data['tags'])
-                                _context.pop()
-                                _context[-1][1] = False
-                                _markupping_counter = markup_end_len - 1
-                                break
-
-                    else:
-                        # enter context
-                        _tag = _get_valid_template_tag(
-                            mk_data['tags'], start=True)
-                        html_by_repl_inner += '<%s>' % _tag
-                        _context.append([markup, False])
-                        _markupping_counter = markup_start_len - 1
-                    break
-                # case when opening and closing markup strings differ
-                else:
-                    markup_end_len = self._ch_maybe_next_are_markup(
-                        i, replacement, mk_data['end_string'])
-                    if markup_end_len:
-                        if _context[-1][0] == markup:
-                            html_by_repl_inner += '</%s>' % \
-                                _get_valid_template_tag(mk_data['tags'])
-                            _context.pop()
-                            _context[-1][1] = False
-                            _markupping_counter = markup_end_len - 1
-                        break
-
-        # print('--------------------------------------')
-        html_by_repl = html_by_repl_schema % html_by_repl_inner
-
-        return html_by_repl
-
-    def _fix_replacement_split_links(self, replacement_split):
-        response = []
-
-        _inside_link_text = False
-        _inside_link_target = False
-        _inside_link_title = False
-        _exiting_link_title = False
-        _current_link_text = None
-
-        for sp in replacement_split:
-            _sp = ''
-            for i, ch in enumerate(sp):
-                if ch == '[' and sp[i - 1] != '\\' and not _inside_link_text:
-                    _inside_link_text = True
-                    response.append(_sp)
-                    _sp = ''
-                    continue
-                elif ch == ']' and sp[i - 1] != '\\' and _inside_link_text:
-                    _inside_link_text = False
-                    _current_link_text = _sp
-                    _sp = ''
-                    continue
-                elif ch == '(' and sp[i - 1] == ']' and sp[i - 2] != "\\":
-                    _inside_link_target = True
-                    continue
-                elif _inside_link_target:
-                    if ch == ')' and sp[i - 1] != '\\':
-                        response.append(_sp)  # target
-                        response.append(_current_link_text)  # text
-                        _sp = ''
-                        _current_link_text = None
-                        _inside_link_target = False
-                        continue
-                    elif ch == ' ':
-                        response.append(_sp)  # target
-                        _inside_link_target = False
-                        _inside_link_title = True
-                        _sp = ''
-                        continue
-                elif _inside_link_title:
-                    if _sp == '' and ch == '"':
-                        continue
-                    if ch == '"' and sp[i - 1] != '\\':
-                        response.append(_sp)  # title
-                        response.append(_current_link_text)  # text
-                        _sp = ''
-                        _exiting_link_title = True
-                        _inside_link_title = False
-                        continue
-                elif _exiting_link_title:
-                    _exiting_link_title = False
-                    continue
-                _sp += ch
-            if _sp:
-                response.append(_sp)
-
-        return [_sp for _sp in response if _sp != '']
 
     def _process_replacer(self):
         # print("REPLACER:", self.replacer)
@@ -328,21 +116,21 @@ class MdPo2HTML(HTMLParser):
                 template_tags.append(handled)
 
                 if handled in self.code_tags:
-                    _current_replacement += self.code_start_string
+                    _current_replacement += '`'
                     raw_html_template += '<%s%s>' % (
                         handled,
                         (' ' + html_attrs_tuple_to_string(attrs)
                          if attrs else '')
                     )
                 elif handled in self.bold_tags:
-                    _current_replacement += self.bold_start_string
+                    _current_replacement += '**'
                     raw_html_template += '<%s%s>' % (
                         handled,
                         (' ' + html_attrs_tuple_to_string(attrs)
                          if attrs else '')
                     )
                 elif handled in self.italic_tags:
-                    _current_replacement += self.italic_start_string
+                    _current_replacement += '*'
                     raw_html_template += '<%s%s>' % (
                         handled,
                         (' ' + html_attrs_tuple_to_string(attrs)
@@ -391,11 +179,11 @@ class MdPo2HTML(HTMLParser):
             elif handle == 'end':
                 raw_html_template += '</%s>' % handled
                 if handled in self.code_tags:
-                    _current_replacement += self.code_end_string
+                    _current_replacement += '`'
                 elif handled in self.bold_tags:
-                    _current_replacement += self.bold_end_string
+                    _current_replacement += '**'
                 elif handled in self.italic_tags:
-                    _current_replacement += self.italic_end_string
+                    _current_replacement += '*'
             elif handle == 'comment':
                 raw_html_template += '<!--%s-->' % handled
             elif handle == 'startend':
@@ -407,50 +195,42 @@ class MdPo2HTML(HTMLParser):
         replacement = self.translations.get(
             _current_replacement, _current_replacement)
 
+        for tt in template_tags:
+            for tags_group in [self.bold_tags, self.italic_tags]:
+                if tt in tags_group:
+                    for tag in tags_group:
+                        if tag not in template_tags:
+                            template_tags.append(tag)
+
         # print("RAW TEMPLATE:", raw_html_template)
         # print("TEMPLATE TAGS:", template_tags)
-        # print('CURRENT REPLACEMENT: \'%s\'' % _current_replacement)
-        # print('REPLACEMENT:', replacement)
+        # print('CURRENT MSGID: \'%s\'' % _current_replacement)
+        # print('MSGSTR:', replacement)
 
-        # only build html template by replacement if replacement found
-        if replacement != _current_replacement:
-            # only build html template replacement if markup character found
-            _markup_ch_found = False
-            for ch in replacement:
-                if ch in ['(', ')']:
-                    continue
-                if ch in self._template_splitter_without_separators:
-                    _markup_ch_found = True
+        html_before_first_replacement = raw_html_template.split('{')[0]
+        html_after_last_replacement = raw_html_template.split('}')[-1]
+        for tags_group in [self.bold_tags, self.italic_tags, self.code_tags]:
+            for tag in tags_group:
+                html_before_first_replacement = \
+                    html_before_first_replacement.split('<%s>' % tag)[0]
+                html_after_last_replacement = \
+                    html_after_last_replacement.split('</%s>' % tag)[-1]
+            html_before_first_replacement = \
+                html_before_first_replacement.split('<a href="')[0]
 
-            if _markup_ch_found:
-                html_template = self._build_html_template_by_replacement(
-                    raw_html_template, replacement, template_tags)
-            else:
-                html_template = raw_html_template
-        else:
-            html_template = raw_html_template
+        html_inner = '\n'.join(
+            self.html_renderer.parse(replacement).split('\n')[:-1])
+        html_inner = '>'.join(html_inner.split('>')[1:])
+        html_inner = '<'.join(html_inner.split('<')[:-1])
 
-        # print('TEMPLATE SPLITTER:', self._template_splitter)
-        # print('HTML TEMPLATE:', html_template)
-
-        replacement_split = self._fix_replacement_split_links(list(filter(
-            lambda x: x not in self.markup_strings and x,
-            re.split(self._template_splitter, replacement)
-        )))
-
-        # print('REPLACEMENT SPLIT:', replacement_split)
-
-        html = html_template.format(*replacement_split)
-        # print('PARTIAL OUTPUT: \'%s\'' % html)
+        html = html_before_first_replacement + html_inner + \
+            html_after_last_replacement
 
         if self.merge_adjacent_markups:
             html = self._merge_adyacent_tags(html, template_tags)
-            # print("MERGE ADYACENT TAGS OUTPUT: '%s'" % html)
 
         self.output += html
         self.context = []
-
-        # print("\n________________________________________________\n")
 
     def handle_starttag(self, tag, attrs):
         # print("START TAG: %s | POS: %d:%d" % (tag, *self.getpos()))

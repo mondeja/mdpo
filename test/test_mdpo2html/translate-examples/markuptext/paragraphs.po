@@ -7,4 +7,4 @@ msgid "A simple paragraph"
 msgstr "Un simple párrafo"
 
 msgid " A simple paragraph starting and ending with spaces "
-msgstr " Un simple párrafo empezando y terminando con espacios "
+msgstr " Un simple párrafo empezando y terminando con espacios (ignorados)"
