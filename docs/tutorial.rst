@@ -2,7 +2,7 @@
 Tutorial
 ********
 
-mdpo provides different methods of translate Markdown markup:
+mdpo provides different methods for Markdown markup translations.
 
 Markdown to markdown
 ====================
@@ -21,14 +21,15 @@ Given next directory tree:
    └── README.md
 
 
-Use next command to create and update the translation pofile for ``README.md``:
+Use the next command to create and update the translation pofile for
+``README.md``:
 
 .. code-block:: bash
 
    md2po README.md --quiet --save --po-filepath locale/es/LC_MESSAGES/readme.po
 
 
-And, to translate the ``README.md`` producing other file as result:
+And, in order of translate the ``README.md`` producing other file as result:
 
 .. code-block:: bash
 

@@ -1,6 +1,6 @@
-**************
-mdpo rationale
-**************
+*********
+Rationale
+*********
 
 Are markup characters part of a translation?
 ============================================

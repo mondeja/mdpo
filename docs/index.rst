@@ -23,7 +23,7 @@ Fully complies with `CommonMark Specification`_.
 
 .. toctree::
    :maxdepth: 2
-   :caption: For developers
+   :caption: In depth
 
    rationale
 

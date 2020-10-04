@@ -16,7 +16,7 @@ from mdpo.md4c import DEFAULT_MD4C_FLAGS
 
 
 DESCRIPTION = ('Utility like xgettext to extract Markdown content dumping it'
-               ' inside .po files.')
+               ' inside pofiles.')
 
 
 def build_parser():
