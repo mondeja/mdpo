@@ -110,6 +110,8 @@ class MdPo2HTML(HTMLParser):
         _current_link_target = ''
 
         _last_start_tag = None
+        _last_end_tag = None
+        _inside_code = False
         while self.replacer:
             handle, handled, attrs = self.replacer.pop(0)
             if handle == 'start':
@@ -159,15 +161,20 @@ class MdPo2HTML(HTMLParser):
                         handled,
                         ' ' + html_attrs_tuple_to_string(attrs)
                         if attrs else '')
+                _last_start_tag = handled
+                if _last_start_tag == 'code':
+                    _inside_code = True
 
             elif handle == 'data':
+                if not _inside_code:
+                    handled = handled.replace('  ', ' ')
+
                 if all((ch in ALIGNMENT_CHARS) for ch in handled):
                     raw_html_template += handled
                     if _last_start_tag in self.markup_tags:
                         _current_replacement += handled
                     else:
-                        if handled == ' ':
-                            _current_replacement += handled
+                        _current_replacement += handled
                 else:
                     raw_html_template += '{}'
                     if _current_link_target:
@@ -175,8 +182,6 @@ class MdPo2HTML(HTMLParser):
                             handled, _current_link_target)
                         _current_link_target = ''
                     else:
-                        if _last_start_tag != 'code':
-                            handled = handled.replace('  ', ' ')
                         _current_replacement += handled
             elif handle == 'end':
                 raw_html_template += '</%s>' % handled
@@ -186,6 +191,9 @@ class MdPo2HTML(HTMLParser):
                     _current_replacement += '**'
                 elif handled in self.italic_tags:
                     _current_replacement += '*'
+                _last_end_tag = handled
+                if _last_end_tag == 'code':
+                    _inside_code = False
             elif handle == 'comment':
                 raw_html_template += '<!--%s-->' % handled
             elif handle == 'startend':

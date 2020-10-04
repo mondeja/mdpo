@@ -1,0 +1,17 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid ""
+"**`context_processors/`** [Django context "
+"processors](https://docs.djangoproject.com/en/stable/ref/templates/api/#using-"
+"requestcontext). If you want to include expensive data to compute here, "
+"consider to use [variables as functions](https://rock-it.pl/how-to-make-"
+"your-django-context-processors-lazy/) or temporal caches."
+msgstr ""
+"**`context_processors/`** [Procesadores de contexto de "
+"Django](https://docs.djangoproject.com/en/stable/ref/templates/api/#using-"
+"requestcontext). Si quieres incluir datos costosos de calcular aquí, "
+"considera usar [variables como funciones](https://rock-it.pl/how-to-make-"
+"your-django-context-processors-lazy/) o cachés temporales."
