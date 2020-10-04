@@ -11,15 +11,14 @@ The traditional approach
 Use one Markdown file for each language. This is the most commonly used.
 For example, Jekyll plugins like `jekyll-multiple-languages-plugin`_ uses it.
 
-This is a very poor approach because their advantages are less than the
-disadvantages, but it's state of the art at the moment of ``mdpo``
-specification was conceived:
+This is a very poor approach, but it's state of the art at the moment of
+``mdpo`` specification was conceived:
 
 Advantages
 ----------
 
 * **Contextualization**: The translator sees the entire file in the translation
-  process, which provides a better understanding of what is translating.
+  process, which can provide a better understanding of what is translating.
 * **Programming vagueness**: The programmer don't need to deal with complicated
   translations workflows. He/she can sort files by translation directories or
   whatever. The use of plain files limits the responsibility of the programmer.
@@ -45,7 +44,7 @@ Disadvantages
   for these parts that have been updated... It just doesn't make sense.
 * **Redundancy**: There are parts of Markdown files that don't need to be
   translated, like code blocks. You can tell to the translators that they must
-  not translate content inside blocks of text wich starts and ends with triple
+  ignore that content inside blocks of text wich starts and ends with triple
   backticks (``\```), but at the end of the day, you will have blocks of code
   translated. These blocks, as well as other parts of the source file, must be
   hidden to the translator.
@@ -65,7 +64,7 @@ could rebuilt the markup characters in the target language. As long as there
 is no artificial intelligence capable of doing that in a stable way, we need
 to look for other ways to fix the problem.
 
-Beyound that statement, an artificial intelligence capable of solve the
+Beyond that statement, an artificial intelligence capable of solve the
 problem or rebuild the target language file would be possible? I don't know,
 but think about next simple example. This machine would need to be able to
 translate the Markdown string ``**Flexible** replacement **again**`` to the
@@ -89,7 +88,7 @@ way in other language. So I declare that a good translation process is one that
 allows markup characters without the need to force the translator to do mental
 juggling working with them.
 
-This implies a ``.po`` files translator capable of work with markup character
+This implies a ``.po`` files translator capable of work with markup characters
 templates using an editor which allows to create markups like editors do. But,
 this thing doesn't exists currently.
 

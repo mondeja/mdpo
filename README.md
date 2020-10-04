@@ -1,11 +1,15 @@
 # mdpo
 
+<!-- mdpo-disable -->
+
 [![PyPI][pypi-image]][pypi-link]
 [![PyPI Python versions][pypi-versions-image]][pypi-link]
 [![License][license-image]][license-link]
 [![Tests][tests-image]][tests-link]
 [![Coverage status][coverage-image]][coverage-link]
 [![Documentation status][doc-image]][doc-link]
+
+<!-- mdpo-enable -->
 
 Utilities for Markdown files translation using `.po` files. Fully complies
  with [CommonMark Specification][commonmark-spec-link], supporting some
@@ -24,7 +28,7 @@ pip install \
   && pip install mdpo
 ```
 
-#### Specifying in requirements
+#### Specifying in `requirements.txt`
 
 ```ini
 -e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c
@@ -32,6 +36,15 @@ mdpo
 ```
 
 ## [Documentation][doc-link]
+
+<!-- mdpo-disable -->
+
+> You can see the README introduction translated to other languages using the
+> library from [this script][process-locales-script-link]:
+>
+> - [Spanish][spanish-readme-link]
+
+<!-- mdpo-enable -->
 
 [pypi-image]: https://img.shields.io/pypi/v/mdpo
 [pypi-link]: https://pypi.org/project/mdpo/
@@ -50,3 +63,5 @@ mdpo
 [pymd4c-build-from-source-link]: https://github.com/dominickpastore/pymd4c#build-and-install-from-source
 [mdpo2html-link]: https://github.com/mondeja/mdpo2html
 [commonmark-spec-link]: https://spec.commonmark.org/0.29
+[process-locales-script-link]: https://github.com/mondeja/mdpo/blob/master/process-locales.py
+[spanish-readme-link]: https://github.com/mondeja/mdpo/blob/master/locale/readme/es.md

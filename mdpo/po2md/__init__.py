@@ -166,26 +166,25 @@ class Po2Md:
                 response = self.translations[msgid]
         except KeyError:
             response = msgid
-        return response
+        return response or msgid
 
     def _save_current_msgid(self):
-        if self._current_msgid:
-            translation = self._escape_translation(
-                self._translate_msgid(self._current_msgid,
-                                      self._current_msgctxt)
-            )
-            if self._inside_liblock:
-                translation = '\n'.join(polib.wrap(translation, width=79))
-            if self._inside_pblock:
-                # wrap paragraphs fitting with markdownlint
-                lines = polib.wrap(translation, width=80)
-                if self._codespan_inside_current_msgid:
-                    # fix codespans wrapping
-                    lines = fixwrap_codespans(lines)
-                for line in lines:
-                    self._current_line += '%s\n' % polib.unescape(line)
-            else:
-                self._current_line += polib.unescape(translation)
+        translation = self._escape_translation(
+            self._translate_msgid(self._current_msgid,
+                                  self._current_msgctxt)
+        )
+        if self._inside_liblock:
+            translation = '\n'.join(polib.wrap(translation, width=79))
+        if self._inside_pblock:
+            # wrap paragraphs fitting with markdownlint
+            lines = polib.wrap(translation, width=80)
+            if self._codespan_inside_current_msgid:
+                # fix codespans wrapping
+                lines = fixwrap_codespans(lines)
+            for line in lines:
+                self._current_line += '%s\n' % polib.unescape(line)
+        else:
+            self._current_line += polib.unescape(translation)
         self._current_msgid = ''
         self._current_msgctxt = None
 
