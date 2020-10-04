@@ -78,13 +78,6 @@ class MdPo2HTML(HTMLParser):
 
         super().__init__()
 
-    def _build_template_splitter(self):
-        _template_splitter = ''
-        for markup in sorted(list(set(self.markup_strings)), reverse=True):
-            _template_splitter += '(%s)|' % (
-                ''.join([re.escape(ch) for ch in markup]))
-        return _template_splitter.strip('|')
-
     def _merge_adyacent_tags(self, html, template_tags):
         for markup, mk_data in self.markups_handler.items():
             regexes = []
