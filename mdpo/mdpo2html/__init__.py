@@ -3,6 +3,7 @@
 import glob
 import re
 from collections import OrderedDict
+import html
 from html.parser import HTMLParser
 
 import polib
@@ -202,6 +203,8 @@ class MdPo2HTML(HTMLParser):
                     (' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
                 )
 
+        _current_replacement = html.unescape(_current_replacement)
+
         replacement = self.translations.get(
             _current_replacement, _current_replacement)
 
@@ -233,13 +236,14 @@ class MdPo2HTML(HTMLParser):
         html_inner = '>'.join(html_inner.split('>')[1:])
         html_inner = '<'.join(html_inner.split('<')[:-1])
 
-        html = html_before_first_replacement + html_inner + \
+        html_template = html_before_first_replacement + html_inner + \
             html_after_last_replacement
 
         if self.merge_adjacent_markups:
-            html = self._merge_adyacent_tags(html, template_tags)
+            html_template = self._merge_adyacent_tags(html_template,
+                                                      template_tags)
 
-        self.output += html
+        self.output += html_template
         self.context = []
 
         # print("________________________________________________")
