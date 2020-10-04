@@ -24,8 +24,7 @@ msgstr ""
 
 
 def test_disable_enable():
-    content = '''
-This must be included.
+    content = '''This must be included.
 
 <!-- mdpo-disable -->
 This must be ignored
@@ -48,8 +47,7 @@ msgstr ""
 
 def test_disable_enable_raw_inline():
     # enable command is part of the last item in the list
-    content = '''
-This must be included.
+    content = '''This must be included.
 
 <!-- mdpo-disable -->
 - `config.development.yml`
@@ -73,8 +71,7 @@ msgstr ""
 
 
 def test_enable_next_line():
-    content = '''
-This must be included.
+    content = '''This must be included.
 
 <!-- mdpo-disable -->
 
@@ -84,7 +81,6 @@ This must be ignored.
 This must be included also.
 
 This must be ignored also.
-
 
 <!-- mdpo-enable-next-line -->
 # This header must be included

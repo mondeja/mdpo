@@ -6,6 +6,7 @@ import re
 import md4c
 import polib
 
+from mdpo.command import search_html_command
 from mdpo.io import (
     filter_paths,
     to_file_content_if_is_file,
@@ -32,8 +33,16 @@ class Po2Md:
             kwargs.get('flags', DEFAULT_MD4C_FLAGS))
 
         self._current_msgid = ''
+        self._current_msgctxt = None
         self._current_line = ''
         self._outputlines = []
+
+        self._disable_next_line = False
+        self._disable = False
+        self._enable_next_line = False
+
+        self.translations = None
+        self.translations_with_msgctxt = None
 
         self.bold_start_string = kwargs.get('bold_start_string', '**')
         self.bold_start_string_escaped = build_po_escaped_string(
@@ -87,6 +96,7 @@ class Po2Md:
             self._leavespan_replacer[md4c.SpanType.WIKILINK] = \
                 self.wikilink_end_string
 
+        self._inside_htmlblock = False
         self._inside_codeblock = False
         self._inside_indented_codeblock = False
 
@@ -121,6 +131,22 @@ class Po2Md:
 
         self._current_wikilink_target = None
 
+    def _process_command(self, text):
+        command, comment = search_html_command(text)
+        if command is None:
+            return
+
+        if command == 'disable-next-line':
+            self._disable_next_line = True
+        elif command == 'disable':
+            self._disable = True
+        elif command == 'enable':
+            self._disable = False
+        elif command == 'enable-next-line':
+            self._enable_next_line = True
+        elif command == 'context' and comment:
+            self._current_msgctxt = comment.strip(" ")
+
     def _escape_translation(self, text):
         # escape '"' characters inside links and image titles
         if self._aimg_title_inside_current_msgid:
@@ -132,9 +158,12 @@ class Po2Md:
                                      link_start_string=self.link_start_string,
                                      link_end_string=self.link_end_string)
 
-    def _translate_msgid(self, msgid):
+    def _translate_msgid(self, msgid, msgctxt):
         try:
-            response = self.translations[msgid]
+            if msgctxt:
+                response = self.translations_with_msgctxt[msgctxt][msgid]
+            else:
+                response = self.translations[msgid]
         except KeyError:
             response = msgid
         return response
@@ -142,7 +171,9 @@ class Po2Md:
     def _save_current_msgid(self):
         if self._current_msgid:
             translation = self._escape_translation(
-                self._translate_msgid(self._current_msgid))
+                self._translate_msgid(self._current_msgid,
+                                      self._current_msgctxt)
+            )
             if self._inside_liblock:
                 translation = '\n'.join(polib.wrap(translation, width=79))
             if self._inside_pblock:
@@ -155,13 +186,24 @@ class Po2Md:
                     self._current_line += '%s\n' % polib.unescape(line)
             else:
                 self._current_line += polib.unescape(translation)
-            self._current_msgid = ''
+        self._current_msgid = ''
+        self._current_msgctxt = None
+
         self._codespan_inside_current_msgid = False
         self._aimg_title_inside_current_msgid = False
 
     def _save_current_line(self, times=1, _time_number=1):
-        self._outputlines.append(self._current_line.rstrip(" "))
+        if (not self._disable and not self._disable_next_line) or \
+                self._enable_next_line:
+            self._outputlines.append(self._current_line.rstrip(" "))
+        else:
+            _time_number = times
+
         self._current_line = ''
+
+        self._disable_next_line = False
+        self._enable_next_line = False
+
         if _time_number < times:
             self._save_current_line(times=times, _time_number=_time_number+1)
 
@@ -216,6 +258,8 @@ class Po2Md:
             self._current_line += '| '
         elif block.value == md4c.BlockType.QUOTE:
             self._inside_quoteblock = True
+        elif block.value == md4c.BlockType.HTML:
+            self._inside_htmlblock = True
 
     def leave_block(self, block, details):
         # print("LEAVE BLOCK", block.name, details)
@@ -233,10 +277,13 @@ class Po2Md:
             self._save_current_line(times=2)
         elif block.value == md4c.BlockType.H:
             self._save_current_msgid()
+            if not self._inside_quoteblock:
+                self._current_line += '\n'
+            else:
+                self._current_line += '\n> '
             self._save_current_line()
             if self._inside_quoteblock:
                 self._current_line += "> "
-            self._save_current_line()
         elif block.value == md4c.BlockType.LI:
             self._save_current_msgid()
             self._inside_liblock = False
@@ -295,6 +342,8 @@ class Po2Md:
             self._save_current_line()
         elif block.value == md4c.BlockType.DOC:
             pass
+        elif block.value == md4c.BlockType.HTML:
+            self._inside_htmlblock = False
 
     def enter_span(self, span, details):
         # print("ENTER SPAN", span.name, details)
@@ -359,55 +408,65 @@ class Po2Md:
 
     def text(self, block, text):
         # print("TEXT", "'%s'" % text)
-        if not self._inside_codeblock:
-            if self._inside_liblock and text == "\n":
-                text = ' '
-            if self._current_imgspan:
-                self._current_imgspan['text'] = text
-                return
-            elif self._inside_codespan:
-                self._codespan_backticks = min_not_max_chars_in_a_row(
-                    self.code_start_string,
-                    text) - 1
-                self._current_msgid = '%s%s%s' % (
-                    self._current_msgid[:self._codespan_start_index],
-                    self._codespan_backticks * self.code_start_string,
-                    self._current_msgid[self._codespan_start_index:])
-            elif text == self.italic_start_string:
-                text = self.italic_start_string_escaped
-            elif text == self.italic_end_string:
-                text = self.italic_end_string_escaped
-            elif text == self.code_start_string:
-                text = self.code_start_string_escaped
-            elif text == self.code_end_string:
-                text = self.code_end_string_escaped
-
-            if self._inside_pblock:
-                text = text.replace("\n", " ")
-            if self._current_aspan_href:
-                if text == self._current_aspan_href:
-                    # self-referenced link
-                    self._current_aspan_href = None
-            elif self._current_wikilink_target:
-                if text != self._current_wikilink_target:
-                    self._current_wikilink_target = '%s|%s' % (
-                        self._current_wikilink_target, text)
-                return
-            self._current_msgid += polib.escape(text)
-        else:
-            if self._inside_indented_codeblock and text:
-                if text == '\n':
+        if not self._inside_htmlblock:
+            if not self._inside_codeblock:
+                if self._inside_liblock and text == "\n":
+                    text = ' '
+                if self._current_imgspan:
+                    self._current_imgspan['text'] = text
                     return
-                text = '    %s' % text
-            self._current_line += text
+                elif self._inside_codespan:
+                    self._codespan_backticks = min_not_max_chars_in_a_row(
+                        self.code_start_string,
+                        text) - 1
+                    self._current_msgid = '%s%s%s' % (
+                        self._current_msgid[:self._codespan_start_index],
+                        self._codespan_backticks * self.code_start_string,
+                        self._current_msgid[self._codespan_start_index:])
+                elif text == self.italic_start_string:
+                    text = self.italic_start_string_escaped
+                elif text == self.italic_end_string:
+                    text = self.italic_end_string_escaped
+                elif text == self.code_start_string:
+                    text = self.code_start_string_escaped
+                elif text == self.code_end_string:
+                    text = self.code_end_string_escaped
+
+                if self._inside_pblock:
+                    text = text.replace("\n", " ")
+                if self._current_aspan_href:
+                    if text == self._current_aspan_href:
+                        # self-referenced link
+                        self._current_aspan_href = None
+                elif self._current_wikilink_target:
+                    if text != self._current_wikilink_target:
+                        self._current_wikilink_target = '%s|%s' % (
+                            self._current_wikilink_target, text)
+                    return
+                self._current_msgid += polib.escape(text)
+            else:
+                if self._inside_indented_codeblock and text:
+                    if text == '\n':
+                        return
+                    text = '    %s' % text
+                self._current_line += text
+        else:
+            self._process_command(text)
 
     def translate(self, filepath_or_content, save=None):
         content = to_file_content_if_is_file(filepath_or_content)
 
         self.translations = {}
+        self.translations_with_msgctxt = {}
         for pofile in self.pofiles:
             for entry in pofile:
-                self.translations[entry.msgid] = entry.msgstr
+                if entry.msgctxt:
+                    if entry.msgctxt not in self.translations_with_msgctxt:
+                        self.translations_with_msgctxt[entry.msgctxt] = {}
+                    self.translations_with_msgctxt[
+                        entry.msgctxt][entry.msgid] = entry.msgstr
+                else:
+                    self.translations[entry.msgid] = entry.msgstr
 
         parser = md4c.GenericParser(self.flags)
         parser.parse(content,
@@ -416,6 +475,9 @@ class Po2Md:
                      self.enter_span,
                      self.leave_span,
                      self.text)
+        self._disable_next_line = False
+        self._disable = False
+        self._enable_next_line = False
 
         self.output = '\n'.join(self._outputlines)
 

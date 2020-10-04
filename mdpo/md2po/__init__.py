@@ -1,11 +1,11 @@
 """Markdown to pofiles extractor according to mdpo specification."""
 
 import os
-import re
 
 import md4c
 import polib
 
+from mdpo.command import search_html_command
 from mdpo.io import filter_paths, to_glob_or_content
 from mdpo.md4c import DEFAULT_MD4C_FLAGS, parse_md4c_flags_string
 from mdpo.po import build_po_escaped_string
@@ -39,9 +39,9 @@ class Md2Po:
 
         self.plaintext = kwargs.get('plaintext', False)
 
-        self.disable = False
-        self.disable_next_line = False
-        self.enable_next_line = False
+        self._disable = False
+        self._disable_next_line = False
+        self._enable_next_line = False
 
         self._include_xheaders = False
 
@@ -218,53 +218,49 @@ class Md2Po:
         self.msgids.append(msgid)
 
     def _save_current_msgid(self):
-        if self._current_msgid and (
-                (not self.disable_next_line and not self.disable) or
-                self.enable_next_line):
+        if self._current_msgid and ((not self._disable_next_line and
+                                     not self._disable) or
+                                    self._enable_next_line):
             self._save_msgid(self._current_msgid,
                              tcomment=self._current_tcomment,
                              msgctxt=self._current_msgctxt)
-        self.disable_next_line = False
-        self.enable_next_line = False
+        self._disable_next_line = False
+        self._enable_next_line = False
         self._current_msgid = ''
         self._current_tcomment = None
         self._current_msgctxt = None
 
     def _process_command(self, text):
-        command_search = re.search(
-            r'<\!\-\-\s{0,1}mdpo\-([a-z\-]+)\s{0,1}([\w\s]+)?\-\->', text)
-        if command_search:
-            command = command_search.group(1)
-            if command == 'disable-next-line':
-                self.disable_next_line = True
-            elif command == 'disable':
-                self.disable = True
-            elif command == 'enable':
-                self.disable = False
-            elif command == 'enable-next-line':
-                self.enable_next_line = True
-            elif command == 'translator':
-                comment = command_search.group(2)
-                if comment is None:
-                    raise ValueError('You need to specify a string for the'
-                                     ' extracted comment with the command'
-                                     ' \'mdpo-translator\'.')
-                self._current_tcomment = comment.strip(" ")
-            elif command == 'context':
-                comment = command_search.group(2)
-                if comment is None:
-                    raise ValueError('You need to specify a string for the'
-                                     ' context with the command'
-                                     ' \'mdpo-context\'.')
-                self._current_msgctxt = comment.strip(" ")
-            elif command == 'include':
-                comment = command_search.group(2)
-                if comment is None:
-                    raise ValueError('You need to specify a message for the'
-                                     ' comment to include with the command'
-                                     ' \'mdpo-include\'.')
-                self._current_msgid = comment.strip(" ")
-                self._save_current_msgid()
+        command, comment = search_html_command(text)
+        if command is None:
+            return
+
+        if command == 'disable-next-line':
+            self._disable_next_line = True
+        elif command == 'disable':
+            self._disable = True
+        elif command == 'enable':
+            self._disable = False
+        elif command == 'enable-next-line':
+            self._enable_next_line = True
+        elif command == 'translator':
+            if not comment:
+                raise ValueError('You need to specify a string for the'
+                                 ' extracted comment with the command'
+                                 ' \'mdpo-translator\'.')
+            self._current_tcomment = comment.strip(" ")
+        elif command == 'context':
+            if not comment:
+                raise ValueError('You need to specify a string for the'
+                                 ' context with the command \'mdpo-context\'.')
+            self._current_msgctxt = comment.strip(" ")
+        elif command == 'include':
+            if not comment:
+                raise ValueError('You need to specify a message for the'
+                                 ' comment to include with the command'
+                                 ' \'mdpo-include\'.')
+            self._current_msgid = comment.strip(" ")
+            self._save_current_msgid()
 
     def enter_block(self, block, details):
         # print("ENTER BLOCK:", block.name)
@@ -444,8 +440,9 @@ class Md2Po:
                 with open(filepath, "r") as f:
                     content = f.read()
                 _parse(content)
-                self.disable_next_line = False
-                self.disable = False
+                self._disable_next_line = False
+                self._disable = False
+                self._enable_next_line = False
 
         if self.mark_not_found_as_absolete:
             for entry in self.pofile:
