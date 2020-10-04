@@ -167,7 +167,7 @@ class MdPo2HTML(HTMLParser):
 
             elif handle == 'data':
                 if not _inside_code:
-                    handled = handled.replace('  ', ' ')
+                    handled = re.sub(r'\s{2,}', ' ', handled)
 
                 if all((ch in ALIGNMENT_CHARS) for ch in handled):
                     raw_html_template += handled
@@ -241,6 +241,8 @@ class MdPo2HTML(HTMLParser):
 
         self.output += html
         self.context = []
+
+        # print("________________________________________________")
 
     def handle_starttag(self, tag, attrs):
         # print("START TAG: %s | POS: %d:%d" % (tag, *self.getpos()))

@@ -3,4 +3,7 @@
  <a href="https://docs.djangoproject.com/en/stable/ref/templates/api/#using-requestcontext">Django context processors</a>. If you want to
  include expensive data to compute here, consider to use
  <a href="https://rock-it.pl/how-to-make-your-django-context-processors-lazy/">variables as functions</a> or temporal caches.</li>
+<li><strong><code>error/</code></strong> Files that render error messages in production. In development
+  environment we can see the result of these renderizations accessing to the URL
+  <a href="some-url">some-url</a>. The error file <code>503</code> is crazy.</li>
 </ul>

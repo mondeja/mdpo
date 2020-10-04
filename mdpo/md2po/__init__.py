@@ -401,11 +401,7 @@ class Md2Po:
                         text = self.code_end_string_escaped
                 if self._inside_pblock:
                     text = text.replace("\n", " ")
-                if self._current_aspan_href:
-                    if text == self._current_aspan_href:
-                        # self-referenced link
-                        self._current_aspan_href = None
-                elif self._current_wikilink_target:
+                if self._current_wikilink_target:
                     if text != self._current_wikilink_target:
                         # not self-referenced wikilink
                         self._current_wikilink_target = '%s|%s' % (

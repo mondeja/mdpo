@@ -8,7 +8,7 @@ msgstr ""
 msgid "Revenue was `off` the chart"
 msgstr ""
 
-msgid "Profits were higher than [https://ever.com] has been"
+msgid "Profits were higher than [https://ever.com](https://ever.com) has been"
 msgstr ""
 
 msgid "The first item of an ordered list."

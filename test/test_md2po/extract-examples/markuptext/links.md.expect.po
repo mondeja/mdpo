@@ -10,7 +10,9 @@ msgid ""
 "best search engine for privacy\")."
 msgstr ""
 
-msgid "Visit [https://www.github.com/mondeja/mdpo]"
+msgid ""
+"Visit "
+"[https://www.github.com/mondeja/mdpo](https://www.github.com/mondeja/mdpo)"
 msgstr ""
 
 msgid ""
