@@ -175,6 +175,8 @@ class MdPo2HTML(HTMLParser):
                             handled, _current_link_target)
                         _current_link_target = ''
                     else:
+                        if _last_start_tag != 'code':
+                            handled = handled.replace('  ', ' ')
                         _current_replacement += handled
             elif handle == 'end':
                 raw_html_template += '</%s>' % handled
@@ -290,6 +292,8 @@ class MdPo2HTML(HTMLParser):
                 self.output += data
                 return
             else:
+                if self.context:
+                    data = data.replace('\n', ' ')
                 self.replacer.append(('data', data, None))
 
     def handle_comment(self, data):
