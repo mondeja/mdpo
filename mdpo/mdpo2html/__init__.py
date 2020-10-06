@@ -2,7 +2,6 @@
 
 import glob
 import re
-from collections import OrderedDict
 import html
 from html.parser import HTMLParser
 
@@ -52,23 +51,6 @@ class MdPo2HTML(HTMLParser):
 
         self.ignore_grouper_tags = ignore_grouper_tags
 
-        self.markups_handler = OrderedDict(sorted(
-            {
-                'bold': {
-                    'start_string': '**',
-                    'end_string': '**',
-                    'tags': self.bold_tags,
-                },
-                'italic': {
-                    'start_string': '*',
-                    'end_string': '*',
-                    'tags': self.italic_tags,
-                },
-            }.items(),
-            key=lambda k: -max([len(k[1]['start_string']),
-                                len(k[1]['end_string'])]),
-        ))
-
         self.markup_tags = []
         self.markup_tags.extend(self.code_tags)
         self.markup_tags.extend(self.bold_tags)
@@ -79,12 +61,12 @@ class MdPo2HTML(HTMLParser):
         super().__init__()
 
     def _merge_adyacent_tags(self, html, template_tags):
-        for markup, mk_data in self.markups_handler.items():
+        for tags_group in [self.bold_tags, self.italic_tags]:
             regexes = []
-            for tag in mk_data['tags']:
+            for tag in tags_group:
                 if tag not in template_tags:
                     continue
-                for _tag in mk_data['tags']:
+                for _tag in tags_group:
                     if _tag not in template_tags:
                         continue
                     regex = r'</%s>\s*<%s>' % (tag, _tag)
@@ -93,6 +75,7 @@ class MdPo2HTML(HTMLParser):
 
             for regex in regexes:
                 html = re.sub(regex, ' ', html)
+
         return html
 
     def _process_replacer(self):
