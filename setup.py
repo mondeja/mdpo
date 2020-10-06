@@ -110,6 +110,7 @@ setup(
         'console_scripts': [
             'md2po = mdpo.md2po.__main__:main',
             'po2md = mdpo.po2md.__main__:main',
+            'mdpo2html = mdpo.mdpo2html.__main__:main',
         ],
     },
     packages=find_packages(exclude=['test']),

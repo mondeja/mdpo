@@ -89,12 +89,10 @@ After that, you can use the new file ``locale/es/LC_MESSAGES/readme.po`` to
 to replace the contents of the file ``README.html`` with your translations,
 using next command:
 
-.. code-block:: python
+.. code-block:: bash
 
-   >>> import mdpo
-   >>> mdpo.markdown_pofile_to_html('README.html',
-   ...                              'locale/es/LC_MESSAGES/readme.po',
-   ...                              save='locale/es/LC_MESSAGES/README.html')
+   mdpo2html README.html --pofiles locale/es/LC_MESSAGES/readme.po --quiet \
+     --save locale/es/LC_MESSAGES/README.html
 
 And this will produce your translated file in
 ``locale/es/LC_MESSAGES/README.html``:
