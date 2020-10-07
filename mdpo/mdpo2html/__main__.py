@@ -39,7 +39,7 @@ def build_parser():
 
 def parse_options(args):
     parser = build_parser()
-    if '-h' in sys.argv or '--help' in sys.argv:
+    if '-h' in args or '--help' in args:
         parser.print_help()
         sys.exit(0)
     opts = parser.parse_args(args)
