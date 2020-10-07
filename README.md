@@ -1,24 +1,44 @@
-# mdpo
+<p align="center">
+  <a href="https://github.com/mondeja/mdpo"><img src="https://raw.githubusercontent.com/mondeja/mdpo/master/mdpo.png" alt="mdpo" width="400"></a>
+</h1>
+
+<h4 align="center">Markdown file translation utilities using pofiles</h4>
+
+<p align="center">
+  <a href="https://pypi.org/project/mdpo/">
+    <img src="https://img.shields.io/pypi/v/mdpo"
+         alt="PyPI">
+  </a>
+  <a href="https://pypi.org/project/mdpo/">
+    <img src="https://img.shields.io/pypi/pyversions/mdpo?logo=python&logoColor=aaaaaa&labelColor=333333">
+  </a>
+  <a href="https://github.com/mondeja/mdpo/blob/master/LICENSE">
+    <img src="https://img.shields.io/pypi/l/mdpo?color=light-green">
+  </a>
+</p>
+
+<h2 align="center">
+  <a href="https://mdpo.readthedocs.io/en/latest/">Documentation</a>
+</h2>
+
+<p align="center">
+Fully complies with <a href="https://spec.commonmark.org/0.29">CommonMark Specification v0.29</a>,
+supporting some additional features.
+</p>
+
+## Status
 
 <!-- mdpo-disable -->
 
-[![PyPI][pypi-image]][pypi-link]
-[![PyPI Python versions][pypi-versions-image]][pypi-link]
-[![License][license-image]][license-link]
+[![Documentation status][doc-image]][doc-link]
 [![Tests][tests-image]][tests-link]
 [![Coverage status][coverage-image]][coverage-link]
-[![Documentation status][doc-image]][doc-link]
 
 <!-- mdpo-enable -->
 
-Utilities for Markdown files translation using `.po` files. Fully complies
- with [CommonMark Specification][commonmark-spec-link], supporting some
- additional features.
-
 ## Install
 
-You need to compile [md4c](https://github.com/mity/md4c/wiki/Building-MD4C)
-before install, and then:
+You need to compile [md4c][md4c-build-link] before install, and then:
 
 ### Linux
 
@@ -35,8 +55,6 @@ pip install \
 mdpo
 ```
 
-## [Documentation][doc-link]
-
 ---
 
 <!-- mdpo-disable -->
@@ -48,22 +66,13 @@ mdpo
 
 <!-- mdpo-enable -->
 
-[pypi-image]: https://img.shields.io/pypi/v/mdpo
-[pypi-link]: https://pypi.org/project/mdpo/
-[pypi-versions-image]: https://img.shields.io/pypi/pyversions/mdpo?logo=python&logoColor=aaaaaa&labelColor=333333
-[license-image]: https://img.shields.io/pypi/l/mdpo?color=light-green
-[license-link]: https://github.com/mondeja/mdpo/blob/master/LICENSE
+
 [tests-image]: https://img.shields.io/travis/mondeja/mdpo?label=tests
 [tests-link]: https://travis-ci.com/github/mondeja/mdpo
 [coverage-image]: https://coveralls.io/repos/github/mondeja/mdpo/badge.svg
 [coverage-link]: https://coveralls.io/github/mondeja/mdpo
 [doc-image]: https://readthedocs.org/projects/mdpo/badge/?version=latest
 [doc-link]: https://mdpo.readthedocs.io/en/latest/
-[pofile-doc-link]: https://polib.readthedocs.io/en/latest/api.html#polib.POFile
-[polib-doc-link]: https://polib.readthedocs.io/en/latest
-[pymd4c-link]: https://github.com/dominickpastore/pymd4c
-[pymd4c-build-from-source-link]: https://github.com/dominickpastore/pymd4c#build-and-install-from-source
-[mdpo2html-link]: https://github.com/mondeja/mdpo2html
-[commonmark-spec-link]: https://spec.commonmark.org/0.29
+[md4c-build-link]: https://github.com/mity/md4c/wiki/Building-MD4C
 [process-locales-script-link]: https://github.com/mondeja/mdpo/blob/master/process-locales.py
 [spanish-readme-link]: https://github.com/mondeja/mdpo/blob/master/locale/readme/es.md

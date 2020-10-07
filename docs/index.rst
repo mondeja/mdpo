@@ -2,8 +2,8 @@
 mdpo's documentation
 ####################
 
-Utilities to translate Markdown files using `.po` files.
-Fully complies with `CommonMark Specification`_.
+Markdown file translation utilities using pofiles. Fully complies with
+`CommonMark Specification`_.
 
 .. toctree::
    :maxdepth: 2
