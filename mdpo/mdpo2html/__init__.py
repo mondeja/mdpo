@@ -29,6 +29,10 @@ class MdPo2HTML(HTMLParser):
         self.replacer = []
         self._raw_replacement = ''
         self.context = []
+        self._current_msgctxt = None
+
+        self.translations = None
+        self.translations_with_msgctxt = None
 
         self._disable = False
         self._disable_next_line = False
@@ -190,8 +194,11 @@ class MdPo2HTML(HTMLParser):
                 or self._disable_next_line:
             replacement = _current_replacement
         else:
-            replacement = self.translations.get(
-                _current_replacement, _current_replacement)
+            if self._current_msgctxt:
+                replacement = self.translations_with_msgctxt[
+                    self._current_msgctxt].get(_current_replacement)
+            else:
+                replacement = self.translations.get(_current_replacement)
             if not replacement:
                 replacement = _current_replacement
 
@@ -235,6 +242,7 @@ class MdPo2HTML(HTMLParser):
 
         self._disable_next_line = False
         self._enable_next_line = False
+        self._current_msgctxt = None
 
         # print("________________________________________________")
 
@@ -320,14 +328,23 @@ class MdPo2HTML(HTMLParser):
                     self._disable = False
                 elif command == 'enable-next-line':
                     self._enable_next_line = True
+                elif command == 'context' and comment:
+                    self._current_msgctxt = comment.strip(" ")
 
     def translate(self, filepath_or_content, save=None):
         content = to_file_content_if_is_file(filepath_or_content)
 
         self.translations = {}
+        self.translations_with_msgctxt = {}
         for pofile in self.pofiles:
             for entry in pofile:
-                self.translations[entry.msgid] = entry.msgstr
+                if entry.msgctxt:
+                    if entry.msgctxt not in self.translations_with_msgctxt:
+                        self.translations_with_msgctxt[entry.msgctxt] = {}
+                    self.translations_with_msgctxt[
+                        entry.msgctxt][entry.msgid] = entry.msgstr
+                else:
+                    self.translations[entry.msgid] = entry.msgstr
 
         self.feed(content)
 

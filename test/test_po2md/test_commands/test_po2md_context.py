@@ -1,11 +1,7 @@
-import os
-import tempfile
-from uuid import uuid4
-
 from mdpo.po2md import pofile_to_markdown
 
 
-def test_context():
+def test_context(tmp_pofile):
     markdown_input = '''<!-- mdpo-context month -->
 May
 
@@ -28,14 +24,9 @@ msgid "May"
 msgstr "Quizás"
 '''
 
-    po_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
-    with open(po_filepath, "w") as f:
-        f.write(pofile_content)
-
-    output = pofile_to_markdown(markdown_input, po_filepath)
+    with tmp_pofile(pofile_content) as po_filepath:
+        output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output
-
-    os.remove(po_filepath)
 
 
 def test_context_without_value():
