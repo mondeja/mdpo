@@ -88,7 +88,3 @@ Disadvantages
 * Message replacers needs to be written and depends on this specification.
 * Translation editors needs to be configured with this specification if they
   want to handle properly markup character templates.
-
-
-
-.. _jekyll-multiple-languages-plugin: https://github.com/kurtsson/jekyll-multiple-languages-plugin

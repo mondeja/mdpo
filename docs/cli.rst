@@ -22,6 +22,9 @@ md2po
    :prog: md2po
    :nodefault:
 
+.. raw:: html
+
+   <hr>
 
 .. _po2md-cli:
 
@@ -33,6 +36,13 @@ po2md
    :func: build_parser
    :prog: po2md
    :nodefault:
+
+
+.. raw:: html
+
+   <hr>
+
+.. _mdpo2html-cli:
 
 mdpo2html
 =========

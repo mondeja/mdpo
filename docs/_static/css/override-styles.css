@@ -1,0 +1,23 @@
+
+.wy-menu > .caption > span {
+  color: #d66671;
+}
+
+.rst-content a,
+.rst-content a:visited {
+  color: #bc0013;
+  transition: color 80ms;
+}
+.rst-content a:hover {
+  color: #f70019;
+}
+
+#rtd-search-form > input[type="text"] {
+  border-color: rgba(100,100,100,.4);
+}
+
+
+/* Hack for lists inside adminitions */
+.admonition > ul {
+  margin-bottom: 0px !important;
+}

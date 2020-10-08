@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath('..'))
 _now = datetime.datetime.now()
 _start_copyright_year = 2020
 
-project = 'md2po'
+project = 'mdpo'
 copyright = '%s, Álvaro Mondéjar Rubio' % (
     str(_start_copyright_year) if _now.year == _start_copyright_year else
     '%d-%d' % (_start_copyright_year, _now.year)
@@ -57,11 +57,20 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+html_theme_options = {
+    'logo_only': True,
+    'style_nav_header_background': 'white',
+}
+html_logo = os.path.abspath(os.path.join("..", "mdpo.png"))
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+html_css_files = [
+    os.path.join('css', 'override-styles.css'),
+]
 
 # -- Options for `sphinx.ext.intersphinx` ------------------------------------
 

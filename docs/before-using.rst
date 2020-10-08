@@ -45,3 +45,5 @@ Disadvantages
   backticks (``\```), but at the end of the day, you will have blocks of code
   translated. These blocks, as well as other parts of the source file, must be
   hidden to the translator.
+
+.. _jekyll-multiple-languages-plugin: https://github.com/kurtsson/jekyll-multiple-languages-plugin
