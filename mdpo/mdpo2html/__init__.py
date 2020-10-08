@@ -8,6 +8,7 @@ from html.parser import HTMLParser
 import polib
 import md4c
 
+from mdpo.command import search_html_command
 from mdpo.html import (
     get_html_attrs_tuple_attr,
     html_attrs_tuple_to_string,
@@ -33,6 +34,10 @@ class MdPo2HTML(HTMLParser):
         self.replacer = []
         self._raw_replacement = ''
         self.context = []
+
+        self._disable = False
+        self._disable_next_line = False
+        self._enable_next_line = False
 
         # lazy translators mode
         self.merge_adjacent_markups = merge_adjacent_markups
@@ -77,6 +82,11 @@ class MdPo2HTML(HTMLParser):
                 html = re.sub(regex, ' ', html)
 
         return html
+
+    def _remove_lastline_from_output_if_empty(self):
+        split_output = self.output.split("\n")
+        if not split_output[-1]:
+            self.output = '\n'.join(split_output)[:-1]
 
     def _process_replacer(self):
         # print("REPLACER:", self.replacer)
@@ -181,10 +191,14 @@ class MdPo2HTML(HTMLParser):
 
         _current_replacement = html.unescape(_current_replacement)
 
-        replacement = self.translations.get(
-            _current_replacement, _current_replacement)
-        if not replacement:
+        if (self._disable and not self._enable_next_line) \
+                or self._disable_next_line:
             replacement = _current_replacement
+        else:
+            replacement = self.translations.get(
+                _current_replacement, _current_replacement)
+            if not replacement:
+                replacement = _current_replacement
 
         for tt in template_tags:
             for tags_group in [self.bold_tags, self.italic_tags]:
@@ -223,6 +237,9 @@ class MdPo2HTML(HTMLParser):
 
         self.output += html_template
         self.context = []
+
+        self._disable_next_line = False
+        self._enable_next_line = False
 
         # print("________________________________________________")
 
@@ -291,10 +308,23 @@ class MdPo2HTML(HTMLParser):
     def handle_comment(self, data):
         # print("     COMMENT: '%s'" % (data))
 
-        if not self.replacer:
-            self.output += '<!--%s-->' % data
-        else:
+        if self.replacer:
             self.replacer.append(('comment', data, None))
+        else:
+            data_as_comment = '<!--%s-->' % data
+            command, comment = search_html_command(data_as_comment)
+            if command is None:
+                self.output += data_as_comment
+            else:
+                self._remove_lastline_from_output_if_empty()
+                if command == 'disable-next-line':
+                    self._disable_next_line = True
+                elif command == 'disable':
+                    self._disable = True
+                elif command == 'enable':
+                    self._disable = False
+                elif command == 'enable-next-line':
+                    self._enable_next_line = True
 
     def translate(self, filepath_or_content, save=None):
         content = to_file_content_if_is_file(filepath_or_content)
