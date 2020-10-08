@@ -1,22 +1,17 @@
 """HTML-produced-from-Markdown files translator using pofiles as reference."""
 
 import glob
-import re
 import html
+import re
 from html.parser import HTMLParser
 
-import polib
 import md4c
+import polib
 
 from mdpo.command import search_html_command
-from mdpo.html import (
-    get_html_attrs_tuple_attr,
-    html_attrs_tuple_to_string,
-)
-from mdpo.io import (
-    filter_paths,
-    to_file_content_if_is_file,
-)
+from mdpo.html import get_html_attrs_tuple_attr, html_attrs_tuple_to_string
+from mdpo.io import filter_paths, to_file_content_if_is_file
+
 
 PROCESS_REPLACER_TAGS = ['p', 'li', 'h1', 'h2', 'h3',
                          'h4', 'h5', 'h6', 'td', 'th']

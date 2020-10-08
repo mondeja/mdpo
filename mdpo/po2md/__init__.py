@@ -7,19 +7,13 @@ import md4c
 import polib
 
 from mdpo.command import search_html_command
-from mdpo.io import (
-    filter_paths,
-    to_file_content_if_is_file,
-)
+from mdpo.io import filter_paths, to_file_content_if_is_file
 from mdpo.md import (
     escape_links_titles,
     fixwrap_codespans,
-    inline_untexted_links,
+    inline_untexted_links
 )
-from mdpo.md4c import (
-    DEFAULT_MD4C_FLAGS,
-    parse_md4c_flags_string,
-)
+from mdpo.md4c import DEFAULT_MD4C_FLAGS, parse_md4c_flags_string
 from mdpo.po import build_po_escaped_string
 from mdpo.text import min_not_max_chars_in_a_row
 

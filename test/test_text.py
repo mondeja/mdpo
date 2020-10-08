@@ -2,10 +2,7 @@
 
 import pytest
 
-from mdpo.text import (
-    max_char_in_a_row,
-    min_not_max_chars_in_a_row,
-)
+from mdpo.text import max_char_in_a_row, min_not_max_chars_in_a_row
 
 
 @pytest.mark.parametrize(("char", "text", "expected_result"), (

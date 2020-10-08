@@ -2,6 +2,7 @@
 
 import re
 
+
 COMMAND_SEARCH_RE = re.compile(
     r'<\!\-\-\s{0,1}mdpo\-([a-z\-]+)\s{0,1}([\w\s]+)?\-\->')
 

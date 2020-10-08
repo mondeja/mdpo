@@ -8,6 +8,7 @@ import pytest
 from mdpo.po2md.__main__ import run
 from mdpo.text import striplastline
 
+
 EXAMPLE = {
     'markdown-input': '# Header 1\n\nSome text here\n',
     'markdown-output': '# Encabezado 1\n\nAlgo de texto aquí\n',

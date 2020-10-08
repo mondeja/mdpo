@@ -9,6 +9,7 @@ from mdpo import __version__
 from mdpo.cli import parse_list_argument
 from mdpo.po2md import pofile_to_markdown
 
+
 DESCRIPTION = 'Markdown files translator using pofiles as reference.'
 
 

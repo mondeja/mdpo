@@ -8,6 +8,7 @@ import pytest
 
 from mdpo.po2md import pofile_to_markdown
 
+
 EXAMPLES_DIR = os.path.join('test', 'test_po2md', 'translate-examples')
 
 

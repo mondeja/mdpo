@@ -9,6 +9,7 @@ from mdpo import __version__
 from mdpo.cli import parse_list_argument
 from mdpo.mdpo2html import markdown_pofile_to_html
 
+
 DESCRIPTION = ('HTML-produced-from-Markdown files translator using pofiles'
                ' as reference.')
 

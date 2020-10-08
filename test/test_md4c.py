@@ -1,9 +1,7 @@
 import pytest
 
-from mdpo.md4c import (
-    DEFAULT_MD4C_FLAGS,
-    parse_md4c_flags_string,
-)
+from mdpo.md4c import DEFAULT_MD4C_FLAGS, parse_md4c_flags_string
+
 
 DEFAULT_MODES_OUTPUT = {
     'strikethrough': True,
