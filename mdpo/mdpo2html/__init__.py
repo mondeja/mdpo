@@ -21,7 +21,7 @@ ALIGNMENT_CHARS = ['\n', ' ', '\t', '\r']
 class MdPo2HTML(HTMLParser):
     def __init__(self, pofiles, ignore=[], merge_adjacent_markups=False,
                  code_tags=['code'], bold_tags=['b', 'strong'],
-                 italic_tags=['em', 'i'], link_tags=['a'],
+                 italic_tags=['em', 'i'], link_tags=['a'], image_tags=['img'],
                  ignore_grouper_tags=['div', 'hr']):
         self.pofiles = [polib.pofile(pofilepath) for pofilepath in
                         filter_paths(glob.glob(pofiles), ignore_paths=ignore)]
@@ -52,6 +52,9 @@ class MdPo2HTML(HTMLParser):
 
         # link markup
         self.link_tags = link_tags
+
+        # image markup
+        self.image_tags = image_tags
 
         self.ignore_grouper_tags = ignore_grouper_tags
 
@@ -183,10 +186,23 @@ class MdPo2HTML(HTMLParser):
             elif handle == 'comment':
                 raw_html_template += '<!--%s-->' % handled
             elif handle == 'startend':
-                raw_html_template += '<%s%s/>' % (
-                    handled,
-                    (' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
-                )
+                if handled in self.image_tags:
+                    _current_replacement += '![%s](%s' % (
+                        get_html_attrs_tuple_attr(attrs, "alt"),
+                        get_html_attrs_tuple_attr(attrs, "src"),
+                    )
+                    title = get_html_attrs_tuple_attr(attrs, "title")
+                    if title:
+                        _current_replacement += ' "%s"' % title
+                    _current_replacement += ')'
+
+                    raw_html_template += '{}'
+                else:
+                    raw_html_template += '<%s%s/>' % (
+                        handled,
+                        ((' %s' % html_attrs_tuple_to_string(attrs))
+                         if attrs else '')
+                    )
 
         _current_replacement = html.unescape(_current_replacement)
 

@@ -1,0 +1,18 @@
+#
+msgid ""
+msgstr ""
+
+msgid "![Tux, the Linux mascot](/assets/images/tux.png)"
+msgstr "![Tux, la mascota Linux](/assets/images/tux.png)"
+
+msgid "![](/assets/favicon.ico)"
+msgstr "![](/assets/favicon.ico)"
+
+msgid "![Hail Tux!](/assets/images/tux.png \"Use linux, don't be crazy\")"
+msgstr "![Hail Tux!](/assets/images/tux.png \"Usa linux, no seas loco\")"
+
+msgid "![Alt text](url/to/image \"Optional title attribute\")"
+msgstr "![Texto alternativo](url/to/imagen \"Atributo título opcional\")"
+
+msgid "My ![foo bar](/path/to/train.jpg \"title\")"
+msgstr "Mi ![foo bar](/path/to/tren.jpg \"título\")"
