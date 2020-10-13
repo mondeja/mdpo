@@ -36,7 +36,7 @@ supporting some additional features.
 
 <!-- mdpo-enable -->
 
-## Install
+## Installation
 
 You need to compile [md4c][md4c-build-link] before install, and then:
 

@@ -209,13 +209,11 @@ class Po2Md:
             self._inside_pblock = True
         elif block.value == md4c.BlockType.CODE:
             self._inside_codeblock = True
-            if details['fence_char'] and details['fence_char'] != '\x00':
+            if 'fence_char' in details:
                 self._current_line += '%s' % (details['fence_char']*3)
             if details["lang"]:
                 self._current_line += details["lang"][0][1]
-            # ``fence_char`` -> None == '\x00' is pymd4c "bug":
-            # https://github.com/dominickpastore/pymd4c/pull/11
-            if not details["fence_char"] or details["fence_char"] == '\x00':
+            if 'fence_char' not in details:
                 self._inside_indented_codeblock = True
             self._save_current_line()
         elif block.value == md4c.BlockType.H:
@@ -265,7 +263,7 @@ class Po2Md:
         elif block.value == md4c.BlockType.CODE:
             self._inside_codeblock = False
             self._inside_indented_codeblock = False
-            if details['fence_char'] and details['fence_char'] != '\x00':
+            if 'fence_char' in details:
                 self._current_line += '%s' % (details['fence_char']*3)
             self._save_current_line(times=2)
         elif block.value == md4c.BlockType.H:
