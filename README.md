@@ -38,24 +38,9 @@ supporting some additional features.
 
 ## Installation
 
-You need to compile [md4c][md4c-build-link] before install, and then:
-
-### Linux
-
 ```bash
-pip install \
-  -e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c \
-  && pip install mdpo
+pip install mdpo
 ```
-
-#### Specifying in `requirements.txt`
-
-```ini
--e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c
-mdpo
-```
-
----
 
 <!-- mdpo-disable -->
 
