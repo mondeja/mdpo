@@ -13,7 +13,7 @@ from mdpo.md import (
     fixwrap_codespans,
     inline_untexted_links
 )
-from mdpo.md4c import DEFAULT_MD4C_FLAGS, parse_md4c_flags_string
+from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import build_po_escaped_string
 from mdpo.text import min_not_max_chars_in_a_row
 
@@ -23,8 +23,8 @@ class Po2Md:
         self.pofiles = [polib.pofile(pofilepath) for pofilepath in
                         filter_paths(glob.glob(pofiles), ignore_paths=ignore)]
 
-        self.flags, self.modes = parse_md4c_flags_string(
-            kwargs.get('flags', DEFAULT_MD4C_FLAGS))
+        self.extensions = kwargs.get("extensions",
+                                     DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS)
 
         self._current_msgid = ''
         self._current_msgctxt = None
@@ -81,7 +81,7 @@ class Po2Md:
             md4c.SpanType.A: self.link_end_string,
         }
 
-        if self.modes['wikilinks']:
+        if "wikilinks" in self.extensions:
             self.wikilink_start_string = kwargs.get('link_end_string', '[[')
             self.wikilink_end_string = kwargs.get('link_end_string', ']]')
 
@@ -459,7 +459,8 @@ class Po2Md:
                 else:
                     self.translations[entry.msgid] = entry.msgstr
 
-        parser = md4c.GenericParser(self.flags)
+        parser = md4c.GenericParser(0,
+                                    **{ext: True for ext in self.extensions})
         parser.parse(content,
                      self.enter_block,
                      self.leave_block,

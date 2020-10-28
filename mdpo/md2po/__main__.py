@@ -14,7 +14,7 @@ except ImportError:
 from mdpo import __version__
 from mdpo.cli import parse_list_argument
 from mdpo.md2po import markdown_to_pofile
-from mdpo.md4c import DEFAULT_MD4C_FLAGS
+from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 
 DESCRIPTION = ('Utility like xgettext to extract Markdown content dumping it'
@@ -73,17 +73,18 @@ def build_parser():
                              ' been found in the current extraction.'
                              ' If this argument is not passed, will be marked'
                              ' as obsolete strings.')
-    parser.add_argument('-f', '--flags',
-                        default=DEFAULT_MD4C_FLAGS, dest='flags',
+    parser.add_argument('-x', '--extensions', dest='extensions',
+                        default=','.join(
+                            DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS),
                         help='md4c extensions used to parse markdown'
-                             ' content, separated by ``|`` or ``+``'
-                             '  characters. You can see all available at http'
-                             's://github.com/mity/md4c#markdown-extensions')
+                             ' content, separated by ``,`` and formatted as'
+                             ' pymd4c extension keyword arguments. You can'
+                             ' see all available at https://github.com/'
+                             'dominickpastore/pymd4c#parser-option-flags')
     parser.add_argument('-e', '--encoding', dest='encoding', default=None,
                         help='Resulting pofile encoding (autodetected by'
                              ' default).')
-    parser.add_argument('-x', '--xheaders', dest='xheaders',
-                        action='store_true',
+    parser.add_argument('--xheaders', dest='xheaders', action='store_true',
                         help='Include mdpo specification x-headers.'
                              ' These only will be included if you do not pass'
                              ' the parameter ``--plaintext``.')
@@ -101,6 +102,7 @@ def parse_options(args=[]):
         opts.glob_or_content = sys.stdin.read().strip('\n')
     if opts.ignore:
         opts.ignore = parse_list_argument(opts.ignore)
+    opts.extensions = opts.extensions.split(",")
 
     return opts
 
@@ -115,7 +117,7 @@ def run(args=[]):
         mo_filepath=opts.mo_filepath,
         plaintext=opts.plaintext,
         mark_not_found_as_absolete=opts.mark_not_found_as_absolete,
-        flags=opts.flags,
+        extensions=opts.extensions,
         encoding=opts.encoding,
         xheaders=opts.xheaders)
     if isinstance(opts.wrapwidth, int):

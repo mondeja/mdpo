@@ -1,15 +1,17 @@
 
 from mdpo.md2po import markdown_to_pofile
-from mdpo.md4c import DEFAULT_MD4C_FLAGS
+from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 
 def test_x_headers_included():
     markdown_content = '# Foo\n'
 
+    extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
+    extensions.append("underline")
     po = markdown_to_pofile(markdown_content,
                             xheaders=True,
                             plaintext=False,
-                            flags=DEFAULT_MD4C_FLAGS + '|MD_FLAG_UNDERLINE')
+                            extensions=extensions)
     assert po.__unicode__() == '''#
 msgid ""
 msgstr ""

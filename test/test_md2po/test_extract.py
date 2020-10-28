@@ -7,7 +7,7 @@ from uuid import uuid4
 import pytest
 
 from mdpo.md2po import markdown_to_pofile
-from mdpo.md4c import DEFAULT_MD4C_FLAGS
+from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 
 EXAMPLES_DIR = os.path.join('test', 'test_md2po', 'extract-examples')
@@ -52,7 +52,7 @@ def test_extract_underline(filename):
     filepath = os.path.join(EXAMPLES['underline']['dirpath'], filename)
     pofile = markdown_to_pofile(
         filepath, plaintext=False,
-        flags=DEFAULT_MD4C_FLAGS + '|MD_FLAG_UNDERLINE')
+        extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS + ["underline"])
 
     with open(filepath + '.expect.po', 'r') as expect_file:
         assert pofile.__unicode__() == expect_file.read()

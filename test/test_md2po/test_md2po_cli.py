@@ -226,7 +226,7 @@ msgstr ""
     assert _line_with_provided_width_found
 
 
-@pytest.mark.parametrize('arg', ['-x', '--xheaders'])
+@pytest.mark.parametrize('arg', ['--xheaders'])
 def test_xheaders(capsys, arg):
     markdown_content = '# Foo'
 

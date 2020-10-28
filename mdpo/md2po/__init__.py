@@ -7,7 +7,7 @@ import polib
 
 from mdpo.command import search_html_command
 from mdpo.io import filter_paths, to_glob_or_content
-from mdpo.md4c import DEFAULT_MD4C_FLAGS, parse_md4c_flags_string
+from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import build_po_escaped_string
 from mdpo.text import min_not_max_chars_in_a_row
 
@@ -34,8 +34,8 @@ class Md2Po:
         self.mark_not_found_as_absolete = kwargs.get(
             'mark_not_found_as_absolete', True)
 
-        self.flags, self.modes = parse_md4c_flags_string(
-            kwargs.get('flags', DEFAULT_MD4C_FLAGS))
+        self.extensions = kwargs.get("extensions",
+                                     DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS)
 
         self.plaintext = kwargs.get('plaintext', False)
 
@@ -104,7 +104,7 @@ class Md2Po:
                 md4c.SpanType.A: self.link_end_string,
             }
 
-            if self.modes["strikethrough"]:
+            if "strikethrough" in self.extensions:
                 self.strikethrough_start_string = kwargs.get(
                     'strikethrough_start_string', '~~')
                 self._enterspan_replacer[md4c.SpanType.DEL] = \
@@ -123,7 +123,7 @@ class Md2Po:
                             self.strikethrough_end_string,
                     })
 
-            if self.modes['latexmathspans']:
+            if "latex_math_spans" in self.extensions:
                 self.latexmath_start_string = kwargs.get(
                     'latexmath_start_string', '$')
                 self._enterspan_replacer[md4c.SpanType.LATEXMATH] = \
@@ -154,7 +154,7 @@ class Md2Po:
                             self.latexmathdisplay_end_string,
                     })
 
-            if self.modes['wikilinks']:
+            if "wikilinks" in self.extensions:
                 self.wikilink_start_string = kwargs.get(
                     'wikilink_start_string', '[[')
                 self.wikilink_end_string = kwargs.get(
@@ -171,7 +171,7 @@ class Md2Po:
                         "x-mdpo-wikilink-end": self.wikilink_end_string,
                     })
 
-            if self.modes['underline']:
+            if "underline" in self.extensions:
                 # underline text is standarized with double '_'
                 self.underline_start_string = kwargs.get(
                     'underline_start_string', '__')
@@ -189,7 +189,8 @@ class Md2Po:
                         "x-mdpo-underline-end": self.underline_end_string,
                     })
 
-            # optimization to skip checking for ``self.modes['underline']``
+            # optimization to skip checking for
+            # ``self.md4c_generic_parser_kwargs.get('underline')``
             # inside spans
             self._inside_uspan = False
 
@@ -423,7 +424,8 @@ class Md2Po:
         self.pofile = polib.pofile(po_filepath, wrapwidth=self.wrapwidth,
                                    **pofile_kwargs)
 
-        parser = md4c.GenericParser(self.flags)
+        parser = md4c.GenericParser(0,
+                                    **{ext: True for ext in self.extensions})
 
         def _parse(content):
             parser.parse(content,
@@ -463,8 +465,8 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
                        po_filepath=None, save=False, mo_filepath=None,
                        plaintext=False, wrapwidth=78,
                        mark_not_found_as_absolete=True,
-                       flags=DEFAULT_MD4C_FLAGS, encoding=None,
-                       xheaders=False, **kwargs):
+                       extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
+                       encoding=None, xheaders=False, **kwargs):
     """
     Extracts all the msgids from a string of Markdown content or a group
     of files.
@@ -501,10 +503,10 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         mark_not_found_as_absolete (bool): The strings extracted from markdown
             that will not be found inside the provided pofile will be marked
             as obsolete.
-        flags (str): md4c extensions used to parse markdown content, separated
-            by ``|`` or ``+`` characters. You can see all available at
-            `md4c repository <https://github.com/mity/md4c#markdown-
-            extensions>`_.
+        extensions (list): md4c extensions used to parse markdown content,
+            formatted as a list of 'pymd4c' keyword arguments. You can see all
+            available at `pymd4c repository <https://github.com/dominickpastore
+            /pymd4c#parser-option-flags>`_.
         encoding (bool): Resulting pofile encoding (autodetected by default).
         xheaders (bool): Indicates if the resulting pofile will have mdpo
             x-headers included. These only can be included if the parameter
@@ -530,7 +532,7 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         glob_or_content, ignore=ignore, msgstr=msgstr,
         plaintext=plaintext, wrapwidth=wrapwidth,
         mark_not_found_as_absolete=mark_not_found_as_absolete,
-        flags=flags, xheaders=xheaders, **kwargs
+        extensions=extensions, xheaders=xheaders, **kwargs
     ).extract(
         po_filepath=po_filepath, save=save,
         mo_filepath=mo_filepath, encoding=encoding
