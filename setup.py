@@ -14,7 +14,7 @@ EMAIL = 'mondejar1994@gmail.com'
 AUTHOR = 'Álvaro Mondéjar Rubio'
 REQUIRES_PYTHON = '>=3.6'
 REQUIRED = [
-    'pymd4c==0.4.4.0b1',
+    'pymd4c==0.4.6.0b1',
     'polib>=1.1.0',
 ]
 
@@ -140,9 +140,5 @@ setup(
     ],
     cmdclass={
         'upload': UploadCommand,
-    },
-    dependency_links=[
-        ('http://github.com/dominickpastore/pymd4c/'
-         'tarball/master#egg=md4c-0.4.4.0b1'),
-    ]
+    }
 )

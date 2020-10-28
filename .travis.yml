@@ -3,35 +3,24 @@ os: linux
 dist: focal
 cache: false
 install:
-  - travis_retry pip install -U pip virtualenv
-  - wget https://github.com/mity/md4c/archive/release-0.4.4.tar.gz
-  - tar -zxvf release-0.4.4.tar.gz
-  - rm release-0.4.4.tar.gz
-  - cd md4c-release-0.4.4
-  - mkdir build && cd build
-  - cmake ..
-  - make
-  - sudo make install
-  - sudo ldconfig
-  - cd ../..
-  - python -m virtualenv venv
-  - . venv/bin/activate && python -m pip install -e git+https://github.com/dominickpastore/pymd4c.git@master#egg=md4c && python -m pip install -e git+https://github.com/mondeja/mdpo.git@master#egg=mdpo && python -m pip install pytest
+  - travis_retry pip install -U tox-travis
+  - pip install --upgrade pip
 matrix:
   include:
     - python: 3.6
+      env: TOXENV=py36
       dist: xenial
     - python: 3.7
+      env: TOXENV=coveralls
       dist: bionic
       before_script:
-        - pip install pytest-cov coveralls
-      script: pytest -s --cov=mdpo --cov-config=setup.cfg
+        - pip install coveralls
       after_success:
         - coveralls
     - python: 3.8
+      env: TOXENV=py38
       dist: focal
-      before_script:
-        - pip install flake8
-      script: flake8 test mdpo docs setup.py
     - python: 3.7
+      env: TOXENV=flake8
       dist: focal
-script: . venv/bin/activate && python -m pytest -svv
+script: tox
