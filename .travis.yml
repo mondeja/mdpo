@@ -7,9 +7,11 @@ install:
   - pip install --upgrade pip
 matrix:
   include:
-    - python: 3.6
-      env: TOXENV=py36
-      dist: xenial
+    # Disabled due to bug in TravisCI, is not getting distribution build
+    # https://travis-ci.com/github/mondeja/mdpo/jobs/413913216#L226
+    #- python: 3.6
+    #  env: TOXENV=py36
+    #  dist: xenial
     - python: 3.7
       env: TOXENV=coveralls
       dist: bionic
@@ -22,5 +24,8 @@ matrix:
       dist: focal
     - python: 3.7
       env: TOXENV=flake8
+      dist: focal
+    - python: 3.9-dev
+      env: TOXENV=py39
       dist: focal
 script: tox
