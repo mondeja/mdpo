@@ -6,19 +6,17 @@ md2po
 =====
 
 .. automodule:: mdpo.md2po
-   :members:
-   :private-members: Md2Po
+   :members: markdown_to_pofile
 
 po2md
 =====
 
 .. automodule:: mdpo.po2md
-   :members:
-   :private-members: Po2Md
+   :members: pofile_to_markdown
 
 mdpo2html
 =========
 
 .. automodule:: mdpo.mdpo2html
-   :members:
-   :private-members: MdPo2HTML
+   :members: markdown_pofile_to_html
+

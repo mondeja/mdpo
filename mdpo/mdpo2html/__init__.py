@@ -375,6 +375,22 @@ class MdPo2HTML(HTMLParser):
 
 def markdown_pofile_to_html(filepath_or_content, pofiles, ignore=[],
                             save=None, **kwargs):
+    """Produces a translated HTML file given a previous HTML file (created by a
+    Markdown-to-HTML processor) and a set of pofiles as reference for msgstrs.
+
+    Args:
+        filepath_or_content (str): HTML whose content wants to be translated.
+        pofiles (str): Glob for set of pofiles used as reference translating
+            the strings to another language.
+        ignore (list): List of paths to pofiles to ignore, useful if the glob
+            patterns in ``pofiles`` parameter does not fit your requirements.
+        save (str): If you pass this parameter as a path to one HTML file,
+            even if does not exists, will be saved in the path the output of
+            the function.
+
+    Returns:
+        str: HTML output translated version of the given file.
+    """
     return MdPo2HTML(
         pofiles, ignore=ignore, **kwargs
     ).translate(filepath_or_content, save=save)
