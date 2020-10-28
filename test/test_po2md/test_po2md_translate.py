@@ -48,7 +48,7 @@ def test_translate_markuptext(filename):
 @pytest.mark.parametrize(
     'filename', [random.choice(EXAMPLES['markuptext']['filenames'])]
 )
-def test_translate_save(filename):
+def _test_translate_save(filename):
     filepath_in = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
     filepath_out = filepath_in + '.expect.md'
     po_filepath = os.path.join(

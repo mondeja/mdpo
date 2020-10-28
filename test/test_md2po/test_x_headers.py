@@ -6,8 +6,7 @@ from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 def test_x_headers_included():
     markdown_content = '# Foo\n'
 
-    extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-    extensions.append("underline")
+    extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS + ["underline"]
     po = markdown_to_pofile(markdown_content,
                             xheaders=True,
                             plaintext=False,
