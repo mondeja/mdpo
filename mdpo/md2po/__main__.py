@@ -5,12 +5,6 @@
 import argparse
 import sys
 
-
-try:
-    from itertools import izip
-except ImportError:
-    izip = zip
-
 from mdpo import __version__
 from mdpo.cli import parse_list_argument
 from mdpo.md2po import markdown_to_pofile
