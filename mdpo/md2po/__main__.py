@@ -84,7 +84,8 @@ def build_parser():
     parser.add_argument('-e', '--encoding', dest='encoding', default=None,
                         help='Resulting pofile encoding (autodetected by'
                              ' default).')
-    parser.add_argument('--xheaders', dest='xheaders', action='store_true',
+    parser.add_argument('-a', '--xheaders', dest='xheaders',
+                        action='store_true',
                         help='Include mdpo specification x-headers.'
                              ' These only will be included if you do not pass'
                              ' the parameter ``--plaintext``.')
