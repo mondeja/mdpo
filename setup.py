@@ -102,9 +102,9 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     project_urls={
-        'Documentation': 'https://md2po.readthedocs.io',
-        'GitHub Project': 'https://github.com/mondeja/md2po',
-        'Issue Tracker': 'https://github.com/mondeja/md2po/issues'
+        'Documentation': 'https://mdpo.readthedocs.io',
+        'GitHub Project': 'https://github.com/mondeja/mdpo',
+        'Issue Tracker': 'https://github.com/mondeja/mdpo/issues'
     },
     entry_points={
         'console_scripts': [
