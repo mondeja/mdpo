@@ -28,29 +28,15 @@ supporting some additional features.
 
 ## Status
 
-<!-- mdpo-disable -->
-
 [![Documentation status][doc-image]][doc-link]
 [![Tests][tests-image]][tests-link]
 [![Coverage status][coverage-image]][coverage-link]
-
-<!-- mdpo-enable -->
 
 ## Installation
 
 ```bash
 pip install mdpo
 ```
-
-<!-- mdpo-disable -->
-
-> You can see the README introduction translated to other languages using the
-> library from [this script][process-locales-script-link]:
->
-> - [Spanish][spanish-readme-link]
-
-<!-- mdpo-enable -->
-
 
 [tests-image]: https://img.shields.io/travis/mondeja/mdpo?label=tests
 [tests-link]: https://travis-ci.com/github/mondeja/mdpo
