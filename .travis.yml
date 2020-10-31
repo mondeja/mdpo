@@ -25,7 +25,7 @@ matrix:
     - python: 3.7
       env: TOXENV=flake8
       dist: focal
-    - python: 3.9-dev
+    - python: 3.9
       env: TOXENV=py39
       dist: focal
 script: tox
