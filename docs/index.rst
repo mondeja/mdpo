@@ -3,7 +3,7 @@ mdpo's documentation
 ####################
 
 Markdown file translation utilities using pofiles. Fully complies with
-`CommonMark Specification`_.
+`CommonMark Specification v0.29`_.
 
 .. toctree::
    :maxdepth: 2
@@ -27,4 +27,4 @@ Markdown file translation utilities using pofiles. Fully complies with
 
    rationale
 
-.. _CommonMark Specification: https://spec.commonmark.org/0.29
+.. _CommonMark Specification v0.29: https://spec.commonmark.org/0.29
