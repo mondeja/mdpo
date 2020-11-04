@@ -83,6 +83,13 @@ def build_parser():
                         help='Include mdpo specification x-headers.'
                              ' These only will be included if you do not pass'
                              ' the parameter ``--plaintext``.')
+    parser.add_argument('-c', '--include-codeblocks',
+                        dest='include_codeblocks', action='store_true',
+                        help='Include all code blocks found inside pofile'
+                             ' result. This is useful if you want to translate'
+                             ' all your blocks of code. Equivalent to append'
+                             ' \'<!-- mdpo-include-codeblock -->\' command'
+                             ' before each code block.')
     return parser
 
 
@@ -114,7 +121,8 @@ def run(args=[]):
         mark_not_found_as_absolete=opts.mark_not_found_as_absolete,
         extensions=opts.extensions,
         encoding=opts.encoding,
-        xheaders=opts.xheaders)
+        xheaders=opts.xheaders,
+        include_codeblocks=opts.include_codeblocks)
     if isinstance(opts.wrapwidth, int):
         kwargs['wrapwidth'] = opts.wrapwidth
 

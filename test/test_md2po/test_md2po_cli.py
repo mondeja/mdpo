@@ -260,3 +260,36 @@ msgstr ""
     assert exitcode == 0
     assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output
+
+
+@pytest.mark.parametrize('arg', ['-c', '--include-codeblocks'])
+def test_include_codeblocks(capsys, arg):
+    markdown_content = '''
+    var hello = "world";
+
+```javascript
+var this;
+```
+
+This must be included also.
+'''
+    pofile, exitcode = run([markdown_content, arg])
+    out, err = capsys.readouterr()
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "var hello = \\"world\\";\\n"
+msgstr ""
+
+msgid "var this;\\n"
+msgstr ""
+
+msgid "This must be included also."
+msgstr ""
+'''
+
+    assert exitcode == 0
+    assert pofile.__unicode__() == expected_output
+    assert striplastline(out) == expected_output

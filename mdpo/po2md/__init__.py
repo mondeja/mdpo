@@ -163,10 +163,13 @@ class Po2Md:
         return response or msgid
 
     def _save_current_msgid(self):
-        translation = self._escape_translation(
-            self._translate_msgid(self._current_msgid,
-                                  self._current_msgctxt)
-        )
+        translation = self._translate_msgid(self._current_msgid,
+                                            self._current_msgctxt)
+        if not self._inside_codeblock:
+            translation = self._escape_translation(translation)
+        elif self._inside_indented_codeblock:
+            # add 4 spaces before each line including next indented block code
+            translation = '    %s' % re.sub('\n', '\n    ', translation)
         if self._inside_liblock:
             translation = '\n'.join(polib.wrap(translation, width=79))
         if self._inside_pblock:
@@ -261,6 +264,7 @@ class Po2Md:
                 self._save_current_line()
             self._inside_pblock = False
         elif block.value == md4c.BlockType.CODE:
+            self._save_current_msgid()
             self._inside_codeblock = False
             self._inside_indented_codeblock = False
             if 'fence_char' in details:
@@ -436,11 +440,7 @@ class Po2Md:
                     return
                 self._current_msgid += polib.escape(text)
             else:
-                if self._inside_indented_codeblock and text:
-                    if text == '\n':
-                        return
-                    text = '    %s' % text
-                self._current_line += text
+                self._current_msgid += text
         else:
             self._process_command(text)
 

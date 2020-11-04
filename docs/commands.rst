@@ -16,7 +16,7 @@ next HTML commments:
 * ``<!-- mdpo-enable -->``
 * ``<!-- mdpo-enable-next-line -->``
 
-For example:
+.. rubric:: Example:
 
 .. code-block:: python
 
@@ -71,7 +71,7 @@ line before the message:
 
 * ``<!-- mdpo-translator Comment that you want to include -->``
 
-For example:
+.. rubric:: Example:
 
 .. code-block:: python
 
@@ -102,7 +102,7 @@ You can specify contexts for msgids using next command:
 
 * ``<!-- mdpo-context Context for your string -->``
 
-For example:
+.. rubric:: Example:
 
 .. code-block:: python
 
@@ -127,6 +127,64 @@ For example:
    msgid "May"
    msgstr ""
 
+.. _include-codeblock-command:
+
+Extracting code blocks
+======================
+
+You can extract code blocks inside the pofile, using next command:
+
+* ``<!-- mdpo-include-codeblock -->``
+
+.. rubric:: Indented code block example:
+
+.. code-block:: python
+
+   >>> content = '''
+   ... <!-- mdpo-include-codeblock -->
+   ...
+   ...     var hello = "world";
+   ...     var hola = "mundo";
+   ...
+   ... Another paragraph.
+   ... '''
+   >>>
+   >>> pofile = markdown_to_pofile(content)
+   >>> print(pofile)
+   msgid ""
+   msgstr ""
+
+   msgid ""
+   "var hello = \"world\";\n"
+   "var hola = \"mundo\";\n"
+   msgstr ""
+
+   msgid "Another paragraph."
+   msgstr ""
+
+
+.. rubric:: Fenced code block example:
+
+.. code-block:: python
+
+   >>> content = '''
+   ... <!-- mdpo-include-codeblock -->
+   ... ```javascript
+   ... var hello = "world";
+   ... var hola = "mundo";
+   ... ```
+   ... '''
+   >>>
+   >>> pofile = markdown_to_pofile(content)
+   >>> print(pofile)
+   msgid ""
+   msgstr ""
+
+   msgid ""
+   "var hello = \"world\";\n"
+   "var hola = \"mundo\";\n"
+   msgstr ""
+
 
 Extracting comments itself
 ==========================
@@ -135,7 +193,7 @@ You can extract comments inside the pofile, but don't ask me why you need this:
 
 * ``<!-- mdpo-include Message that you want to include -->``
 
-For example:
+.. rubric:: Example:
 
 .. code-block:: python
 

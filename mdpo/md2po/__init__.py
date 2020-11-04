@@ -39,10 +39,12 @@ class Md2Po:
 
         self.plaintext = kwargs.get('plaintext', False)
 
+        self.include_codeblocks = kwargs.get("include_codeblocks", False)
+
         self._disable = False
         self._disable_next_line = False
         self._enable_next_line = False
-
+        self._include_next_codeblock = False
         self._include_xheaders = False
 
         if not self.plaintext:
@@ -255,6 +257,8 @@ class Md2Po:
                 raise ValueError('You need to specify a string for the'
                                  ' context with the command \'mdpo-context\'.')
             self._current_msgctxt = comment.strip(" ")
+        elif command == 'include-codeblock':
+            self._include_next_codeblock = True
         elif command == 'include':
             if not comment:
                 raise ValueError('You need to specify a message for the'
@@ -283,6 +287,9 @@ class Md2Po:
         # print("LEAVE BLOCK:", block.name)
         if block.value == md4c.BlockType.CODE:
             self._inside_codeblock = False
+            if self._include_next_codeblock or self.include_codeblocks:
+                self._save_current_msgid()
+                self._include_next_codeblock = False
         elif block.value == md4c.BlockType.HTML:
             self._inside_htmlblock = False
         else:
@@ -406,6 +413,9 @@ class Md2Po:
                             text)
                     return
                 self._current_msgid += text
+            else:
+                if self._include_next_codeblock or self.include_codeblocks:
+                    self._current_msgid += text
         else:
             self._process_command(text)
 
@@ -466,7 +476,8 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
                        plaintext=False, wrapwidth=78,
                        mark_not_found_as_absolete=True,
                        extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
-                       encoding=None, xheaders=False, **kwargs):
+                       encoding=None, xheaders=False,
+                       include_codeblocks=False, **kwargs):
     """
     Extracts all the msgids from a string of Markdown content or a group
     of files.
@@ -511,6 +522,10 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         xheaders (bool): Indicates if the resulting pofile will have mdpo
             x-headers included. These only can be included if the parameter
             ``plaintext`` is ``False``.
+        include_codeblocks (bool): Include all code blocks found inside pofile
+            result. This is useful if you want to translate all your blocks
+            of code. Equivalent to append ``<!-- mdpo-include-codeblock -->``
+            command before each code block.
 
     Examples:
         >>> content = 'Some text with `inline code`'
@@ -532,7 +547,8 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
         glob_or_content, ignore=ignore, msgstr=msgstr,
         plaintext=plaintext, wrapwidth=wrapwidth,
         mark_not_found_as_absolete=mark_not_found_as_absolete,
-        extensions=extensions, xheaders=xheaders, **kwargs
+        extensions=extensions, xheaders=xheaders,
+        include_codeblocks=include_codeblocks, **kwargs
     ).extract(
         po_filepath=po_filepath, save=save,
         mo_filepath=mo_filepath, encoding=encoding

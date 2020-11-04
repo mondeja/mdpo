@@ -77,10 +77,8 @@ Advantages
   the old one fuzzy and the translation can be updated quickly.
 * Translators work with ``.po`` files directly, a standard in translations.
 * Parts of the Markdown files that do not need translated as code blocks or
-  link targets are not included in the translation, reducing possibility of
+  are not included in the translation (by default), reducing possibility of
   markup failures in translations.
-* Markup characters are reduced to their minimum expression inside msgids,
-  reducing possibility of markup failures in translations.
 
 Disadvantages
 -------------

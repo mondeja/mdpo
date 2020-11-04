@@ -3,6 +3,7 @@
 import glob
 import html
 import re
+import warnings
 from html.parser import HTMLParser
 
 import md4c
@@ -346,6 +347,10 @@ class MdPo2HTML(HTMLParser):
                     self._enable_next_line = True
                 elif command == 'context' and comment:
                     self._current_msgctxt = comment.strip(" ")
+                elif command == 'include-codeblock':
+                    warnings.warn("Code blocks translations is not supported"
+                                  " by mdpo2html implementation.",
+                                  SyntaxWarning)
 
     def translate(self, filepath_or_content, save=None):
         content = to_file_content_if_is_file(filepath_or_content)
@@ -387,6 +392,12 @@ def markdown_pofile_to_html(filepath_or_content, pofiles, ignore=[],
         save (str): If you pass this parameter as a path to one HTML file,
             even if does not exists, will be saved in the path the output of
             the function.
+
+    .. rubric:: Known limitations:
+
+    * This implementation doesn't include support for
+      :ref:`include-codeblock command<include-codeblock-command>`.
+
 
     Returns:
         str: HTML output translated version of the given file.
