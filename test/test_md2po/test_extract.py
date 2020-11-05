@@ -2,7 +2,6 @@ import glob
 import os
 import random
 import tempfile
-from uuid import uuid4
 
 import pytest
 
@@ -64,12 +63,12 @@ def test_extract_underline(filename):
 def test_extract_save(filename):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
 
-    save_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
+    save_file = tempfile.NamedTemporaryFile(suffix=".po")
 
     markdown_to_pofile(
-        filepath, plaintext=True, save=True, po_filepath=save_filepath)
+        filepath, plaintext=True, save=True, po_filepath=save_file.name)
+    save_file.seek(0)
 
     with open(filepath + '.expect.po', 'r') as expect_file:
-        with open(save_filepath, 'r') as tmpf:
-            assert tmpf.read() == expect_file.read()
-    os.remove(save_filepath)
+        assert save_file.read().decode("utf-8") == expect_file.read()
+    save_file.close()

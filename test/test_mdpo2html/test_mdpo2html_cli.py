@@ -1,5 +1,4 @@
 import os
-import shutil
 import tempfile
 from uuid import uuid4
 
@@ -26,8 +25,8 @@ msgstr "Algo de texto aquí"
 
 
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
-def test_quiet(capsys, arg, tmp_pofile):
-    with tmp_pofile(EXAMPLE['pofile']) as po_filepath:
+def test_quiet(capsys, arg, tmp_file):
+    with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
 
         output, exitcode = run([EXAMPLE['html-input'],
                                 '-p', po_filepath, arg])
@@ -38,8 +37,8 @@ def test_quiet(capsys, arg, tmp_pofile):
 
 
 @pytest.mark.parametrize('arg', ['-s', '--save'])
-def test_save(capsys, arg, tmp_pofile):
-    with tmp_pofile(EXAMPLE['pofile']) as po_filepath:
+def test_save(capsys, arg, tmp_file):
+    with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
 
         output_html_filepath = os.path.join(
             tempfile.gettempdir(), uuid4().hex + '.html')
@@ -67,38 +66,33 @@ def test_save(capsys, arg, tmp_pofile):
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
-def test_ignore_files_by_filepath(capsys, arg):
-    filesdir = os.path.join(tempfile.gettempdir(), uuid4().hex)
-    os.mkdir(filesdir)
+def test_ignore_files_by_filepath(capsys, arg, tmp_file):
+    pofiles = [
+        (
+            uuid4().hex + '.po',
+            ('#\n\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
+             'msgstr "Incluida"\n\n'),
+        ),
+        (
+            uuid4().hex + '.po',
+            ('#\n\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
+             'msgstr "Excluida"\n\n'),
+        )
+    ]
 
-    po_filepath_included = os.path.join(filesdir, uuid4().hex + '.po')
-    po_included_content = (
-        '#\n\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\nmsgstr "Incluida"\n\n'
-    )
-
-    po_filepath_excluded = os.path.join(filesdir, uuid4().hex + '.po')
-    po_excluded_content = (
-        '#\n\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\nmsgstr "Excluida"\n\n'
-    )
-
-    with open(po_filepath_included, "w") as f:
-        f.write(po_included_content)
-    with open(po_filepath_excluded, "w") as f:
-        f.write(po_excluded_content)
-
-    input_html_filepath = os.path.join(filesdir, uuid4().hex + '.html')
-    with open(input_html_filepath, "w") as f:
-        f.write("<p>Included</p>\n\n<p>Excluded</p>\n\n")
-
+    html_input = "<p>Included</p>\n\n<p>Excluded</p>\n\n"
     expected_output = "<p>Incluida</p>\n\n<p>Excluded</p>\n\n"
 
-    output, exitcode = run([input_html_filepath, '-p',
-                            os.path.join(filesdir, '*.po'),
-                            arg, po_filepath_excluded])
-    out, err = capsys.readouterr()
+    with tempfile.TemporaryDirectory() as filesdir:
+        for pofile in pofiles:
+            with open(os.path.join(filesdir, pofile[0]), "w") as f:
+                f.write(pofile[1])
+        with tmp_file(html_input, ".html") as html_input_filepath:
+            output, exitcode = run([html_input_filepath, '-p',
+                                    os.path.join(filesdir, '*.po'),
+                                    arg, pofiles[1][0]])
+            out, err = capsys.readouterr()
 
     assert exitcode == 0
     assert output == expected_output
     assert striplastline(out) == expected_output
-
-    shutil.rmtree(filesdir)

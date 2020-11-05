@@ -103,7 +103,7 @@ setup(
     url=URL,
     project_urls={
         'Documentation': 'https://mdpo.readthedocs.io',
-        'GitHub Project': 'https://github.com/mondeja/mdpo',
+        'Source': 'https://github.com/mondeja/mdpo',
         'Issue Tracker': 'https://github.com/mondeja/mdpo/issues'
     },
     entry_points={

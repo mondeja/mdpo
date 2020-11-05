@@ -2,7 +2,6 @@ import glob
 import os
 import random
 import tempfile
-from uuid import uuid4
 
 import pytest
 
@@ -48,18 +47,18 @@ def test_translate_markuptext(filename):
 @pytest.mark.parametrize(
     'filename', [random.choice(EXAMPLES['markuptext']['filenames'])]
 )
-def _test_translate_save(filename):
+def test_translate_save(filename):
     filepath_in = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
     filepath_out = filepath_in + '.expect.md'
     po_filepath = os.path.join(
         os.path.dirname(filepath_in),
         os.path.splitext(os.path.basename(filepath_in))[0] + '.po')
 
-    save_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
+    save_file = tempfile.NamedTemporaryFile(suffix=".po")
 
-    pofile_to_markdown(filepath_in, po_filepath, save=save_filepath)
+    pofile_to_markdown(filepath_in, po_filepath, save=save_file.name)
+    save_file.seek(0)
 
     with open(filepath_out, 'r') as expect_file:
-        with open(save_filepath, 'r') as tmpf:
-            assert tmpf.read() == expect_file.read()
-    os.remove(save_filepath)
+        assert save_file.read().decode("utf-8") == expect_file.read()
+    save_file.close()

@@ -1,22 +1,20 @@
-import os
 import tempfile
 from contextlib import contextmanager
-from uuid import uuid4
 
 import pytest
 
 
 @contextmanager
-def _tmp_pofile(content):
-    filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
-    with open(filepath, "w") as f:
-        f.write(content)
+def _tmp_file(content, suffix):
+    f = tempfile.NamedTemporaryFile(suffix=suffix)
+    f.write(content.encode("utf-8"))
+    f.seek(0)
     try:
-        yield filepath
+        yield f.name
     finally:
-        os.remove(filepath)
+        f.close()
 
 
 @pytest.fixture()
-def tmp_pofile():
-    return _tmp_pofile
+def tmp_file():
+    return _tmp_file

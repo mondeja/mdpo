@@ -1,6 +1,4 @@
-import os
 import tempfile
-from uuid import uuid4
 
 from mdpo.md2po import Md2Po
 
@@ -28,21 +26,16 @@ msgstr ""
 '''
 
 
-def test_mark_not_found_as_absolete():
-    tmpdir = tempfile.gettempdir()
-    original_md_filepath = os.path.join(tmpdir, uuid4().hex + '.md')
-    new_md_filepath = os.path.join(tmpdir, uuid4().hex + '.md')
-    po_filepath = os.path.join(tmpdir, uuid4().hex + '.po')
+def test_mark_not_found_as_absolete(tmp_file):
+    original_md_file_content = ('Some string in the markdown\n\n'
+                                'Another string\n\n')
+    new_md_file_content = 'A new string\n'
+    po_file = tempfile.NamedTemporaryFile(suffix=".po")
 
-    with open(original_md_filepath, "w") as f:
-        f.write('Some string in the markdown\n\nAnother string\n\n')
-
-    with open(new_md_filepath, "w") as f:
-        f.write('A new string\n')
-
-    md2po_extractor = Md2Po(original_md_filepath)
-    pofile = md2po_extractor.extract(po_filepath=po_filepath, save=True)
-    assert pofile.__unicode__() == '''#
+    with tmp_file(original_md_file_content, ".md") as original_md_filepath:
+        md2po_extractor = Md2Po(original_md_filepath)
+        po = md2po_extractor.extract(po_filepath=po_file.name, save=True)
+    assert po.__unicode__() == '''#
 msgid ""
 msgstr ""
 
@@ -53,9 +46,11 @@ msgid "Another string"
 msgstr ""
 '''
 
-    md2po_extractor = Md2Po(new_md_filepath, mark_not_found_as_absolete=True)
-    pofile = md2po_extractor.extract(po_filepath=po_filepath)
-    assert pofile.__unicode__() == '''#
+    with tmp_file(new_md_file_content, ".md") as new_md_filepath:
+        md2po_extractor = Md2Po(new_md_filepath,
+                                mark_not_found_as_absolete=True)
+        po = md2po_extractor.extract(po_filepath=po_file.name)
+    assert po.__unicode__() == '''#
 msgid ""
 msgstr ""
 
@@ -68,6 +63,8 @@ msgstr ""
 #~ msgid "Another string"
 #~ msgstr ""
 '''
+
+    po_file.close()
 
 
 def test_msgstr():

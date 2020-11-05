@@ -1,11 +1,7 @@
-import os
-import tempfile
-from uuid import uuid4
-
 from mdpo.po2md import pofile_to_markdown
 
 
-def test_disable_next_line():
+def test_disable_next_line(tmp_file):
     markdown_input = '''This must be included.
 
 <!-- mdpo-disable-next-line -->
@@ -33,17 +29,12 @@ msgid "This must be included also."
 msgstr "Esto también debe ser incluido."
 '''
 
-    po_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
-    with open(po_filepath, "w") as f:
-        f.write(pofile_content)
-
-    output = pofile_to_markdown(markdown_input, po_filepath)
+    with tmp_file(pofile_content, ".po") as po_filepath:
+        output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output
 
-    os.remove(po_filepath)
 
-
-def test_disable_enable():
+def test_disable_enable(tmp_file):
     markdown_input = '''This must be included.
 
 <!-- mdpo-disable -->
@@ -72,17 +63,12 @@ msgid "This must be included also."
 msgstr "Esto también debe ser incluido."
 '''
 
-    po_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
-    with open(po_filepath, "w") as f:
-        f.write(pofile_content)
-
-    output = pofile_to_markdown(markdown_input, po_filepath)
+    with tmp_file(pofile_content, ".po") as po_filepath:
+        output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output
 
-    os.remove(po_filepath)
 
-
-def test_enable_next_line():
+def test_enable_next_line(tmp_file):
     markdown_input = '''This must be included.
 
 <!-- mdpo-disable -->
@@ -136,11 +122,6 @@ msgid "The last line also must be included."
 msgstr "La última línea también debe ser incluida."
 '''
 
-    po_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
-    with open(po_filepath, "w") as f:
-        f.write(pofile_content)
-
-    output = pofile_to_markdown(markdown_input, po_filepath)
+    with tmp_file(pofile_content, ".po") as po_filepath:
+        output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output
-
-    os.remove(po_filepath)

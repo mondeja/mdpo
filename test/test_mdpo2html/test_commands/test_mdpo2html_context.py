@@ -1,7 +1,7 @@
 from mdpo.mdpo2html import markdown_pofile_to_html
 
 
-def test_context(tmp_pofile):
+def test_context(tmp_file):
     html_input = '''<!-- mdpo-context month -->
 <p>May</p>
 
@@ -24,7 +24,7 @@ msgid "May"
 msgstr "Quizás"
 '''
 
-    with tmp_pofile(pofile_content) as po_filepath:
+    with tmp_file(pofile_content, ".po") as po_filepath:
         output = markdown_pofile_to_html(html_input, po_filepath)
     assert output == html_output
 

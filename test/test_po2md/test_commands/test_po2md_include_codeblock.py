@@ -5,7 +5,7 @@ translated directly."""
 from mdpo.po2md import pofile_to_markdown
 
 
-def test_include_indented_codeblock(tmp_pofile):
+def test_include_indented_codeblock(tmp_file):
     markdown_input = '''
     var hello = "world";
     var this;
@@ -43,12 +43,12 @@ msgid "This must be translated."
 msgstr "Esto debe ser traducido."
 '''
 
-    with tmp_pofile(pofile_content) as po_filepath:
+    with tmp_file(pofile_content, ".po") as po_filepath:
         output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output
 
 
-def test_include_fenced_codeblock(tmp_pofile):
+def test_include_fenced_codeblock(tmp_file):
     markdown_input = '''```javascript
 var hello = "world";
 var this;
@@ -88,6 +88,6 @@ msgid "This must be translated."
 msgstr "Esto debe ser traducido."
 '''
 
-    with tmp_pofile(pofile_content) as po_filepath:
+    with tmp_file(pofile_content, ".po") as po_filepath:
         output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output

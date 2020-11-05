@@ -1,7 +1,7 @@
 from mdpo.mdpo2html import markdown_pofile_to_html
 
 
-def test_disable(tmp_pofile):
+def test_disable(tmp_file):
     html_input = '''<h1>Header</h1>
 
 <!-- mdpo-disable -->
@@ -27,12 +27,12 @@ msgid "This message can not be translated."
 msgstr "Este mensaje no puede ser traducido."
 '''
 
-    with tmp_pofile(pofile_content) as po_filepath:
+    with tmp_file(pofile_content, ".po") as po_filepath:
         output = markdown_pofile_to_html(html_input, po_filepath)
     assert output == html_output
 
 
-def test_disable_enable(tmp_pofile):
+def test_disable_enable(tmp_file):
     html_input = '''<h1>Header</h1>
 
 <!-- mdpo-disable -->
@@ -66,12 +66,12 @@ msgid "This message must be translated."
 msgstr "Este mensaje debe ser traducido."
 '''
 
-    with tmp_pofile(pofile_content) as po_filepath:
+    with tmp_file(pofile_content, ".po") as po_filepath:
         output = markdown_pofile_to_html(html_input, po_filepath)
     assert output == html_output
 
 
-def test_disable_next_line(tmp_pofile):
+def test_disable_next_line(tmp_file):
     html_input = '''<h1>Header</h1>
 
 <!-- mdpo-disable-next-line -->
@@ -102,12 +102,12 @@ msgid "This message must be translated."
 msgstr "Este mensaje debe ser traducido."
 '''
 
-    with tmp_pofile(pofile_content) as po_filepath:
+    with tmp_file(pofile_content, ".po") as po_filepath:
         output = markdown_pofile_to_html(html_input, po_filepath)
     assert output == html_output
 
 
-def test_enable_next_line(tmp_pofile):
+def test_enable_next_line(tmp_file):
     html_input = '''<h1>Header</h1>
 
 <!-- mdpo-disable -->
@@ -149,6 +149,6 @@ msgid "This message must be translated also."
 msgstr "Este mensaje también debe ser traducido."
 '''
 
-    with tmp_pofile(pofile_content) as po_filepath:
+    with tmp_file(pofile_content, ".po") as po_filepath:
         output = markdown_pofile_to_html(html_input, po_filepath)
     assert output == html_output

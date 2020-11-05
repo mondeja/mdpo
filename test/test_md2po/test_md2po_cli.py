@@ -1,7 +1,5 @@
 import os
-import shutil
 import tempfile
-from uuid import uuid4
 
 import pytest
 
@@ -35,8 +33,7 @@ def test_quiet(capsys, arg):
 
 
 @pytest.mark.parametrize('arg', ['-po', '--po-filepath'])
-def test_po_filepath(capsys, arg):
-    pofile_path = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
+def test_po_filepath(capsys, arg, tmp_file):
     pofile_content = '''#
 msgid ""
 msgstr ""
@@ -44,15 +41,6 @@ msgstr ""
 msgid "Foo"
 msgstr ""
 '''
-
-    with open(pofile_path, 'w') as f:
-        f.write(pofile_content)
-
-    markdown_content = '# Bar\n'
-
-    pofile, exitcode = run([markdown_content, arg, pofile_path, '-m'])
-    out, err = capsys.readouterr()
-
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -64,16 +52,17 @@ msgid "Bar"
 msgstr ""
 '''
 
+    with tmp_file(pofile_content, ".po") as pofile_path:
+        pofile, exitcode = run(['# Bar\n', arg, pofile_path, '-m'])
+        out, err = capsys.readouterr()
+
     assert exitcode == 0
     assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output
-
-    os.remove(pofile_path)
 
 
 @pytest.mark.parametrize('arg', ['-s', '--save'])
-def test_save(capsys, arg):
-    pofile_path = os.path.join(tempfile.gettempdir(), uuid4().hex + '.po')
+def test_save(capsys, arg, tmp_file):
     pofile_content = '''#
 msgid ""
 msgstr ""
@@ -81,15 +70,6 @@ msgstr ""
 msgid "Foo"
 msgstr ""
 '''
-
-    with open(pofile_path, 'w') as f:
-        f.write(pofile_content)
-
-    markdown_content = '# Bar\n'
-
-    pofile, exitcode = run([markdown_content, arg, '-po', pofile_path, '-m'])
-    out, err = capsys.readouterr()
-
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -101,19 +81,23 @@ msgid "Bar"
 msgstr ""
 '''
 
+    with tmp_file(pofile_content, ".po") as pofile_path:
+        pofile, exitcode = run(['# Bar\n', arg, '-po', pofile_path, '-m'])
+        out, err = capsys.readouterr()
+
+        with open(pofile_path, 'r') as f:
+            assert f.read() == expected_output
+
     assert exitcode == 0
     assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output
-
-    with open(pofile_path, 'r') as f:
-        assert f.read() == expected_output
-
-    os.remove(pofile_path)
 
 
 @pytest.mark.parametrize('arg', ['-mo', '--mo-filepath'])
 def test_mo_filepath(capsys, arg):
-    mo_filepath = os.path.join(tempfile.gettempdir(), uuid4().hex + '.mo')
+    mo_file = tempfile.NamedTemporaryFile(suffix=".mo")
+    mo_filepath = mo_file.name
+    mo_file.close()
 
     pofile, exitcode = run([EXAMPLE["input"], arg, mo_filepath])
     out, err = capsys.readouterr()
@@ -127,25 +111,21 @@ def test_mo_filepath(capsys, arg):
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
 def test_ignore_files_by_filepath(capsys, arg):
-    filesdir = os.path.join(tempfile.gettempdir(), uuid4().hex)
-
-    os.mkdir(filesdir)
-
     filesdata = {
         'foo': '### Foo\n\nFoo 2',
         'bar': '## Bar with `inline code`',
         'baz': 'baz should not appear'
     }
-    for filename, content in filesdata.items():
-        filepath = os.path.join(filesdir, filename + '.md')
-        with open(filepath, 'w') as f:
-            f.write(content)
 
-    _glob = os.path.join(filesdir, '*.md')
-    pofile, exitcode = run([_glob, arg, os.path.join(filesdir, 'baz.md')])
-    out, err = capsys.readouterr()
+    with tempfile.TemporaryDirectory() as filesdir:
+        for filename, content in filesdata.items():
+            filepath = os.path.join(filesdir, filename + '.md')
+            with open(filepath, 'w') as f:
+                f.write(content)
 
-    shutil.rmtree(filesdir)
+        _glob = os.path.join(filesdir, '*.md')
+        pofile, exitcode = run([_glob, arg, os.path.join(filesdir, 'baz.md')])
+        out, err = capsys.readouterr()
 
     expected_output = '''#
 msgid ""
