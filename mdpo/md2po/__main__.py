@@ -138,7 +138,7 @@ def run(args=[]):
 
 
 def main():
-    sys.exit(run(args=sys.argv[1:])[1])
+    sys.exit(run(args=sys.argv[1:])[1])  # pragma: no cover
 
 
 if __name__ == '__main__':
