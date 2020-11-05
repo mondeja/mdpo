@@ -23,9 +23,10 @@ def build_parser():
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Do not print output to STDOUT.')
     parser.add_argument('glob_or_content', metavar='GLOB_OR_CONTENT',
+                        nargs='*',
                         help='Glob to markdown input files or markdown'
-                             ' content as a string. If not provided,'
-                             ' will be read from STDIN.')
+                             ' content as string. If not provided, will be'
+                             ' read from STDIN.')
     parser.add_argument('-i', '--ignore', dest='ignore', default=[],
                         help='List of filepaths to ignore if'
                              ' ``GLOB_OR_CONTENT`` argument is a glob,'
@@ -102,6 +103,8 @@ def parse_options(args=[]):
 
     if not sys.stdin.isatty():
         opts.glob_or_content = sys.stdin.read().strip('\n')
+    elif isinstance(opts.glob_or_content, list):
+        opts.glob_or_content = opts.glob_or_content[0]
     if opts.ignore:
         opts.ignore = parse_list_argument(opts.ignore)
     opts.extensions = opts.extensions.split(",")

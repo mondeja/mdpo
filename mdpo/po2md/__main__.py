@@ -21,7 +21,9 @@ def build_parser():
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Don\'t print output to STDOUT.')
     parser.add_argument('filepath_or_content', metavar='FILEPATH_OR_CONTENT',
-                        help='Markdown filepath or content to translate.')
+                        nargs='*',
+                        help='Markdown filepath or content to translate.'
+                             ' If not provided, will be read from STDIN.')
     parser.add_argument('-p', '--pofiles', metavar='POFILES',
                         help='Glob matching a set of pofiles from where to'
                              ' extract references to make the replacements'
@@ -46,6 +48,8 @@ def parse_options(args):
 
     if not sys.stdin.isatty():
         opts.filepath_or_content = sys.stdin.read().strip('\n')
+    elif isinstance(opts.filepath_or_content, list):
+        opts.filepath_or_content = opts.filepath_or_content[0]
     if opts.ignore:
         opts.ignore = parse_list_argument(opts.ignore)
 

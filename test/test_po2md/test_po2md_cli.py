@@ -1,3 +1,4 @@
+import io
 import os
 import tempfile
 from uuid import uuid4
@@ -22,6 +23,18 @@ msgid "Some text here"
 msgstr "Algo de texto aquí"
 '''
 }
+
+
+def test_stdin(capsys, monkeypatch, tmp_file):
+    monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['markdown-input']))
+    with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
+
+        output, exitcode = run(['-p', po_filepath])
+        out, err = capsys.readouterr()
+
+        assert exitcode == 0
+        assert output == EXAMPLE['markdown-output']
+        assert striplastline(out) == EXAMPLE['markdown-output']
 
 
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])

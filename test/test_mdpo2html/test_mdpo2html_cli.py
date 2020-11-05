@@ -1,3 +1,4 @@
+import io
 import os
 import tempfile
 from uuid import uuid4
@@ -24,6 +25,18 @@ msgstr "Algo de texto aquí"
 }
 
 
+def test_stdin(capsys, monkeypatch, tmp_file):
+    monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['html-input']))
+    with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
+
+        output, exitcode = run(['-p', po_filepath])
+        out, err = capsys.readouterr()
+
+        assert exitcode == 0
+        assert output == EXAMPLE['html-output'][:-1]  # rstrip("\n")
+        assert out == EXAMPLE['html-output']
+
+
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
 def test_quiet(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
@@ -38,31 +51,22 @@ def test_quiet(capsys, arg, tmp_file):
 
 @pytest.mark.parametrize('arg', ['-s', '--save'])
 def test_save(capsys, arg, tmp_file):
-    with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
+    with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath, \
+            tmp_file(EXAMPLE['html-input'], ".html") as html_input_filepath, \
+            tmp_file(EXAMPLE['html-output'], ".html") as html_output_filepath:
 
-        output_html_filepath = os.path.join(
-            tempfile.gettempdir(), uuid4().hex + '.html')
-        input_html_filepath = os.path.join(
-            tempfile.gettempdir(), uuid4().hex + '.html')
-
-        with open(input_html_filepath, "w") as f:
-            f.write(EXAMPLE['html-input'])
-
-        output, exitcode = run([input_html_filepath, '-p', po_filepath,
-                                arg, output_html_filepath])
+        output, exitcode = run([html_input_filepath, '-p', po_filepath,
+                                arg, html_output_filepath])
         out, err = capsys.readouterr()
 
         assert exitcode == 0
         assert output == EXAMPLE['html-output']
         assert out == ''
 
-        with open(output_html_filepath, "r") as f:
+        with open(html_output_filepath, "r") as f:
             output_html_content = f.read()
 
         assert output_html_content == EXAMPLE['html-output']
-
-        os.remove(input_html_filepath)
-        os.remove(output_html_filepath)
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])

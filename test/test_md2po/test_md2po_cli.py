@@ -1,3 +1,4 @@
+import io
 import os
 import tempfile
 
@@ -20,6 +21,15 @@ msgid "Some text here"
 msgstr ""
 '''
 }
+
+
+def test_stdin(capsys, monkeypatch):
+    monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['input']))
+    pofile, exitcode = run()
+    out, err = capsys.readouterr()
+    assert exitcode == 0
+    assert pofile.__unicode__() == EXAMPLE['output']
+    assert striplastline(out) == EXAMPLE['output']
 
 
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
