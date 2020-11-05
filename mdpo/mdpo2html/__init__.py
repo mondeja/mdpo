@@ -138,14 +138,18 @@ class MdPo2HTML(HTMLParser):
 
                     raw_html_template += '<%s' % handled
 
-                    attrs_except_href_title = []
+                    # attrs_except_href_title = []
                     for attr, value in attrs:
                         if attr in ['title', 'href']:
                             raw_html_template += ' %s="{}"' % attr
-                        else:
-                            attrs_except_href_title.append(attr)
-                    raw_html_template += html_attrs_tuple_to_string(
-                        attrs_except_href_title) + '>'
+                        # else:
+                        #     These attributes are not included in output
+                        #    attrs_except_href_title.append((attr, value))
+                    # if attrs_except_href_title:
+                    #     raw_html_template += ' '
+                    # raw_html_template += html_attrs_tuple_to_string(
+                    #     attrs_except_href_title) + '>'
+                    raw_html_template += '>'
                 else:
                     raw_html_template += '<%s%s>' % (
                         handled,
@@ -161,10 +165,7 @@ class MdPo2HTML(HTMLParser):
 
                 if all((ch in ALIGNMENT_CHARS) for ch in handled):
                     raw_html_template += handled
-                    if _last_start_tag in self.markup_tags:
-                        _current_replacement += handled
-                    else:
-                        _current_replacement += handled
+                    _current_replacement += handled
                 else:
                     raw_html_template += '{}'
                     if _current_link_target:

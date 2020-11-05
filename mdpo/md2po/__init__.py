@@ -397,11 +397,11 @@ class Md2Po:
                             self._current_msgid[self._codespan_start_index:])
                     elif text == self.italic_start_string:
                         text = self.italic_start_string_escaped
-                    elif text == self.italic_end_string:
-                        text = self.italic_end_string_escaped
                     elif text == self.code_start_string:
                         text = self.code_start_string_escaped
-                    elif text == self.code_end_string:
+                    elif text == self.italic_end_string:   # pragma: no cover
+                        text = self.italic_end_string_escaped
+                    elif text == self.code_end_string:   # pragma: no cover
                         text = self.code_end_string_escaped
                 if self._inside_pblock:
                     text = text.replace("\n", " ")
