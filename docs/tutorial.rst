@@ -59,12 +59,12 @@ HTML-from-Markdown to HTML
 ==========================
 
 If you have a HTML file produced from Markdown file using a Markdown processor
-like `Python-Markdown <markdown_py>`_ and want to translate it in place using ``.po`` files, use
-this method.
+like `Python-Markdown <markdown_py>`_ and want to translate it in place using
+``.po`` files, use this method.
 
 .. warning::
    This method is experimental. If you have issues consider open an issue
-   in the `bug tracker <https://github.com/mondeja/mdpo/issues>`_
+   in the `bug tracker <https://github.com/mondeja/mdpo/issues>`_.
 
 
 Given next directory tree:

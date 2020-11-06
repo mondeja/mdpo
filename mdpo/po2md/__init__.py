@@ -15,6 +15,7 @@ from mdpo.md import (
 )
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import build_po_escaped_string
+from mdpo.polib import *  # noqa
 from mdpo.text import min_not_max_chars_in_a_row
 
 

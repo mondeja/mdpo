@@ -8,7 +8,11 @@ import polib
 from mdpo.command import search_html_command
 from mdpo.io import filter_paths, to_glob_or_content
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-from mdpo.po import build_po_escaped_string
+from mdpo.po import (
+    build_po_escaped_string,
+    find_equal_without_consider_obsoletion
+)
+from mdpo.polib import *  # noqa
 from mdpo.text import min_not_max_chars_in_a_row
 
 
@@ -24,7 +28,7 @@ class Md2Po:
 
         self.pofile = None
         self.msgstr = kwargs.get('msgstr', '')
-        self.msgids = []
+        self.found_entries = []
         self._current_msgid = ''
         self._current_tcomment = None
         self._current_msgctxt = None
@@ -213,12 +217,12 @@ class Md2Po:
         self._uls_deep = 0
 
     def _save_msgid(self, msgid, tcomment=None, msgctxt=None):
-        if polib.POEntry(msgid=msgid) not in self.pofile:
-            entry = polib.POEntry(msgid=msgid, msgstr=self.msgstr,
-                                  comment=tcomment,
-                                  msgctxt=msgctxt)
+        entry = polib.POEntry(msgid=msgid, msgstr=self.msgstr,
+                              comment=tcomment,
+                              msgctxt=msgctxt)
+        if entry not in self.pofile:
             self.pofile.append(entry)
-        self.msgids.append(msgid)
+        self.found_entries.append(entry)
 
     def _save_current_msgid(self):
         if self._current_msgid and ((not self._disable_next_line and
@@ -429,8 +433,8 @@ class Md2Po:
             if not os.path.exists(po_filepath):
                 po_filepath = ''
 
-        pofile_kwargs = (dict(autodetect_encoding=False, encoding=encoding) if
-                         encoding else {})
+        pofile_kwargs = (dict(autodetect_encoding=False, encoding=encoding)
+                         if encoding else {})
         self.pofile = polib.pofile(po_filepath, wrapwidth=self.wrapwidth,
                                    **pofile_kwargs)
 
@@ -458,8 +462,26 @@ class Md2Po:
 
         if self.mark_not_found_as_absolete:
             for entry in self.pofile:
-                if entry.msgid not in self.msgids:
-                    entry.obsolete = True
+                if entry not in self.found_entries:
+                    _equal_not_obsolete_found = \
+                        find_equal_without_consider_obsoletion(
+                            entry, self.found_entries)
+                    if _equal_not_obsolete_found:
+                        self.pofile.remove(entry)
+                    else:
+                        entry.obsolete = True
+                else:
+                    entry.obsolete = False
+        else:
+            for entry in self.pofile:
+                if entry not in self.found_entries:
+                    _equal_not_obsolete_found = \
+                        find_equal_without_consider_obsoletion(
+                            entry, self.found_entries)
+                    if _equal_not_obsolete_found:
+                        self.pofile.remove(entry)
+                    else:
+                        entry.obsolete = False
 
         if self._include_xheaders:
             self.pofile.metadata.update(self.xheaders)

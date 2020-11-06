@@ -12,6 +12,7 @@ import polib
 from mdpo.command import search_html_command
 from mdpo.html import get_html_attrs_tuple_attr, html_attrs_tuple_to_string
 from mdpo.io import filter_paths, to_file_content_if_is_file
+from mdpo.polib import *  # noqa
 
 
 PROCESS_REPLACER_TAGS = ['p', 'li', 'h1', 'h2', 'h3',
