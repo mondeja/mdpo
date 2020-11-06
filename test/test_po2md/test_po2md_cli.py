@@ -75,12 +75,12 @@ def test_ignore_files_by_filepath(capsys, arg):
     pofiles = [
         (
             uuid4().hex + '.po',
-            ('#\n\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
+            ('#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
              'msgstr "Incluida"\n\n'),
         ),
         (
             uuid4().hex + '.po',
-            ('#\n\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
+            ('#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
              'msgstr "Excluida"\n\n'),
         )
     ]

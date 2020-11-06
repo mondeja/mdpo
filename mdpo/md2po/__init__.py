@@ -8,10 +8,7 @@ import polib
 from mdpo.command import search_html_command
 from mdpo.io import filter_paths, to_glob_or_content
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-from mdpo.po import (
-    build_po_escaped_string,
-    find_equal_without_consider_obsoletion
-)
+from mdpo.po import build_po_escaped_string, find_entry_in_entries
 from mdpo.polib import *  # noqa
 from mdpo.text import min_not_max_chars_in_a_row
 
@@ -220,6 +217,11 @@ class Md2Po:
         entry = polib.POEntry(msgid=msgid, msgstr=self.msgstr,
                               comment=tcomment,
                               msgctxt=msgctxt)
+        _equal_entry = find_entry_in_entries(entry, self.pofile,
+                                             compare_obsolete=False,
+                                             compare_msgstr=False)
+        if _equal_entry and _equal_entry.msgstr:
+            entry.msgstr = _equal_entry.msgstr
         if entry not in self.pofile:
             self.pofile.append(entry)
         self.found_entries.append(entry)
@@ -463,9 +465,8 @@ class Md2Po:
         if self.mark_not_found_as_absolete:
             for entry in self.pofile:
                 if entry not in self.found_entries:
-                    _equal_not_obsolete_found = \
-                        find_equal_without_consider_obsoletion(
-                            entry, self.found_entries)
+                    _equal_not_obsolete_found = find_entry_in_entries(
+                        entry, self.found_entries, compare_obsolete=False)
                     if _equal_not_obsolete_found:
                         self.pofile.remove(entry)
                     else:
@@ -475,9 +476,8 @@ class Md2Po:
         else:
             for entry in self.pofile:
                 if entry not in self.found_entries:
-                    _equal_not_obsolete_found = \
-                        find_equal_without_consider_obsoletion(
-                            entry, self.found_entries)
+                    _equal_not_obsolete_found = find_entry_in_entries(
+                        entry, self.found_entries, compare_obsolete=False)
                     if _equal_not_obsolete_found:
                         self.pofile.remove(entry)
                     else:
@@ -551,10 +551,10 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
 
     Examples:
         >>> content = 'Some text with `inline code`'
-        >>> entries = markdown_to_pofile(content)
+        >>> entries = markdown_to_pofile(content, plaintext=True)
         >>> {e.msgid: e.msgstr for e in entries}
         {'Some text with inline code': ''}
-        >>> entries = markdown_to_pofile(content, plaintext=False)
+        >>> entries = markdown_to_pofile(content)
         >>> {e.msgid: e.msgstr for e in entries}
         {'Some text with `inline code`': ''}
         >>> entries = markdown_to_pofile(content, msgstr='Default message')
