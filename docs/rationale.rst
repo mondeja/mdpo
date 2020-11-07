@@ -74,7 +74,7 @@ Advantages
 ----------
 
 * Updates into source files are synchronized. A change in one string declares
-  the old one fuzzy and the translation can be updated quickly.
+  the old one obsolete and the translation can be updated quickly.
 * Translators work with ``.po`` files directly, a standard in translations.
 * Parts of the Markdown files that do not need translated as code blocks or
   are not included in the translation (by default), reducing possibility of

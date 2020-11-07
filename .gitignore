@@ -3,6 +3,7 @@
 /docs/_build/
 /dev.md
 /example-project
+/LC_MESSAGES
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

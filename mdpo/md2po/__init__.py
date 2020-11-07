@@ -222,6 +222,8 @@ class Md2Po:
                                              compare_msgstr=False)
         if _equal_entry and _equal_entry.msgstr:
             entry.msgstr = _equal_entry.msgstr
+            if _equal_entry.fuzzy and not entry.fuzzy:
+                entry.flags.append('fuzzy')
         if entry not in self.pofile:
             self.pofile.append(entry)
         self.found_entries.append(entry)
