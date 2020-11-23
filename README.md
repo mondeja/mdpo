@@ -31,6 +31,7 @@ supporting some additional features.
 [![Documentation status][doc-image]][doc-link]
 [![Tests][tests-image]][tests-link]
 [![Coverage status][coverage-image]][coverage-link]
+[![pre-commit.ci-status][pre-commit-ci-image]][pre-commit-ci-link]
 
 ## Installation
 
@@ -43,7 +44,9 @@ pip install mdpo
 [coverage-image]: https://coveralls.io/repos/github/mondeja/mdpo/badge.svg
 [coverage-link]: https://coveralls.io/github/mondeja/mdpo
 [doc-image]: https://readthedocs.org/projects/mdpo/badge/?version=latest
+[pre-commit-ci-image]: https://results.pre-commit.ci/badge/github/mondeja/mdpo/master.svg
 [doc-link]: https://mdpo.readthedocs.io/en/latest/
 [md4c-build-link]: https://github.com/mity/md4c/wiki/Building-MD4C
 [process-locales-script-link]: https://github.com/mondeja/mdpo/blob/master/process-locales.py
 [spanish-readme-link]: https://github.com/mondeja/mdpo/blob/master/locale/readme/es.md
+[pre-commit-ci-link]: https://results.pre-commit.ci/latest/github/mondeja/mdpo/master
