@@ -18,14 +18,16 @@ REQUIRED = [
     'polib>=1.1.0',
 ]
 
-TEST_EXTRAS = [
-    'pytest>=6.1.0',
-    'pytest-cov',
+LINT_EXTRAS = [
     'flake8',
     'flake8-print',
     'flake8-implicit-str-concat',
     'isort',
-    'tox',
+]
+TEST_EXTRAS = [
+    'pytest==6.1.0',
+    'pytest-cov',
+    'coveralls'
 ]
 DOC_EXTRAS = [
     'Sphinx>=3.2.1',
@@ -118,6 +120,7 @@ setup(
     extras_require={
         'dev': DEV_EXTRAS,
         'test': TEST_EXTRAS,
+        'lint': LINT_EXTRAS,
         'docs': DOC_EXTRAS,
     },
     include_package_data=True,

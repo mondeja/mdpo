@@ -9,6 +9,10 @@ from mdpo.po2md.__main__ import run
 from mdpo.text import striplastline
 
 
+if os.environ.get("GITHUB_WORKFLOW"):
+    pytest.skip("CLI tests don't work in Github workflows",
+                allow_module_level=True)
+
 EXAMPLE = {
     'markdown-input': '# Header 1\n\nSome text here\n',
     'markdown-output': '# Encabezado 1\n\nAlgo de texto aquí\n',

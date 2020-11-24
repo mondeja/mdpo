@@ -3,8 +3,7 @@ os: linux
 dist: focal
 cache: false
 install:
-  - travis_retry pip install -U tox-travis
-  - pip install --upgrade pip
+  - travis_retry pip install -U pip tox-travis
 matrix:
   include:
     # Disabled due to bug in TravisCI, is not getting distribution build
