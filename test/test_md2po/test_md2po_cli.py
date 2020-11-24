@@ -9,6 +9,7 @@ from mdpo.text import striplastline
 
 
 if os.environ.get("GITHUB_WORKFLOW"):
+    # https://github.com/actions/runner/issues/241
     pytest.skip("CLI tests don't work in Github workflows",
                 allow_module_level=True)
 
