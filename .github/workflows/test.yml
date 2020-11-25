@@ -16,8 +16,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip coveralls
           python -m pip install .[test]
           pip list
       - name: Test with pytest
-        run: pytest -svv
+        # https://github.com/actions/runner/issues/241#issuecomment-577360161
+        run: |
+          script -e -c 'pytest -svv --cov=mdpo --cov-config setup.cfg'
+          coveralls
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

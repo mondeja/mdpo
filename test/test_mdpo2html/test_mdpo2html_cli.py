@@ -9,11 +9,6 @@ from mdpo.mdpo2html.__main__ import run
 from mdpo.text import striplastline
 
 
-if os.environ.get("GITHUB_WORKFLOW"):
-    # https://github.com/actions/runner/issues/241
-    pytest.skip("CLI tests don't work in Github workflows",
-                allow_module_level=True)
-
 EXAMPLE = {
     'html-input': '<h1>Header 1</h1>\n\n<p>Some text here</p>\n',
     'html-output': '<h1>Encabezado 1</h1>\n\n<p>Algo de texto aquí</p>\n',
