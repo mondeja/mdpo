@@ -38,8 +38,8 @@ supporting some additional features.
 pip install mdpo
 ```
 
-[tests-image]: https://img.shields.io/travis/mondeja/mdpo?label=tests
-[tests-link]: https://travis-ci.com/github/mondeja/mdpo
+[tests-image]: https://img.shields.io/github/workflow/status/mondeja/mdpo/Test?logo=github
+[tests-link]: https://github.com/mondeja/mdpo/actions?query=workflow%3ATest
 [coverage-image]: https://coveralls.io/repos/github/mondeja/mdpo/badge.svg
 [coverage-link]: https://coveralls.io/github/mondeja/mdpo
 [doc-image]: https://readthedocs.org/projects/mdpo/badge/?version=latest
