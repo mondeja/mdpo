@@ -40,9 +40,9 @@ pip install mdpo
 
 [tests-image]: https://img.shields.io/github/workflow/status/mondeja/mdpo/Test?logo=github
 [tests-link]: https://github.com/mondeja/mdpo/actions?query=workflow%3ATest
-[coverage-image]: https://coveralls.io/repos/github/mondeja/mdpo/badge.svg
+[coverage-image]: https://img.shields.io/coveralls/github/mondeja/mdpo?logo=coveralls
 [coverage-link]: https://coveralls.io/github/mondeja/mdpo
-[doc-image]: https://readthedocs.org/projects/mdpo/badge/?version=latest
+[doc-image]: https://img.shields.io/readthedocs/mdpo?logo=read-the-docs&logoColor=white
 [pre-commit-ci-image]: https://results.pre-commit.ci/badge/github/mondeja/mdpo/master.svg
 [doc-link]: https://mdpo.readthedocs.io/en/latest/
 [md4c-build-link]: https://github.com/mity/md4c/wiki/Building-MD4C
