@@ -10,7 +10,7 @@
          alt="PyPI">
   </a>
   <a href="https://pypi.org/project/mdpo/">
-    <img src="https://img.shields.io/pypi/pyversions/mdpo?logo=python&logoColor=aaaaaa&labelColor=333333">
+    <img src="https://img.shields.io/pypi/pyversions/mdpo?labelColor=333333">
   </a>
   <a href="https://github.com/mondeja/mdpo/blob/master/LICENSE">
     <img src="https://img.shields.io/pypi/l/mdpo?color=light-green">
