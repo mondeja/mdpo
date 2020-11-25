@@ -31,7 +31,6 @@ supporting some additional features.
 [![Documentation status][doc-image]][doc-link]
 [![Tests][tests-image]][tests-link]
 [![Coverage status][coverage-image]][coverage-link]
-[![pre-commit.ci-status][pre-commit-ci-image]][pre-commit-ci-link]
 
 ## Installation
 
