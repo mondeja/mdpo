@@ -19,24 +19,25 @@ REQUIRED = [
 ]
 
 LINT_EXTRAS = [
-    'flake8',
-    'flake8-print',
-    'flake8-implicit-str-concat',
-    'isort',
+    'flake8==6.1.2',
+    'flake8-print==3.1.4',
+    'flake8-implicit-str-concat==0.1.0',
+    'isort==5.6.4',
 ]
 TEST_EXTRAS = [
-    'pytest==6.1.0',
-    'pytest-cov',
-    'coveralls'
+    'pytest==6.1.2',
+    'pytest-cov==2.10.1',
 ]
 DOC_EXTRAS = [
-    'Sphinx>=3.2.1',
+    'Sphinx==3.3.1',
     'sphinx-rtd-theme==0.4.3',
-    'sphinx-argparse>=0.2.5',
+    'sphinx-argparse==0.2.5',
 ]
-DEV_EXTRAS = ['twine', 'bump2version', 'pre-commit'] + \
-    TEST_EXTRAS + \
-    DOC_EXTRAS
+DEV_EXTRAS = [
+    'twine==3.2.0',
+    'bump2version==1.0.1',
+    'pre-commit==2.9.0'
+] + TEST_EXTRAS + DOC_EXTRAS
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
