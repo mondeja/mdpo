@@ -3,26 +3,6 @@ name: Test
 on: [push, pull_request]
 
 jobs:
-  lint:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python v3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install .[lint]
-        pip list
-    - name: Lint with flake8
-      run: |
-        flake8 test mdpo docs setup.py
-    - name: Lint with isort
-      run: |
-        isort --check-only setup.py test mdpo docs
-
   test:
     runs-on: ubuntu-latest
     strategy:
