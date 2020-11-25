@@ -1,4 +1,4 @@
-name: Pre-commit auto-update
+name: pre-commit autoupdate
 on:
   schedule:
     - cron: '0 0 * * 1'
