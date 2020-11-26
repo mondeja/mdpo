@@ -1,18 +1,19 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: /
     schedule:
       interval: daily
-      time: "04:00"
+      time: '04:00'
   - package-ecosystem: pip
-    directory: "/"
+    directory: /
     schedule:
       interval: daily
-      time: "04:00"
+      time: '04:00'
     ignore:
-    - dependency-name: "sphinx-rtd-theme"
-      versions: ["0.5.0"]
+      - dependency-name: sphinx-rtd-theme
+        versions:
+          - 0.5.0
     open-pull-requests-limit: 10
     reviewers:
       - mondeja

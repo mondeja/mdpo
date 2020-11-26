@@ -2,7 +2,7 @@ name: Update copyright years in license file
 
 on:
   schedule:
-    - cron: "0 3 2 1 *"
+    - cron: 0 3 2 1 *
   workflow_dispatch:
 
 jobs:

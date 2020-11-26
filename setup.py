@@ -23,6 +23,7 @@ LINT_EXTRAS = [
     'flake8-print==3.1.4',
     'flake8-implicit-str-concat==0.2.0',
     'isort==5.6.4',
+    'yamllint==1.25.0',
 ]
 TEST_EXTRAS = [
     'pytest==6.1.2',
@@ -37,7 +38,7 @@ DEV_EXTRAS = [
     'twine==3.2.0',
     'bump2version==1.0.1',
     'pre-commit==2.9.2'
-] + TEST_EXTRAS + DOC_EXTRAS
+] + TEST_EXTRAS + LINT_EXTRAS + DOC_EXTRAS
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
