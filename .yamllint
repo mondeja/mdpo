@@ -46,12 +46,4 @@ rules:
     quote-type: single
     required: only-when-needed
   trailing-spaces: enable
-  truthy:
-    allowed-values:
-      - 'true'
-      - 'false'
-    check-keys: true
-    # Ignore this rule for all Github files:
-    # https://github.com/adrienverge/yamllint/issues/344
-    ignore: |
-      .github
+  truthy: disable
