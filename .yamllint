@@ -23,6 +23,8 @@ rules:
     check-multi-line-strings: true
     indent-sequences: true
     spaces: consistent
+    ignore: |
+      .github
   key-duplicates: enable
   key-ordering:
     ignore: |
