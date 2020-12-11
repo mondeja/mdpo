@@ -86,8 +86,8 @@ next command to create and update the translation pofile for ``README.html``:
    md2po README.md --quiet --save --po-filepath locale/es/LC_MESSAGES/readme.po
 
 After that, you can use the new file ``locale/es/LC_MESSAGES/readme.po`` to
-to replace the contents of the file ``README.html`` with your translations,
-using next command:
+replace the contents of the file ``README.html`` with your translations, using
+next command:
 
 .. code-block:: bash
 
