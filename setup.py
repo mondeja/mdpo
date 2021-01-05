@@ -31,7 +31,7 @@ TEST_EXTRAS = [
 ]
 DOC_EXTRAS = [
     'Sphinx==3.4.2',
-    'sphinx-rtd-theme==0.4.3',
+    'sphinx-rtd-theme==0.5.1',
     'sphinx-argparse==0.2.5',
 ]
 DEV_EXTRAS = [
