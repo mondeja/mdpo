@@ -30,7 +30,7 @@ TEST_EXTRAS = [
     'pytest-cov==2.10.1',
 ]
 DOC_EXTRAS = [
-    'Sphinx==3.4.2',
+    'Sphinx==3.4.3',
     'sphinx-rtd-theme==0.4.3',
     'sphinx-argparse==0.2.5',
 ]
