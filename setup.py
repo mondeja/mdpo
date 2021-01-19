@@ -27,7 +27,7 @@ LINT_EXTRAS = [
 ]
 TEST_EXTRAS = [
     'pytest==6.2.1',
-    'pytest-cov==2.10.1',
+    'pytest-cov==2.11.0',
 ]
 DOC_EXTRAS = [
     'Sphinx==3.4.3',
