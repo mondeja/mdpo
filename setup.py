@@ -26,7 +26,7 @@ LINT_EXTRAS = [
     'yamllint==1.25.0',
 ]
 TEST_EXTRAS = [
-    'pytest==6.2.1',
+    'pytest==6.2.2',
     'pytest-cov==2.11.1',
 ]
 DOC_EXTRAS = [
