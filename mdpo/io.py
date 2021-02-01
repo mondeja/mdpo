@@ -46,7 +46,7 @@ def to_file_content_if_is_file(value):
         str: File content if ``value`` is an existing file or ``value`` as is.
     """
     if os.path.isfile(value):
-        with open(value, "r") as f:
+        with open(value) as f:
             value = f.read()
     return value
 

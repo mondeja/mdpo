@@ -14,6 +14,12 @@ repos:
           - --check-only
           - --filter-files
         files: \.py$
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.9.0
+    hooks:
+      - id: pyupgrade
+        args:
+          - --py36-plus
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.26.0
     hooks:

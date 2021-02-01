@@ -38,7 +38,7 @@ def test_translate_markuptext(filename):
 
     output = pofile_to_markdown(filepath_in, po_filepath)
 
-    with open(filepath_out, "r") as f:
+    with open(filepath_out) as f:
         expected_output = f.read()
 
     assert output == expected_output
@@ -59,6 +59,6 @@ def test_translate_save(filename):
     pofile_to_markdown(filepath_in, po_filepath, save=save_file.name)
     save_file.seek(0)
 
-    with open(filepath_out, 'r') as expect_file:
+    with open(filepath_out) as expect_file:
         assert save_file.read().decode("utf-8") == expect_file.read()
     save_file.close()

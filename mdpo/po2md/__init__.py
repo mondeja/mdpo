@@ -230,7 +230,7 @@ class Po2Md:
                                                  self._current_ol_delimitier)
             else:
                 # inside UL
-                self._current_line += "%s%s " % (
+                self._current_line += "{}{} ".format(
                     "  " * (len(self._ul_marks) - 1), self._ul_marks[-1])
                 if details["is_task"]:
                     self._current_line += "[%s] " % details["task_mark"]
@@ -392,7 +392,7 @@ class Po2Md:
                 self._codespan_backticks * self.code_end_string)
             self._codespan_backticks = None
         elif span.value == md4c.SpanType.IMG:
-            self._current_msgid += polib.escape('![%s](%s' % (
+            self._current_msgid += polib.escape('![{}]({}'.format(
                 self._current_imgspan['text'], self._current_imgspan['src']
             ))
             if self._current_imgspan['title']:
@@ -415,7 +415,7 @@ class Po2Md:
                     self._codespan_backticks = min_not_max_chars_in_a_row(
                         self.code_start_string,
                         text) - 1
-                    self._current_msgid = '%s%s%s' % (
+                    self._current_msgid = '{}{}{}'.format(
                         self._current_msgid[:self._codespan_start_index],
                         self._codespan_backticks * self.code_start_string,
                         self._current_msgid[self._codespan_start_index:])
@@ -436,7 +436,7 @@ class Po2Md:
                         self._current_aspan_href = None
                 elif self._current_wikilink_target:
                     if text != self._current_wikilink_target:
-                        self._current_wikilink_target = '%s|%s' % (
+                        self._current_wikilink_target = '{}|{}'.format(
                             self._current_wikilink_target, text)
                     return
                 self._current_msgid += polib.escape(text)

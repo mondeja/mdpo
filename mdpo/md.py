@@ -8,7 +8,7 @@ def escape_links_titles(text, link_start_string='[', link_end_string=']'):
     found inside, returning the replaced string.
     """
     link_end_string_escaped_regex = re.escape(link_end_string)
-    regex = r'(%s[^%s]+%s\([^\s]+\s)([^\)]+)' % (
+    regex = r'({}[^{}]+{}\([^\s]+\s)([^\)]+)'.format(
         re.escape(link_start_string),
         link_end_string_escaped_regex,
         link_end_string_escaped_regex,
@@ -31,7 +31,7 @@ def inline_untexted_links(text, link_start_string='[', link_end_string=']'):
     ``]]`` string chunks).
     """
     link_end_string_escaped_regex = re.escape(link_end_string)
-    regex = r'(%s)([^%s]+)(%s)(?!\[|\()(?!\])' % (
+    regex = r'({})([^{}]+)({})(?!\[|\()(?!\])'.format(
         re.escape(link_start_string),
         link_end_string_escaped_regex,
         link_end_string_escaped_regex,

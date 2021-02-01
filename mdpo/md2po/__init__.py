@@ -358,7 +358,7 @@ class Md2Po:
 
             if span.value == md4c.SpanType.A:
                 if self._current_aspan_href:
-                    self._current_msgid += "(%s%s)" % (
+                    self._current_msgid += "({}{})".format(
                         self._current_aspan_href,
                         "" if not details['title'] else ' "%s"' % (
                             details['title'][0][1])
@@ -372,7 +372,7 @@ class Md2Po:
                     self._codespan_backticks * self.code_end_string)
                 self._codespan_backticks = None
             elif span.value == md4c.SpanType.IMG:
-                self._current_msgid += '![%s](%s' % (
+                self._current_msgid += '![{}]({}'.format(
                     self._current_imgspan['text'], self._current_imgspan['src']
                 )
                 if self._current_imgspan['title']:
@@ -399,7 +399,7 @@ class Md2Po:
                         self._codespan_backticks = min_not_max_chars_in_a_row(
                             self.code_start_string,
                             text) - 1
-                        self._current_msgid = '%s%s%s' % (
+                        self._current_msgid = '{}{}{}'.format(
                             self._current_msgid[:self._codespan_start_index],
                             self._codespan_backticks * self.code_start_string,
                             self._current_msgid[self._codespan_start_index:])
@@ -416,7 +416,7 @@ class Md2Po:
                 if self._current_wikilink_target:
                     if text != self._current_wikilink_target:
                         # not self-referenced wikilink
-                        self._current_wikilink_target = '%s|%s' % (
+                        self._current_wikilink_target = '{}|{}'.format(
                             self._current_wikilink_target,
                             text)
                     return
@@ -457,7 +457,7 @@ class Md2Po:
             _parse(self.content)
         else:
             for filepath in self.filepaths:
-                with open(filepath, "r") as f:
+                with open(filepath) as f:
                     content = f.read()
                 _parse(content)
                 self._disable_next_line = False

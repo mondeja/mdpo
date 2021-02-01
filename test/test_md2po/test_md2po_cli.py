@@ -95,7 +95,7 @@ msgstr ""
         pofile, exitcode = run(['# Bar\n', arg, '-po', pofile_path, '-m'])
         out, err = capsys.readouterr()
 
-        with open(pofile_path, 'r') as f:
+        with open(pofile_path) as f:
             assert f.read() == expected_output
 
     assert exitcode == 0

@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-import io
 import os
 import re
 import sys
@@ -42,12 +40,12 @@ DEV_EXTRAS = [
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
-with io.open(os.path.join(HERE, 'README.md'), encoding='utf-8') as f:
+with open(os.path.join(HERE, 'README.md'), encoding='utf-8') as f:
     LONG_DESCRIPTION = '\n' + f.read()
 
 ABOUT = {}
 INIT_FILEPATH = os.path.join(HERE, 'mdpo', '__init__.py')
-with io.open(INIT_FILEPATH, encoding='utf-8') as f:
+with open(INIT_FILEPATH, encoding='utf-8') as f:
     content = f.read()
     ABOUT['__title__'] = \
         re.search(r'__title__\s=\s[\'"]([^\'"]+)[\'"]', content).group(1)
@@ -66,7 +64,7 @@ class UploadCommand(Command):
     @staticmethod
     def status(s):
         'Prints things in bold.'
-        sys.stdout.write('\033[1m{0}\033[0m\n'.format(s))
+        sys.stdout.write(f'\033[1m{s}\033[0m\n')
 
     def initialize_options(self):
         self.test = None
@@ -83,7 +81,7 @@ class UploadCommand(Command):
             pass
 
         self.status('Building Source and Wheel (universal) distribution…')
-        os.system('{0} setup.py sdist bdist_wheel --universal'.format(
+        os.system('{} setup.py sdist bdist_wheel --universal'.format(
             sys.executable))
 
         self.status('Uploading the package to PyPI via Twine…')

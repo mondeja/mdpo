@@ -1,4 +1,3 @@
-
 import pytest
 
 from mdpo.po import build_po_escaped_string

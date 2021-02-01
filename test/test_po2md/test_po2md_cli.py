@@ -64,7 +64,7 @@ def test_save(capsys, arg, tmp_file):
         assert output == EXAMPLE['markdown-output']
         assert out == ''
 
-        with open(output_md_filepath, "r") as f:
+        with open(output_md_filepath) as f:
             output_markdown_content = f.read()
 
         assert output_markdown_content == EXAMPLE['markdown-output']

@@ -33,7 +33,7 @@ def test_extract_plaintext(filename):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
     pofile = markdown_to_pofile(filepath, plaintext=True)
 
-    with open(filepath + '.expect.po', 'r') as expect_file:
+    with open(filepath + '.expect.po') as expect_file:
         assert pofile.__unicode__() == expect_file.read()
 
 
@@ -42,7 +42,7 @@ def test_extract_markuptext(filename):
     filepath = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
     pofile = markdown_to_pofile(filepath, plaintext=False)
 
-    with open(filepath + '.expect.po', 'r') as expect_file:
+    with open(filepath + '.expect.po') as expect_file:
         assert pofile.__unicode__() == expect_file.read()
 
 
@@ -53,7 +53,7 @@ def test_extract_underline(filename):
         filepath, plaintext=False,
         extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS + ["underline"])
 
-    with open(filepath + '.expect.po', 'r') as expect_file:
+    with open(filepath + '.expect.po') as expect_file:
         assert pofile.__unicode__() == expect_file.read()
 
 
@@ -69,6 +69,6 @@ def test_extract_save(filename):
         filepath, plaintext=True, save=True, po_filepath=save_file.name)
     save_file.seek(0)
 
-    with open(filepath + '.expect.po', 'r') as expect_file:
+    with open(filepath + '.expect.po') as expect_file:
         assert save_file.read().decode("utf-8") == expect_file.read()
     save_file.close()

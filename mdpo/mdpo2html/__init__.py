@@ -78,7 +78,7 @@ class MdPo2HTML(HTMLParser):
                 for _tag in tags_group:
                     if _tag not in template_tags:
                         continue
-                    regex = r'</%s>\s*<%s>' % (tag, _tag)
+                    regex = fr'</{tag}>\s*<{_tag}>'
                     if regex not in regexes:
                         regexes.append(regex)
 
@@ -110,21 +110,21 @@ class MdPo2HTML(HTMLParser):
 
                 if handled in self.code_tags:
                     _current_replacement += '`'
-                    raw_html_template += '<%s%s>' % (
+                    raw_html_template += '<{}{}>'.format(
                         handled,
                         (' ' + html_attrs_tuple_to_string(attrs)
                          if attrs else '')
                     )
                 elif handled in self.bold_tags:
                     _current_replacement += '**'
-                    raw_html_template += '<%s%s>' % (
+                    raw_html_template += '<{}{}>'.format(
                         handled,
                         (' ' + html_attrs_tuple_to_string(attrs)
                          if attrs else '')
                     )
                 elif handled in self.italic_tags:
                     _current_replacement += '*'
-                    raw_html_template += '<%s%s>' % (
+                    raw_html_template += '<{}{}>'.format(
                         handled,
                         (' ' + html_attrs_tuple_to_string(attrs)
                          if attrs else '')
@@ -152,7 +152,7 @@ class MdPo2HTML(HTMLParser):
                     #     attrs_except_href_title) + '>'
                     raw_html_template += '>'
                 else:
-                    raw_html_template += '<%s%s>' % (
+                    raw_html_template += '<{}{}>'.format(
                         handled,
                         ' ' + html_attrs_tuple_to_string(attrs)
                         if attrs else '')
@@ -170,7 +170,7 @@ class MdPo2HTML(HTMLParser):
                 else:
                     raw_html_template += '{}'
                     if _current_link_target:
-                        _current_replacement += '[%s]%s' % (
+                        _current_replacement += '[{}]{}'.format(
                             handled, _current_link_target)
                         _current_link_target = ''
                     else:
@@ -190,7 +190,7 @@ class MdPo2HTML(HTMLParser):
                 raw_html_template += '<!--%s-->' % handled
             elif handle == 'startend':
                 if handled in self.image_tags:
-                    _current_replacement += '![%s](%s' % (
+                    _current_replacement += '![{}]({}'.format(
                         get_html_attrs_tuple_attr(attrs, "alt"),
                         get_html_attrs_tuple_attr(attrs, "src"),
                     )
@@ -201,7 +201,7 @@ class MdPo2HTML(HTMLParser):
 
                     raw_html_template += '{}'
                 else:
-                    raw_html_template += '<%s%s/>' % (
+                    raw_html_template += '<{}{}/>'.format(
                         handled,
                         ((' %s' % html_attrs_tuple_to_string(attrs))
                          if attrs else '')
@@ -270,16 +270,16 @@ class MdPo2HTML(HTMLParser):
 
         if tag in self.ignore_grouper_tags:
             self.context.append(tag)
-            self.output += '<%s%s>' % (
+            self.output += '<{}{}>'.format(
                 tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
         elif self.context and self.context[0] in self.ignore_grouper_tags:
-            self.output += '<%s%s>' % (
+            self.output += '<{}{}>'.format(
                 tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
         elif tag == 'ul' and not self.context:
-            self.output += '<%s%s>' % (
+            self.output += '<{}{}>'.format(
                 tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
         elif tag in ['blockquote', 'table', 'thead', 'tbody', 'tr']:
-            self.output += '<%s%s>' % (
+            self.output += '<{}{}>'.format(
                 tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
         else:
             self.replacer.append(('start', tag, attrs))

@@ -38,7 +38,7 @@ def test_translate_markuptext(filename):
 
     output = markdown_pofile_to_html(filepath_in, po_filepath)
 
-    with open(filepath_out, "r") as f:
+    with open(filepath_out) as f:
         expected_output = f.read()
 
     assert output == expected_output
@@ -59,7 +59,7 @@ def test_translate_merge_adjacent_markups(filename):
     output = markdown_pofile_to_html(filepath_in, po_filepath,
                                      merge_adjacent_markups=True)
 
-    with open(filepath_out, "r") as f:
+    with open(filepath_out) as f:
         expected_output = f.read()
 
     assert output == expected_output

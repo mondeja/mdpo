@@ -63,7 +63,7 @@ def test_save(capsys, arg, tmp_file):
         assert output == EXAMPLE['html-output']
         assert out == ''
 
-        with open(html_output_filepath, "r") as f:
+        with open(html_output_filepath) as f:
             output_html_content = f.read()
 
         assert output_html_content == EXAMPLE['html-output']
