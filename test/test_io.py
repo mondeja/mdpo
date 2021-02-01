@@ -7,7 +7,7 @@ import tempfile
 from mdpo.io import (
     filter_paths,
     to_file_content_if_is_file,
-    to_glob_or_content
+    to_glob_or_content,
 )
 
 
