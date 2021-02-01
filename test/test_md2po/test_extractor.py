@@ -27,8 +27,10 @@ msgstr ""
 
 
 def test_mark_not_found_as_absolete(tmp_file):
-    original_md_file_content = ('Some string in the markdown\n\n'
-                                'Another string\n\n')
+    original_md_file_content = (
+        'Some string in the markdown\n\n'
+        'Another string\n\n'
+    )
     new_md_file_content = 'A new string\n'
     po_file = tempfile.NamedTemporaryFile(suffix=".po")
 
@@ -47,8 +49,10 @@ msgstr ""
 '''
 
     with tmp_file(new_md_file_content, ".md") as new_md_filepath:
-        md2po_extractor = Md2Po(new_md_filepath,
-                                mark_not_found_as_absolete=True)
+        md2po_extractor = Md2Po(
+            new_md_filepath,
+            mark_not_found_as_absolete=True,
+        )
         po = md2po_extractor.extract(po_filepath=po_file.name)
     assert po.__unicode__() == '''#
 msgid ""

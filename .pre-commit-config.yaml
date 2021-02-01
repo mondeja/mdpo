@@ -19,6 +19,17 @@ repos:
       - id: pyupgrade
         args:
           - --py36-plus
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.1.0
+    hooks:
+      - id: add-trailing-comma
+        name: add-trailing-comma
+        args:
+          - --py36-plus
+  - repo: https://github.com/asottile/setup-cfg-fmt
+    rev: v1.16.0
+    hooks:
+      - id: setup-cfg-fmt
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.26.0
     hooks:

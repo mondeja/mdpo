@@ -24,41 +24,55 @@ class TestFilterPaths:
         return os.path.join('test', EMPTY_FILES_DIRNAME, directory, *args)
 
     def test_ignore_files_by_filename(self):
-        filepaths = filter_paths(EMPTY_FILES_GLOB,
-                                 ignore_paths=['foo04.md', 'bar02.md'])
-        assert filepaths == [self.empty_file_path('bar', 'bar01.md'),
-                             self.empty_file_path('bar', 'bar03.md'),
-                             self.empty_file_path('foo', 'foo01.md'),
-                             self.empty_file_path('foo', 'foo02.md'),
-                             self.empty_file_path('foo', 'foo03.md')]
+        filepaths = filter_paths(
+            EMPTY_FILES_GLOB,
+            ignore_paths=['foo04.md', 'bar02.md'],
+        )
+        assert filepaths == [
+            self.empty_file_path('bar', 'bar01.md'),
+            self.empty_file_path('bar', 'bar03.md'),
+            self.empty_file_path('foo', 'foo01.md'),
+            self.empty_file_path('foo', 'foo02.md'),
+            self.empty_file_path('foo', 'foo03.md'),
+        ]
 
     def test_ignore_directory_by_dirname(self):
         filepaths = filter_paths(EMPTY_FILES_GLOB, ignore_paths=['foo'])
 
-        assert filepaths == [self.empty_file_path('bar', 'bar01.md'),
-                             self.empty_file_path('bar', 'bar02.md'),
-                             self.empty_file_path('bar', 'bar03.md')]
+        assert filepaths == [
+            self.empty_file_path('bar', 'bar01.md'),
+            self.empty_file_path('bar', 'bar02.md'),
+            self.empty_file_path('bar', 'bar03.md'),
+        ]
 
     def test_ignore_files_by_filepath(self):
         filepaths = filter_paths(
             EMPTY_FILES_GLOB,
-            ignore_paths=[self.empty_file_path('foo', 'foo04.md'),
-                          self.empty_file_path('bar', 'bar02.md')]
+            ignore_paths=[
+                self.empty_file_path('foo', 'foo04.md'),
+                self.empty_file_path('bar', 'bar02.md'),
+            ],
         )
 
-        assert filepaths == [self.empty_file_path('bar', 'bar01.md'),
-                             self.empty_file_path('bar', 'bar03.md'),
-                             self.empty_file_path('foo', 'foo01.md'),
-                             self.empty_file_path('foo', 'foo02.md'),
-                             self.empty_file_path('foo', 'foo03.md')]
+        assert filepaths == [
+            self.empty_file_path('bar', 'bar01.md'),
+            self.empty_file_path('bar', 'bar03.md'),
+            self.empty_file_path('foo', 'foo01.md'),
+            self.empty_file_path('foo', 'foo02.md'),
+            self.empty_file_path('foo', 'foo03.md'),
+        ]
 
     def test_ignore_files_by_dirpath(self):
-        filepaths = filter_paths(EMPTY_FILES_GLOB,
-                                 ignore_paths=[self.empty_file_path('foo')])
+        filepaths = filter_paths(
+            EMPTY_FILES_GLOB,
+            ignore_paths=[self.empty_file_path('foo')],
+        )
 
-        assert filepaths == [self.empty_file_path('bar', 'bar01.md'),
-                             self.empty_file_path('bar', 'bar02.md'),
-                             self.empty_file_path('bar', 'bar03.md')]
+        assert filepaths == [
+            self.empty_file_path('bar', 'bar01.md'),
+            self.empty_file_path('bar', 'bar02.md'),
+            self.empty_file_path('bar', 'bar03.md'),
+        ]
 
 
 class TestToGlobOrContent:

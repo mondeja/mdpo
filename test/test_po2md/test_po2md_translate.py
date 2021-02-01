@@ -14,8 +14,10 @@ EXAMPLES_DIR = os.path.join('test', 'test_po2md', 'translate-examples')
 def _build_examples(dirname):
     examples_dir = os.path.join(EXAMPLES_DIR, dirname)
     examples_glob = glob.glob(examples_dir + os.sep + '*.md')
-    examples_filenames = sorted([os.path.basename(fp) for fp in examples_glob
-                                 if not fp.endswith(".expect.md")])
+    examples_filenames = sorted([
+        os.path.basename(fp) for fp in examples_glob
+        if not fp.endswith(".expect.md")
+    ])
     return (examples_dir, examples_filenames)
 
 
@@ -24,7 +26,7 @@ for suite in os.listdir(EXAMPLES_DIR):
     dirpath, filenames = _build_examples(suite)
     EXAMPLES[suite] = {
         "filenames": filenames,
-        "dirpath": dirpath
+        "dirpath": dirpath,
     }
 
 
@@ -34,7 +36,8 @@ def test_translate_markuptext(filename):
     filepath_out = filepath_in + '.expect.md'
     po_filepath = os.path.join(
         os.path.dirname(filepath_in),
-        os.path.splitext(os.path.basename(filepath_in))[0] + '.po')
+        os.path.splitext(os.path.basename(filepath_in))[0] + '.po',
+    )
 
     output = pofile_to_markdown(filepath_in, po_filepath)
 
@@ -45,14 +48,15 @@ def test_translate_markuptext(filename):
 
 
 @pytest.mark.parametrize(
-    'filename', [random.choice(EXAMPLES['markuptext']['filenames'])]
+    'filename', [random.choice(EXAMPLES['markuptext']['filenames'])],
 )
 def test_translate_save(filename):
     filepath_in = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
     filepath_out = filepath_in + '.expect.md'
     po_filepath = os.path.join(
         os.path.dirname(filepath_in),
-        os.path.splitext(os.path.basename(filepath_in))[0] + '.po')
+        os.path.splitext(os.path.basename(filepath_in))[0] + '.po',
+    )
 
     save_file = tempfile.NamedTemporaryFile(suffix=".po")
 

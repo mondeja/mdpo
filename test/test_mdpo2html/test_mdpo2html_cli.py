@@ -21,7 +21,7 @@ msgstr "Encabezado 1"
 
 msgid "Some text here"
 msgstr "Algo de texto aquí"
-'''
+''',
 }
 
 
@@ -41,8 +41,10 @@ def test_stdin(capsys, monkeypatch, tmp_file):
 def test_quiet(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
 
-        output, exitcode = run([EXAMPLE['html-input'],
-                                '-p', po_filepath, arg])
+        output, exitcode = run([
+            EXAMPLE['html-input'],
+            '-p', po_filepath, arg,
+        ])
         out, err = capsys.readouterr()
 
         assert exitcode == 0
@@ -55,8 +57,10 @@ def test_save(capsys, arg, tmp_file):
             tmp_file(EXAMPLE['html-input'], ".html") as html_input_filepath, \
             tmp_file(EXAMPLE['html-output'], ".html") as html_output_filepath:
 
-        output, exitcode = run([html_input_filepath, '-p', po_filepath,
-                                arg, html_output_filepath])
+        output, exitcode = run([
+            html_input_filepath, '-p', po_filepath,
+            arg, html_output_filepath,
+        ])
         out, err = capsys.readouterr()
 
         assert exitcode == 0
@@ -74,14 +78,18 @@ def test_ignore_files_by_filepath(capsys, arg, tmp_file):
     pofiles = [
         (
             uuid4().hex + '.po',
-            ('#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
-             'msgstr "Incluida"\n\n'),
+            (
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
+                'msgstr "Incluida"\n\n'
+            ),
         ),
         (
             uuid4().hex + '.po',
-            ('#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
-             'msgstr "Excluida"\n\n'),
-        )
+            (
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
+                'msgstr "Excluida"\n\n'
+            ),
+        ),
     ]
 
     html_input = "<p>Included</p>\n\n<p>Excluded</p>\n\n"
@@ -92,9 +100,11 @@ def test_ignore_files_by_filepath(capsys, arg, tmp_file):
             with open(os.path.join(filesdir, pofile[0]), "w") as f:
                 f.write(pofile[1])
         with tmp_file(html_input, ".html") as html_input_filepath:
-            output, exitcode = run([html_input_filepath, '-p',
-                                    os.path.join(filesdir, '*.po'),
-                                    arg, pofiles[1][0]])
+            output, exitcode = run([
+                html_input_filepath, '-p',
+                os.path.join(filesdir, '*.po'),
+                arg, pofiles[1][0],
+            ])
             out, err = capsys.readouterr()
 
     assert exitcode == 0

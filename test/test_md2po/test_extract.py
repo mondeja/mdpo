@@ -24,7 +24,7 @@ for suite in os.listdir(EXAMPLES_DIR):
     dirpath, filenames = _build_examples(suite)
     EXAMPLES[suite] = {
         "filenames": filenames,
-        "dirpath": dirpath
+        "dirpath": dirpath,
     }
 
 
@@ -51,14 +51,15 @@ def test_extract_underline(filename):
     filepath = os.path.join(EXAMPLES['underline']['dirpath'], filename)
     pofile = markdown_to_pofile(
         filepath, plaintext=False,
-        extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS + ["underline"])
+        extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS + ["underline"],
+    )
 
     with open(filepath + '.expect.po') as expect_file:
         assert pofile.__unicode__() == expect_file.read()
 
 
 @pytest.mark.parametrize(
-    'filename', [random.choice(EXAMPLES['plaintext']['filenames'])]
+    'filename', [random.choice(EXAMPLES['plaintext']['filenames'])],
 )
 def test_extract_save(filename):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
@@ -66,7 +67,8 @@ def test_extract_save(filename):
     save_file = tempfile.NamedTemporaryFile(suffix=".po")
 
     markdown_to_pofile(
-        filepath, plaintext=True, save=True, po_filepath=save_file.name)
+        filepath, plaintext=True, save=True, po_filepath=save_file.name,
+    )
     save_file.seek(0)
 
     with open(filepath + '.expect.po') as expect_file:

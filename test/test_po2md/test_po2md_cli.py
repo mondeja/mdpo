@@ -21,7 +21,7 @@ msgstr "Encabezado 1"
 
 msgid "Some text here"
 msgstr "Algo de texto aquí"
-'''
+''',
 }
 
 
@@ -41,8 +41,10 @@ def test_stdin(capsys, monkeypatch, tmp_file):
 def test_quiet(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
 
-        output, exitcode = run([EXAMPLE['markdown-input'],
-                                '-p', po_filepath, arg])
+        output, exitcode = run([
+            EXAMPLE['markdown-input'],
+            '-p', po_filepath, arg,
+        ])
         out, err = capsys.readouterr()
 
         assert exitcode == 0
@@ -56,8 +58,10 @@ def test_save(capsys, arg, tmp_file):
             tmp_file(EXAMPLE['markdown-input'], ".md") as input_md_filepath, \
             tmp_file("", ".md") as output_md_filepath:
 
-        output, exitcode = run([input_md_filepath, '-p', po_filepath,
-                                arg, output_md_filepath])
+        output, exitcode = run([
+            input_md_filepath, '-p', po_filepath,
+            arg, output_md_filepath,
+        ])
         out, err = capsys.readouterr()
 
         assert exitcode == 0
@@ -75,14 +79,18 @@ def test_ignore_files_by_filepath(capsys, arg):
     pofiles = [
         (
             uuid4().hex + '.po',
-            ('#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
-             'msgstr "Incluida"\n\n'),
+            (
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
+                'msgstr "Incluida"\n\n'
+            ),
         ),
         (
             uuid4().hex + '.po',
-            ('#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
-             'msgstr "Excluida"\n\n'),
-        )
+            (
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
+                'msgstr "Excluida"\n\n'
+            ),
+        ),
     ]
 
     expected_output = "Incluida\n\nExcluded\n"
@@ -96,9 +104,11 @@ def test_ignore_files_by_filepath(capsys, arg):
         with open(input_md_filepath, "w") as f:
             f.write("Included\n\nExcluded\n\n")
 
-        output, exitcode = run([input_md_filepath, '-p',
-                                os.path.join(filesdir, '*.po'),
-                                arg, os.path.join(filesdir, pofiles[1][0])])
+        output, exitcode = run([
+            input_md_filepath, '-p',
+            os.path.join(filesdir, '*.po'),
+            arg, os.path.join(filesdir, pofiles[1][0]),
+        ])
         out, err = capsys.readouterr()
 
     assert exitcode == 0

@@ -16,15 +16,16 @@ def test_obsolete_equal_found(tmp_file, mark_not_found_as_absolete):
     with tmp_file(pofile_content, ".po") as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath,
-            mark_not_found_as_absolete=mark_not_found_as_absolete
+            mark_not_found_as_absolete=mark_not_found_as_absolete,
         ).__unicode__()
     assert output == expected_output
 
 
-@pytest.mark.parametrize(('mark_not_found_as_absolete', 'expected_output'), (
-    (
-        True,
-        '''#
+@pytest.mark.parametrize(
+    ('mark_not_found_as_absolete', 'expected_output'), (
+        (
+            True,
+            '''#
 msgid ""
 msgstr ""
 
@@ -33,11 +34,11 @@ msgstr ""
 
 #~ msgid "Bar"
 #~ msgstr ""
-'''
-    ),
-    (
-        False,
-        '''#
+''',
+        ),
+        (
+            False,
+            '''#
 msgid ""
 msgstr ""
 
@@ -46,18 +47,21 @@ msgstr ""
 
 msgid "Foo"
 msgstr ""
-'''
-    )
-))
-def test_obsolete_not_equal_found(mark_not_found_as_absolete, expected_output,
-                                  tmp_file):
+''',
+        ),
+    ),
+)
+def test_obsolete_not_equal_found(
+    mark_not_found_as_absolete, expected_output,
+    tmp_file,
+):
     markdown_content = '# Foo'
     pofile_content = '#\nmsgid ""\nmsgstr ""\n\nmsgid "Bar"\nmsgstr ""\n'
 
     with tmp_file(pofile_content, ".po") as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath,
-            mark_not_found_as_absolete=mark_not_found_as_absolete
+            mark_not_found_as_absolete=mark_not_found_as_absolete,
         ).__unicode__()
     assert output == expected_output
 
@@ -94,8 +98,10 @@ def test_fuzzy_obsolete_msgstr_fallback(tmp_file, default_msgstr):
     over default msgstr using ``msgstr`` parameter.
     """
     markdown_content = '# Hello'
-    pofile_content = ('#\nmsgid ""\nmsgstr ""\n\n#, fuzzy\n'
-                      '#~ msgid "Hello"\n#~ msgstr "Hola"\n')
+    pofile_content = (
+        '#\nmsgid ""\nmsgstr ""\n\n#, fuzzy\n'
+        '#~ msgid "Hello"\n#~ msgstr "Hola"\n'
+    )
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -115,7 +121,7 @@ msgstr "Hola"
 @pytest.mark.parametrize(("default_msgstr"), ("", "Por defecto"))
 def test_tcomment_obsolete_msgstr_fallback_without_found_tcomment(
     tmp_file,
-    default_msgstr
+    default_msgstr,
 ):
     """If a translated message is marked as obsolete and has a translator
     comment, and his msgid is found in markdown content and the found message
@@ -124,8 +130,10 @@ def test_tcomment_obsolete_msgstr_fallback_without_found_tcomment(
     msgstr using ``msgstr`` parameter.
     """
     markdown_content = '# Hello'
-    pofile_content = ('#\nmsgid ""\nmsgstr ""\n\n#. Translator comment\n'
-                      '#~ msgid "Hello"\n#~ msgstr "Hola"\n')
+    pofile_content = (
+        '#\nmsgid ""\nmsgstr ""\n\n#. Translator comment\n'
+        '#~ msgid "Hello"\n#~ msgstr "Hola"\n'
+    )
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -144,7 +152,7 @@ msgstr "Hola"
 @pytest.mark.parametrize(("default_msgstr"), ("", "Por defecto"))
 def test_tcomment_obsolete_msgstr_fallback_with_found_tcomment(
     tmp_file,
-    default_msgstr
+    default_msgstr,
 ):
     """If a translated message is marked as obsolete and has a translator
     comment, and his msgid is found in markdown content and the found message
@@ -155,8 +163,10 @@ def test_tcomment_obsolete_msgstr_fallback_with_found_tcomment(
     """
     markdown_content = \
         '<!-- mdpo-translator Comment for translator -->\n# Hello'
-    pofile_content = ('#\nmsgid ""\nmsgstr ""\n\n#. Other comment\n'
-                      '#~ msgid "Hello"\n#~ msgstr "Hola"\n')
+    pofile_content = (
+        '#\nmsgid ""\nmsgstr ""\n\n#. Other comment\n'
+        '#~ msgid "Hello"\n#~ msgstr "Hola"\n'
+    )
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -179,8 +189,10 @@ def test_obsolete_with_msgctxt_matching_msgstr_fallback(tmp_file):
     translated.
     """
     markdown_content = '<!-- mdpo-context Context -->\n# Hello'
-    pofile_content = ('#\nmsgid ""\nmsgstr ""\n\n#~ msgctxt "Context"\n'
-                      '#~ msgid "Hello"\n#~ msgstr "Hola"\n')
+    pofile_content = (
+        '#\nmsgid ""\nmsgstr ""\n\n#~ msgctxt "Context"\n'
+        '#~ msgid "Hello"\n#~ msgstr "Hola"\n'
+    )
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -204,8 +216,10 @@ def test_obsolete_with_msgctxt_not_matching_msgstr_fallback(tmp_file):
     as obsolete (if ``mark_not_found_as_absolete`` is ``True``).
     """
     markdown_content = '<!-- mdpo-context First context -->\n# Hello'
-    pofile_content = ('#\nmsgid ""\nmsgstr ""\n\n#~ msgctxt "Second context"\n'
-                      '#~ msgid "Hello"\n#~ msgstr "Hola"\n')
+    pofile_content = (
+        '#\nmsgid ""\nmsgstr ""\n\n#~ msgctxt "Second context"\n'
+        '#~ msgid "Hello"\n#~ msgstr "Hola"\n'
+    )
     expected_output = '''#
 msgid ""
 msgstr ""

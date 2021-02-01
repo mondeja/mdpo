@@ -29,8 +29,8 @@ from mdpo.md import inline_untexted_links
         (
             "String with [self-referenced-link][and malformatted link",
             "String with [self-referenced-link][and malformatted link",
-        )
-    )
+        ),
+    ),
 )
 def test_inline_untexted_links__default_parameters(text, expected_result):
     assert inline_untexted_links(text) == expected_result

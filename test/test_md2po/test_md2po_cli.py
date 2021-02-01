@@ -19,7 +19,7 @@ msgstr ""
 
 msgid "Some text here"
 msgstr ""
-'''
+''',
 }
 
 
@@ -124,7 +124,7 @@ def test_ignore_files_by_filepath(capsys, arg):
     filesdata = {
         'foo': '### Foo\n\nFoo 2',
         'bar': '## Bar with `inline code`',
-        'baz': 'baz should not appear'
+        'baz': 'baz should not appear',
     }
 
     with tempfile.TemporaryDirectory() as filesdir:
@@ -156,9 +156,11 @@ msgstr ""
 
 
 def test_markuptext(capsys):
-    content = ('# Header `with inline code`\n\n'
-               'Some text with **bold characters**, *italic characters*'
-               ' and a [link](https://nowhere.nothing).\n')
+    content = (
+        '# Header `with inline code`\n\n'
+        'Some text with **bold characters**, *italic characters*'
+        ' and a [link](https://nowhere.nothing).\n'
+    )
 
     pofile, exitcode = run([content])
     out, err = capsys.readouterr()
@@ -183,8 +185,10 @@ msgstr ""
 
 @pytest.mark.parametrize('arg', ['-w', '--wrapwidth'])
 def test_wrapwidth(capsys, arg):
-    content = ('# Some long header with **bold characters**, '
-               '*italic characters* and a [link](https://nowhere.nothing).\n')
+    content = (
+        '# Some long header with **bold characters**, '
+        '*italic characters* and a [link](https://nowhere.nothing).\n'
+    )
     width = 20
 
     pofile, exitcode = run([content, arg, str(width), '-p'])

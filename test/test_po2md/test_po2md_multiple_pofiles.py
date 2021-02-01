@@ -15,7 +15,7 @@ msgstr ""
 
 msgid "Beyond good intentions, a dictatorship is a dictatorship."
 msgstr "Más allá de las buenas intenciones, una dictadura es una dictadura."
-'''
+''',
         ),
         (
             uuid4().hex + '.po',
@@ -25,8 +25,8 @@ msgstr ""
 
 msgid "How is it that you think beautiful nerd? Gaaaaaay"
 msgstr "¿Cómo es que te parece nerd lo bello? Gaaaaaay"
-'''
-        )
+''',
+        ),
     ]
 
     markdown_content = """

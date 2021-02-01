@@ -15,18 +15,24 @@ from mdpo.io import filter_paths, to_file_content_if_is_file
 from mdpo.polib import *  # noqa
 
 
-PROCESS_REPLACER_TAGS = ['p', 'li', 'h1', 'h2', 'h3',
-                         'h4', 'h5', 'h6', 'td', 'th']
+PROCESS_REPLACER_TAGS = [
+    'p', 'li', 'h1', 'h2', 'h3',
+    'h4', 'h5', 'h6', 'td', 'th',
+]
 ALIGNMENT_CHARS = ['\n', ' ', '\t', '\r']
 
 
 class MdPo2HTML(HTMLParser):
-    def __init__(self, pofiles, ignore=[], merge_adjacent_markups=False,
-                 code_tags=['code'], bold_tags=['b', 'strong'],
-                 italic_tags=['em', 'i'], link_tags=['a'], image_tags=['img'],
-                 ignore_grouper_tags=['div', 'hr']):
-        self.pofiles = [polib.pofile(pofilepath) for pofilepath in
-                        filter_paths(glob.glob(pofiles), ignore_paths=ignore)]
+    def __init__(
+        self, pofiles, ignore=[], merge_adjacent_markups=False,
+        code_tags=['code'], bold_tags=['b', 'strong'],
+        italic_tags=['em', 'i'], link_tags=['a'], image_tags=['img'],
+        ignore_grouper_tags=['div', 'hr'],
+    ):
+        self.pofiles = [
+            polib.pofile(pofilepath) for pofilepath in
+            filter_paths(glob.glob(pofiles), ignore_paths=ignore)
+        ]
         self.output = ''
         self.replacer = []
         self._raw_replacement = ''
@@ -112,27 +118,34 @@ class MdPo2HTML(HTMLParser):
                     _current_replacement += '`'
                     raw_html_template += '<{}{}>'.format(
                         handled,
-                        (' ' + html_attrs_tuple_to_string(attrs)
-                         if attrs else '')
+                        (
+                            ' ' + html_attrs_tuple_to_string(attrs)
+                            if attrs else ''
+                        ),
                     )
                 elif handled in self.bold_tags:
                     _current_replacement += '**'
                     raw_html_template += '<{}{}>'.format(
                         handled,
-                        (' ' + html_attrs_tuple_to_string(attrs)
-                         if attrs else '')
+                        (
+                            ' ' + html_attrs_tuple_to_string(attrs)
+                            if attrs else ''
+                        ),
                     )
                 elif handled in self.italic_tags:
                     _current_replacement += '*'
                     raw_html_template += '<{}{}>'.format(
                         handled,
-                        (' ' + html_attrs_tuple_to_string(attrs)
-                         if attrs else '')
+                        (
+                            ' ' + html_attrs_tuple_to_string(attrs)
+                            if attrs else ''
+                        ),
                     )
                 elif handled in self.link_tags:
                     title = get_html_attrs_tuple_attr(attrs, "title")
                     _current_link_target += '(%s' % get_html_attrs_tuple_attr(
-                        attrs, "href")
+                        attrs, "href",
+                    )
                     if title:
                         _current_link_target += ' "%s"' % title
                     _current_link_target += ')'
@@ -155,7 +168,8 @@ class MdPo2HTML(HTMLParser):
                     raw_html_template += '<{}{}>'.format(
                         handled,
                         ' ' + html_attrs_tuple_to_string(attrs)
-                        if attrs else '')
+                        if attrs else '',
+                    )
                 _last_start_tag = handled
                 if _last_start_tag == 'code':
                     _inside_code = True
@@ -171,7 +185,8 @@ class MdPo2HTML(HTMLParser):
                     raw_html_template += '{}'
                     if _current_link_target:
                         _current_replacement += '[{}]{}'.format(
-                            handled, _current_link_target)
+                            handled, _current_link_target,
+                        )
                         _current_link_target = ''
                     else:
                         _current_replacement += handled
@@ -203,8 +218,10 @@ class MdPo2HTML(HTMLParser):
                 else:
                     raw_html_template += '<{}{}/>'.format(
                         handled,
-                        ((' %s' % html_attrs_tuple_to_string(attrs))
-                         if attrs else '')
+                        (
+                            (' %s' % html_attrs_tuple_to_string(attrs))
+                            if attrs else ''
+                        ),
                     )
 
         _current_replacement = html.unescape(_current_replacement)
@@ -215,7 +232,8 @@ class MdPo2HTML(HTMLParser):
         else:
             if self._current_msgctxt:
                 replacement = self.translations_with_msgctxt[
-                    self._current_msgctxt].get(_current_replacement)
+                    self._current_msgctxt
+                ].get(_current_replacement)
             else:
                 replacement = self.translations.get(_current_replacement)
             if not replacement:
@@ -245,7 +263,8 @@ class MdPo2HTML(HTMLParser):
                 html_before_first_replacement.split('<a href="')[0]
 
         html_inner = '\n'.join(
-            self.html_renderer.parse(replacement).split('\n')[:-1])
+            self.html_renderer.parse(replacement).split('\n')[:-1],
+        )
         html_inner = '>'.join(html_inner.split('>')[1:])
         html_inner = '<'.join(html_inner.split('<')[:-1])
 
@@ -253,8 +272,10 @@ class MdPo2HTML(HTMLParser):
             html_after_last_replacement
 
         if self.merge_adjacent_markups:
-            html_template = self._merge_adyacent_tags(html_template,
-                                                      template_tags)
+            html_template = self._merge_adyacent_tags(
+                html_template,
+                template_tags,
+            )
 
         self.output += html_template
         self.context = []
@@ -271,16 +292,20 @@ class MdPo2HTML(HTMLParser):
         if tag in self.ignore_grouper_tags:
             self.context.append(tag)
             self.output += '<{}{}>'.format(
-                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
+                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '',
+            )
         elif self.context and self.context[0] in self.ignore_grouper_tags:
             self.output += '<{}{}>'.format(
-                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
+                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '',
+            )
         elif tag == 'ul' and not self.context:
             self.output += '<{}{}>'.format(
-                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
+                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '',
+            )
         elif tag in ['blockquote', 'table', 'thead', 'tbody', 'tr']:
             self.output += '<{}{}>'.format(
-                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '')
+                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '',
+            )
         else:
             self.replacer.append(('start', tag, attrs))
             self.context.append(tag)
@@ -318,7 +343,8 @@ class MdPo2HTML(HTMLParser):
         if data:
             if not self.replacer or (
                     self.context and
-                    self.context[0] in self.ignore_grouper_tags) or \
+                    self.context[0] in self.ignore_grouper_tags
+            ) or \
                     not self.context:
                 self.output += data
                 return
@@ -350,9 +376,11 @@ class MdPo2HTML(HTMLParser):
                 elif command == 'context' and comment:
                     self._current_msgctxt = comment.strip(" ")
                 elif command == 'include-codeblock':
-                    warnings.warn("Code blocks translations is not supported"
-                                  " by mdpo2html implementation.",
-                                  SyntaxWarning)
+                    warnings.warn(
+                        "Code blocks translations is not supported"
+                        " by mdpo2html implementation.",
+                        SyntaxWarning,
+                    )
 
     def translate(self, filepath_or_content, save=None):
         content = to_file_content_if_is_file(filepath_or_content)
@@ -365,7 +393,8 @@ class MdPo2HTML(HTMLParser):
                     if entry.msgctxt not in self.translations_with_msgctxt:
                         self.translations_with_msgctxt[entry.msgctxt] = {}
                     self.translations_with_msgctxt[
-                        entry.msgctxt][entry.msgid] = entry.msgstr
+                        entry.msgctxt
+                    ][entry.msgid] = entry.msgstr
                 else:
                     self.translations[entry.msgid] = entry.msgstr
 
@@ -380,8 +409,10 @@ class MdPo2HTML(HTMLParser):
         return self.output
 
 
-def markdown_pofile_to_html(filepath_or_content, pofiles, ignore=[],
-                            save=None, **kwargs):
+def markdown_pofile_to_html(
+    filepath_or_content, pofiles, ignore=[],
+    save=None, **kwargs,
+):
     """Produces a translated HTML file given a previous HTML file (created by a
     Markdown-to-HTML processor) and a set of pofiles as reference for msgstrs.
 
@@ -405,5 +436,5 @@ def markdown_pofile_to_html(filepath_or_content, pofiles, ignore=[],
         str: HTML output translated version of the given file.
     """
     return MdPo2HTML(
-        pofiles, ignore=ignore, **kwargs
+        pofiles, ignore=ignore, **kwargs,
     ).translate(filepath_or_content, save=save)

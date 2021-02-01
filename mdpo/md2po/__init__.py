@@ -19,7 +19,8 @@ class Md2Po:
         if is_glob:
             self.filepaths = filter_paths(
                 glob_or_content,
-                ignore_paths=kwargs.get('ignore', []))
+                ignore_paths=kwargs.get('ignore', []),
+            )
         else:
             self.content = glob_or_content
 
@@ -33,10 +34,13 @@ class Md2Po:
         self.wrapwidth = kwargs.get('wrapwidth', 78)
 
         self.mark_not_found_as_absolete = kwargs.get(
-            'mark_not_found_as_absolete', True)
+            'mark_not_found_as_absolete', True,
+        )
 
-        self.extensions = kwargs.get("extensions",
-                                     DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS)
+        self.extensions = kwargs.get(
+            "extensions",
+            DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
+        )
 
         self.plaintext = kwargs.get('plaintext', False)
 
@@ -51,19 +55,23 @@ class Md2Po:
         if not self.plaintext:
             self.bold_start_string = kwargs.get('bold_start_string', '**')
             self.bold_start_string_escaped = build_po_escaped_string(
-                self.bold_start_string)
+                self.bold_start_string,
+            )
 
             self.bold_end_string = kwargs.get('bold_end_string', '**')
             self.bold_end_string_escaped = build_po_escaped_string(
-                self.bold_end_string)
+                self.bold_end_string,
+            )
 
             self.italic_start_string = kwargs.get('italic_start_string', '*')
             self.italic_start_string_escaped = build_po_escaped_string(
-                self.italic_start_string)
+                self.italic_start_string,
+            )
 
             self.italic_end_string = kwargs.get('italic_end_string', '*')
             self.italic_end_string_escaped = build_po_escaped_string(
-                self.italic_end_string)
+                self.italic_end_string,
+            )
 
             self._bold_italic_context = False
 
@@ -71,11 +79,13 @@ class Md2Po:
             # so we take only the first
             self.code_start_string = kwargs.get('code_start_string', '`')[0]
             self.code_start_string_escaped = build_po_escaped_string(
-                self.code_start_string)
+                self.code_start_string,
+            )
 
             self.code_end_string = kwargs.get('code_end_string', '`')[0]
             self.code_end_string_escaped = build_po_escaped_string(
-                self.code_end_string)
+                self.code_end_string,
+            )
 
             self.link_start_string = kwargs.get('link_start_string', '[')
             self.link_end_string = kwargs.get('link_end_string', ']')
@@ -109,12 +119,14 @@ class Md2Po:
 
             if "strikethrough" in self.extensions:
                 self.strikethrough_start_string = kwargs.get(
-                    'strikethrough_start_string', '~~')
+                    'strikethrough_start_string', '~~',
+                )
                 self._enterspan_replacer[md4c.SpanType.DEL] = \
                     self.strikethrough_start_string
 
                 self.strikethrough_end_string = kwargs.get(
-                    'strikethrough_end_string', '~~')
+                    'strikethrough_end_string', '~~',
+                )
                 self._leavespan_replacer[md4c.SpanType.DEL] = \
                     self.strikethrough_end_string
 
@@ -128,22 +140,26 @@ class Md2Po:
 
             if "latex_math_spans" in self.extensions:
                 self.latexmath_start_string = kwargs.get(
-                    'latexmath_start_string', '$')
+                    'latexmath_start_string', '$',
+                )
                 self._enterspan_replacer[md4c.SpanType.LATEXMATH] = \
                     self.latexmath_start_string
 
                 self.latexmath_end_string = kwargs.get(
-                    'latexmath_end_string', '$')
+                    'latexmath_end_string', '$',
+                )
                 self._leavespan_replacer[md4c.SpanType.LATEXMATH] = \
                     self.latexmath_end_string
 
                 self.latexmathdisplay_start_string = kwargs.get(
-                    'latexmathdisplay_start_string', '$$')
+                    'latexmathdisplay_start_string', '$$',
+                )
                 self._enterspan_replacer[md4c.SpanType.LATEXMATH_DISPLAY] = \
                     self.latexmathdisplay_start_string
 
                 self.latexmathdisplay_end_string = kwargs.get(
-                    'latexmathdisplay_end_string', '$$')
+                    'latexmathdisplay_end_string', '$$',
+                )
                 self._leavespan_replacer[md4c.SpanType.LATEXMATH_DISPLAY] = \
                     self.latexmathdisplay_end_string
 
@@ -159,9 +175,11 @@ class Md2Po:
 
             if "wikilinks" in self.extensions:
                 self.wikilink_start_string = kwargs.get(
-                    'wikilink_start_string', '[[')
+                    'wikilink_start_string', '[[',
+                )
                 self.wikilink_end_string = kwargs.get(
-                    'wikilink_end_string', ']]')
+                    'wikilink_end_string', ']]',
+                )
 
                 self._enterspan_replacer[md4c.SpanType.WIKILINK] = \
                     self.wikilink_start_string
@@ -177,12 +195,14 @@ class Md2Po:
             if "underline" in self.extensions:
                 # underline text is standarized with double '_'
                 self.underline_start_string = kwargs.get(
-                    'underline_start_string', '__')
+                    'underline_start_string', '__',
+                )
                 self._enterspan_replacer[md4c.SpanType.U] = \
                     self.underline_start_string
 
                 self.underline_end_string = kwargs.get(
-                    'underline_end_string', '__')
+                    'underline_end_string', '__',
+                )
                 self._leavespan_replacer[md4c.SpanType.U] = \
                     self.underline_end_string
 
@@ -214,12 +234,16 @@ class Md2Po:
         self._uls_deep = 0
 
     def _save_msgid(self, msgid, tcomment=None, msgctxt=None):
-        entry = polib.POEntry(msgid=msgid, msgstr=self.msgstr,
-                              comment=tcomment,
-                              msgctxt=msgctxt)
-        _equal_entry = find_entry_in_entries(entry, self.pofile,
-                                             compare_obsolete=False,
-                                             compare_msgstr=False)
+        entry = polib.POEntry(
+            msgid=msgid, msgstr=self.msgstr,
+            comment=tcomment,
+            msgctxt=msgctxt,
+        )
+        _equal_entry = find_entry_in_entries(
+            entry, self.pofile,
+            compare_obsolete=False,
+            compare_msgstr=False,
+        )
         if _equal_entry and _equal_entry.msgstr:
             entry.msgstr = _equal_entry.msgstr
             if _equal_entry.fuzzy and not entry.fuzzy:
@@ -229,12 +253,18 @@ class Md2Po:
         self.found_entries.append(entry)
 
     def _save_current_msgid(self):
-        if self._current_msgid and ((not self._disable_next_line and
-                                     not self._disable) or
-                                    self._enable_next_line):
-            self._save_msgid(self._current_msgid,
-                             tcomment=self._current_tcomment,
-                             msgctxt=self._current_msgctxt)
+        if self._current_msgid and (
+            (
+                not self._disable_next_line and
+                not self._disable
+            ) or
+            self._enable_next_line
+        ):
+            self._save_msgid(
+                self._current_msgid,
+                tcomment=self._current_tcomment,
+                msgctxt=self._current_msgctxt,
+            )
         self._disable_next_line = False
         self._enable_next_line = False
         self._current_msgid = ''
@@ -256,22 +286,28 @@ class Md2Po:
             self._enable_next_line = True
         elif command == 'translator':
             if not comment:
-                raise ValueError('You need to specify a string for the'
-                                 ' extracted comment with the command'
-                                 ' \'mdpo-translator\'.')
+                raise ValueError(
+                    'You need to specify a string for the'
+                    ' extracted comment with the command'
+                    ' \'mdpo-translator\'.',
+                )
             self._current_tcomment = comment.strip(" ")
         elif command == 'context':
             if not comment:
-                raise ValueError('You need to specify a string for the'
-                                 ' context with the command \'mdpo-context\'.')
+                raise ValueError(
+                    'You need to specify a string for the'
+                    ' context with the command \'mdpo-context\'.',
+                )
             self._current_msgctxt = comment.strip(" ")
         elif command == 'include-codeblock':
             self._include_next_codeblock = True
         elif command == 'include':
             if not comment:
-                raise ValueError('You need to specify a message for the'
-                                 ' comment to include with the command'
-                                 ' \'mdpo-include\'.')
+                raise ValueError(
+                    'You need to specify a message for the'
+                    ' comment to include with the command'
+                    ' \'mdpo-include\'.',
+                )
             self._current_msgid = comment.strip(" ")
             self._save_current_msgid()
 
@@ -361,7 +397,8 @@ class Md2Po:
                     self._current_msgid += "({}{})".format(
                         self._current_aspan_href,
                         "" if not details['title'] else ' "%s"' % (
-                            details['title'][0][1])
+                            details['title'][0][1]
+                        ),
                     )
                     self._current_aspan_href = None
             elif span.value == md4c.SpanType.CODE:
@@ -369,15 +406,18 @@ class Md2Po:
                 self._codespan_start_index = None
                 # add backticks at the end for escape internal backticks
                 self._current_msgid += (
-                    self._codespan_backticks * self.code_end_string)
+                    self._codespan_backticks * self.code_end_string
+                )
                 self._codespan_backticks = None
             elif span.value == md4c.SpanType.IMG:
                 self._current_msgid += '![{}]({}'.format(
-                    self._current_imgspan['text'], self._current_imgspan['src']
+                    self._current_imgspan['text'],
+                    self._current_imgspan['src'],
                 )
                 if self._current_imgspan['title']:
                     self._current_msgid += ' "%s"' % (
-                        self._current_imgspan['title'])
+                        self._current_imgspan['title']
+                    )
                 self._current_msgid += ')'
                 self._current_imgspan = {}
             elif span.value == md4c.SpanType.U:
@@ -398,11 +438,13 @@ class Md2Po:
                         # internal backticks
                         self._codespan_backticks = min_not_max_chars_in_a_row(
                             self.code_start_string,
-                            text) - 1
+                            text,
+                        ) - 1
                         self._current_msgid = '{}{}{}'.format(
                             self._current_msgid[:self._codespan_start_index],
                             self._codespan_backticks * self.code_start_string,
-                            self._current_msgid[self._codespan_start_index:])
+                            self._current_msgid[self._codespan_start_index:],
+                        )
                     elif text == self.italic_start_string:
                         text = self.italic_start_string_escaped
                     elif text == self.code_start_string:
@@ -418,7 +460,8 @@ class Md2Po:
                         # not self-referenced wikilink
                         self._current_wikilink_target = '{}|{}'.format(
                             self._current_wikilink_target,
-                            text)
+                            text,
+                        )
                     return
                 self._current_msgid += text
             else:
@@ -427,8 +470,9 @@ class Md2Po:
         else:
             self._process_command(text)
 
-    def extract(self, po_filepath=None, save=False, mo_filepath=None,
-                encoding=None):
+    def extract(
+        self, po_filepath=None, save=False, mo_filepath=None, encoding=None,
+    ):
         _po_filepath = None
         if not po_filepath:
             po_filepath = ''
@@ -437,21 +481,29 @@ class Md2Po:
             if not os.path.exists(po_filepath):
                 po_filepath = ''
 
-        pofile_kwargs = (dict(autodetect_encoding=False, encoding=encoding)
-                         if encoding else {})
-        self.pofile = polib.pofile(po_filepath, wrapwidth=self.wrapwidth,
-                                   **pofile_kwargs)
+        pofile_kwargs = (
+            dict(autodetect_encoding=False, encoding=encoding)
+            if encoding else {}
+        )
+        self.pofile = polib.pofile(
+            po_filepath, wrapwidth=self.wrapwidth,
+            **pofile_kwargs,
+        )
 
-        parser = md4c.GenericParser(0,
-                                    **{ext: True for ext in self.extensions})
+        parser = md4c.GenericParser(
+            0,
+            **{ext: True for ext in self.extensions},
+        )
 
         def _parse(content):
-            parser.parse(content,
-                         self.enter_block,
-                         self.leave_block,
-                         self.enter_span,
-                         self.leave_span,
-                         self.text)
+            parser.parse(
+                content,
+                self.enter_block,
+                self.leave_block,
+                self.enter_span,
+                self.leave_span,
+                self.text,
+            )
 
         if hasattr(self, 'content'):
             _parse(self.content)
@@ -468,7 +520,8 @@ class Md2Po:
             for entry in self.pofile:
                 if entry not in self.found_entries:
                     _equal_not_obsolete_found = find_entry_in_entries(
-                        entry, self.found_entries, compare_obsolete=False)
+                        entry, self.found_entries, compare_obsolete=False,
+                    )
                     if _equal_not_obsolete_found:
                         self.pofile.remove(entry)
                     else:
@@ -479,7 +532,8 @@ class Md2Po:
             for entry in self.pofile:
                 if entry not in self.found_entries:
                     _equal_not_obsolete_found = find_entry_in_entries(
-                        entry, self.found_entries, compare_obsolete=False)
+                        entry, self.found_entries, compare_obsolete=False,
+                    )
                     if _equal_not_obsolete_found:
                         self.pofile.remove(entry)
                     else:
@@ -495,13 +549,13 @@ class Md2Po:
         return self.pofile
 
 
-def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
-                       po_filepath=None, save=False, mo_filepath=None,
-                       plaintext=False, wrapwidth=78,
-                       mark_not_found_as_absolete=True,
-                       extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
-                       encoding=None, xheaders=False,
-                       include_codeblocks=False, **kwargs):
+def markdown_to_pofile(
+    glob_or_content, ignore=[], msgstr='', po_filepath=None, save=False,
+    mo_filepath=None, plaintext=False, wrapwidth=78,
+    mark_not_found_as_absolete=True,
+    extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS, encoding=None,
+    xheaders=False, include_codeblocks=False, **kwargs,
+):
     """
     Extracts all the msgids from a string of Markdown content or a group
     of files.
@@ -568,12 +622,12 @@ def markdown_to_pofile(glob_or_content, ignore=[], msgstr='',
 
     """
     return Md2Po(
-        glob_or_content, ignore=ignore, msgstr=msgstr,
-        plaintext=plaintext, wrapwidth=wrapwidth,
+        glob_or_content, ignore=ignore, msgstr=msgstr, plaintext=plaintext,
+        wrapwidth=wrapwidth,
         mark_not_found_as_absolete=mark_not_found_as_absolete,
         extensions=extensions, xheaders=xheaders,
-        include_codeblocks=include_codeblocks, **kwargs
+        include_codeblocks=include_codeblocks, **kwargs,
     ).extract(
         po_filepath=po_filepath, save=save,
-        mo_filepath=mo_filepath, encoding=encoding
+        mo_filepath=mo_filepath, encoding=encoding,
     )

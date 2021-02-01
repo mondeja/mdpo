@@ -6,5 +6,5 @@ DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS = [
     "strikethrough",
     "tasklists",
     "latex_math_spans",
-    "wikilinks"
+    "wikilinks",
 ]

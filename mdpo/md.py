@@ -17,7 +17,8 @@ def escape_links_titles(text, link_start_string='[', link_end_string=']'):
     for match in re.findall(regex, text):
         original_string = match[0] + match[1]
         target_string = match[0] + '"%s"' % (
-            match[1][1:-1].replace('"', '\\"'))
+            match[1][1:-1].replace('"', '\\"')
+        )
         text = text.replace(original_string, target_string)
     return text
 
@@ -51,8 +52,10 @@ def n_chars_until_chars(text, chars=[" ", "\n"]):
     return n
 
 
-def fixwrap_codespans(lines, code_start_string='`', code_end_string='`',
-                      width=80):
+def fixwrap_codespans(
+    lines, code_start_string='`', code_end_string='`',
+    width=80,
+):
     """Given a set of lines wrapped by `:py:class:textwrap.TextWrapper`,
     unwraps reasonably all markdown codespans that are found inside the lines.
     This funcion is designed to render codespans without wrap them in multiples
@@ -102,7 +105,8 @@ def fixwrap_codespans(lines, code_start_string='`', code_end_string='`',
     _curr_line = ''
 
     _entering_codespan, _exiting_codespan, _inside_codespan = (
-        False, False, False)
+        False, False, False,
+    )
     _codespan_n_backticks_wrapper, _n_backticks_to_exit_codespan = (0, None)
     prev_char = None
     for li, line in enumerate(lines):
@@ -120,7 +124,8 @@ def fixwrap_codespans(lines, code_start_string='`', code_end_string='`',
                     if len(_curr_line) > width * .7:
                         _entering_codespan_length = \
                             _chars_num_until_next_codespan_exit(
-                                line[ci:] + ' '.join(lines[li+1:]))
+                                line[ci:] + ' '.join(lines[li+1:]),
+                            )
                         if len(_curr_line) + _entering_codespan_length > width:
                             response.append(_curr_line.rstrip(" "))
                             _curr_line = ''
@@ -155,7 +160,8 @@ def fixwrap_codespans(lines, code_start_string='`', code_end_string='`',
                 if ch in [" ", "\n"]:
                     # check if we can add more words until next space
                     _chars_until_next_space = n_chars_until_chars(
-                        line[ci+1:] + ' ' + ' '.join(lines[li+1:]))
+                        line[ci+1:] + ' ' + ' '.join(lines[li+1:]),
+                    )
                     if len(_curr_line) + _chars_until_next_space > width:
                         response.append(_curr_line.rstrip(" "))
                         _curr_line = ''
@@ -169,7 +175,8 @@ def fixwrap_codespans(lines, code_start_string='`', code_end_string='`',
 
         if not _inside_codespan:
             _chars_until_next_space = n_chars_until_chars(
-                ' '.join(lines[li+1:]))
+                ' '.join(lines[li+1:]),
+            )
             if len(_curr_line) + _chars_until_next_space > width:
                 response.append(_curr_line.rstrip(" "))
                 _curr_line = ''
