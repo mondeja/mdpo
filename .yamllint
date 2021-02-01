@@ -33,7 +33,7 @@ rules:
       .readthedocs.yml
   line-length:
     allow-non-breakable-words: true
-    max: 80
+    max: 96
   new-lines:
     type: unix
   octal-values:

@@ -40,7 +40,7 @@ def inline_untexted_links(text, link_start_string='[', link_end_string=']'):
     return re.sub(regex, r'<\g<2>>', text)
 
 
-def n_chars_until_chars(text, chars=[" ", "\n"]):
+def n_chars_until_chars(text, chars=[' ', '\n']):
     """Returns the number of characters until one of the characters passed
     as ``chars`` argument is found.
     """
@@ -70,7 +70,7 @@ def fixwrap_codespans(
             if not __inside:
                 if not __entering and not __exiting and \
                         _ch == code_start_string:
-                    if _prev_char != "\\":
+                    if _prev_char != '\\':
                         __entering = True
                         __n_backticks_wrapper += 1
                 elif __entering and _ch != code_start_string:
@@ -78,12 +78,12 @@ def fixwrap_codespans(
                     __entering = False
                     __n_backticks_to_exit = __n_backticks_wrapper
                 elif __entering and _ch == code_start_string:
-                    if _prev_char != "\\":
+                    if _prev_char != '\\':
                         __n_backticks_wrapper += 1
             elif __inside:
                 if not __exiting and not __entering and \
                         _ch == code_end_string:
-                    if _prev_char != "\\":
+                    if _prev_char != '\\':
                         __exiting = True
                         __n_backticks_to_exit -= 1
                 elif __exiting and _ch != code_end_string:
@@ -93,7 +93,7 @@ def fixwrap_codespans(
                         __exiting = False
                         __n_backticks_to_exit = __n_backticks_wrapper
                 elif __exiting and _ch == code_end_string:
-                    if _prev_char != "\\":
+                    if _prev_char != '\\':
                         __n_backticks_to_exit -= 1
             _prev_char = _ch
             n += 1
@@ -116,7 +116,7 @@ def fixwrap_codespans(
                         ch == code_start_string:
 
                     # check '`' escapes
-                    if prev_char != "\\":
+                    if prev_char != '\\':
                         _entering_codespan = True
                         _codespan_n_backticks_wrapper += 1
 
@@ -127,7 +127,7 @@ def fixwrap_codespans(
                                 line[ci:] + ' '.join(lines[li+1:]),
                             )
                         if len(_curr_line) + _entering_codespan_length > width:
-                            response.append(_curr_line.rstrip(" "))
+                            response.append(_curr_line.rstrip(' '))
                             _curr_line = ''
                 elif _entering_codespan and ch != code_start_string:
                     _inside_codespan = True
@@ -135,12 +135,12 @@ def fixwrap_codespans(
                     _n_backticks_to_exit_codespan = \
                         _codespan_n_backticks_wrapper
                 elif _entering_codespan and ch == code_start_string:
-                    if prev_char != "\\":
+                    if prev_char != '\\':
                         _codespan_n_backticks_wrapper += 1
             elif _inside_codespan:
                 if not _exiting_codespan and not _entering_codespan and \
                         ch == code_end_string:
-                    if prev_char != "\\":
+                    if prev_char != '\\':
                         _exiting_codespan = True
                         _n_backticks_to_exit_codespan -= 1
                 elif _exiting_codespan and ch != code_end_string:
@@ -153,23 +153,23 @@ def fixwrap_codespans(
                         _n_backticks_to_exit_codespan = \
                             _codespan_n_backticks_wrapper
                 elif _exiting_codespan and ch == code_end_string:
-                    if prev_char != "\\":
+                    if prev_char != '\\':
                         _n_backticks_to_exit_codespan -= 1
 
             if not _inside_codespan:
-                if ch in [" ", "\n"]:
+                if ch in [' ', '\n']:
                     # check if we can add more words until next space
                     _chars_until_next_space = n_chars_until_chars(
                         line[ci+1:] + ' ' + ' '.join(lines[li+1:]),
                     )
                     if len(_curr_line) + _chars_until_next_space > width:
-                        response.append(_curr_line.rstrip(" "))
+                        response.append(_curr_line.rstrip(' '))
                         _curr_line = ''
 
             # store a reference to previous character
             prev_char = ch
 
-            if ch == " " and not _curr_line:
+            if ch == ' ' and not _curr_line:
                 continue
             _curr_line += ch
 
@@ -178,7 +178,7 @@ def fixwrap_codespans(
                 ' '.join(lines[li+1:]),
             )
             if len(_curr_line) + _chars_until_next_space > width:
-                response.append(_curr_line.rstrip(" "))
+                response.append(_curr_line.rstrip(' '))
                 _curr_line = ''
             elif _curr_line:
                 _curr_line += ' '
@@ -186,5 +186,5 @@ def fixwrap_codespans(
             _curr_line += ' '
 
     if _curr_line:
-        response.append(_curr_line.rstrip(" "))
+        response.append(_curr_line.rstrip(' '))
     return response

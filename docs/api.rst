@@ -19,4 +19,3 @@ mdpo2html
 
 .. automodule:: mdpo.mdpo2html
    :members: markdown_pofile_to_html
-

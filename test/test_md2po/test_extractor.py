@@ -32,9 +32,9 @@ def test_mark_not_found_as_absolete(tmp_file):
         'Another string\n\n'
     )
     new_md_file_content = 'A new string\n'
-    po_file = tempfile.NamedTemporaryFile(suffix=".po")
+    po_file = tempfile.NamedTemporaryFile(suffix='.po')
 
-    with tmp_file(original_md_file_content, ".md") as original_md_filepath:
+    with tmp_file(original_md_file_content, '.md') as original_md_filepath:
         md2po_extractor = Md2Po(original_md_filepath)
         po = md2po_extractor.extract(po_filepath=po_file.name, save=True)
     assert po.__unicode__() == '''#
@@ -48,7 +48,7 @@ msgid "Another string"
 msgstr ""
 '''
 
-    with tmp_file(new_md_file_content, ".md") as new_md_filepath:
+    with tmp_file(new_md_file_content, '.md') as new_md_filepath:
         md2po_extractor = Md2Po(
             new_md_filepath,
             mark_not_found_as_absolete=True,

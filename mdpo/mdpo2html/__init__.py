@@ -94,7 +94,7 @@ class MdPo2HTML(HTMLParser):
         return html
 
     def _remove_lastline_from_output_if_empty(self):
-        split_output = self.output.split("\n")
+        split_output = self.output.split('\n')
         if not split_output[-1]:
             self.output = '\n'.join(split_output)[:-1]
 
@@ -142,9 +142,9 @@ class MdPo2HTML(HTMLParser):
                         ),
                     )
                 elif handled in self.link_tags:
-                    title = get_html_attrs_tuple_attr(attrs, "title")
+                    title = get_html_attrs_tuple_attr(attrs, 'title')
                     _current_link_target += '(%s' % get_html_attrs_tuple_attr(
-                        attrs, "href",
+                        attrs, 'href',
                     )
                     if title:
                         _current_link_target += ' "%s"' % title
@@ -206,10 +206,10 @@ class MdPo2HTML(HTMLParser):
             elif handle == 'startend':
                 if handled in self.image_tags:
                     _current_replacement += '![{}]({}'.format(
-                        get_html_attrs_tuple_attr(attrs, "alt"),
-                        get_html_attrs_tuple_attr(attrs, "src"),
+                        get_html_attrs_tuple_attr(attrs, 'alt'),
+                        get_html_attrs_tuple_attr(attrs, 'src'),
                     )
-                    title = get_html_attrs_tuple_attr(attrs, "title")
+                    title = get_html_attrs_tuple_attr(attrs, 'title')
                     if title:
                         _current_replacement += ' "%s"' % title
                     _current_replacement += ')'
@@ -374,11 +374,11 @@ class MdPo2HTML(HTMLParser):
                 elif command == 'enable-next-line':
                     self._enable_next_line = True
                 elif command == 'context' and comment:
-                    self._current_msgctxt = comment.strip(" ")
+                    self._current_msgctxt = comment.strip(' ')
                 elif command == 'include-codeblock':
                     warnings.warn(
-                        "Code blocks translations is not supported"
-                        " by mdpo2html implementation.",
+                        'Code blocks translations is not supported'
+                        ' by mdpo2html implementation.',
                         SyntaxWarning,
                     )
 
@@ -401,7 +401,7 @@ class MdPo2HTML(HTMLParser):
         self.feed(content)
 
         if save:
-            with open(save, "w") as f:
+            with open(save, 'w') as f:
                 f.write(self.output)
 
         self.reset()

@@ -29,7 +29,7 @@ msgid "This must be included also."
 msgstr "Esto también debe ser incluido."
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output
 
@@ -63,7 +63,7 @@ msgid "This must be included also."
 msgstr "Esto también debe ser incluido."
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output
 
@@ -122,6 +122,6 @@ msgid "The last line also must be included."
 msgstr "La última línea también debe ser incluida."
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output

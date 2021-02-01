@@ -7,7 +7,7 @@ import pytest
 @contextmanager
 def _tmp_file(content, suffix):
     f = tempfile.NamedTemporaryFile(suffix=suffix)
-    f.write(content.encode("utf-8"))
+    f.write(content.encode('utf-8'))
     f.seek(0)
     try:
         yield f.name

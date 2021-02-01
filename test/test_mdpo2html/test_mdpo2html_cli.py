@@ -27,7 +27,7 @@ msgstr "Algo de texto aquí"
 
 def test_stdin(capsys, monkeypatch, tmp_file):
     monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['html-input']))
-    with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
+    with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
 
         output, exitcode = run(['-p', po_filepath])
         out, err = capsys.readouterr()
@@ -39,7 +39,7 @@ def test_stdin(capsys, monkeypatch, tmp_file):
 
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
 def test_quiet(capsys, arg, tmp_file):
-    with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath:
+    with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
 
         output, exitcode = run([
             EXAMPLE['html-input'],
@@ -53,9 +53,9 @@ def test_quiet(capsys, arg, tmp_file):
 
 @pytest.mark.parametrize('arg', ['-s', '--save'])
 def test_save(capsys, arg, tmp_file):
-    with tmp_file(EXAMPLE['pofile'], ".po") as po_filepath, \
-            tmp_file(EXAMPLE['html-input'], ".html") as html_input_filepath, \
-            tmp_file(EXAMPLE['html-output'], ".html") as html_output_filepath:
+    with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath, \
+            tmp_file(EXAMPLE['html-input'], '.html') as html_input_filepath, \
+            tmp_file(EXAMPLE['html-output'], '.html') as html_output_filepath:
 
         output, exitcode = run([
             html_input_filepath, '-p', po_filepath,
@@ -92,14 +92,14 @@ def test_ignore_files_by_filepath(capsys, arg, tmp_file):
         ),
     ]
 
-    html_input = "<p>Included</p>\n\n<p>Excluded</p>\n\n"
-    expected_output = "<p>Incluida</p>\n\n<p>Excluded</p>\n\n"
+    html_input = '<p>Included</p>\n\n<p>Excluded</p>\n\n'
+    expected_output = '<p>Incluida</p>\n\n<p>Excluded</p>\n\n'
 
     with tempfile.TemporaryDirectory() as filesdir:
         for pofile in pofiles:
-            with open(os.path.join(filesdir, pofile[0]), "w") as f:
+            with open(os.path.join(filesdir, pofile[0]), 'w') as f:
                 f.write(pofile[1])
-        with tmp_file(html_input, ".html") as html_input_filepath:
+        with tmp_file(html_input, '.html') as html_input_filepath:
             output, exitcode = run([
                 html_input_filepath, '-p',
                 os.path.join(filesdir, '*.po'),

@@ -1,4 +1,3 @@
-
 ```
 Fenced code block with backticks
 ```

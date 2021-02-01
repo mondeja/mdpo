@@ -27,7 +27,7 @@ msgid "This message can not be translated."
 msgstr "Este mensaje no puede ser traducido."
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_pofile_to_html(html_input, po_filepath)
     assert output == html_output
 
@@ -66,7 +66,7 @@ msgid "This message must be translated."
 msgstr "Este mensaje debe ser traducido."
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_pofile_to_html(html_input, po_filepath)
     assert output == html_output
 
@@ -102,7 +102,7 @@ msgid "This message must be translated."
 msgstr "Este mensaje debe ser traducido."
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_pofile_to_html(html_input, po_filepath)
     assert output == html_output
 
@@ -149,6 +149,6 @@ msgid "This message must be translated also."
 msgstr "Este mensaje también debe ser traducido."
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_pofile_to_html(html_input, po_filepath)
     assert output == html_output

@@ -89,7 +89,7 @@ class TestToGlobOrContent:
 
 class TestToFileContentIfIsFile:
     def test_file(self):
-        with tempfile.NamedTemporaryFile("w+") as tmpfile:
+        with tempfile.NamedTemporaryFile('w+') as tmpfile:
             tmpfile.write(MD_CONTENT_EXAMPLE)
             tmpfile.seek(0)
             md_content = to_file_content_if_is_file(tmpfile.name)

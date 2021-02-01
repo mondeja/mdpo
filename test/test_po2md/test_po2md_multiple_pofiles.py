@@ -42,7 +42,7 @@ How is it that you think beautiful nerd? Gaaaaaay
 
     with tempfile.TemporaryDirectory() as pofiles_dirpath:
         for pofile in pofiles:
-            with open(os.path.join(pofiles_dirpath, pofile[0]), "w") as f:
+            with open(os.path.join(pofiles_dirpath, pofile[0]), 'w') as f:
                 f.write(pofile[1])
 
         pofiles_glob = os.path.join(pofiles_dirpath, '*.po')

@@ -13,7 +13,7 @@ def test_obsolete_equal_found(tmp_file, mark_not_found_as_absolete):
         '#\nmsgid ""\nmsgstr ""\n\n#~ msgid "Foo"\n#~ msgstr ""\n'
     expected_output = '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n'
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath,
             mark_not_found_as_absolete=mark_not_found_as_absolete,
@@ -58,7 +58,7 @@ def test_obsolete_not_equal_found(
     markdown_content = '# Foo'
     pofile_content = '#\nmsgid ""\nmsgstr ""\n\nmsgid "Bar"\nmsgstr ""\n'
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath,
             mark_not_found_as_absolete=mark_not_found_as_absolete,
@@ -66,7 +66,7 @@ def test_obsolete_not_equal_found(
     assert output == expected_output
 
 
-@pytest.mark.parametrize(("default_msgstr"), ("", "Por defecto"))
+@pytest.mark.parametrize(('default_msgstr'), ('', 'Por defecto'))
 def test_obsolete_msgstr_fallback(tmp_file, default_msgstr):
     """If a translated message is marked as obsolete and his msgid is found in
     markdown content, must be directly translated. This behaviour is preferred
@@ -83,14 +83,14 @@ msgid "Hello"
 msgstr "Hola"
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath, msgstr=default_msgstr,
         ).__unicode__()
     assert output == expected_output
 
 
-@pytest.mark.parametrize(("default_msgstr"), ("", "Por defecto"))
+@pytest.mark.parametrize(('default_msgstr'), ('', 'Por defecto'))
 def test_fuzzy_obsolete_msgstr_fallback(tmp_file, default_msgstr):
     """If a translated message is marked as obsolete and fuzzy, and his msgid
     is found in markdown content, must be directly translated but needs to be
@@ -111,14 +111,14 @@ msgid "Hello"
 msgstr "Hola"
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath, msgstr=default_msgstr,
         ).__unicode__()
     assert output == expected_output
 
 
-@pytest.mark.parametrize(("default_msgstr"), ("", "Por defecto"))
+@pytest.mark.parametrize(('default_msgstr'), ('', 'Por defecto'))
 def test_tcomment_obsolete_msgstr_fallback_without_found_tcomment(
     tmp_file,
     default_msgstr,
@@ -142,14 +142,14 @@ msgid "Hello"
 msgstr "Hola"
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath, msgstr=default_msgstr,
         ).__unicode__()
     assert output == expected_output
 
 
-@pytest.mark.parametrize(("default_msgstr"), ("", "Por defecto"))
+@pytest.mark.parametrize(('default_msgstr'), ('', 'Por defecto'))
 def test_tcomment_obsolete_msgstr_fallback_with_found_tcomment(
     tmp_file,
     default_msgstr,
@@ -176,7 +176,7 @@ msgid "Hello"
 msgstr "Hola"
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath, msgstr=default_msgstr,
         ).__unicode__()
@@ -202,7 +202,7 @@ msgid "Hello"
 msgstr "Hola"
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath,
         ).__unicode__()
@@ -233,7 +233,7 @@ msgstr ""
 #~ msgstr "Hola"
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath,
         ).__unicode__()

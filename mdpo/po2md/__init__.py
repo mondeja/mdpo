@@ -27,7 +27,7 @@ class Po2Md:
         ]
 
         self.extensions = kwargs.get(
-            "extensions",
+            'extensions',
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
         )
 
@@ -92,7 +92,7 @@ class Po2Md:
             md4c.SpanType.A: self.link_end_string,
         }
 
-        if "wikilinks" in self.extensions:
+        if 'wikilinks' in self.extensions:
             self.wikilink_start_string = kwargs.get('link_end_string', '[[')
             self.wikilink_end_string = kwargs.get('link_end_string', ']]')
 
@@ -150,7 +150,7 @@ class Po2Md:
         elif command == 'enable-next-line':
             self._enable_next_line = True
         elif command == 'context' and comment:
-            self._current_msgctxt = comment.strip(" ")
+            self._current_msgctxt = comment.strip(' ')
 
     def _escape_translation(self, text):
         # escape '"' characters inside links and image titles
@@ -207,7 +207,7 @@ class Po2Md:
     def _save_current_line(self, times=1, _time_number=1):
         if (not self._disable and not self._disable_next_line) or \
                 self._enable_next_line:
-            self._outputlines.append(self._current_line.rstrip(" "))
+            self._outputlines.append(self._current_line.rstrip(' '))
         else:
             _time_number = times
 
@@ -222,17 +222,17 @@ class Po2Md:
     def enter_block(self, block, details):
         # print("ENTER BLOCK", block.name, details)
         if self._inside_quoteblock and (
-                not self._current_line or self._current_line[0] != ">"
+                not self._current_line or self._current_line[0] != '>'
         ):
-            self._current_line += "> "
+            self._current_line += '> '
         if block.value == md4c.BlockType.P:
             self._inside_pblock = True
         elif block.value == md4c.BlockType.CODE:
             self._inside_codeblock = True
             if 'fence_char' in details:
                 self._current_line += '%s' % (details['fence_char']*3)
-            if details["lang"]:
-                self._current_line += details["lang"][0][1]
+            if details['lang']:
+                self._current_line += details['lang'][0][1]
             if 'fence_char' not in details:
                 self._inside_indented_codeblock = True
             self._save_current_line()
@@ -248,23 +248,23 @@ class Po2Md:
                 )
             else:
                 # inside UL
-                self._current_line += "{}{} ".format(
-                    "  " * (len(self._ul_marks) - 1), self._ul_marks[-1],
+                self._current_line += '{}{} '.format(
+                    '  ' * (len(self._ul_marks) - 1), self._ul_marks[-1],
                 )
-                if details["is_task"]:
-                    self._current_line += "[%s] " % details["task_mark"]
+                if details['is_task']:
+                    self._current_line += '[%s] ' % details['task_mark']
             self._inside_liblock = True
         elif block.value == md4c.BlockType.UL:
             if len(self._ul_marks) > 0:
                 self._save_current_msgid()
                 self._save_current_line()
-            self._ul_marks.append(details["mark"])
+            self._ul_marks.append(details['mark'])
         elif block.value == md4c.BlockType.OL:
-            self._current_ol_delimitier = details["mark_delimiter"]
+            self._current_ol_delimitier = details['mark_delimiter']
         elif block.value == md4c.BlockType.HR:
             self._current_line += '---'
             if not self._inside_liblock:
-                self._current_line += "\n\n"
+                self._current_line += '\n\n'
         elif block.value == md4c.BlockType.TH:
             self._current_line += '| '
             self._current_thead_aligns.append(details['align'].value)
@@ -298,7 +298,7 @@ class Po2Md:
                 self._current_line += '\n> '
             self._save_current_line()
             if self._inside_quoteblock:
-                self._current_line += "> "
+                self._current_line += '> '
         elif block.value == md4c.BlockType.LI:
             self._save_current_msgid()
             self._inside_liblock = False
@@ -306,13 +306,13 @@ class Po2Md:
         elif block.value == md4c.BlockType.UL:
             self._ul_marks.pop()
             if self._inside_quoteblock:
-                self._current_line += "> "
+                self._current_line += '> '
             if not self._ul_marks:
                 self._save_current_line()
         elif block.value == md4c.BlockType.OL:
             self._current_ol_delimitier = None
             if self._inside_quoteblock:
-                self._current_line += "> "
+                self._current_line += '> '
             self._save_current_line()
         elif block.value in (md4c.BlockType.TH, md4c.BlockType.TD):
             self._save_current_msgid()
@@ -352,7 +352,7 @@ class Po2Md:
             self._current_line += '\n%s' % thead_separator
             self._save_current_line()
         elif block.value == md4c.BlockType.QUOTE:
-            self._current_line += "> "
+            self._current_line += '> '
         elif block.value == md4c.BlockType.TABLE:
             self._save_current_line()
         elif block.value == md4c.BlockType.DOC:
@@ -369,7 +369,7 @@ class Po2Md:
             pass
 
         if span.value == md4c.SpanType.A:
-            self._current_aspan_href = details["href"][0][1]
+            self._current_aspan_href = details['href'][0][1]
         elif span.value == md4c.SpanType.CODE:
             self._inside_codespan = True
             self._codespan_start_index = len(self._current_msgid)-1
@@ -397,12 +397,12 @@ class Po2Md:
         if span.value == md4c.SpanType.A:
             if self._current_aspan_href:
                 # is not self-referenced link
-                self._current_msgid += "(%s" % self._current_aspan_href
+                self._current_msgid += '(%s' % self._current_aspan_href
 
-                if details["title"]:
+                if details['title']:
                     self._aimg_title_inside_current_msgid = True
                     self._current_msgid += ' "%s"' % polib.escape(
-                        details["title"][0][1],
+                        details['title'][0][1],
                     )
                 self._current_msgid += ')'
                 self._current_aspan_href = None
@@ -430,7 +430,7 @@ class Po2Md:
         # print("TEXT", "'%s'" % text)
         if not self._inside_htmlblock:
             if not self._inside_codeblock:
-                if self._inside_liblock and text == "\n":
+                if self._inside_liblock and text == '\n':
                     text = ' '
                 if self._current_imgspan:
                     self._current_imgspan['text'] = text
@@ -455,7 +455,7 @@ class Po2Md:
                     text = self.italic_end_string_escaped
 
                 if self._inside_pblock:
-                    text = text.replace("\n", " ")
+                    text = text.replace('\n', ' ')
                 if self._current_aspan_href:
                     if text == self._current_aspan_href:
                         # self-referenced link
@@ -507,7 +507,7 @@ class Po2Md:
         self.output = '\n'.join(self._outputlines)
 
         if save:
-            with open(save, "w") as f:
+            with open(save, 'w') as f:
                 f.write(self.output)
 
         return self.output

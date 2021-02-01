@@ -38,13 +38,13 @@ class Md2Po:
         )
 
         self.extensions = kwargs.get(
-            "extensions",
+            'extensions',
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
         )
 
         self.plaintext = kwargs.get('plaintext', False)
 
-        self.include_codeblocks = kwargs.get("include_codeblocks", False)
+        self.include_codeblocks = kwargs.get('include_codeblocks', False)
 
         self._disable = False
         self._disable_next_line = False
@@ -90,17 +90,17 @@ class Md2Po:
             self.link_start_string = kwargs.get('link_start_string', '[')
             self.link_end_string = kwargs.get('link_end_string', ']')
 
-            self._include_xheaders = kwargs.get("xheaders", False)
+            self._include_xheaders = kwargs.get('xheaders', False)
             if self._include_xheaders:
                 self.xheaders = {
-                    "x-mdpo-bold-start": self.bold_start_string,
-                    "x-mdpo-bold-end": self.bold_end_string,
-                    "x-mdpo-italic-start": self.italic_start_string,
-                    "x-mdpo-italic-end": self.italic_end_string,
-                    "x-mdpo-code-start": self.code_start_string,
-                    "x-mdpo-code-end": self.code_end_string,
-                    "x-mdpo-link-start": self.link_start_string,
-                    "x-mdpo-link-end": self.link_end_string,
+                    'x-mdpo-bold-start': self.bold_start_string,
+                    'x-mdpo-bold-end': self.bold_end_string,
+                    'x-mdpo-italic-start': self.italic_start_string,
+                    'x-mdpo-italic-end': self.italic_end_string,
+                    'x-mdpo-code-start': self.code_start_string,
+                    'x-mdpo-code-end': self.code_end_string,
+                    'x-mdpo-link-start': self.link_start_string,
+                    'x-mdpo-link-end': self.link_end_string,
                 }
 
             self._enterspan_replacer = {
@@ -117,7 +117,7 @@ class Md2Po:
                 md4c.SpanType.A: self.link_end_string,
             }
 
-            if "strikethrough" in self.extensions:
+            if 'strikethrough' in self.extensions:
                 self.strikethrough_start_string = kwargs.get(
                     'strikethrough_start_string', '~~',
                 )
@@ -132,13 +132,13 @@ class Md2Po:
 
                 if self._include_xheaders:
                     self.xheaders.update({
-                        "x-mdpo-strikethrough-start":
+                        'x-mdpo-strikethrough-start':
                             self.strikethrough_start_string,
-                        "x-mdpo-strikethrough-end":
+                        'x-mdpo-strikethrough-end':
                             self.strikethrough_end_string,
                     })
 
-            if "latex_math_spans" in self.extensions:
+            if 'latex_math_spans' in self.extensions:
                 self.latexmath_start_string = kwargs.get(
                     'latexmath_start_string', '$',
                 )
@@ -165,15 +165,15 @@ class Md2Po:
 
                 if self._include_xheaders:
                     self.xheaders.update({
-                        "x-mdpo-latexmath-start": self.latexmath_start_string,
-                        "x-mdpo-latexmath-end": self.latexmath_end_string,
-                        "x-mdpo-latexmathdisplay-start":
+                        'x-mdpo-latexmath-start': self.latexmath_start_string,
+                        'x-mdpo-latexmath-end': self.latexmath_end_string,
+                        'x-mdpo-latexmathdisplay-start':
                             self.latexmathdisplay_start_string,
-                        "x-mdpo-latexmathdisplay-end":
+                        'x-mdpo-latexmathdisplay-end':
                             self.latexmathdisplay_end_string,
                     })
 
-            if "wikilinks" in self.extensions:
+            if 'wikilinks' in self.extensions:
                 self.wikilink_start_string = kwargs.get(
                     'wikilink_start_string', '[[',
                 )
@@ -188,11 +188,11 @@ class Md2Po:
 
                 if self._include_xheaders:
                     self.xheaders.update({
-                        "x-mdpo-wikilink-start": self.wikilink_start_string,
-                        "x-mdpo-wikilink-end": self.wikilink_end_string,
+                        'x-mdpo-wikilink-start': self.wikilink_start_string,
+                        'x-mdpo-wikilink-end': self.wikilink_end_string,
                     })
 
-            if "underline" in self.extensions:
+            if 'underline' in self.extensions:
                 # underline text is standarized with double '_'
                 self.underline_start_string = kwargs.get(
                     'underline_start_string', '__',
@@ -208,8 +208,8 @@ class Md2Po:
 
                 if self._include_xheaders:
                     self.xheaders.update({
-                        "x-mdpo-underline-start": self.underline_start_string,
-                        "x-mdpo-underline-end": self.underline_end_string,
+                        'x-mdpo-underline-start': self.underline_start_string,
+                        'x-mdpo-underline-end': self.underline_end_string,
                     })
 
             # optimization to skip checking for
@@ -291,14 +291,14 @@ class Md2Po:
                     ' extracted comment with the command'
                     ' \'mdpo-translator\'.',
                 )
-            self._current_tcomment = comment.strip(" ")
+            self._current_tcomment = comment.strip(' ')
         elif command == 'context':
             if not comment:
                 raise ValueError(
                     'You need to specify a string for the'
                     ' context with the command \'mdpo-context\'.',
                 )
-            self._current_msgctxt = comment.strip(" ")
+            self._current_msgctxt = comment.strip(' ')
         elif command == 'include-codeblock':
             self._include_next_codeblock = True
         elif command == 'include':
@@ -308,7 +308,7 @@ class Md2Po:
                     ' comment to include with the command'
                     ' \'mdpo-include\'.',
                 )
-            self._current_msgid = comment.strip(" ")
+            self._current_msgid = comment.strip(' ')
             self._save_current_msgid()
 
     def enter_block(self, block, details):
@@ -356,7 +356,7 @@ class Md2Po:
                     pass
 
             if span.value == md4c.SpanType.A:
-                self._current_aspan_href = details["href"][0][1]
+                self._current_aspan_href = details['href'][0][1]
             elif span.value == md4c.SpanType.CODE:
                 self._inside_codespan = True
 
@@ -394,9 +394,9 @@ class Md2Po:
 
             if span.value == md4c.SpanType.A:
                 if self._current_aspan_href:
-                    self._current_msgid += "({}{})".format(
+                    self._current_msgid += '({}{})'.format(
                         self._current_aspan_href,
-                        "" if not details['title'] else ' "%s"' % (
+                        '' if not details['title'] else ' "%s"' % (
                             details['title'][0][1]
                         ),
                     )
@@ -427,7 +427,7 @@ class Md2Po:
         # print("TEXT:", text)
         if not self._inside_htmlblock:
             if not self._inside_codeblock:
-                if self._inside_liblock and text == "\n":
+                if self._inside_liblock and text == '\n':
                     text = ' '
                 if not self.plaintext:
                     if self._current_imgspan:
@@ -454,7 +454,7 @@ class Md2Po:
                     elif text == self.code_end_string:   # pragma: no cover
                         text = self.code_end_string_escaped
                 if self._inside_pblock:
-                    text = text.replace("\n", " ")
+                    text = text.replace('\n', ' ')
                 if self._current_wikilink_target:
                     if text != self._current_wikilink_target:
                         # not self-referenced wikilink

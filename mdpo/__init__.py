@@ -10,7 +10,7 @@ __version_info__ = tuple([int(i) for i in __version__.split('.')])
 __title__ = 'mdpo'
 __description__ = ('Markdown file translation utilities using pofiles')
 __all__ = (
-    "markdown_to_pofile",
-    "pofile_to_markdown",
-    "markdown_pofile_to_html",
+    'markdown_to_pofile',
+    'pofile_to_markdown',
+    'markdown_pofile_to_html',
 )

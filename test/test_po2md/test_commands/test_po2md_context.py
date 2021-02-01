@@ -24,7 +24,7 @@ msgid "May"
 msgstr "Quizás"
 '''
 
-    with tmp_file(pofile_content, ".po") as po_filepath:
+    with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output
 

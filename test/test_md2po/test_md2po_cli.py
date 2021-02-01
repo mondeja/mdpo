@@ -62,7 +62,7 @@ msgid "Bar"
 msgstr ""
 '''
 
-    with tmp_file(pofile_content, ".po") as pofile_path:
+    with tmp_file(pofile_content, '.po') as pofile_path:
         pofile, exitcode = run(['# Bar\n', arg, pofile_path, '-m'])
         out, err = capsys.readouterr()
 
@@ -91,7 +91,7 @@ msgid "Bar"
 msgstr ""
 '''
 
-    with tmp_file(pofile_content, ".po") as pofile_path:
+    with tmp_file(pofile_content, '.po') as pofile_path:
         pofile, exitcode = run(['# Bar\n', arg, '-po', pofile_path, '-m'])
         out, err = capsys.readouterr()
 
@@ -105,15 +105,15 @@ msgstr ""
 
 @pytest.mark.parametrize('arg', ['-mo', '--mo-filepath'])
 def test_mo_filepath(capsys, arg):
-    mo_file = tempfile.NamedTemporaryFile(suffix=".mo")
+    mo_file = tempfile.NamedTemporaryFile(suffix='.mo')
     mo_filepath = mo_file.name
     mo_file.close()
 
-    pofile, exitcode = run([EXAMPLE["input"], arg, mo_filepath])
+    pofile, exitcode = run([EXAMPLE['input'], arg, mo_filepath])
     out, err = capsys.readouterr()
     assert exitcode == 0
-    assert pofile.__unicode__() == EXAMPLE["output"]
-    assert striplastline(out) == EXAMPLE["output"]
+    assert pofile.__unicode__() == EXAMPLE['output']
+    assert striplastline(out) == EXAMPLE['output']
     assert os.path.exists(mo_filepath)
 
     os.remove(mo_filepath)

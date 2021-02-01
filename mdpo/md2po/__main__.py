@@ -138,7 +138,7 @@ def parse_options(args=[]):
         opts.glob_or_content = opts.glob_or_content[0]
     if opts.ignore:
         opts.ignore = parse_list_argument(opts.ignore)
-    opts.extensions = opts.extensions.split(",")
+    opts.extensions = opts.extensions.split(',')
 
     return opts
 

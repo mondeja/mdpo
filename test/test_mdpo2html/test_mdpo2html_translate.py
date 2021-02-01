@@ -14,7 +14,7 @@ def _build_examples(dirname):
     examples_glob = glob.glob(examples_dir + os.sep + '*.html')
     examples_filenames = sorted([
         os.path.basename(fp) for fp in examples_glob
-        if not fp.endswith(".expect.html")
+        if not fp.endswith('.expect.html')
     ])
     return (examples_dir, examples_filenames)
 
@@ -23,8 +23,8 @@ EXAMPLES = {}
 for suite in os.listdir(EXAMPLES_DIR):
     dirpath, filenames = _build_examples(suite)
     EXAMPLES[suite] = {
-        "filenames": filenames,
-        "dirpath": dirpath,
+        'filenames': filenames,
+        'dirpath': dirpath,
     }
 
 

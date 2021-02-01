@@ -16,7 +16,7 @@ def _build_examples(dirname):
     examples_glob = glob.glob(examples_dir + os.sep + '*.md')
     examples_filenames = sorted([
         os.path.basename(fp) for fp in examples_glob
-        if not fp.endswith(".expect.md")
+        if not fp.endswith('.expect.md')
     ])
     return (examples_dir, examples_filenames)
 
@@ -25,8 +25,8 @@ EXAMPLES = {}
 for suite in os.listdir(EXAMPLES_DIR):
     dirpath, filenames = _build_examples(suite)
     EXAMPLES[suite] = {
-        "filenames": filenames,
-        "dirpath": dirpath,
+        'filenames': filenames,
+        'dirpath': dirpath,
     }
 
 
@@ -58,11 +58,11 @@ def test_translate_save(filename):
         os.path.splitext(os.path.basename(filepath_in))[0] + '.po',
     )
 
-    save_file = tempfile.NamedTemporaryFile(suffix=".po")
+    save_file = tempfile.NamedTemporaryFile(suffix='.po')
 
     pofile_to_markdown(filepath_in, po_filepath, save=save_file.name)
     save_file.seek(0)
 
     with open(filepath_out) as expect_file:
-        assert save_file.read().decode("utf-8") == expect_file.read()
+        assert save_file.read().decode('utf-8') == expect_file.read()
     save_file.close()
