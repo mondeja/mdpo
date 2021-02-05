@@ -33,7 +33,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
-    'sphinxarg.ext',
+    'sphinx_argparse_cli',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

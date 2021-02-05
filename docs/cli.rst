@@ -11,16 +11,20 @@ mdpo installation includes two command line interfaces:
   file produced from Markdown file using a Markdown-to-HTML converter, and a
   pofile of reference for strings.
 
+.. raw:: html
+
+   <hr>
+
 .. _md2po-cli:
 
 md2po
 =====
 
-.. argparse::
+.. sphinx_argparse_cli::
    :module: mdpo.md2po.__main__
    :func: build_parser
    :prog: md2po
-   :nodefault:
+   :title:
 
 .. raw:: html
 
@@ -31,12 +35,11 @@ md2po
 po2md
 =====
 
-.. argparse::
+.. sphinx_argparse_cli::
    :module: mdpo.po2md.__main__
    :func: build_parser
    :prog: po2md
-   :nodefault:
-
+   :title:
 
 .. raw:: html
 
@@ -47,8 +50,8 @@ po2md
 mdpo2html
 =========
 
-.. argparse::
+.. sphinx_argparse_cli::
    :module: mdpo.mdpo2html.__main__
    :func: build_parser
    :prog: mdpo2html
-   :nodefault:
+   :title:
