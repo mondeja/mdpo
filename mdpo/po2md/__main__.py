@@ -32,15 +32,13 @@ def build_parser():
     )
     parser.add_argument(
         '-p', '--pofiles', metavar='POFILES',
-        help='Glob matching a set of pofiles from where to'
-             ' extract references to make the replacements'
-             ' translating strings.',
+        help='Glob matching a set of pofiles from where to extract references'
+             ' to make the replacements translating strings.',
     )
     parser.add_argument(
         '-i', '--ignore', dest='ignore', default=[],
-        help='List of filepaths to ignore if ``POFILES``'
-             ' argument is a glob, as a list of comma'
-             ' separated values.',
+        help='Filepaths to ignore if ``--pofiles`` argument value is a glob,'
+             ' as a list of comma separated values.',
         metavar='PATH_1,PATH_2...',
     )
     parser.add_argument(

@@ -31,25 +31,21 @@ def build_parser():
     parser.add_argument(
         'glob_or_content', metavar='GLOB_OR_CONTENT',
         nargs='*',
-        help='Glob to markdown input files or markdown'
-             ' content as string. If not provided, will be'
-             ' read from STDIN.',
+        help='Glob to markdown input files or markdown content as string.'
+             ' If not provided, will be read from STDIN.',
     )
     parser.add_argument(
         '-i', '--ignore', dest='ignore', default=[],
-        help='List of filepaths to ignore if'
-             ' ``GLOB_OR_CONTENT`` argument is a glob,'
-             ' as a list of comma separated values.',
+        help='Filepaths to ignore if ``GLOB_OR_CONTENT`` argument'
+             ' is a glob, as a list of comma separated values.',
         metavar='PATH_1,PATH_2...',
     )
     parser.add_argument(
         '-po', '--po-filepath', dest='po_filepath',
         default=None,
-        help='Merge new msgids in the po file indicated'
-             ' at this parameter (if ``--save`` argument'
-             ' is passed) or use the msgids of the file'
-             ' as reference for'
-             ' ``--mark-not-found-as-obsolete`` parameter.',
+        help='Merge new msgids in the po file indicated at this parameter (if'
+             ' ``--save`` argument is passed) or use the msgids of the file as'
+             ' reference for ``--mark-not-found-as-obsolete`` parameter.',
         metavar='OUTPUT_PO_FILEPATH',
     )
     parser.add_argument(
@@ -60,67 +56,59 @@ def build_parser():
     parser.add_argument(
         '-mo', '--mo-filepath', dest='mo_filepath',
         default=None,
-        help='The resulting pofile will be compiled to a'
-             ' mofile and saved in the path specified at'
-             ' this parameter.',
+        help='The resulting pofile will be compiled to a mofile and saved in'
+             ' the path specified at this parameter.',
         metavar='OUTPUT_MO_FILEPATH',
     )
     parser.add_argument(
         '-p', '--plaintext', dest='plaintext',
         action='store_true',
-        help='Do not include markdown markup characters in'
-             ' extracted msgids for **bold text**, *italic'
-             ' text*, `inline code` and [link](target).',
+        help='Do not include markdown markup characters in extracted msgids'
+             ' for **bold text**, *italic text*, `inline code` and'
+             ' [link](target).',
     )
     parser.add_argument(
         '-w', '--wrapwidth', dest='wrapwidth',
-        help='Wrap width for po file indicated at'
-             ' ``--filepath`` parameter. Only useful when'
-             ' the ``-w`` option was passed to xgettext.',
+        help='Wrap width for po file indicated at ``--filepath`` parameter.'
+             ' Only useful when the ``-w`` option was passed to xgettext.',
         metavar='N', type=int,
     )
     parser.add_argument(
         '-m', '--merge-pofiles',
         dest='mark_not_found_as_absolete',
         action='store_false',
-        help='New found msgids not present in the pofile'
-             ' passed at ``--po-filepath`` parameter will be'
-             ' preserved in the new pofile, even when are not'
-             ' been found in the current extraction.'
-             ' If this argument is not passed, will be marked'
-             ' as obsolete strings.',
+        help='New found msgids not present in the pofile passed at '
+             '``--po-filepath`` parameter will be preserved in the new pofile,'
+             ' even when are not been found in the current extraction. If this'
+             ' argument is not passed, will be marked as obsolete strings.',
     )
     parser.add_argument(
         '-x', '--extensions', dest='extensions',
         default=','.join(
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
         ),
-        help='md4c extensions used to parse markdown'
-             ' content, separated by ``,`` and formatted as'
-             ' pymd4c extension keyword arguments. You can'
-             ' see all available at https://github.com/'
-             'dominickpastore/pymd4c#parser-option-flags',
+        help='md4c extensions used to parse markdown content, separated by'
+             ' ``,`` and formatted as pymd4c extension keyword arguments.'
+             ' You can see all available at https://github.com/dominickpastore'
+             '/pymd4c#parser-option-flags',
     )
     parser.add_argument(
         '-e', '--encoding', dest='encoding', default=None,
-        help='Resulting pofile encoding (autodetected by'
-             ' default).',
+        help='Resulting pofile encoding (autodetected by default).',
     )
     parser.add_argument(
         '-a', '--xheaders', dest='xheaders',
         action='store_true',
-        help='Include mdpo specification x-headers.'
-             ' These only will be included if you do not pass'
-             ' the parameter ``--plaintext``.',
+        help='Include mdpo specification x-headers. These only will be'
+             ' included if you do not pass the parameter ``--plaintext``.',
     )
     parser.add_argument(
         '-c', '--include-codeblocks',
         dest='include_codeblocks', action='store_true',
-        help='Include all code blocks found inside pofile'
-             ' result. This is useful if you want to translate'
-             ' all your blocks of code. Equivalent to append'
-             ' \'<!-- mdpo-include-codeblock -->\' command'
-             ' before each code block.',
+        help='Include all code blocks found inside pofile result. This is'
+             ' useful if you want to translate all your blocks of code.'
+             ' Equivalent to append \'<!-- mdpo-include-codeblock -->\''
+             ' command before each code block.',
     )
     return parser
 
