@@ -20,10 +20,10 @@ msgstr "Visita [https://www.github.com/mondeja/mdpo]"
 
 msgid ""
 "Write an email to [fake@example.com](mailto:fake@example.com) if you want "
-"help"
+"help."
 msgstr ""
 "Escribe un correo electrónico a [fake@example.com](mailto:fake@example.com) "
-"si quieres ayuda"
+"si quieres ayuda."
 
 msgid "[Reference A](https://github.com/mondeja/mdpo)"
 msgstr "[Referencia A](https://github.com/mondeja/mdpo)"

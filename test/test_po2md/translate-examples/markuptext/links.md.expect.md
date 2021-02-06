@@ -6,7 +6,7 @@ motor de búsqueda para privacidad").
 Visita <https://www.github.com/mondeja/mdpo>
 
 Escribe un correo electrónico a [fake@example.com](mailto:fake@example.com) si
-quieres ayuda
+quieres ayuda.
 
 [Referencia A](https://github.com/mondeja/mdpo)
 

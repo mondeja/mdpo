@@ -2,7 +2,12 @@
 Tutorial
 ********
 
-mdpo provides different methods for Markdown markup translations.
+mdpo provides flexible ways for doing Markdown markup translations. In this
+tutorial are covered the two most common workflows.
+
+.. raw:: html
+
+   <hr>
 
 Markdown to markdown
 ====================
@@ -29,14 +34,14 @@ Use the next command to create and update the translation pofile for
    md2po README.md --quiet --save --po-filepath locale/es/LC_MESSAGES/readme.po
 
 
-And, in order of translate the ``README.md`` producing other file as result:
+Then, in order of translate the ``README.md`` producing other file as result:
 
 .. code-block:: bash
 
    po2md README.md --pofiles locale/es/LC_MESSAGES/readme.po --quiet \
      --save locale/es/LC_MESSAGES/README.md
 
-This will be the output after that two commands:
+This will be the output after previous two commands:
 
 .. code-block::
 
@@ -52,14 +57,15 @@ This will be the output after that two commands:
    * :ref:`md2po CLI<md2po-cli>`
    * :ref:`po2md CLI<po2md-cli>`
 
+.. raw:: html
 
-..
+   <hr>
 
 HTML-from-Markdown to HTML
 ==========================
 
-If you have a HTML file produced from Markdown file using a Markdown processor
-like `Python-Markdown <markdown_py>`_ and want to translate it in place using
+If you have a HTML file produced from Markdown using a Markdown processor like
+`Python-Markdown <markdown_py>`_ and you want to translate it in place using
 ``.po`` files, use this method.
 
 .. warning::
@@ -107,5 +113,8 @@ And this will produce your translated file in
    │           └── readme.po
    ├── README.html
    └── README.md
+
+.. seealso::
+   * :ref:`mdpo2html CLI<mdpo2html-cli>`
 
 .. markdown_py: https://github.com/Python-Markdown/markdown

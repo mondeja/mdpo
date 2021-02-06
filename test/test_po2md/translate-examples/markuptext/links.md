@@ -10,7 +10,7 @@ My favorite search engine is [Duck Duck Go](https://duckduckgo.com "The best sea
 
 Visit <https://www.github.com/mondeja/mdpo>
 
-Write an email to <fake@example.com> if you want help
+Write an email to <fake@example.com> if you want help.
 
 
 [//]: # (Links by reference)

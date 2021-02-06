@@ -7,7 +7,7 @@ Markdown file translation utilities using pofiles. Fully complies with
 
 .. toctree::
    :maxdepth: 2
-   :caption: Basic
+   :caption: Manual
 
    install
    before-using
@@ -26,5 +26,15 @@ Markdown file translation utilities using pofiles. Fully complies with
    :caption: In depth
 
    rationale
+
+.. raw:: html
+
+   <hr>
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Developer reference
+
+   devref/index
 
 .. _CommonMark Specification v0.29: https://spec.commonmark.org/0.29

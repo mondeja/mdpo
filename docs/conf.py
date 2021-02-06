@@ -1,20 +1,11 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# This file only contains a selection of the most common options. For a full
-# list see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-
-# -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
+"""Configuration file for the Sphinx documentation builder for mdpo."""
 
 import datetime
 import os
 import sys
 
+
+# -- Path setup --------------------------------------------------------------
 
 sys.path.insert(0, os.path.abspath('..'))
 
@@ -69,5 +60,6 @@ html_css_files = [
 # -- Options for `sphinx.ext.intersphinx` ------------------------------------
 
 intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', None),
     'polib': ('https://polib.readthedocs.io/en/latest', None),
 }

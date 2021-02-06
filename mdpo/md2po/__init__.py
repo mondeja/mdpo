@@ -5,10 +5,10 @@ import os
 import md4c
 import polib
 
-from mdpo.command import search_html_command
+from mdpo.command import parse_mdpo_html_command
 from mdpo.io import filter_paths, to_glob_or_content
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-from mdpo.po import build_po_escaped_string, find_entry_in_entries
+from mdpo.po import find_entry_in_entries, po_escaped_string
 from mdpo.polib import *  # noqa
 from mdpo.text import min_not_max_chars_in_a_row
 
@@ -54,22 +54,22 @@ class Md2Po:
 
         if not self.plaintext:
             self.bold_start_string = kwargs.get('bold_start_string', '**')
-            self.bold_start_string_escaped = build_po_escaped_string(
+            self.bold_start_string_escaped = po_escaped_string(
                 self.bold_start_string,
             )
 
             self.bold_end_string = kwargs.get('bold_end_string', '**')
-            self.bold_end_string_escaped = build_po_escaped_string(
+            self.bold_end_string_escaped = po_escaped_string(
                 self.bold_end_string,
             )
 
             self.italic_start_string = kwargs.get('italic_start_string', '*')
-            self.italic_start_string_escaped = build_po_escaped_string(
+            self.italic_start_string_escaped = po_escaped_string(
                 self.italic_start_string,
             )
 
             self.italic_end_string = kwargs.get('italic_end_string', '*')
-            self.italic_end_string_escaped = build_po_escaped_string(
+            self.italic_end_string_escaped = po_escaped_string(
                 self.italic_end_string,
             )
 
@@ -78,12 +78,12 @@ class Md2Po:
             # codespans are built by a indetermined number of 'x' characters
             # so we take only the first
             self.code_start_string = kwargs.get('code_start_string', '`')[0]
-            self.code_start_string_escaped = build_po_escaped_string(
+            self.code_start_string_escaped = po_escaped_string(
                 self.code_start_string,
             )
 
             self.code_end_string = kwargs.get('code_end_string', '`')[0]
-            self.code_end_string_escaped = build_po_escaped_string(
+            self.code_end_string_escaped = po_escaped_string(
                 self.code_end_string,
             )
 
@@ -272,7 +272,7 @@ class Md2Po:
         self._current_msgctxt = None
 
     def _process_command(self, text):
-        command, comment = search_html_command(text)
+        command, comment = parse_mdpo_html_command(text)
         if command is None:
             return
 
@@ -556,9 +556,8 @@ def markdown_to_pofile(
     extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS, encoding=None,
     xheaders=False, include_codeblocks=False, **kwargs,
 ):
-    """
-    Extracts all the msgids from a string of Markdown content or a group
-    of files.
+    """Extracts all the msgids from a string of Markdown content or a group of
+    files.
 
     Args:
         glob_or_content (str): Glob path to Markdown files or a string
@@ -619,7 +618,6 @@ def markdown_to_pofile(
 
     Returns:
         :class:`polib.POFile`:: Pofile instance with new msgids included.
-
     """
     return Md2Po(
         glob_or_content, ignore=ignore, msgstr=msgstr, plaintext=plaintext,

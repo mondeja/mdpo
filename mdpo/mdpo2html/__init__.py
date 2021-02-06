@@ -9,7 +9,7 @@ from html.parser import HTMLParser
 import md4c
 import polib
 
-from mdpo.command import search_html_command
+from mdpo.command import parse_mdpo_html_command
 from mdpo.html import get_html_attrs_tuple_attr, html_attrs_tuple_to_string
 from mdpo.io import filter_paths, to_file_content_if_is_file
 from mdpo.polib import *  # noqa
@@ -360,7 +360,7 @@ class MdPo2HTML(HTMLParser):
             self.replacer.append(('comment', data, None))
         else:
             data_as_comment = '<!--%s-->' % data
-            command, comment = search_html_command(data_as_comment)
+            command, comment = parse_mdpo_html_command(data_as_comment)
             if command is None:
                 self.output += data_as_comment
             else:

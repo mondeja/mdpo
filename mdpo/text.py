@@ -27,9 +27,11 @@ def max_char_in_a_row(char, text):
 
 def min_not_max_chars_in_a_row(char, text, default=1):
     """Returns the minimum possible of characters not found in a row for a string.
+
     For example, given the string ``"c cc cccc"`` and the character ``"c"``,
-    returns the number of characters in a row that are not found, so ``3`` in
-    this case.
+    returns the minimum number of characters in a row that are not found, so
+    ``3`` in this case.
+
     This function is used in the source code to compute the string that
     wraps markdown code spans. Given the code span
     ``"code that contains 3 ``` and 2 `` backticks"`` and the character
@@ -67,4 +69,12 @@ def min_not_max_chars_in_a_row(char, text, default=1):
 
 
 def striplastline(text):
+    """Returns a text, ignoring the last line.
+
+    Args:
+        text (str): Text that will be returned ignoring its last line.
+
+    Returns:
+        str: Text wihout their last line.
+    """
     return '\n'.join(text.split('\n')[:-1])

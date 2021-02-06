@@ -4,14 +4,33 @@ import re
 
 
 def escape_links_titles(text, link_start_string='[', link_end_string=']'):
-    """Finds titles inside inline links or images and escapes `"` characters
-    found inside, returning the replaced string.
+    r"""Escapes ``"`` characters found inside link titles.
+
+    This is used by mdpo extracting titles of links which contains Markdown
+    `link titles <https://spec.commonmark.org/0.29/#link-title>`_ delimiter
+    characters.
+
+    Args:
+        text (str): Text where the links titles to escape will be search.
+        link_start_string (str): String that delimites the start of a link.
+        link_end_string (str): String that delimites the end of a link.
+
+    Returns:
+        str: Same text as input with escaped title delimiters characters found
+        inside titles.
+
+    Examples:
+        >>> title = '[a link](href "title with characters to escape "")'
+        >>> escape_links_titles(title)
+        '[a link](href "title with characters to escape \\"")'
     """
     link_end_string_escaped_regex = re.escape(link_end_string)
-    regex = r'({}[^{}]+{}\([^\s]+\s)([^\)]+)'.format(
-        re.escape(link_start_string),
-        link_end_string_escaped_regex,
-        link_end_string_escaped_regex,
+    regex = re.compile(
+        r'({}[^{}]+{}\([^\s]+\s)([^\)]+)'.format(
+            re.escape(link_start_string),
+            link_end_string_escaped_regex,
+            link_end_string_escaped_regex,
+        ),
     )
 
     for match in re.findall(regex, text):
@@ -24,42 +43,95 @@ def escape_links_titles(text, link_start_string='[', link_end_string=']'):
 
 
 def inline_untexted_links(text, link_start_string='[', link_end_string=']'):
-    """Given a string like ``"String with [self-referenced-link]"``, replaces
-    self referenced links markup characters by new ones, in this case
-    ``"String with <self-referenced-link>"``. Only replaces links that do not
-    contains hrefs.
+    """Replace Markdown self-referenced links delimiters by ``<`` and ``>``.
+
+    Given a string like ``"Text with [self-referenced-link]"``, replaces self
+    referenced links markup characters by new ones, in this case would becomes
+    ``"Text with <self-referenced-link>"``.
+
     Wikilinks are not replaced (strings started with ``[[`` and ended with
     ``]]`` string chunks).
+
+    Args:
+        text (str): Text that could contain self-referenced links.
+        link_start_string (str): String that delimites the start of a link.
+        link_end_string (str): String that delimites the end of a link.
+
+    Returns:
+        str: Same text as input with replaced link delimiters characters found
+        inside titles.
+
+    Examples:
+        >>> inline_untexted_links('Text with [self-referenced-link]')
+        'Text with <self-referenced-link>'
     """
     link_end_string_escaped_regex = re.escape(link_end_string)
-    regex = r'({})([^{}]+)({})(?!\[|\()(?!\])'.format(
-        re.escape(link_start_string),
-        link_end_string_escaped_regex,
-        link_end_string_escaped_regex,
+    regex = re.compile(
+        r'({})([^{}]+)({})(?!\[|\()(?!\])'.format(
+            re.escape(link_start_string),
+            link_end_string_escaped_regex,
+            link_end_string_escaped_regex,
+        ),
     )
     return re.sub(regex, r'<\g<2>>', text)
 
 
 def n_chars_until_chars(text, chars=[' ', '\n']):
-    """Returns the number of characters until one of the characters passed
-    as ``chars`` argument is found.
+    """Computes number of characters until one of other characters are found.
+
+    In a string, returns the minimum position of one of the characters passed
+    as ``chars`` argument, using an one-based index. If any of the characters
+    are found, returns the length of the string.
+
+    Args:
+        text (str): Text to search for the characters.
+        chars (str): Characters to search.
+
+    Returns:
+        int: Number of characters, starting at one, of the first character
+        found in the text passed.
+
+    Examples:
+        >>> n_chars_until_chars('abc', chars=['b', 'c'])
+        2
+
+        >>> n_chars_until_chars('foo', chars=['b', 'a', 'r'])
+        3
     """
-    n = 1
-    for ch in text:
-        if ch in chars:
-            break
-        n += 1
-    return n
+    response = len(text)
+    for char in chars:
+        try:
+            value = text.index(char) + 1
+        except ValueError:
+            pass
+        else:
+            if value < response:
+                response = value
+    return response
 
 
 def fixwrap_codespans(
-    lines, code_start_string='`', code_end_string='`',
+    lines,
+    code_start_string='`',
+    code_end_string='`',
     width=80,
 ):
-    """Given a set of lines wrapped by `:py:class:textwrap.TextWrapper`,
+    """Wraps reasonably Markdown lines containing codespans.
+
+    Given a set of lines wrapped by `:py:class:textwrap.TextWrapper`,
     unwraps reasonably all markdown codespans that are found inside the lines.
     This funcion is designed to render codespans without wrap them in multiples
-    lines, which is desirable in markdown rendering based on available linters.
+    lines, which is desirable in markdown rendering.
+
+    Args:
+        lines (list): Markdown lines as are returned by
+            :py:class:`textwrap.wrap`.
+        code_start_string (str): String that delimites the start of a codespan.
+        code_end_string (str): String that delimites the end of a codespan.
+        width (int): Result line width.
+
+    Returns:
+        list: Lines with codespans propertly wrapped.
     """
     def _chars_num_until_next_codespan_exit(text):
         __exiting, __inside, __entering = (False, False, False)

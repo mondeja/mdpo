@@ -1,6 +1,6 @@
 import pytest
 
-from mdpo.po import build_po_escaped_string
+from mdpo.po import po_escaped_string
 
 
 @pytest.mark.parametrize(
@@ -13,5 +13,5 @@ from mdpo.po import build_po_escaped_string
         ('\n', '\\\n'),
     ),
 )
-def test_build_po_escaped_string(string, escaped):
-    assert build_po_escaped_string(string) == escaped
+def test_po_escaped_string(string, escaped):
+    assert po_escaped_string(string) == escaped

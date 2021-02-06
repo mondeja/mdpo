@@ -5,8 +5,15 @@ import os
 
 
 def filter_paths(filepaths, ignore_paths=[]):
-    """Filters a set of filepaths by filename, filepath dirname or dirpath,
-    relatives or absolutes.
+    """Filters a list of paths removing those defined in other list of paths.
+
+    The paths to filter can be defined in the list of paths to ignore in
+    several forms:
+
+    - The same string.
+    - Only the file name.
+    - Only their direct directory name.
+    - Their direct directory full path.
 
     Args:
         filepaths (list): Set of source paths to filter.
@@ -35,7 +42,8 @@ def filter_paths(filepaths, ignore_paths=[]):
 
 
 def to_file_content_if_is_file(value):
-    """Check if the value passed is a filepath or is string content.
+    """Check if the value passed is a file path or string content.
+
     If is a file, reads its content and returns it, otherwise returns
     the string passed as is.
 
@@ -59,8 +67,8 @@ def to_glob_or_content(value):
 
     Returns:
         list: Two values being the first a boolean that indicates if ``value``
-            is a glob (``True``) or content (``False``) and the second value
-            is the content (parsed as glob is first value is ``True``).
+        is a glob (``True``) or content (``False``) and the second value
+        is the content (parsed as glob is first value is ``True``).
     """
     parsed = glob.glob(value)
     if not parsed:
