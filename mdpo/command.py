@@ -15,7 +15,7 @@ def parse_mdpo_html_command(value):
     used by mdpo to customize the extraction.
 
     Args:
-        value (str): Text where will a command will be search.
+        value (str): Text where will a command will be searched.
 
     Returns:
         tuple: Namename of the command (not including the ``"mdpo"`` prefix)

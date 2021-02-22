@@ -11,7 +11,7 @@ def escape_links_titles(text, link_start_string='[', link_end_string=']'):
     characters.
 
     Args:
-        text (str): Text where the links titles to escape will be search.
+        text (str): Text where the links titles to escape will be searched.
         link_start_string (str): String that delimites the start of a link.
         link_end_string (str): String that delimites the end of a link.
 
