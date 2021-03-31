@@ -2,6 +2,7 @@
 
 import glob
 import re
+import textwrap
 
 import md4c
 import polib
@@ -187,10 +188,10 @@ class Po2Md:
             # add 4 spaces before each line including next indented block code
             translation = '    %s' % re.sub('\n', '\n    ', translation)
         if self._inside_liblock:
-            translation = '\n'.join(polib.wrap(translation, width=79))
+            translation = '\n'.join(textwrap.wrap(translation, width=79))
         if self._inside_pblock:
             # wrap paragraphs fitting with markdownlint
-            lines = polib.wrap(translation, width=80)
+            lines = textwrap.wrap(translation, width=80)
             if self._codespan_inside_current_msgid:
                 # fix codespans wrapping
                 lines = fixwrap_codespans(lines)
