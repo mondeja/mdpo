@@ -30,12 +30,12 @@ repos:
     rev: 3.9.0
     hooks:
       - id: flake8
-        name: flake8
+        name: flake8-package
         additional_dependencies:
           - flake8-print
           - flake8-implicit-str-concat
           - flake8-docstrings
-        files: ^(docs/|mdpo/|setup.py)
+        files: ^mdpo/
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.9.0
     hooks:
@@ -45,6 +45,15 @@ repos:
           - flake8-print
           - flake8-implicit-str-concat
         files: ^test/
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.0
+    hooks:
+      - id: flake8
+        name: flake8-docs
+        additional_dependencies:
+          - flake8-print
+          - flake8-implicit-str-concat
+        files: ^docs/
   - repo: https://github.com/PyCQA/isort
     rev: 5.8.0
     hooks:
