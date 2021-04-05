@@ -53,8 +53,9 @@ the text that needs to be translated, including markdown characters:
 
 * ``**Bold text**`` is not changed, is dumped into msgids as ``**Bold text**``.
 * ``*Italic text*`` is not changed, is dumped into msgids as ``*Italic text*``.
-* ````Code text```` and ```Code text``` are unified to use one backtick
-  for start and end characters and dumped into msgids as ```Code text```.
+* ````Code text```` and ```Code text``` are unified to use the minimum possible
+  backticks for start and end characters and dumped into msgids as
+  ```Code text```.
 * ``[Link text](target)`` is not changed, is dumped into msgids as is.
   Also, if includes titles.
 * Images as ``![Image alternative text](/target.ext "Image title text")``,
@@ -76,8 +77,8 @@ Advantages
 * Updates into source files are synchronized. A change in one string declares
   the old one obsolete and the translation can be updated quickly.
 * Translators work with ``.po`` files directly, a standard in translations.
-* Parts of the Markdown files that do not need translated as code blocks or
-  are not included in the translation (by default), reducing possibility of
+* Parts of the Markdown files that do not need to be translated as code blocks
+  or are not included in the translation (by default), reducing possibility of
   markup failures in translations.
 
 Disadvantages

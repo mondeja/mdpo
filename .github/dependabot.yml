@@ -5,6 +5,8 @@ updates:
     schedule:
       interval: daily
       time: '04:00'
+    assignees:
+      - mondeja
   - package-ecosystem: pip
     directory: /
     schedule:
@@ -15,7 +17,5 @@ updates:
         versions:
           - 0.5.0
     open-pull-requests-limit: 10
-    reviewers:
-      - mondeja
     assignees:
       - mondeja
