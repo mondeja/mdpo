@@ -1,4 +1,4 @@
-"""mdpo commands related utilities."""
+"""mdpo command related utilities."""
 
 import re
 

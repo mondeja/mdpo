@@ -48,7 +48,7 @@ def to_file_content_if_is_file(value):
     the string passed as is.
 
     Args:
-        arg (str): Value to check if is a filepath or content.
+        value (str): Value to check if is a filepath or content.
 
     Returns:
         str: File content if ``value`` is an existing file or ``value`` as is.
@@ -63,7 +63,7 @@ def to_glob_or_content(value):
     """Check if the value passed is a glob or is string content.
 
     Args:
-        arg (str): Value to check if is a glob or content.
+        value (str): Value to check if is a glob or content.
 
     Returns:
         list: Two values being the first a boolean that indicates if ``value``

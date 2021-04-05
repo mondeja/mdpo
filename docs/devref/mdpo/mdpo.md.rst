@@ -1,6 +1,6 @@
-*******
-md4c.py
-*******
+*****
+md.py
+*****
 
-.. automodule:: mdpo.md4c
+.. automodule:: mdpo.md
    :members:

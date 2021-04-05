@@ -17,7 +17,7 @@ def po_escaped_string(chars):
 
 
 def find_entry_in_entries(entry, entries, **kwargs):
-    """Returns an equal entry in a set of :py:class:polib.POEntry` entries.
+    """Returns an equal entry in a set of :py:class:`polib.POEntry` entries.
 
     Finds the first :py:class:`polib.POEntry` instance in the iterable
     ``entries`` that is equal, according to its ``__cmp__`` method, to

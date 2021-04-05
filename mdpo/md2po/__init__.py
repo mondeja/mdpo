@@ -595,7 +595,7 @@ def markdown_to_pofile(
             formatted as a list of 'pymd4c' keyword arguments. You can see all
             available at `pymd4c repository <https://github.com/dominickpastore
             /pymd4c#parser-option-flags>`_.
-        encoding (bool): Resulting pofile encoding (autodetected by default).
+        encoding (str): Resulting pofile encoding (autodetected by default).
         xheaders (bool): Indicates if the resulting pofile will have mdpo
             x-headers included. These only can be included if the parameter
             ``plaintext`` is ``False``.
