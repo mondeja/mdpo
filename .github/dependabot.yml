@@ -12,10 +12,6 @@ updates:
     schedule:
       interval: daily
       time: '04:00'
-    ignore:
-      - dependency-name: sphinx-rtd-theme
-        versions:
-          - 0.5.0
     open-pull-requests-limit: 10
     assignees:
       - mondeja
