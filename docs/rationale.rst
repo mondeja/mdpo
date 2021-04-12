@@ -57,7 +57,6 @@ the text that needs to be translated, including markdown characters:
   backticks for start and end characters and dumped into msgids as
   ```Code text```.
 * ``[Link text](target)`` is not changed, is dumped into msgids as is.
-  Also, if includes titles.
 * Images as ``![Image alternative text](/target.ext "Image title text")``,
   are not changed, but included as is.
 * ``~~Strikethrough text~~`` is not changed, is dumped into msgids as

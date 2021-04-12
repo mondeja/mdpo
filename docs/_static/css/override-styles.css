@@ -1,10 +1,12 @@
-
+/* mdpo documentation's own style */
 .wy-menu > .caption > span {
   color: #d66671;
 }
 
 .rst-content a,
-.rst-content a:visited {
+.rst-content a:visited,
+.rst-other-versions span a,
+.rst-other-versions span a:visited {
   color: #bc0013;
   transition: color 80ms;
 }
@@ -16,8 +18,12 @@
   border-color: rgba(100,100,100,.4);
 }
 
-
 /* Hack for lists inside adminitions */
 .admonition > ul {
   margin-bottom: 0px !important;
+}
+
+/* Hide changelog entries in toctree: https://stackoverflow.com/a/64368882/9167585 */
+#mdpo-s-documentation .toctree-wrapper:nth-child(even) > ul > .toctree-l1:last-child > ul {
+  display: none;
 }

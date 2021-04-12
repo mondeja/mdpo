@@ -20,6 +20,7 @@ Markdown file translation utilities using pofiles. Fully complies with
 
    cli
    api
+   changelog
 
 .. toctree::
    :maxdepth: 2

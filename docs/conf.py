@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 project = 'mdpo'
-copyright = f'2020-{datetime.datetime.now()}, Álvaro Mondéjar Rubio'
+copyright = f'2020-{datetime.datetime.now().year}, Álvaro Mondéjar Rubio'
 author = 'Álvaro Mondéjar Rubio'
 
 
@@ -25,6 +25,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx_argparse_cli',
+    'sphinx_github_changelog',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
