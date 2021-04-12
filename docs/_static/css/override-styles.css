@@ -5,12 +5,16 @@
 
 .rst-content a,
 .rst-content a:visited,
-.rst-other-versions span a,
-.rst-other-versions span a:visited {
+.rst-other-versions span > a,
+.rst-other-versions span > a:visited,
+.rst-other-versions small > a,
+.rst-other-versions small > a:visited {
   color: #bc0013;
   transition: color 80ms;
 }
-.rst-content a:hover {
+.rst-content a:hover,
+.rst-other-versions span > a:hover,
+.rst-other-versions small > a:hover {
   color: #f70019;
 }
 
