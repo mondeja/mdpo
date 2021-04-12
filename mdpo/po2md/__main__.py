@@ -37,7 +37,7 @@ def build_parser():
     )
     parser.add_argument(
         '-i', '--ignore', dest='ignore', default=[],
-        help='Filepaths to ignore if ``--pofiles`` argument value is a glob,'
+        help='Filepaths to ignore when ``--pofiles`` argument value is a glob,'
              ' as a list of comma separated values.',
         metavar='PATH_1,PATH_2...',
     )

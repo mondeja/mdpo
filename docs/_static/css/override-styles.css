@@ -27,6 +27,12 @@
   margin-bottom: 0px !important;
 }
 
+/* https://github.com/readthedocs/sphinx_rtd_theme/issues/1029 */
+.toctree-wrapper > ul > li ul {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 /* Hide changelog entries in toctree: https://stackoverflow.com/a/64368882/9167585 */
 #mdpo-s-documentation .toctree-wrapper:nth-child(even) > ul > .toctree-l1:last-child > ul {
   display: none;

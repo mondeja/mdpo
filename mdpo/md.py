@@ -125,7 +125,7 @@ def fixwrap_codespans(
 
     Args:
         lines (list): Markdown lines as are returned by
-            :py:class:`textwrap.wrap`.
+            :py:func:`textwrap.wrap`.
         code_start_string (str): String that delimites the start of a codespan.
         code_end_string (str): String that delimites the end of a codespan.
         width (int): Result line width.

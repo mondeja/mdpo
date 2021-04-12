@@ -36,7 +36,7 @@ def build_parser():
     )
     parser.add_argument(
         '-i', '--ignore', dest='ignore', default=[],
-        help='Filepaths to ignore if ``GLOB_OR_CONTENT`` argument'
+        help='Filepaths to ignore when ``GLOB_OR_CONTENT`` argument'
              ' is a glob, as a list of comma separated values.',
         metavar='PATH_1,PATH_2...',
     )

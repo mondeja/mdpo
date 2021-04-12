@@ -2,5 +2,5 @@
 __init__.py
 ***********
 
-.. automodule:: mdpo.mdpo2html.__init__
-   :members:
+.. autofunction:: mdpo.mdpo2html.markdown_pofile_to_html
+   :noindex:

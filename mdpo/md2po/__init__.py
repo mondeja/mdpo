@@ -617,7 +617,7 @@ def markdown_to_pofile(
         {'Some text with inline code': 'Default message'}
 
     Returns:
-        :class:`polib.POFile`:: Pofile instance with new msgids included.
+        :class:`polib.POFile` Pofile instance with new msgids included.
     """
     return Md2Po(
         glob_or_content, ignore=ignore, msgstr=msgstr, plaintext=plaintext,
