@@ -18,7 +18,7 @@
 </p>
 
 <h2 align="center">
-  <a href="https://mdpo.readthedocs.io/en/latest/">Documentation</a>
+  <a href="https://mdpo.readthedocs.io/en/master/">Documentation</a>
 </h2>
 
 <p align="center">
@@ -43,4 +43,4 @@ pip install mdpo
 [coverage-image]: https://img.shields.io/coveralls/github/mondeja/mdpo?logo=coveralls
 [coverage-link]: https://coveralls.io/github/mondeja/mdpo
 [doc-image]: https://img.shields.io/readthedocs/mdpo?logo=read-the-docs&logoColor=white
-[doc-link]: https://mdpo.readthedocs.io/en/latest/
+[doc-link]: https://mdpo.readthedocs.io/en/master/
