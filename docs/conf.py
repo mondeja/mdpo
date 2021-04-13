@@ -1,6 +1,5 @@
-"""Configuration file for the Sphinx documentation builder for mdpo."""
+"""Configuration file for the Sphinx documentation build of mdpo."""
 
-import datetime
 import os
 import sys
 
@@ -11,8 +10,8 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 project = 'mdpo'
-copyright = f'2020-{datetime.datetime.now().year}, Álvaro Mondéjar Rubio'
 author = 'Álvaro Mondéjar Rubio'
+copyright = f'2020-2021, {author}'
 
 
 # -- General configuration ---------------------------------------------------
