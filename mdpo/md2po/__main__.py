@@ -5,8 +5,7 @@
 import argparse
 import sys
 
-from mdpo import __version__
-from mdpo.cli import parse_list_argument
+from mdpo.cli import add_common_cli_arguments, parse_list_cli_argument
 from mdpo.md2po import markdown_to_pofile
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
@@ -18,16 +17,8 @@ DESCRIPTION = (
 
 
 def build_parser():
-    parser = argparse.ArgumentParser(description=DESCRIPTION)
-    parser.add_argument(
-        '-v', '--version', action='version',
-        version='%(prog)s ' + __version__,
-        help='Show program version number and exit.',
-    )
-    parser.add_argument(
-        '-q', '--quiet', action='store_true',
-        help='Do not print output to STDOUT.',
-    )
+    parser = argparse.ArgumentParser(description=DESCRIPTION, add_help=False)
+    add_common_cli_arguments(parser)
     parser.add_argument(
         'glob_or_content', metavar='GLOB_OR_CONTENT',
         nargs='*',
@@ -125,7 +116,7 @@ def parse_options(args=[]):
     elif isinstance(opts.glob_or_content, list):
         opts.glob_or_content = opts.glob_or_content[0]
     if opts.ignore:
-        opts.ignore = parse_list_argument(opts.ignore)
+        opts.ignore = parse_list_cli_argument(opts.ignore)
     opts.extensions = opts.extensions.split(',')
 
     return opts

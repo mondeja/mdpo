@@ -55,3 +55,13 @@ mdpo2html
    :func: build_parser
    :prog: mdpo2html
    :title:
+
+.. raw:: html
+
+   <script>
+   var argumentsSubsectionTitles = document.getElementsByTagName("H3");
+   for (let i=0; i<argumentsSubsectionTitles.length; i++) {
+     let subsectionTitle = argumentsSubsectionTitles[i].childNodes[0];
+     subsectionTitle.data = subsectionTitle.data.split(" ").slice(1).join(" ");
+   }
+   </script>
