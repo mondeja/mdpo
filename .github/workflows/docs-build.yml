@@ -1,0 +1,38 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Documentation build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python v3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+          python -m pip install .[doc]
+          pip list
+      - name: Show documentation configuration
+        run: cat docs/conf.py
+      - name: Test documentation build
+        run: |
+          cd docs
+          python -m sphinx -T -E \
+            -b html \
+            -d _build/doctrees \
+            -D language=en \
+            . _build/html
+      - name: Show tree
+        run: tree docs/_build/html
