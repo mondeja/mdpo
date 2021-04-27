@@ -84,8 +84,12 @@ def build_parser():
              '/pymd4c#parser-option-flags',
     )
     parser.add_argument(
-        '-e', '--encoding', dest='encoding', default=None,
-        help='Resulting PO file encoding.',
+        '--po-encoding', dest='po_encoding', default=None,
+        help='Resulting PO file encoding.', metavar='<ENCODING>',
+    )
+    parser.add_argument(
+        '--md-encoding', dest='md_encoding', default='utf-8',
+        help='Markdown content encoding.', metavar='<ENCODING>',
     )
     parser.add_argument(
         '-a', '--xheaders', dest='xheaders',
@@ -133,7 +137,8 @@ def run(args=[]):
         plaintext=opts.plaintext,
         mark_not_found_as_obsolete=opts.mark_not_found_as_obsolete,
         extensions=opts.extensions,
-        encoding=opts.encoding,
+        po_encoding=opts.po_encoding,
+        md_encoding=opts.md_encoding,
         xheaders=opts.xheaders,
         include_codeblocks=opts.include_codeblocks,
     )

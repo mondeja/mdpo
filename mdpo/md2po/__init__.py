@@ -471,7 +471,8 @@ class Md2Po:
             self._process_command(text)
 
     def extract(
-        self, po_filepath=None, save=False, mo_filepath=None, encoding=None,
+        self, po_filepath=None, save=False, mo_filepath=None, po_encoding=None,
+        md_encoding='utf-8',
     ):
         _po_filepath = None
         if not po_filepath:
@@ -482,8 +483,8 @@ class Md2Po:
                 po_filepath = ''
 
         pofile_kwargs = (
-            dict(autodetect_encoding=False, encoding=encoding)
-            if encoding else {}
+            dict(autodetect_encoding=False, encoding=po_encoding)
+            if po_encoding else {}
         )
         self.pofile = polib.pofile(
             po_filepath, wrapwidth=self.wrapwidth,
@@ -509,7 +510,7 @@ class Md2Po:
             _parse(self.content)
         else:
             for filepath in self.filepaths:
-                with open(filepath) as f:
+                with open(filepath, encoding=md_encoding) as f:
                     content = f.read()
                 _parse(content)
                 self._disable_next_line = False
@@ -553,8 +554,8 @@ def markdown_to_pofile(
     glob_or_content, ignore=[], msgstr='', po_filepath=None, save=False,
     mo_filepath=None, plaintext=False, wrapwidth=78,
     mark_not_found_as_obsolete=True,
-    extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS, encoding=None,
-    xheaders=False, include_codeblocks=False, **kwargs,
+    extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS, po_encoding=None,
+    md_encoding='utf-8', xheaders=False, include_codeblocks=False, **kwargs,
 ):
     """Extracts all the msgids from a string of Markdown content or a group of
     files.
@@ -595,7 +596,8 @@ def markdown_to_pofile(
             formatted as a list of 'pymd4c' keyword arguments. You can see all
             available at `pymd4c repository <https://github.com/dominickpastore
             /pymd4c#parser-option-flags>`_.
-        encoding (str): Resulting pofile encoding (autodetected by default).
+        po_encoding (str): Resulting pofile encoding.
+        md_encoding (str): Markdown content encoding.
         xheaders (bool): Indicates if the resulting pofile will have mdpo
             x-headers included. These only can be included if the parameter
             ``plaintext`` is ``False``.
@@ -626,6 +628,6 @@ def markdown_to_pofile(
         extensions=extensions, xheaders=xheaders,
         include_codeblocks=include_codeblocks, **kwargs,
     ).extract(
-        po_filepath=po_filepath, save=save,
-        mo_filepath=mo_filepath, encoding=encoding,
+        po_filepath=po_filepath, save=save, mo_filepath=mo_filepath,
+        po_encoding=po_encoding, md_encoding=md_encoding,
     )
