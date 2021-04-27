@@ -26,7 +26,7 @@ def build_parser():
     )
     parser.add_argument(
         '-p', '--pofiles', metavar='POFILES',
-        help='Glob matching a set of pofiles from where to extract references'
+        help='Glob matching a set of PO files from where to extract references'
              ' to make the replacements translating strings.',
     )
     parser.add_argument(

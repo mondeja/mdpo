@@ -47,7 +47,7 @@ def build_parser():
     parser.add_argument(
         '-mo', '--mo-filepath', dest='mo_filepath',
         default=None,
-        help='The resulting pofile will be compiled to a mofile and saved in'
+        help='The resulting PO file will be compiled to a mofile and saved in'
              ' the path specified at this parameter.',
         metavar='OUTPUT_MO_FILEPATH',
     )
@@ -85,7 +85,7 @@ def build_parser():
     )
     parser.add_argument(
         '-e', '--encoding', dest='encoding', default=None,
-        help='Resulting pofile encoding (autodetected by default).',
+        help='Resulting PO file encoding.',
     )
     parser.add_argument(
         '-a', '--xheaders', dest='xheaders',
@@ -96,7 +96,7 @@ def build_parser():
     parser.add_argument(
         '-c', '--include-codeblocks',
         dest='include_codeblocks', action='store_true',
-        help='Include all code blocks found inside pofile result. This is'
+        help='Include all code blocks found inside PO file result. This is'
              ' useful if you want to translate all your blocks of code.'
              ' Equivalent to append \'<!-- mdpo-include-codeblock -->\''
              ' command before each code block.',

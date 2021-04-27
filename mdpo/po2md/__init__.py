@@ -525,7 +525,7 @@ def pofile_to_markdown(
     filepath_or_content, pofiles, ignore=[],
     save=None, md_encoding='utf-8', po_encoding=None, **kwargs,
 ):
-    """Translate Markdown content or a file using pofiles for message replacing.
+    r"""Translate Markdown content or a file using pofiles for message replacing.
 
     Args:
         filepath_or_content (str): Markdown filepath or content to translate.
@@ -538,7 +538,10 @@ def pofile_to_markdown(
         save (str): Saves the output content in file whose path is specified
             at this parameter.
         md_encoding (str): Markdown content encoding.
-        po_encoding (str): PO files encoding (autodetected by default).
+        po_encoding (str): PO files encoding. If you need different encodings
+            for each file, you must define it in the "Content-Type" field of
+            each PO file metadata, in the form
+            ``"Content-Type: text/plain; charset=<ENCODING>\n"``.
 
     Returns:
         str: Markdown output file with translated content.

@@ -23,7 +23,7 @@ def build_parser():
     )
     parser.add_argument(
         '-p', '--pofiles', metavar='POFILES',
-        help='Glob matching a set of pofiles from where to extract references'
+        help='Glob matching a set of PO files from where to extract references'
              ' to make the replacements translating strings.',
     )
     parser.add_argument(
@@ -38,12 +38,15 @@ def build_parser():
              ' specified at this parameter.', metavar='PATH',
     )
     parser.add_argument(
-        '--md-encoding', dest='save', default=None,
+        '--md-encoding', dest='md_encoding', default='utf-8',
         help='Markdown content encoding.', metavar='<ENCODING>',
     )
     parser.add_argument(
-        '--po-encoding', dest='save', default=None,
-        help='PO files encoding (autodetected by default).',
+        '--po-encoding', dest='po_encoding', default=None,
+        help='PO files encoding. If you need different encodings for each'
+             ' file, you must define it in the "Content-Type" field of each'
+             ' PO file metadata, in the form "Content-Type: text/plain;'
+             ' charset=<ENCODING>\\n".',
         metavar='<ENCODING>',
     )
     return parser
@@ -72,6 +75,8 @@ def run(args=[]):
     output = pofile_to_markdown(
         opts.filepath_or_content, opts.pofiles,
         ignore=opts.ignore, save=opts.save,
+        md_encoding=opts.md_encoding,
+        po_encoding=opts.po_encoding,
     )
 
     if not opts.quiet and not opts.save:
