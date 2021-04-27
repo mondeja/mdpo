@@ -65,15 +65,12 @@ def inline_untexted_links(text, link_start_string='[', link_end_string=']'):
         >>> inline_untexted_links('Text with [self-referenced-link]')
         'Text with <self-referenced-link>'
     """
-    link_end_string_escaped_regex = re.escape(link_end_string)
-    regex = re.compile(
-        r'({})([^{}]+)({})(?!\[|\()(?!\])'.format(
-            re.escape(link_start_string),
-            link_end_string_escaped_regex,
-            link_end_string_escaped_regex,
-        ),
+    return re.sub(
+        (
+            re.escape(link_start_string) + r'(\w{1,5}:\/\/[^\s]+)' +
+            re.escape(link_end_string)
+        ), r'<\g<1>>', text,
     )
-    return re.sub(regex, r'<\g<2>>', text)
 
 
 def n_chars_until_chars(text, chars=[' ', '\n']):
