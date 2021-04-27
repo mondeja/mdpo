@@ -2,6 +2,7 @@
 
 import glob
 import os
+import re
 
 
 def filter_paths(filepaths, ignore_paths=[]):
@@ -70,7 +71,12 @@ def to_glob_or_content(value):
         is a glob (``True``) or content (``False``) and the second value
         is the content (parsed as glob is first value is ``True``).
     """
-    parsed = glob.glob(value)
+    try:
+        parsed = glob.glob(value)
+    except re.error:
+        # some strings like '[s-m]' will produce
+        # 're.error: bad character range ... at position'
+        return (False, value)
     if not parsed:
         # assumes it is content
         return (False, value)

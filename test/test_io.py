@@ -1,6 +1,7 @@
 """I/O mdpo utitlites tests."""
 
 import glob
+import html
 import os
 import tempfile
 
@@ -85,6 +86,12 @@ class TestToGlobOrContent:
         is_glob, parsed = to_glob_or_content(MD_CONTENT_EXAMPLE)
         assert not is_glob
         assert parsed == MD_CONTENT_EXAMPLE
+
+    def test_bad_glob_characters_range(self):
+        content = html.escape('[s-m]')
+        is_glob, parsed = to_glob_or_content(content)
+        assert not is_glob
+        assert parsed == content
 
 
 class TestToFileContentIfIsFile:
