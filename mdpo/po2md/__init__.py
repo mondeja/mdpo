@@ -21,9 +21,9 @@ from mdpo.text import min_not_max_chars_in_a_row
 
 
 class Po2Md:
-    def __init__(self, pofiles, ignore=[], **kwargs):
+    def __init__(self, pofiles, ignore=[], po_encoding=None, **kwargs):
         self.pofiles = [
-            polib.pofile(pofilepath) for pofilepath in
+            polib.pofile(pofilepath, encoding=po_encoding) for pofilepath in
             filter_paths(glob.glob(pofiles), ignore_paths=ignore)
         ]
 
@@ -477,8 +477,11 @@ class Po2Md:
         else:
             self._process_command(text)
 
-    def translate(self, filepath_or_content, save=None):
-        content = to_file_content_if_is_file(filepath_or_content)
+    def translate(self, filepath_or_content, save=None, md_encoding='utf-8'):
+        content = to_file_content_if_is_file(
+            filepath_or_content,
+            encoding=md_encoding,
+        )
 
         self.translations = {}
         self.translations_with_msgctxt = {}
@@ -520,7 +523,7 @@ class Po2Md:
 
 def pofile_to_markdown(
     filepath_or_content, pofiles, ignore=[],
-    save=None, **kwargs,
+    save=None, md_encoding='utf-8', po_encoding=None, **kwargs,
 ):
     """Translate Markdown content or a file using pofiles for message replacing.
 
@@ -534,10 +537,15 @@ def pofile_to_markdown(
             full path.
         save (str): Saves the output content in file whose path is specified
             at this parameter.
+        md_encoding (str): Markdown content encoding.
+        po_encoding (str): PO files encoding (autodetected by default).
 
     Returns:
         str: Markdown output file with translated content.
     """
-    return Po2Md(pofiles, ignore=ignore, **kwargs).translate(
-        filepath_or_content, save=save,
+    return Po2Md(
+        pofiles, ignore=ignore, po_encoding=po_encoding,
+        **kwargs,
+    ).translate(
+        filepath_or_content, save=save, md_encoding=md_encoding,
     )

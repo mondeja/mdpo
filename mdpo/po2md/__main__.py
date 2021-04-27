@@ -37,6 +37,15 @@ def build_parser():
         help='Saves the output content in file whose path is'
              ' specified at this parameter.', metavar='PATH',
     )
+    parser.add_argument(
+        '--md-encoding', dest='save', default=None,
+        help='Markdown content encoding.', metavar='<ENCODING>',
+    )
+    parser.add_argument(
+        '--po-encoding', dest='save', default=None,
+        help='PO files encoding (autodetected by default).',
+        metavar='<ENCODING>',
+    )
     return parser
 
 

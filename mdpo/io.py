@@ -42,7 +42,7 @@ def filter_paths(filepaths, ignore_paths=[]):
     return response
 
 
-def to_file_content_if_is_file(value):
+def to_file_content_if_is_file(value, encoding='utf-8'):
     """Check if the value passed is a file path or string content.
 
     If is a file, reads its content and returns it, otherwise returns
@@ -50,12 +50,13 @@ def to_file_content_if_is_file(value):
 
     Args:
         value (str): Value to check if is a filepath or content.
+        encoding (str): Expected file encoding, if is a file.
 
     Returns:
         str: File content if ``value`` is an existing file or ``value`` as is.
     """
     if os.path.isfile(value):
-        with open(value) as f:
+        with open(value, encoding=encoding) as f:
             value = f.read()
     return value
 
