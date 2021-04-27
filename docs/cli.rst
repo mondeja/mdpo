@@ -2,7 +2,7 @@
 Command line interfaces
 ***********************
 
-mdpo installation includes two command line interfaces:
+mdpo installation includes three command line interfaces:
 
 * **md2po** is used to dump strings from Markdown files into pofiles as msgids.
 * **po2md** is used to produce a translated Markdown file from a source Markdown
