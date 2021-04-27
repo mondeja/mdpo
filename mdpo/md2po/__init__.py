@@ -33,8 +33,8 @@ class Md2Po:
 
         self.wrapwidth = kwargs.get('wrapwidth', 78)
 
-        self.mark_not_found_as_absolete = kwargs.get(
-            'mark_not_found_as_absolete', True,
+        self.mark_not_found_as_obsolete = kwargs.get(
+            'mark_not_found_as_obsolete', True,
         )
 
         self.extensions = kwargs.get(
@@ -516,7 +516,7 @@ class Md2Po:
                 self._disable = False
                 self._enable_next_line = False
 
-        if self.mark_not_found_as_absolete:
+        if self.mark_not_found_as_obsolete:
             for entry in self.pofile:
                 if entry not in self.found_entries:
                     _equal_not_obsolete_found = find_entry_in_entries(
@@ -552,7 +552,7 @@ class Md2Po:
 def markdown_to_pofile(
     glob_or_content, ignore=[], msgstr='', po_filepath=None, save=False,
     mo_filepath=None, plaintext=False, wrapwidth=78,
-    mark_not_found_as_absolete=True,
+    mark_not_found_as_obsolete=True,
     extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS, encoding=None,
     xheaders=False, include_codeblocks=False, **kwargs,
 ):
@@ -571,7 +571,7 @@ def markdown_to_pofile(
             instance where to dump the new msgids and that will be used
             as source checking not found strings that will be marked as
             obsolete if is the case (see ``save`` and
-            ``mark_not_found_as_absolete`` optional parameters).
+            ``mark_not_found_as_obsolete`` optional parameters).
         save (bool): Save the new content to the pofile indicated in the
             parameter ``po_filepath``.
         mo_filepath (str): The resulting pofile will be compiled to a mofile
@@ -588,7 +588,7 @@ def markdown_to_pofile(
         wrapwidth (int): Wrap width for po file indicated at ``po_filepath``
             parameter. Only useful when the ``-w`` option was passed
             to xgettext.
-        mark_not_found_as_absolete (bool): The strings extracted from markdown
+        mark_not_found_as_obsolete (bool): The strings extracted from markdown
             that will not be found inside the provided pofile will be marked
             as obsolete.
         extensions (list): md4c extensions used to parse markdown content,
@@ -622,7 +622,7 @@ def markdown_to_pofile(
     return Md2Po(
         glob_or_content, ignore=ignore, msgstr=msgstr, plaintext=plaintext,
         wrapwidth=wrapwidth,
-        mark_not_found_as_absolete=mark_not_found_as_absolete,
+        mark_not_found_as_obsolete=mark_not_found_as_obsolete,
         extensions=extensions, xheaders=xheaders,
         include_codeblocks=include_codeblocks, **kwargs,
     ).extract(

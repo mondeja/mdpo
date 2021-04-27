@@ -6,8 +6,8 @@ import pytest
 from mdpo.md2po import markdown_to_pofile
 
 
-@pytest.mark.parametrize('mark_not_found_as_absolete', (True, False))
-def test_obsolete_equal_found(tmp_file, mark_not_found_as_absolete):
+@pytest.mark.parametrize('mark_not_found_as_obsolete', (True, False))
+def test_obsolete_equal_found(tmp_file, mark_not_found_as_obsolete):
     markdown_content = '# Foo'
     pofile_content = \
         '#\nmsgid ""\nmsgstr ""\n\n#~ msgid "Foo"\n#~ msgstr ""\n'
@@ -16,13 +16,13 @@ def test_obsolete_equal_found(tmp_file, mark_not_found_as_absolete):
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath,
-            mark_not_found_as_absolete=mark_not_found_as_absolete,
+            mark_not_found_as_obsolete=mark_not_found_as_obsolete,
         ).__unicode__()
     assert output == expected_output
 
 
 @pytest.mark.parametrize(
-    ('mark_not_found_as_absolete', 'expected_output'), (
+    ('mark_not_found_as_obsolete', 'expected_output'), (
         (
             True,
             '''#
@@ -52,7 +52,7 @@ msgstr ""
     ),
 )
 def test_obsolete_not_equal_found(
-    mark_not_found_as_absolete, expected_output,
+    mark_not_found_as_obsolete, expected_output,
     tmp_file,
 ):
     markdown_content = '# Foo'
@@ -61,7 +61,7 @@ def test_obsolete_not_equal_found(
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_to_pofile(
             markdown_content, po_filepath=po_filepath,
-            mark_not_found_as_absolete=mark_not_found_as_absolete,
+            mark_not_found_as_obsolete=mark_not_found_as_obsolete,
         ).__unicode__()
     assert output == expected_output
 
@@ -213,7 +213,7 @@ def test_obsolete_with_msgctxt_not_matching_msgstr_fallback(tmp_file):
     """If a translated message with msgctxt is marked as obsolete and his msgid
     with different msgctxt is found in markdown content, should not be
     translated and the other message (with msgctxt not found) must be marked
-    as obsolete (if ``mark_not_found_as_absolete`` is ``True``).
+    as obsolete (if ``mark_not_found_as_obsolete`` is ``True``).
     """
     markdown_content = '<!-- mdpo-context First context -->\n# Hello'
     pofile_content = (
