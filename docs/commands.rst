@@ -186,6 +186,12 @@ You can extract code blocks inside the pofile, using next command:
    msgstr ""
 
 
+.. note::
+
+   If you want to include all the codeblocks, use the argument
+   :ref:`md2po---include-codeblocks` or ``include_codeblocks=True`` if you are
+   using the :ref:`programmatic interface<md2po-init>`.
+
 Extracting comments itself
 ==========================
 
