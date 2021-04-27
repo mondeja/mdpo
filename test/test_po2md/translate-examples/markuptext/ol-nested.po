@@ -1,0 +1,18 @@
+#
+msgid ""
+msgstr ""
+
+msgid "First ordered list item"
+msgstr "Primer elemento de lista ordenada"
+
+msgid "Second ordered list item"
+msgstr "Segundo elemento de lista ordenada"
+
+msgid "First nested ordered list item"
+msgstr "Primer elemento de lista ordenada anidada"
+
+msgid "Second nested ordered list item"
+msgstr "Segundo elemento de lista ordenada anidada"
+
+msgid "Third nested ordered list item"
+msgstr "Tercer elemento de lista ordenada anidada"

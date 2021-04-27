@@ -33,6 +33,8 @@ rules:
       .readthedocs.yml
   line-length:
     allow-non-breakable-words: true
+    ignore:
+      .pre-commit-config.yaml
     max: 96
   new-lines:
     type: unix

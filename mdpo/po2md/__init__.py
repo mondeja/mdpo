@@ -130,10 +130,8 @@ class Po2Md:
         # current UL marks by nesting levels
         self._ul_marks = []
 
-        # OL blocks are not fully supported by md4c. We can rebuilt them
-        # without nesting and using a basic counter
-        self._current_ol_delimitier = None
-        self._ol_items_counter = 0
+        # [numerical iterm order, current delimitier] for OL blocks
+        self._current_ol_delimiters = []
 
         self._current_wikilink_target = None
 
@@ -221,7 +219,7 @@ class Po2Md:
             self._save_current_line(times=times, _time_number=_time_number+1)
 
     def enter_block(self, block, details):
-        # print("ENTER BLOCK", block.name, details)
+        # print('ENTER BLOCK', block.name, details)
         if self._inside_quoteblock and (
                 not self._current_line or self._current_line[0] != '>'
         ):
@@ -240,12 +238,17 @@ class Po2Md:
         elif block.value == md4c.BlockType.H:
             self._current_line += '%s ' % ('#' * details['level'])
         elif block.value == md4c.BlockType.LI:
-            if self._current_ol_delimitier:
+            if self._current_ol_delimiters:
                 # inside OL
-                self._ol_items_counter += 1
-                self._current_line += '%d%s ' % (
-                    self._ol_items_counter,
-                    self._current_ol_delimitier,
+                if len(self._current_ol_delimiters) > 1:
+                    self._save_current_msgid()
+                    if not self._current_ol_delimiters[-1][0]:
+                        self._save_current_line()
+                self._current_ol_delimiters[-1][0] += 1
+                self._current_line += '%s%d%s ' % (
+                    '   ' * (len(self._current_ol_delimiters) - 1),
+                    self._current_ol_delimiters[-1][0],
+                    self._current_ol_delimiters[-1][1],
                 )
             else:
                 # inside UL
@@ -261,7 +264,7 @@ class Po2Md:
                 self._save_current_line()
             self._ul_marks.append(details['mark'])
         elif block.value == md4c.BlockType.OL:
-            self._current_ol_delimitier = details['mark_delimiter']
+            self._current_ol_delimiters.append([0, details['mark_delimiter']])
         elif block.value == md4c.BlockType.HR:
             self._current_line += '---'
             if not self._inside_liblock:
@@ -277,7 +280,7 @@ class Po2Md:
             self._inside_htmlblock = True
 
     def leave_block(self, block, details):
-        # print("LEAVE BLOCK", block.name, details)
+        # print('LEAVE BLOCK', block.name, details)
 
         if block.value == md4c.BlockType.P:
             self._save_current_msgid()
@@ -311,10 +314,11 @@ class Po2Md:
             if not self._ul_marks:
                 self._save_current_line()
         elif block.value == md4c.BlockType.OL:
-            self._current_ol_delimitier = None
+            self._current_ol_delimiters.pop()
             if self._inside_quoteblock:
                 self._current_line += '> '
-            self._save_current_line()
+            if not self._current_ol_delimiters:
+                self._save_current_line()
         elif block.value in (md4c.BlockType.TH, md4c.BlockType.TD):
             self._save_current_msgid()
             self._current_line += ' '
