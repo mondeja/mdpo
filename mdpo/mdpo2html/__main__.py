@@ -40,6 +40,18 @@ def build_parser():
         help='Saves the output content in file whose path is specified at this'
              ' parameter.', metavar='PATH',
     )
+    parser.add_argument(
+        '--html-encoding', dest='html_encoding', default='utf-8',
+        help='Markdown content encoding.', metavar='<ENCODING>',
+    )
+    parser.add_argument(
+        '--po-encoding', dest='po_encoding', default=None,
+        help='PO files encoding. If you need different encodings for each'
+             ' file, you must define it in the "Content-Type" field of each'
+             ' PO file metadata, in the form "Content-Type: text/plain;'
+             ' charset=<ENCODING>\\n".',
+        metavar='<ENCODING>',
+    )
     return parser
 
 
@@ -66,6 +78,8 @@ def run(args=[]):
     output = markdown_pofile_to_html(
         opts.filepath_or_content, opts.pofiles,
         ignore=opts.ignore, save=opts.save,
+        po_encoding=opts.po_encoding,
+        html_encoding=opts.html_encoding,
     )
 
     if not opts.quiet and not opts.save:

@@ -27,10 +27,10 @@ class MdPo2HTML(HTMLParser):
         self, pofiles, ignore=[], merge_adjacent_markups=False,
         code_tags=['code'], bold_tags=['b', 'strong'],
         italic_tags=['em', 'i'], link_tags=['a'], image_tags=['img'],
-        ignore_grouper_tags=['div', 'hr'],
+        ignore_grouper_tags=['div', 'hr'], po_encoding=None,
     ):
         self.pofiles = [
-            polib.pofile(pofilepath) for pofilepath in
+            polib.pofile(pofilepath, encoding=po_encoding) for pofilepath in
             filter_paths(glob.glob(pofiles), ignore_paths=ignore)
         ]
         self.output = ''
@@ -382,11 +382,13 @@ class MdPo2HTML(HTMLParser):
                         SyntaxWarning,
                     )
 
-    def translate(self, filepath_or_content, save=None):
-        content = to_file_content_if_is_file(filepath_or_content)
+    def translate(self, filepath_or_content, save=None, html_encoding='utf-8'):
+        content = to_file_content_if_is_file(
+            filepath_or_content,
+            encoding=html_encoding,
+        )
 
-        self.translations = {}
-        self.translations_with_msgctxt = {}
+        self.translations, self.translations_with_msgctxt = ({}, {})
         for pofile in self.pofiles:
             for entry in pofile:
                 if entry.msgctxt:
@@ -401,7 +403,7 @@ class MdPo2HTML(HTMLParser):
         self.feed(content)
 
         if save:
-            with open(save, 'w') as f:
+            with open(save, 'w', encoding=html_encoding) as f:
                 f.write(self.output)
 
         self.reset()
@@ -410,10 +412,10 @@ class MdPo2HTML(HTMLParser):
 
 
 def markdown_pofile_to_html(
-    filepath_or_content, pofiles, ignore=[],
-    save=None, **kwargs,
+    filepath_or_content, pofiles, ignore=[], save=None,
+    po_encoding=None, html_encoding='utf-8', **kwargs,
 ):
-    """Produces a translated HTML file given a previous HTML file (created by a
+    r"""Produces a translated HTML file given a previous HTML file (created by a
     Markdown-to-HTML processor) and a set of pofiles as reference for msgstrs.
 
     Args:
@@ -425,6 +427,11 @@ def markdown_pofile_to_html(
         save (str): If you pass this parameter as a path to one HTML file,
             even if does not exists, will be saved in the path the output of
             the function.
+        md_encoding (str): HTML content encoding.
+        po_encoding (str): PO files encoding. If you need different encodings
+            for each file, you must define it in the "Content-Type" field of
+            each PO file metadata, in the form
+            ``"Content-Type: text/plain; charset=<ENCODING>\n"``.
 
     .. rubric:: Known limitations:
 
@@ -436,5 +443,5 @@ def markdown_pofile_to_html(
         str: HTML output translated version of the given file.
     """
     return MdPo2HTML(
-        pofiles, ignore=ignore, **kwargs,
-    ).translate(filepath_or_content, save=save)
+        pofiles, ignore=ignore, po_encoding=po_encoding, **kwargs,
+    ).translate(filepath_or_content, save=save, html_encoding=html_encoding)

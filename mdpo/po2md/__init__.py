@@ -515,7 +515,7 @@ class Po2Md:
         self.output = '\n'.join(self._outputlines)
 
         if save:
-            with open(save, 'w') as f:
+            with open(save, 'w', encoding=md_encoding) as f:
                 f.write(self.output)
 
         return self.output
