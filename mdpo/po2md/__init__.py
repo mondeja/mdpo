@@ -40,6 +40,7 @@ class Po2Md:
         self._disable_next_line = False
         self._disable = False
         self._enable_next_line = False
+        self.disabled_entries = []
 
         self.translations = None
         self.translations_with_msgctxt = None
@@ -184,6 +185,14 @@ class Po2Md:
             )
         else:
             translation = self._current_msgid
+            self.disabled_entries.append(
+                polib.POEntry(
+                    msgid=translation,
+                    msgstr='',
+                    msgctxt=self._current_msgctxt,
+                ),
+            )
+
         if not self._inside_codeblock:
             translation = self._escape_translation(translation)
         elif self._inside_indented_codeblock:

@@ -49,6 +49,8 @@ class Md2Po:
         self._disable = False
         self._disable_next_line = False
         self._enable_next_line = False
+        self.disabled_entries = []
+
         self._include_next_codeblock = False
         self._include_xheaders = False
 
@@ -235,7 +237,8 @@ class Md2Po:
 
     def _save_msgid(self, msgid, tcomment=None, msgctxt=None):
         entry = polib.POEntry(
-            msgid=msgid, msgstr=self.msgstr,
+            msgid=msgid,
+            msgstr=self.msgstr,
             comment=tcomment,
             msgctxt=msgctxt,
         )
@@ -253,18 +256,23 @@ class Md2Po:
         self.found_entries.append(entry)
 
     def _save_current_msgid(self):
-        if self._current_msgid and (
-            (
-                not self._disable_next_line and
-                not self._disable
-            ) or
-            self._enable_next_line
-        ):
-            self._save_msgid(
-                self._current_msgid,
-                tcomment=self._current_tcomment,
-                msgctxt=self._current_msgctxt,
-            )
+        if self._current_msgid:
+            if (not self._disable_next_line and not self._disable) or \
+                    self._enable_next_line:
+                self._save_msgid(
+                    self._current_msgid,
+                    tcomment=self._current_tcomment,
+                    msgctxt=self._current_msgctxt,
+                )
+            else:
+                self.disabled_entries.append(
+                    polib.POEntry(
+                        msgid=self._current_msgid,
+                        msgstr=self.msgstr,
+                        comment=self._current_tcomment,
+                        msgctxt=self._current_msgctxt,
+                    ),
+                )
         self._disable_next_line = False
         self._enable_next_line = False
         self._current_msgid = ''

@@ -1,4 +1,4 @@
-from mdpo.po2md import pofile_to_markdown
+from mdpo.po2md import Po2Md, pofile_to_markdown
 
 
 def test_disable_next_line(tmp_file):
@@ -135,3 +135,71 @@ msgstr "La última línea también debe ser traducida."
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(markdown_input, po_filepath)
     assert output == markdown_output
+
+
+def test_disabled_entries(tmp_file):
+    markdown_input = '''This must be translated.
+
+<!-- mdpo-disable -->
+
+This must be ignored.
+
+<!-- mdpo-enable-next-line -->
+This must be translated also.
+
+This must be ignored also.
+
+<!-- mdpo-enable-next-line -->
+# This header must be translated
+
+Other line that must be ignored.
+
+<!-- mdpo-enable -->
+
+The last line also must be translated.
+'''
+
+    pofile_content = '''#
+msgid ""
+msgstr ""
+
+msgid "This must be translated."
+msgstr "Esto debe ser traducido."
+
+msgid "This must be ignored."
+msgstr "Esto debe ser ignorado."
+
+msgid "This must be translated also."
+msgstr "Esto también debe ser traducido."
+
+msgid "This header must be translated"
+msgstr "Este encabezado debe ser traducido"
+
+msgid "Other line that must be ignored."
+msgstr "Otra línea que debe ser ignorada."
+
+msgid "The last line also must be translated."
+msgstr "La última línea también debe ser traducida."
+'''
+
+    with tmp_file(pofile_content, '.po') as po_filepath:
+        po2md = Po2Md(po_filepath)
+        po2md.translate(markdown_input)
+
+        expected_msgids = [
+            'This must be ignored.',
+            'This must be ignored also.',
+            'Other line that must be ignored.',
+        ]
+
+        assert len(po2md.disabled_entries) == len(expected_msgids)
+
+        for expected_msgid in expected_msgids:
+            _found_msgid = False
+            for entry in po2md.disabled_entries:
+                if entry.msgid == expected_msgid:
+                    _found_msgid = True
+
+            assert _found_msgid, (
+                f"'{expected_msgid}' msgid not found inside disabled_entries"
+            )

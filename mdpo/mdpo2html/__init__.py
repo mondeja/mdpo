@@ -45,6 +45,7 @@ class MdPo2HTML(HTMLParser):
         self._disable = False
         self._disable_next_line = False
         self._enable_next_line = False
+        self.disabled_entries = []
 
         # lazy translators mode
         self.merge_adjacent_markups = merge_adjacent_markups
@@ -229,6 +230,14 @@ class MdPo2HTML(HTMLParser):
         if (self._disable and not self._enable_next_line) \
                 or self._disable_next_line:
             replacement = _current_replacement
+
+            self.disabled_entries.append(
+                polib.POEntry(
+                    msgid=replacement,
+                    msgstr='',
+                    msgctxt=self._current_msgctxt,
+                ),
+            )
         else:
             if self._current_msgctxt:
                 replacement = self.translations_with_msgctxt[
