@@ -176,10 +176,14 @@ class Po2Md:
         return response or msgid
 
     def _save_current_msgid(self):
-        translation = self._translate_msgid(
-            self._current_msgid,
-            self._current_msgctxt,
-        )
+        if (not self._disable and not self._disable_next_line) or \
+                self._enable_next_line:
+            translation = self._translate_msgid(
+                self._current_msgid,
+                self._current_msgctxt,
+            )
+        else:
+            translation = self._current_msgid
         if not self._inside_codeblock:
             translation = self._escape_translation(translation)
         elif self._inside_indented_codeblock:
@@ -200,23 +204,15 @@ class Po2Md:
         self._current_msgid = ''
         self._current_msgctxt = None
 
-        self._codespan_inside_current_msgid = False
-        self._aimg_title_inside_current_msgid = False
-
-    def _save_current_line(self, times=1, _time_number=1):
-        if (not self._disable and not self._disable_next_line) or \
-                self._enable_next_line:
-            self._outputlines.append(self._current_line.rstrip(' '))
-        else:
-            _time_number = times
-
-        self._current_line = ''
-
         self._disable_next_line = False
         self._enable_next_line = False
 
-        if _time_number < times:
-            self._save_current_line(times=times, _time_number=_time_number+1)
+        self._codespan_inside_current_msgid = False
+        self._aimg_title_inside_current_msgid = False
+
+    def _save_current_line(self):
+        self._outputlines.append(self._current_line.rstrip(' '))
+        self._current_line = ''
 
     def enter_block(self, block, details):
         # print('ENTER BLOCK', block.name, details)
@@ -293,7 +289,8 @@ class Po2Md:
             self._inside_indented_codeblock = False
             if 'fence_char' in details:
                 self._current_line += '%s' % (details['fence_char']*3)
-            self._save_current_line(times=2)
+            self._save_current_line()
+            self._save_current_line()
         elif block.value == md4c.BlockType.H:
             self._save_current_msgid()
             if not self._inside_quoteblock:
