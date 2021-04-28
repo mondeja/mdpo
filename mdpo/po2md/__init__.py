@@ -195,6 +195,7 @@ class Po2Md:
 
         if not self._inside_codeblock:
             translation = self._escape_translation(translation)
+
         elif self._inside_indented_codeblock:
             # add 4 spaces before each line including next indented block code
             translation = '    %s' % re.sub('\n', '\n    ', translation)
@@ -202,10 +203,11 @@ class Po2Md:
             translation = '\n'.join(textwrap.wrap(translation, width=79))
         if self._inside_pblock:
             # wrap paragraphs fitting with markdownlint
-            lines = textwrap.wrap(translation, width=80)
             if self._codespan_inside_current_msgid:
                 # fix codespans wrapping
-                lines = fixwrap_codespans(lines)
+                lines = fixwrap_codespans(translation.split('\n'))
+            else:
+                lines = textwrap.wrap(translation, width=80)
             for line in lines:
                 self._current_line += '%s\n' % polib.unescape(line)
         else:

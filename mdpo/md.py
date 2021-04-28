@@ -251,8 +251,6 @@ def fixwrap_codespans(
                 _curr_line = ''
             elif _curr_line:
                 _curr_line += ' '
-        elif _curr_line:
-            _curr_line += ' '
 
     if _curr_line:
         response.append(_curr_line.rstrip(' '))

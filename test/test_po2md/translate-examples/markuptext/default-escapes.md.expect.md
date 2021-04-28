@@ -29,7 +29,8 @@ dobles asteriscos literales \*\* \*\* y marcado **en negrita**.
 
 Algo de texto con tilde invertida literal dentro de ``código ` en línea``.
 
-Algo de texto con dos tildes invertidas literales dentro de `código `` en línea`.
+Algo de texto con dos tildes invertidas literales dentro de
+`código `` en línea`.
 
 Algo de texto con tres tildes invertidas literales dentro de
 `código ``` en línea`.
