@@ -106,7 +106,7 @@ This must be ignored also.
 
 Other line that must be ignored.
 
-La última línea también debe ser incluida.
+La última línea también debe ser traducida.
 '''
 
     pofile_content = '''#
@@ -129,7 +129,7 @@ msgid "Other line that must be ignored."
 msgstr "Otra línea que debe ser ignorada."
 
 msgid "The last line also must be translated."
-msgstr "La última línea también debe ser incluida."
+msgstr "La última línea también debe ser traducida."
 '''
 
     with tmp_file(pofile_content, '.po') as po_filepath:
