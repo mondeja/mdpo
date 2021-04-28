@@ -19,5 +19,5 @@ Fenced code block with tildes
 !!! note
 
     I'm coming from
-    pymdownx.details and I'm a note
+    admonition Python-Markdown extension and I'm a note
     but you think that I'm an indented code block
