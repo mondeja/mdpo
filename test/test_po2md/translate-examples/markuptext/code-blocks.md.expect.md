@@ -14,6 +14,12 @@ Fenced code block with tildes
 Fenced code block with tildes
 ~~~
 
-
     Indented code block
+
+
+!!! note
+
+    I'm coming from
+    pymdownx.details and I'm a note
+    but you think that I'm an indented code block
 

@@ -225,6 +225,7 @@ class Po2Md:
 
     def enter_block(self, block, details):
         # print('ENTER BLOCK', block.name, details)
+
         if self._inside_quoteblock and (
                 not self._current_line or self._current_line[0] != '>'
         ):
@@ -239,7 +240,8 @@ class Po2Md:
                 self._current_line += details['lang'][0][1]
             if 'fence_char' not in details:
                 self._inside_indented_codeblock = True
-            self._save_current_line()
+            if self._current_line:
+                self._save_current_line()
         elif block.value == md4c.BlockType.H:
             self._current_line += '%s ' % ('#' * details['level'])
         elif block.value == md4c.BlockType.LI:
@@ -439,6 +441,7 @@ class Po2Md:
 
     def text(self, block, text):
         # print("TEXT", "'%s'" % text)
+
         if not self._inside_htmlblock:
             if not self._inside_codeblock:
                 if self._inside_liblock and text == '\n':

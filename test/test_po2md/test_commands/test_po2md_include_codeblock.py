@@ -12,17 +12,14 @@ def test_include_indented_codeblock(tmp_file):
 
 This must be translated.
 
-
     var thisCodeMustNotBeEdited = undefined;
 '''
 
-    markdown_output = '''
-    var hola = "mundo";
+    markdown_output = '''    var hola = "mundo";
     var esto;
 
 
 Esto debe ser traducido.
-
 
     var thisCodeMustNotBeEdited = undefined;
 
