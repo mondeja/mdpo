@@ -262,7 +262,7 @@ class Po2Md:
             else:
                 # inside UL
                 self._current_line += '{}{} '.format(
-                    '  ' * (len(self._ul_marks) - 1), self._ul_marks[-1],
+                    '    ' * (len(self._ul_marks) - 1), self._ul_marks[-1],
                 )
                 if details['is_task']:
                     self._current_line += '[%s] ' % details['task_mark']
@@ -316,7 +316,8 @@ class Po2Md:
         elif block.value == md4c.BlockType.LI:
             self._save_current_msgid()
             self._inside_liblock = False
-            self._save_current_line()
+            if self._current_line:
+                self._save_current_line()
         elif block.value == md4c.BlockType.UL:
             self._ul_marks.pop()
             if self._inside_quoteblock:

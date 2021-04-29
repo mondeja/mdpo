@@ -1,0 +1,27 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Task 1"
+msgstr "Tarea 1"
+
+msgid "Task 2"
+msgstr "Tarea 2"
+
+msgid "Task A"
+msgstr "Tarea A"
+
+msgid "Task B"
+msgstr "Tarea B"
+
+msgid "Task C"
+msgstr "Tarea C"
+
+msgid "Task D"
+msgstr "Tarea D"
+
+msgid "Task E"
+msgstr "Tarea E"
+
+msgid "Task F"
+msgstr "Tarea F"
