@@ -81,3 +81,15 @@ msgstr ""
 msgid "Mensaje por defecto"
 msgstr "Default message"
 '''
+
+
+def test_ignore_msgids():
+    content = 'foo\n\nbar\n\nbaz\n'
+    md2po_extractor = Md2Po(content, ignore_msgids=['foo', 'baz'])
+    assert md2po_extractor.extract(content).__unicode__() == '''#
+msgid ""
+msgstr ""
+
+msgid "bar"
+msgstr ""
+'''

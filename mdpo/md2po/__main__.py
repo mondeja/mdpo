@@ -105,6 +105,11 @@ def build_parser():
              ' Equivalent to append \'<!-- mdpo-include-codeblock -->\''
              ' command before each code block.',
     )
+    parser.add_argument(
+        '--ignore-msgids', dest='ignore_msgids', default=None,
+        help='Path to a plain text file where all msgids to ignore from being'
+             ' extracted are located, separated by newlines.',
+    )
     return parser
 
 
@@ -122,7 +127,11 @@ def parse_options(args=[]):
     if opts.ignore:
         opts.ignore = parse_list_cli_argument(opts.ignore)
     opts.extensions = opts.extensions.split(',')
-
+    if opts.ignore_msgids is not None:
+        with open(opts.ignore_msgids) as f:
+            opts.ignore_msgids = f.read().splitlines()
+    else:
+        opts.ignore_msgids = []
     return opts
 
 
@@ -141,6 +150,7 @@ def run(args=[]):
         md_encoding=opts.md_encoding,
         xheaders=opts.xheaders,
         include_codeblocks=opts.include_codeblocks,
+        ignore_msgids=opts.ignore_msgids,
     )
     if isinstance(opts.wrapwidth, int):
         kwargs['wrapwidth'] = opts.wrapwidth

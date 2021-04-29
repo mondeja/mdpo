@@ -287,3 +287,22 @@ msgstr ""
     assert exitcode == 0
     assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output
+
+
+@pytest.mark.parametrize('arg', ['--ignore-msgids'])
+def test_ignore_msgids(capsys, arg, tmp_file):
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "bar"
+msgstr ""
+'''
+
+    with tmp_file('foo\nbaz', '.txt') as filename:
+        pofile, exitcode = run(['foo\n\nbar\n\nbaz\n', arg, filename])
+    out, err = capsys.readouterr()
+
+    assert exitcode == 0
+    assert pofile.__unicode__() == expected_output
+    assert striplastline(out) == expected_output

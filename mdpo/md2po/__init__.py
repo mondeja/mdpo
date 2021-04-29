@@ -32,6 +32,7 @@ class Md2Po:
         self._current_msgctxt = None
 
         self.wrapwidth = kwargs.get('wrapwidth', 78)
+        self.ignore_msgids = kwargs.get('ignore_msgids', [])
 
         self.mark_not_found_as_obsolete = kwargs.get(
             'mark_not_found_as_obsolete', True,
@@ -236,6 +237,8 @@ class Md2Po:
         self._uls_deep = 0
 
     def _save_msgid(self, msgid, tcomment=None, msgctxt=None):
+        if msgid in self.ignore_msgids:
+            return
         entry = polib.POEntry(
             msgid=msgid,
             msgstr=self.msgstr,
@@ -243,7 +246,8 @@ class Md2Po:
             msgctxt=msgctxt,
         )
         _equal_entry = find_entry_in_entries(
-            entry, self.pofile,
+            entry,
+            self.pofile,
             compare_obsolete=False,
             compare_msgstr=False,
         )
@@ -561,7 +565,7 @@ class Md2Po:
 def markdown_to_pofile(
     glob_or_content, ignore=[], msgstr='', po_filepath=None, save=False,
     mo_filepath=None, plaintext=False, wrapwidth=78,
-    mark_not_found_as_obsolete=True,
+    mark_not_found_as_obsolete=True, ignore_msgids=[],
     extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS, po_encoding=None,
     md_encoding='utf-8', xheaders=False, include_codeblocks=False, **kwargs,
 ):
@@ -613,6 +617,7 @@ def markdown_to_pofile(
             result. This is useful if you want to translate all your blocks
             of code. Equivalent to append ``<!-- mdpo-include-codeblock -->``
             command before each code block.
+        ignore_msgids (list): List of msgids ot ignore from being extracted.
 
     Examples:
         >>> content = 'Some text with `inline code`'
@@ -631,7 +636,7 @@ def markdown_to_pofile(
     """
     return Md2Po(
         glob_or_content, ignore=ignore, msgstr=msgstr, plaintext=plaintext,
-        wrapwidth=wrapwidth,
+        wrapwidth=wrapwidth, ignore_msgids=ignore_msgids,
         mark_not_found_as_obsolete=mark_not_found_as_obsolete,
         extensions=extensions, xheaders=xheaders,
         include_codeblocks=include_codeblocks, **kwargs,
