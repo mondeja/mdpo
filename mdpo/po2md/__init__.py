@@ -538,6 +538,10 @@ def pofile_to_markdown(
 ):
     r"""Translate Markdown content or a file using pofiles for message replacing.
 
+    This implementation reproduces the same valid Markdown output, given the
+    provided AST, with replaced translations, but doesn't rebuilds the same
+    input format as Markdown is just a subset of HTML.
+
     Args:
         filepath_or_content (str): Markdown filepath or content to translate.
         pofiles (str): Glob matching a set of pofiles from where to extract

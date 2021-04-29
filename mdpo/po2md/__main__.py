@@ -9,11 +9,20 @@ from mdpo.cli import add_common_cli_arguments, parse_list_cli_argument
 from mdpo.po2md import pofile_to_markdown
 
 
-DESCRIPTION = 'Markdown files translator using pofiles as reference.'
+DESCRIPTION = (
+    'Markdown files translator using pofiles as reference.\n\n'
+    'This implementation reproduces the same valid Markdown output, given the'
+    " provided AST, with replaced translations, but doesn't rebuilds the same"
+    ' input format as Markdown is just a subset of HTML.'
+)
 
 
 def build_parser():
-    parser = argparse.ArgumentParser(description=DESCRIPTION, add_help=False)
+    parser = argparse.ArgumentParser(
+        description=DESCRIPTION,
+        add_help=False,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     add_common_cli_arguments(parser)
     parser.add_argument(
         'filepath_or_content', metavar='FILEPATH_OR_CONTENT',
@@ -44,7 +53,7 @@ def build_parser():
     parser.add_argument(
         '--po-encoding', dest='po_encoding', default=None,
         help='PO files encoding. If you need different encodings for each'
-             ' file, you must define it in the "Content-Type" field of each'
+             ' file, you must define them in the "Content-Type" field of each'
              ' PO file metadata, in the form "Content-Type: text/plain;'
              ' charset=<ENCODING>\\n".',
         metavar='<ENCODING>',
