@@ -1,0 +1,18 @@
+#
+msgid ""
+msgstr ""
+
+msgid "7890"
+msgstr "7890"
+
+msgid "78 0 2 4 broken text"
+msgstr "78 0 2 4 texto roto"
+
+msgid "7 9 1 3 5 broken text"
+msgstr "7 9 1 3 5 texto roto"
+
+msgid "A tasklist item that should wrap ignoring the checkbox width"
+msgstr "Un elemento de lista de tareas que debe envolverse ignorando el ancho del checkbox"
+
+msgid "Another tasklist item that should wrap ignoring the checkbox width"
+msgstr "Otro elemento de lista de tareas que debe envolverse ignorando el ancho del checkbox"

@@ -20,10 +20,73 @@ from mdpo.md import (
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import po_escaped_string
 from mdpo.polib import *  # noqa
-from mdpo.text import min_not_max_chars_in_a_row
+from mdpo.text import (
+    min_not_max_chars_in_a_row,
+    wrap_different_first_line_width,
+)
 
 
 class Po2Md:
+    __slots__ = (
+        'pofiles',
+        'output',
+        'extensions',
+        'disabled_entries',
+        'translations',
+        'translations_with_msgctxt',
+        'command_aliases',
+        'wrapwidth',
+
+        'bold_start_string',
+        'bold_start_string_escaped',
+        'bold_end_string',
+        'bold_end_string_escaped',
+        'italic_start_string',
+        'italic_start_string_escaped',
+        'italic_end_string',
+        'italic_end_string_escaped',
+        'code_start_string',
+        'code_start_string_escaped',
+        'code_end_string',
+        'code_end_string_escaped',
+        'link_start_string',
+        'link_end_string',
+        'wikilink_start_string',
+        'wikilink_end_string',
+
+        # internal config
+        '_current_msgid',
+        '_current_msgctxt',
+        '_current_line',
+        '_outputlines',
+        '_disable_next_line',
+        '_disable',
+        '_enable_next_line',
+        '_enterspan_replacer',
+        '_leavespan_replacer',
+
+
+        # state
+        '_inside_htmlblock',
+        '_inside_codeblock',
+        '_inside_indented_codeblock',
+        '_inside_pblock',
+        '_inside_liblock',
+        '_inside_codespan',
+        '_codespan_start_index',
+        '_codespan_backticks',
+        '_codespan_inside_current_msgid',
+        '_inside_quoteblock',
+        '_current_aspan_href',
+        '_current_imgspan',
+        '_current_thead_aligns',
+        '_aimg_title_inside_current_msgid',
+        '_ul_marks',
+        '_ol_marks',
+        '_current_list_type',
+        '_current_wikilink_target',
+    )
+
     def __init__(self, pofiles, ignore=[], po_encoding=None, **kwargs):
         self.pofiles = [
             polib.pofile(pofilepath, encoding=po_encoding) for pofilepath in
@@ -73,8 +136,6 @@ class Po2Md:
         self.italic_end_string_escaped = po_escaped_string(
             self.italic_end_string,
         )
-
-        self._bold_italic_context = False
 
         self.code_start_string = kwargs.get('code_start_string', '`')[0]
         self.code_start_string_escaped = po_escaped_string(
@@ -141,7 +202,11 @@ class Po2Md:
         self._ul_marks = []
 
         # [numerical iterm order, current delimitier] for OL blocks
-        self._current_ol_delimiters = []
+        self._ol_marks = []
+
+        # current lists type (list nesting): ['ul' or 'ol', [True, False]]
+        #   (second parameter is tasklist item or not)
+        self._current_list_type = []
 
         self._current_wikilink_target = None
 
@@ -214,37 +279,27 @@ class Po2Md:
             translation = '    %s' % re.sub('\n', '\n    ', translation)
 
         if self._inside_liblock or self._inside_quoteblock:
+            first_line_width_diff = -2
+            if self._inside_liblock:
+                if self._current_list_type[-1][0] == 'ul':
+                    if self._current_list_type[-1][-1][-1] is True:
+                        first_line_width_diff = -6
+                else:
+                    first_line_width_diff = -3
+
             if self._codespan_inside_current_msgid:
                 lines = fixwrap_codespans(
                     translation.split('\n'),
                     width=self.wrapwidth,
-                    first_line_width=self.wrapwidth - 2,
+                    first_line_width=self.wrapwidth + first_line_width_diff,
                 )
             else:
-                if len(translation) > self.wrapwidth + 2:
-                    # correct wrapping for list items
-                    li_first_line = textwrap.wrap(
-                        translation,
-                        width=self.wrapwidth - 2,
-                        break_long_words=False,
-                        max_lines=4,
-                    )[0]
-                    li_subsequent_lines = textwrap.wrap(
-                        translation[len(li_first_line):],
-                        width=self.wrapwidth,
-                        break_long_words=False,
-                    )
-                    li_subsequent_lines[0] = li_subsequent_lines[0].lstrip()
-                    lines = [
-                        li_first_line,
-                        *li_subsequent_lines,
-                    ]
-                else:
-                    lines = textwrap.wrap(
-                        translation,
-                        width=self.wrapwidth,
-                        break_long_words=False,
-                    )
+                lines = wrap_different_first_line_width(
+                    translation,
+                    width=self.wrapwidth,
+                    first_line_width_diff=first_line_width_diff,
+                    break_long_words=False,
+                )
             translation = '\n'.join(lines)
         elif self._inside_pblock:
             # wrap paragraphs fitting with markdownlint
@@ -300,17 +355,16 @@ class Po2Md:
         elif block.value == md4c.BlockType.H:
             self._current_line += '%s ' % ('#' * details['level'])
         elif block.value == md4c.BlockType.LI:
-            if self._current_ol_delimiters:
+            if self._current_list_type[-1][0] == 'ol':
                 # inside OL
-                if len(self._current_ol_delimiters) > 1:
+                if len(self._ol_marks) > 1:
                     self._save_current_msgid()
-                    if not self._current_ol_delimiters[-1][0]:
+                    if not self._ol_marks[-1][0]:
                         self._save_current_line()
-                self._current_ol_delimiters[-1][0] += 1
-                self._current_line += '%s%d%s ' % (
-                    '   ' * (len(self._current_ol_delimiters) - 1),
-                    self._current_ol_delimiters[-1][0],
-                    self._current_ol_delimiters[-1][1],
+                self._ol_marks[-1][0] += 1
+                self._current_line += '{}1{} '.format(
+                    '   ' * (len(self._ol_marks) - 1),
+                    self._ol_marks[-1][1],
                 )
             else:
                 # inside UL
@@ -319,14 +373,17 @@ class Po2Md:
                 )
                 if details['is_task']:
                     self._current_line += '[%s] ' % details['task_mark']
+                self._current_list_type[-1][-1].append(details['is_task'])
             self._inside_liblock = True
         elif block.value == md4c.BlockType.UL:
             if len(self._ul_marks) > 0:
                 self._save_current_msgid()
                 self._save_current_line()
+            self._current_list_type.append(['ul', []])
             self._ul_marks.append(details['mark'])
         elif block.value == md4c.BlockType.OL:
-            self._current_ol_delimiters.append([0, details['mark_delimiter']])
+            self._current_list_type.append(['ol', []])
+            self._ol_marks.append([0, details['mark_delimiter']])
         elif block.value == md4c.BlockType.HR:
             self._current_line += '---'
             if not self._inside_liblock:
@@ -376,15 +433,17 @@ class Po2Md:
                 self._save_current_line()
         elif block.value == md4c.BlockType.UL:
             self._ul_marks.pop()
+            self._current_list_type.pop()
             if self._inside_quoteblock:
                 self._current_line += '> '
             if not self._ul_marks:
                 self._save_current_line()
         elif block.value == md4c.BlockType.OL:
-            self._current_ol_delimiters.pop()
+            self._ol_marks.pop()
+            self._current_list_type.pop()
             if self._inside_quoteblock:
                 self._current_line += '> '
-            if not self._current_ol_delimiters:
+            if not self._ol_marks:
                 self._save_current_line()
         elif block.value in (md4c.BlockType.TH, md4c.BlockType.TD):
             self._save_current_msgid()

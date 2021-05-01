@@ -1,0 +1,5 @@
+- [ ] 7890
+- [ ] 78 0 2 4 broken text
+- [x] 7 9 1 3 5 broken text
+- [ ] A tasklist item that should wrap ignoring the checkbox width
+- [X] Another tasklist item that should wrap ignoring the checkbox width
