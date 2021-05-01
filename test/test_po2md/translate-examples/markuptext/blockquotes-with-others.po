@@ -20,3 +20,6 @@ msgstr "El segundo elemento de una lista ordenada."
 
 msgid "*Everything* is `going` according to the **plan**."
 msgstr "*Todo* va de acuerdo con el **plan**."
+
+msgid "Another blockquote"
+msgstr "Otro bloque de cita"

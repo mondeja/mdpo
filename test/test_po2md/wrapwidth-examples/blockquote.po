@@ -1,0 +1,16 @@
+#
+msgid ""
+msgstr ""
+
+msgid "345 7 9 1 broken quote"
+msgstr "345 7 9 1 cita rota"
+
+msgid "34 6 8 0 broken quote"
+msgstr "34 6 8 0 cita rota"
+
+msgid ""
+"A blockquote that should wrap if the wrap width parameter is lower than its "
+"length."
+msgstr ""
+"Un bloque de cita que debe ser envuelto si el parámetro de ancho de envoltura"
+" es menor a su largo."

@@ -1,0 +1,5 @@
+- 3456
+- 345 7 9 1 broken text
+- 34 6 8 0 broken text
+- A list item that should wrap ignoring the mark width
+- Another list item that should wrap ignoring the mark width

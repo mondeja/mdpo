@@ -112,6 +112,7 @@ def fixwrap_codespans(
     code_start_string='`',
     code_end_string='`',
     width=80,
+    first_line_width=80,
 ):
     """Wraps reasonably Markdown lines containing codespans.
 
@@ -126,6 +127,7 @@ def fixwrap_codespans(
         code_start_string (str): String that delimites the start of a codespan.
         code_end_string (str): String that delimites the end of a codespan.
         width (int): Result line width.
+        first_line_width (int): First line width in result.
 
     Returns:
         list: Lines with codespans propertly wrapped.
@@ -170,6 +172,7 @@ def fixwrap_codespans(
         return n
 
     response = []
+    _width = first_line_width
 
     _curr_line = ''
 
@@ -190,14 +193,16 @@ def fixwrap_codespans(
                         _codespan_n_backticks_wrapper += 1
 
                     # 70% of the line must be filled to wrap before codespans
-                    if len(_curr_line) > width * .7:
+                    _curr_line_len = len(_curr_line)
+                    if _curr_line_len > _width * .7:
                         _entering_codespan_length = \
                             _chars_num_until_next_codespan_exit(
                                 line[ci:] + ' '.join(lines[li+1:]),
                             )
-                        if len(_curr_line) + _entering_codespan_length > width:
+                        if _curr_line_len + _entering_codespan_length > _width:
                             response.append(_curr_line.rstrip(' '))
                             _curr_line = ''
+                            _width = width  # not in first line now
                 elif _entering_codespan and ch != code_start_string:
                     _inside_codespan = True
                     _entering_codespan = False
@@ -231,9 +236,10 @@ def fixwrap_codespans(
                     _chars_until_next_space = n_chars_until_chars(
                         line[ci+1:] + ' ' + ' '.join(lines[li+1:]),
                     )
-                    if len(_curr_line) + _chars_until_next_space > width:
+                    if len(_curr_line) + _chars_until_next_space > _width:
                         response.append(_curr_line.rstrip(' '))
                         _curr_line = ''
+                        _width = width  # not in first line now
 
             # store a reference to previous character
             prev_char = ch
@@ -246,12 +252,14 @@ def fixwrap_codespans(
             _chars_until_next_space = n_chars_until_chars(
                 ' '.join(lines[li+1:]),
             )
-            if len(_curr_line) + _chars_until_next_space > width:
+            if len(_curr_line) + _chars_until_next_space > _width:
                 response.append(_curr_line.rstrip(' '))
                 _curr_line = ''
+                _width = width  # not in first line now
             elif _curr_line:
                 _curr_line += ' '
 
     if _curr_line:
         response.append(_curr_line.rstrip(' '))
+        _width = width  # not in first line now
     return response

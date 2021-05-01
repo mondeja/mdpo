@@ -52,6 +52,8 @@ class Po2Md:
             kwargs.get('command_aliases', {}),
         )
 
+        self.wrapwidth = kwargs.get('wrapwidth', 80)
+
         self.bold_start_string = kwargs.get('bold_start_string', '**')
         self.bold_start_string_escaped = po_escaped_string(
             self.bold_start_string,
@@ -207,23 +209,60 @@ class Po2Md:
 
         if not self._inside_codeblock:
             translation = self._escape_translation(translation)
-
         elif self._inside_indented_codeblock:
             # add 4 spaces before each line including next indented block code
             translation = '    %s' % re.sub('\n', '\n    ', translation)
-        if self._inside_liblock:
-            translation = '\n'.join(textwrap.wrap(translation, width=79))
-        if self._inside_pblock:
+
+        if self._inside_liblock or self._inside_quoteblock:
+            if self._codespan_inside_current_msgid:
+                lines = fixwrap_codespans(
+                    translation.split('\n'),
+                    width=self.wrapwidth,
+                    first_line_width=self.wrapwidth - 2,
+                )
+            else:
+                if len(translation) > self.wrapwidth + 2:
+                    # correct wrapping for list items
+                    li_first_line = textwrap.wrap(
+                        translation,
+                        width=self.wrapwidth - 2,
+                        break_long_words=False,
+                        max_lines=4,
+                    )
+                    li_subsequent_lines = textwrap.wrap(
+                        translation[len(li_first_line[0]):],
+                        width=self.wrapwidth,
+                        break_long_words=False,
+                    )
+                    li_subsequent_lines[0] = li_subsequent_lines[0].lstrip()
+                    lines = [
+                        li_first_line[0],
+                        *li_subsequent_lines,
+                    ]
+                else:
+                    lines = textwrap.wrap(
+                        translation,
+                        width=self.wrapwidth,
+                        break_long_words=False,
+                    )
+            translation = '\n'.join(lines)
+        elif self._inside_pblock:
             # wrap paragraphs fitting with markdownlint
             if self._codespan_inside_current_msgid:
                 # fix codespans wrapping
-                lines = fixwrap_codespans(translation.split('\n'))
+                lines = fixwrap_codespans(
+                    translation.split('\n'),
+                    width=self.wrapwidth,
+                )
             else:
-                lines = textwrap.wrap(translation, width=80)
-            for line in lines:
-                self._current_line += '%s\n' % polib.unescape(line)
-        else:
-            self._current_line += polib.unescape(translation)
+                lines = textwrap.wrap(
+                    translation,
+                    width=self.wrapwidth,
+                    break_long_words=False,
+                )
+            translation = '\n'.join(lines) + '\n'
+        self._current_line += polib.unescape(translation)
+
         self._current_msgid = ''
         self._current_msgctxt = None
 
@@ -310,6 +349,9 @@ class Po2Md:
             if not self._inside_liblock:
                 self._save_current_line()
             self._inside_pblock = False
+            if self._inside_quoteblock:
+                self._current_line = '>'
+                self._save_current_line()
         elif block.value == md4c.BlockType.CODE:
             self._save_current_msgid()
             self._inside_codeblock = False
@@ -382,7 +424,9 @@ class Po2Md:
             self._current_line += '\n%s' % thead_separator
             self._save_current_line()
         elif block.value == md4c.BlockType.QUOTE:
-            self._current_line += '> '
+            if self._outputlines[-1] == '>':
+                self._outputlines.pop()
+            self._save_current_line()
         elif block.value == md4c.BlockType.TABLE:
             self._save_current_line()
         elif block.value == md4c.BlockType.DOC:
@@ -555,6 +599,7 @@ def pofile_to_markdown(
     md_encoding='utf-8',
     po_encoding=None,
     command_aliases={},
+    wrapwidth=80,
     **kwargs,
 ):
     r"""Translate Markdown content or a file using pofiles for message replacing.
@@ -584,6 +629,7 @@ def pofile_to_markdown(
             instead of ``<!-- mdpo-enable -->``, you can pass the dictionaries
             ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
             parameter.
+        wrapwidth (int): Maximum width used rendering the Markdown output.
 
     Returns:
         str: Markdown output file with translated content.
@@ -593,6 +639,7 @@ def pofile_to_markdown(
         ignore=ignore,
         po_encoding=po_encoding,
         command_aliases=command_aliases,
+        wrapwidth=wrapwidth,
         **kwargs,
     ).translate(
         filepath_or_content,

@@ -52,6 +52,11 @@ def build_parser():
              ' specified at this parameter.', metavar='PATH',
     )
     parser.add_argument(
+        '-w', '--wrapwidth', dest='wrapwidth', default=80, type=int,
+        help='Maximum width rendering the Markdown output.',
+        metavar='N',
+    )
+    parser.add_argument(
         '--md-encoding', dest='md_encoding', default='utf-8',
         help='Markdown content encoding.', metavar='<ENCODING>',
     )
@@ -97,6 +102,7 @@ def run(args=[]):
         md_encoding=opts.md_encoding,
         po_encoding=opts.po_encoding,
         command_aliases=opts.command_aliases,
+        wrapwidth=opts.wrapwidth,
     )
 
     if not opts.quiet and not opts.save:
