@@ -228,15 +228,15 @@ class Po2Md:
                         width=self.wrapwidth - 2,
                         break_long_words=False,
                         max_lines=4,
-                    )
+                    )[0]
                     li_subsequent_lines = textwrap.wrap(
-                        translation[len(li_first_line[0]):],
+                        translation[len(li_first_line):],
                         width=self.wrapwidth,
                         break_long_words=False,
                     )
                     li_subsequent_lines[0] = li_subsequent_lines[0].lstrip()
                     lines = [
-                        li_first_line[0],
+                        li_first_line,
                         *li_subsequent_lines,
                     ]
                 else:
@@ -394,11 +394,17 @@ class Po2Md:
                 self._current_line += '|'
                 self._save_current_line()
         elif block.value == md4c.BlockType.THEAD:
-            self._current_line += '|'
-
             # build thead separator
-            thead_separator = '| '
-            _thead_split = re.split(r'[^\\](\|)', self._current_line)
+            thead_separator = ''
+            if self._inside_quoteblock:
+                _thead_split = re.split(r'[^\\](\|)', self._current_line)
+                self._current_line += '|'
+                thead_separator += '> '
+            else:
+                self._current_line += '|'
+                _thead_split = re.split(r'[^\\](\|)', self._current_line)
+            thead_separator += '| '
+
             for i, title in enumerate(_thead_split):
                 if (i % 2) != 0 or i > len(_thead_split) - 2:
                     continue

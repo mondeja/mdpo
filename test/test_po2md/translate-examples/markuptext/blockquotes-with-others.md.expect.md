@@ -9,3 +9,9 @@
 > *Todo* va de acuerdo con el **plan**.
 
 > Otro bloque de cita
+
+> | Sintaxis | Descripción | Estilo | A |
+> | ----- | :------- | ----------: | :----: |
+> | Encabezado | Título | Foo | B |
+> | Párrafo | Texto | Bar | C |
+
