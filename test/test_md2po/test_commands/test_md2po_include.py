@@ -3,13 +3,19 @@ import pytest
 from mdpo.md2po import markdown_to_pofile
 
 
-def test_include_comment():
-    content = '''<!-- mdpo-include This comment must be included -->
+@pytest.mark.parametrize(
+    ('command', 'command_aliases'), (
+        ('mdpo-include', {}),
+        ('this-message-also', {'this-message-also': 'include'}),
+    ),
+)
+def test_include_comment(command, command_aliases):
+    content = f'''<!-- {command} This comment must be included -->
 Some text that needs to be clarified
 
 Some text without comment
 '''
-    pofile = markdown_to_pofile(content)
+    pofile = markdown_to_pofile(content, command_aliases=command_aliases)
     assert pofile.__unicode__() == '''#
 msgid ""
 msgstr ""
@@ -25,9 +31,18 @@ msgstr ""
 '''
 
 
-def test_include_comment_without_value():
+@pytest.mark.parametrize(
+    ('command', 'command_aliases'), (
+        ('mdpo-include', {}),
+        ('this-message-also', {'this-message-also': 'include'}),
+    ),
+)
+def test_include_comment_without_value(command, command_aliases):
     with pytest.raises(ValueError):
-        markdown_to_pofile('<!-- mdpo-include -->')
+        markdown_to_pofile(
+            f'<!-- {command} -->',
+            command_aliases=command_aliases,
+        )
 
 
 def test_include_comment_with_extracted():

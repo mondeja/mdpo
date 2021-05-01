@@ -1,8 +1,16 @@
+import pytest
+
 from mdpo.po2md import pofile_to_markdown
 
 
-def test_context(tmp_file):
-    markdown_input = '''<!-- mdpo-context month -->
+@pytest.mark.parametrize(
+    ('command', 'command_aliases'), (
+        ('mdpo-context', {}),
+        ('contextualization', {'contextualization': 'context'}),
+    ),
+)
+def test_context(command, command_aliases, tmp_file):
+    markdown_input = f'''<!-- {command} month -->
 May
 
 <!-- mdpo-context might -->
@@ -25,10 +33,20 @@ msgstr "Quizás"
 '''
 
     with tmp_file(pofile_content, '.po') as po_filepath:
-        output = pofile_to_markdown(markdown_input, po_filepath)
+        output = pofile_to_markdown(
+            markdown_input,
+            po_filepath,
+            command_aliases=command_aliases,
+        )
     assert output == markdown_output
 
 
-def test_context_without_value():
-    # not raises Error, is ignored
-    assert pofile_to_markdown('<!-- mdpo-context -->', '') == ''
+@pytest.mark.parametrize(
+    ('command', 'command_aliases'), (
+        ('mdpo-context', {}),
+        ('contextualization', {'contextualization': 'context'}),
+    ),
+)
+def test_context_without_value(command, command_aliases):
+    # does not raises error, is ignored
+    assert pofile_to_markdown(f'<!-- {command} -->', '') == ''

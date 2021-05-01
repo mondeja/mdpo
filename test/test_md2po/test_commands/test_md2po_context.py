@@ -3,14 +3,20 @@ import pytest
 from mdpo.md2po import markdown_to_pofile
 
 
-def test_context():
-    content = '''<!-- mdpo-context month -->
+@pytest.mark.parametrize(
+    ('command', 'command_aliases'), (
+        ('mdpo-context', {}),
+        ('contextualization', {'contextualization': 'context'}),
+    ),
+)
+def test_context(command, command_aliases):
+    content = f'''<!-- mdpo-context month -->
 May
 
-<!-- mdpo-context might -->
+<!-- {command} might -->
 May
 '''
-    pofile = markdown_to_pofile(content)
+    pofile = markdown_to_pofile(content, command_aliases=command_aliases)
     assert pofile.__unicode__() == '''#
 msgid ""
 msgstr ""
@@ -25,6 +31,15 @@ msgstr ""
 '''
 
 
-def test_context_without_value():
+@pytest.mark.parametrize(
+    ('command', 'command_aliases'), (
+        ('mdpo-context', {}),
+        ('contextualization', {'contextualization': 'context'}),
+    ),
+)
+def test_context_without_value(command, command_aliases):
     with pytest.raises(ValueError):
-        markdown_to_pofile('<!-- mdpo-context -->')
+        markdown_to_pofile(
+            f'<!-- {command} -->',
+            command_aliases=command_aliases,
+        )

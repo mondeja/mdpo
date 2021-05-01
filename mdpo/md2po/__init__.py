@@ -5,7 +5,10 @@ import os
 import md4c
 import polib
 
-from mdpo.command import parse_mdpo_html_command
+from mdpo.command import (
+    normalize_mdpo_command_aliases,
+    parse_mdpo_html_command,
+)
 from mdpo.io import filter_paths, to_glob_or_content
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import find_entry_in_entries, po_escaped_string
@@ -33,6 +36,9 @@ class Md2Po:
 
         self.wrapwidth = kwargs.get('wrapwidth', 78)
         self.ignore_msgids = kwargs.get('ignore_msgids', [])
+        self.command_aliases = normalize_mdpo_command_aliases(
+            kwargs.get('command_aliases', {}),
+        )
 
         self.mark_not_found_as_obsolete = kwargs.get(
             'mark_not_found_as_obsolete', True,
@@ -284,43 +290,48 @@ class Md2Po:
         self._current_msgctxt = None
 
     def _process_command(self, text):
-        command, comment = parse_mdpo_html_command(text)
-        if command is None:
+        original_command, comment = parse_mdpo_html_command(text)
+        if original_command is None:
             return
 
-        if command == 'disable-next-line':
+        try:
+            command = self.command_aliases[original_command]
+        except KeyError:  # not custom command
+            command = original_command
+
+        if command == 'mdpo-disable-next-line':
             self._disable_next_line = True
-        elif command == 'disable':
+        elif command == 'mdpo-disable':
             self._disable = True
-        elif command == 'enable':
+        elif command == 'mdpo-enable':
             self._disable = False
-        elif command == 'enable-next-line':
+        elif command == 'mdpo-enable-next-line':
             self._enable_next_line = True
-        elif command == 'translator':
+        elif command == 'mdpo-translator':
             if not comment:
                 raise ValueError(
                     'You need to specify a string for the'
                     ' extracted comment with the command'
-                    ' \'mdpo-translator\'.',
+                    f' \'{original_command}\'.',
                 )
-            self._current_tcomment = comment.strip(' ')
-        elif command == 'context':
+            self._current_tcomment = comment.rstrip()
+        elif command == 'mdpo-context':
             if not comment:
                 raise ValueError(
                     'You need to specify a string for the'
-                    ' context with the command \'mdpo-context\'.',
+                    f' context with the command \'{original_command}\'.',
                 )
-            self._current_msgctxt = comment.strip(' ')
-        elif command == 'include-codeblock':
+            self._current_msgctxt = comment.rstrip()
+        elif command == 'mdpo-include-codeblock':
             self._include_next_codeblock = True
-        elif command == 'include':
+        elif command == 'mdpo-include':
             if not comment:
                 raise ValueError(
                     'You need to specify a message for the'
                     ' comment to include with the command'
-                    ' \'mdpo-include\'.',
+                    f' \'{original_command}\'.',
                 )
-            self._current_msgid = comment.strip(' ')
+            self._current_msgid = comment.rstrip()
             self._save_current_msgid()
 
     def enter_block(self, block, details):
@@ -563,11 +574,23 @@ class Md2Po:
 
 
 def markdown_to_pofile(
-    glob_or_content, ignore=[], msgstr='', po_filepath=None, save=False,
-    mo_filepath=None, plaintext=False, wrapwidth=78,
-    mark_not_found_as_obsolete=True, ignore_msgids=[],
-    extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS, po_encoding=None,
-    md_encoding='utf-8', xheaders=False, include_codeblocks=False, **kwargs,
+    glob_or_content,
+    ignore=[],
+    msgstr='',
+    po_filepath=None,
+    save=False,
+    mo_filepath=None,
+    plaintext=False,
+    wrapwidth=78,
+    mark_not_found_as_obsolete=True,
+    extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
+    po_encoding=None,
+    md_encoding='utf-8',
+    xheaders=False,
+    include_codeblocks=False,
+    ignore_msgids=[],
+    command_aliases={},
+    **kwargs,
 ):
     """Extracts all the msgids from a string of Markdown content or a group of
     files.
@@ -618,6 +641,12 @@ def markdown_to_pofile(
             of code. Equivalent to append ``<!-- mdpo-include-codeblock -->``
             command before each code block.
         ignore_msgids (list): List of msgids ot ignore from being extracted.
+        command_aliases (dict): Mapping of aliases to use custom mdpo command
+            names in comments. The ``mdpo-`` prefix in command names resolution
+            is optional. For example, if you want to use ``<!-- mdpo-on -->``
+            instead of ``<!-- mdpo-enable -->``, you can pass the dictionaries
+            ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
+            parameter.
 
     Examples:
         >>> content = 'Some text with `inline code`'
@@ -635,12 +664,22 @@ def markdown_to_pofile(
         :class:`polib.POFile` Pofile instance with new msgids included.
     """
     return Md2Po(
-        glob_or_content, ignore=ignore, msgstr=msgstr, plaintext=plaintext,
-        wrapwidth=wrapwidth, ignore_msgids=ignore_msgids,
+        glob_or_content,
+        ignore=ignore,
+        msgstr=msgstr,
+        plaintext=plaintext,
+        wrapwidth=wrapwidth,
         mark_not_found_as_obsolete=mark_not_found_as_obsolete,
-        extensions=extensions, xheaders=xheaders,
-        include_codeblocks=include_codeblocks, **kwargs,
+        extensions=extensions,
+        xheaders=xheaders,
+        include_codeblocks=include_codeblocks,
+        ignore_msgids=ignore_msgids,
+        command_aliases=command_aliases,
+        **kwargs,
     ).extract(
-        po_filepath=po_filepath, save=save, mo_filepath=mo_filepath,
-        po_encoding=po_encoding, md_encoding=md_encoding,
+        po_filepath=po_filepath,
+        save=save,
+        mo_filepath=mo_filepath,
+        po_encoding=po_encoding,
+        md_encoding=md_encoding,
     )

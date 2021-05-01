@@ -9,7 +9,10 @@ from html.parser import HTMLParser
 import md4c
 import polib
 
-from mdpo.command import parse_mdpo_html_command
+from mdpo.command import (
+    normalize_mdpo_command_aliases,
+    parse_mdpo_html_command,
+)
 from mdpo.html import get_html_attrs_tuple_attr, html_attrs_tuple_to_string
 from mdpo.io import filter_paths, to_file_content_if_is_file
 from mdpo.polib import *  # noqa
@@ -24,10 +27,18 @@ ALIGNMENT_CHARS = ['\n', ' ', '\t', '\r']
 
 class MdPo2HTML(HTMLParser):
     def __init__(
-        self, pofiles, ignore=[], merge_adjacent_markups=False,
-        code_tags=['code'], bold_tags=['b', 'strong'],
-        italic_tags=['em', 'i'], link_tags=['a'], image_tags=['img'],
-        ignore_grouper_tags=['div', 'hr'], po_encoding=None,
+        self,
+        pofiles,
+        ignore=[],
+        merge_adjacent_markups=False,
+        code_tags=['code'],
+        bold_tags=['b', 'strong'],
+        italic_tags=['em', 'i'],
+        link_tags=['a'],
+        image_tags=['img'],
+        ignore_grouper_tags=['div', 'hr'],
+        po_encoding=None,
+        command_aliases={},
     ):
         self.pofiles = [
             polib.pofile(pofilepath, encoding=po_encoding) for pofilepath in
@@ -46,6 +57,9 @@ class MdPo2HTML(HTMLParser):
         self._disable_next_line = False
         self._enable_next_line = False
         self.disabled_entries = []
+
+        # custom mdpo command resolution
+        self.command_aliases = normalize_mdpo_command_aliases(command_aliases)
 
         # lazy translators mode
         self.merge_adjacent_markups = merge_adjacent_markups
@@ -368,28 +382,38 @@ class MdPo2HTML(HTMLParser):
         if self.replacer:
             self.replacer.append(('comment', data, None))
         else:
-            data_as_comment = '<!--%s-->' % data
-            command, comment = parse_mdpo_html_command(data_as_comment)
+            data_as_comment = f'<!--{data}-->'
+            command, comment = parse_mdpo_html_command(
+                data_as_comment,
+            )
             if command is None:
                 self.output += data_as_comment
             else:
                 self._remove_lastline_from_output_if_empty()
-                if command == 'disable-next-line':
+
+                try:
+                    command = self.command_aliases[command]
+                except KeyError:  # not custom command
+                    pass
+
+                if command == 'mdpo-disable-next-line':
                     self._disable_next_line = True
-                elif command == 'disable':
+                elif command == 'mdpo-disable':
                     self._disable = True
-                elif command == 'enable':
+                elif command == 'mdpo-enable':
                     self._disable = False
-                elif command == 'enable-next-line':
+                elif command == 'mdpo-enable-next-line':
                     self._enable_next_line = True
-                elif command == 'context' and comment:
-                    self._current_msgctxt = comment.strip(' ')
-                elif command == 'include-codeblock':
+                elif command == 'mdpo-context' and comment:
+                    self._current_msgctxt = comment.strip()
+                elif command == 'mdpo-include-codeblock':
                     warnings.warn(
-                        'Code blocks translations is not supported'
+                        'Code blocks translations are not supported'
                         ' by mdpo2html implementation.',
                         SyntaxWarning,
                     )
+                else:
+                    self.output += data_as_comment
 
     def translate(self, filepath_or_content, save=None, html_encoding='utf-8'):
         content = to_file_content_if_is_file(
@@ -421,8 +445,14 @@ class MdPo2HTML(HTMLParser):
 
 
 def markdown_pofile_to_html(
-    filepath_or_content, pofiles, ignore=[], save=None,
-    po_encoding=None, html_encoding='utf-8', **kwargs,
+    filepath_or_content,
+    pofiles,
+    ignore=[],
+    save=None,
+    po_encoding=None,
+    html_encoding='utf-8',
+    command_aliases={},
+    **kwargs,
 ):
     r"""Produces a translated HTML file given a previous HTML file (created by a
     Markdown-to-HTML processor) and a set of pofiles as reference for msgstrs.
@@ -436,11 +466,17 @@ def markdown_pofile_to_html(
         save (str): If you pass this parameter as a path to one HTML file,
             even if does not exists, will be saved in the path the output of
             the function.
-        md_encoding (str): HTML content encoding.
+        html_encoding (str): HTML content encoding.
         po_encoding (str): PO files encoding. If you need different encodings
             for each file, you must define it in the "Content-Type" field of
             each PO file metadata, in the form
             ``"Content-Type: text/plain; charset=<ENCODING>\n"``.
+        command_aliases (dict): Mapping of aliases to use custom mdpo command
+            names in comments. The ``mdpo-`` prefix in command names resolution
+            is optional. For example, if you want to use ``<!-- mdpo-on -->``
+            instead of ``<!-- mdpo-enable -->``, you can pass the dictionaries
+            ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
+            parameter.
 
     .. rubric:: Known limitations:
 
@@ -452,5 +488,13 @@ def markdown_pofile_to_html(
         str: HTML output translated version of the given file.
     """
     return MdPo2HTML(
-        pofiles, ignore=ignore, po_encoding=po_encoding, **kwargs,
-    ).translate(filepath_or_content, save=save, html_encoding=html_encoding)
+        pofiles,
+        ignore=ignore,
+        po_encoding=po_encoding,
+        command_aliases=command_aliases,
+        **kwargs,
+    ).translate(
+        filepath_or_content,
+        save=save,
+        html_encoding=html_encoding,
+    )

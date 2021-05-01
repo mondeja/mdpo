@@ -7,7 +7,10 @@ import textwrap
 import md4c
 import polib
 
-from mdpo.command import parse_mdpo_html_command
+from mdpo.command import (
+    normalize_mdpo_command_aliases,
+    parse_mdpo_html_command,
+)
 from mdpo.io import filter_paths, to_file_content_if_is_file
 from mdpo.md import (
     escape_links_titles,
@@ -44,6 +47,10 @@ class Po2Md:
 
         self.translations = None
         self.translations_with_msgctxt = None
+
+        self.command_aliases = normalize_mdpo_command_aliases(
+            kwargs.get('command_aliases', {}),
+        )
 
         self.bold_start_string = kwargs.get('bold_start_string', '**')
         self.bold_start_string_escaped = po_escaped_string(
@@ -141,16 +148,21 @@ class Po2Md:
         if command is None:
             return
 
-        if command == 'disable-next-line':
+        try:
+            command = self.command_aliases[command]
+        except KeyError:  # not custom command
+            pass
+
+        if command == 'mdpo-disable-next-line':
             self._disable_next_line = True
-        elif command == 'disable':
+        elif command == 'mdpo-disable':
             self._disable = True
-        elif command == 'enable':
+        elif command == 'mdpo-enable':
             self._disable = False
-        elif command == 'enable-next-line':
+        elif command == 'mdpo-enable-next-line':
             self._enable_next_line = True
-        elif command == 'context' and comment:
-            self._current_msgctxt = comment.strip(' ')
+        elif command == 'mdpo-context' and comment:
+            self._current_msgctxt = comment.rstrip()
 
     def _escape_translation(self, text):
         # escape '"' characters inside links and image titles
@@ -222,7 +234,9 @@ class Po2Md:
         self._aimg_title_inside_current_msgid = False
 
     def _save_current_line(self):
-        self._outputlines.append(self._current_line.rstrip(' '))
+        # strip all spaces according to unicodedata database ignoring newlines,
+        # see https://docs.python.org/3/library/stdtypes.html#str.splitlines
+        self._outputlines.append(self._current_line.rstrip(' \v\x0b\f\x0c'))
         self._current_line = ''
 
     def enter_block(self, block, details):
@@ -534,8 +548,14 @@ class Po2Md:
 
 
 def pofile_to_markdown(
-    filepath_or_content, pofiles, ignore=[],
-    save=None, md_encoding='utf-8', po_encoding=None, **kwargs,
+    filepath_or_content,
+    pofiles,
+    ignore=[],
+    save=None,
+    md_encoding='utf-8',
+    po_encoding=None,
+    command_aliases={},
+    **kwargs,
 ):
     r"""Translate Markdown content or a file using pofiles for message replacing.
 
@@ -558,13 +578,24 @@ def pofile_to_markdown(
             for each file, you must define it in the "Content-Type" field of
             each PO file metadata, in the form
             ``"Content-Type: text/plain; charset=<ENCODING>\n"``.
+        command_aliases (dict): Mapping of aliases to use custom mdpo command
+            names in comments. The ``mdpo-`` prefix in command names resolution
+            is optional. For example, if you want to use ``<!-- mdpo-on -->``
+            instead of ``<!-- mdpo-enable -->``, you can pass the dictionaries
+            ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
+            parameter.
 
     Returns:
         str: Markdown output file with translated content.
     """
     return Po2Md(
-        pofiles, ignore=ignore, po_encoding=po_encoding,
+        pofiles,
+        ignore=ignore,
+        po_encoding=po_encoding,
+        command_aliases=command_aliases,
         **kwargs,
     ).translate(
-        filepath_or_content, save=save, md_encoding=md_encoding,
+        filepath_or_content,
+        save=save,
+        md_encoding=md_encoding,
     )

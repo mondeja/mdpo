@@ -1,5 +1,7 @@
 """Text utilities for mdpo."""
 
+PYTHON_VERSION = ()
+
 
 def max_char_in_a_row(char, text):
     """Returns the maximum numbers of characters in a row found inside a string.
@@ -78,3 +80,25 @@ def striplastline(text):
         str: Text wihout their last line.
     """
     return '\n'.join(text.split('\n')[:-1])
+
+
+def removeprefix(text, prefix):
+    """Removes a prefix from a string.
+
+    If the string starts with the prefix string, return string[len(prefix):].
+    Otherwise, return a copy of the original string. This function has been
+    added in Python3.9 as the builtin `str.removepreffix`, but is defined here
+    to support lower versions of the language.
+
+    Args:
+        text (str): Value whose prefix will be removed.
+        prefix (str): Prefix to remove.
+
+    Returns:
+        str: Text without the prefix, if that prefix exists in the text.
+    """
+    if hasattr(str, 'removeprefix'):
+        return text.removeprefix(prefix)
+    if text.startswith(prefix):
+        return text[len(prefix):]
+    return text

@@ -5,7 +5,12 @@
 import argparse
 import sys
 
-from mdpo.cli import add_common_cli_arguments, parse_list_cli_argument
+from mdpo.cli import (
+    add_common_cli_first_arguments,
+    add_common_cli_latest_arguments,
+    parse_command_aliases_cli_argument,
+    parse_list_cli_argument,
+)
 from mdpo.mdpo2html import markdown_pofile_to_html
 
 
@@ -17,7 +22,7 @@ DESCRIPTION = (
 
 def build_parser():
     parser = argparse.ArgumentParser(description=DESCRIPTION, add_help=False)
-    add_common_cli_arguments(parser)
+    add_common_cli_first_arguments(parser)
     parser.add_argument(
         'filepath_or_content', metavar='FILEPATH_OR_CONTENT',
         nargs='*',
@@ -52,6 +57,7 @@ def build_parser():
              ' charset=<ENCODING>\\n".',
         metavar='<ENCODING>',
     )
+    add_common_cli_latest_arguments(parser)
     return parser
 
 
@@ -68,6 +74,9 @@ def parse_options(args):
         opts.filepath_or_content = opts.filepath_or_content[0]
     if opts.ignore:
         opts.ignore = parse_list_cli_argument(opts.ignore)
+    opts.command_aliases = parse_command_aliases_cli_argument(
+        opts.command_aliases,
+    )
 
     return opts
 
@@ -80,6 +89,7 @@ def run(args=[]):
         ignore=opts.ignore, save=opts.save,
         po_encoding=opts.po_encoding,
         html_encoding=opts.html_encoding,
+        command_aliases=opts.command_aliases,
     )
 
     if not opts.quiet and not opts.save:

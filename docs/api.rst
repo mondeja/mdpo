@@ -2,6 +2,8 @@
 Public mdpo APIs
 ****************
 
+.. _md2po-api:
+
 md2po
 =====
 

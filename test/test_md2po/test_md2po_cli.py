@@ -306,3 +306,37 @@ msgstr ""
     assert exitcode == 0
     assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output
+
+
+@pytest.mark.parametrize('arg', ['--command-alias'])
+def test_command_aliases(capsys, arg, tmp_file):
+    markdown_content = '''<!-- \\:off -->
+This should be ignored.
+
+<!-- mdpo-on -->
+
+This should be included.
+
+<!-- \\:off -->
+
+This should be also ignored.
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "This should be included."
+msgstr ""
+'''
+
+    pofile, exitcode = run([
+        markdown_content,
+        arg, 'mdpo-on:mdpo-enable',
+        arg, '\\:off:mdpo-disable',
+    ])
+    out, err = capsys.readouterr()
+
+    assert exitcode == 0
+    assert pofile.__unicode__() == expected_output
+    assert striplastline(out) == expected_output
