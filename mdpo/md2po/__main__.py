@@ -18,7 +18,7 @@ from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 DESCRIPTION = (
     'Utility like xgettext to extract Markdown content dumping it'
-    ' inside pofiles.'
+    ' inside PO files.'
 )
 
 

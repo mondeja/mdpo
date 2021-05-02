@@ -1,4 +1,4 @@
-"""Markdown to pofiles extractor according to mdpo specification."""
+"""Markdown to PO files extractor according to mdpo specification."""
 
 import os
 

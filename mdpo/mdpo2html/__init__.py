@@ -1,4 +1,4 @@
-"""HTML-produced-from-Markdown files translator using pofiles as reference."""
+"""HTML-produced-from-Markdown files translator using PO files as reference."""
 
 import glob
 import html

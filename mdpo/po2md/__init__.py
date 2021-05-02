@@ -1,4 +1,4 @@
-"""Markdown files translator using pofiles as reference."""
+"""Markdown files translator using PO files as reference."""
 
 import glob
 import re
@@ -690,7 +690,7 @@ def pofile_to_markdown(
     wrapwidth=80,
     **kwargs,
 ):
-    r"""Translate Markdown content or a file using pofiles for message replacing.
+    r"""Translate Markdown content or a file using PO files for message replacing.
 
     This implementation reproduces the same valid Markdown output, given the
     provided AST, with replaced translations, but doesn't rebuilds the same

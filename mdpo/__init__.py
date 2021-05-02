@@ -7,7 +7,7 @@ from mdpo.po2md import pofile_to_markdown
 
 __version__ = '0.3.30'
 __title__ = 'mdpo'
-__description__ = ('Markdown file translation utilities using pofiles')
+__description__ = ('Markdown file translation utilities using PO files')
 __all__ = (
     'markdown_to_pofile',
     'pofile_to_markdown',
