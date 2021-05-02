@@ -17,6 +17,74 @@ from mdpo.text import min_not_max_chars_in_a_row
 
 
 class Md2Po:
+    __slots__ = (
+        'filepaths',
+        'content',
+        'pofile',
+        'msgstr',
+        'found_entries',
+        'disabled_entries',
+        'wrapwidth',
+        'ignore_msgids',
+        'command_aliases',
+        'mark_not_found_as_obsolete',
+        'extensions',
+        'plaintext',
+        'include_codeblocks',
+        'xheaders',
+
+        '_current_msgid',
+        '_current_tcomment',
+        '_current_msgctxt',
+
+        '_disable',
+        '_disable_next_line',
+        '_enable_next_line',
+        '_include_next_codeblock',
+        '_include_xheaders',
+
+        '_enterspan_replacer',
+        '_leavespan_replacer',
+
+        'bold_start_string',
+        'bold_start_string_escaped',
+        'bold_end_string',
+        'bold_end_string_escaped',
+        'italic_start_string',
+        'italic_start_string_escaped',
+        'italic_end_string',
+        'italic_end_string_escaped',
+        'code_start_string',
+        'code_start_string_escaped',
+        'code_end_string',
+        'code_end_string_escaped',
+        'link_start_string',
+        'link_end_string',
+        'strikethrough_start_string',
+        'strikethrough_end_string',
+        'latexmath_start_string',
+        'latexmath_end_string',
+        'latexmathdisplay_start_string',
+        'latexmathdisplay_end_string',
+        'wikilink_start_string',
+        'wikilink_end_string',
+        'underline_start_string',
+        'underline_end_string',
+
+        '_inside_uspan',
+        '_inside_htmlblock',
+        '_inside_codeblock',
+        '_inside_pblock',
+        '_inside_liblock',
+        '_inside_codespan',
+        '_codespan_start_index',
+        '_codespan_backticks',
+        '_current_aspan_href',
+        '_current_wikilink_target',
+        '_current_imgspan',
+        '_uls_deep',
+    )
+
     def __init__(self, glob_or_content, **kwargs):
         is_glob, glob_or_content = to_glob_or_content(glob_or_content)
         if is_glob:
@@ -30,6 +98,7 @@ class Md2Po:
         self.pofile = None
         self.msgstr = kwargs.get('msgstr', '')
         self.found_entries = []
+        self.disabled_entries = []
         self._current_msgid = ''
         self._current_tcomment = None
         self._current_msgctxt = None
@@ -56,10 +125,11 @@ class Md2Po:
         self._disable = False
         self._disable_next_line = False
         self._enable_next_line = False
-        self.disabled_entries = []
 
         self._include_next_codeblock = False
-        self._include_xheaders = False
+
+        self.xheaders = None
+        _include_xheaders = False
 
         if not self.plaintext:
             self.bold_start_string = kwargs.get('bold_start_string', '**')
@@ -82,8 +152,6 @@ class Md2Po:
                 self.italic_end_string,
             )
 
-            self._bold_italic_context = False
-
             # codespans are built by a indetermined number of 'x' characters
             # so we take only the first
             self.code_start_string = kwargs.get('code_start_string', '`')[0]
@@ -99,8 +167,8 @@ class Md2Po:
             self.link_start_string = kwargs.get('link_start_string', '[')
             self.link_end_string = kwargs.get('link_end_string', ']')
 
-            self._include_xheaders = kwargs.get('xheaders', False)
-            if self._include_xheaders:
+            _include_xheaders = kwargs.get('xheaders', False)
+            if _include_xheaders:
                 self.xheaders = {
                     'x-mdpo-bold-start': self.bold_start_string,
                     'x-mdpo-bold-end': self.bold_end_string,
@@ -139,7 +207,7 @@ class Md2Po:
                 self._leavespan_replacer[md4c.SpanType.DEL] = \
                     self.strikethrough_end_string
 
-                if self._include_xheaders:
+                if _include_xheaders:
                     self.xheaders.update({
                         'x-mdpo-strikethrough-start':
                             self.strikethrough_start_string,
@@ -172,7 +240,7 @@ class Md2Po:
                 self._leavespan_replacer[md4c.SpanType.LATEXMATH_DISPLAY] = \
                     self.latexmathdisplay_end_string
 
-                if self._include_xheaders:
+                if _include_xheaders:
                     self.xheaders.update({
                         'x-mdpo-latexmath-start': self.latexmath_start_string,
                         'x-mdpo-latexmath-end': self.latexmath_end_string,
@@ -195,7 +263,7 @@ class Md2Po:
                 self._leavespan_replacer[md4c.SpanType.WIKILINK] = \
                     self.wikilink_end_string
 
-                if self._include_xheaders:
+                if _include_xheaders:
                     self.xheaders.update({
                         'x-mdpo-wikilink-start': self.wikilink_start_string,
                         'x-mdpo-wikilink-end': self.wikilink_end_string,
@@ -215,7 +283,7 @@ class Md2Po:
                 self._leavespan_replacer[md4c.SpanType.U] = \
                     self.underline_end_string
 
-                if self._include_xheaders:
+                if _include_xheaders:
                     self.xheaders.update({
                         'x-mdpo-underline-start': self.underline_start_string,
                         'x-mdpo-underline-end': self.underline_end_string,
@@ -563,7 +631,7 @@ class Md2Po:
                     else:
                         entry.obsolete = False
 
-        if self._include_xheaders:
+        if self.xheaders:
             self.pofile.metadata.update(self.xheaders)
 
         if save and _po_filepath:
