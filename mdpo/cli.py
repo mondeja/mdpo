@@ -41,10 +41,10 @@ def parse_escaped_pair_cli_argument(value):
     Returns:
         tuple: Parsed key-value pair.
     """
-    splits = re.split(ESCAPED_PAIR_RE, value)
+    splits = re.split(ESCAPED_PAIR_RE, value, maxsplit=1)
     if len(splits) == 1:
         raise ValueError()
-    return (splits[0] + splits[1][0], splits[2])
+    return ((splits[0] + splits[1][0]).replace(r'\\:', ':', 1), splits[2])
 
 
 def parse_command_aliases_cli_argument(command_aliases):
@@ -77,7 +77,7 @@ def parse_command_aliases_cli_argument(command_aliases):
             response[custom_command] = mdpo_command
         else:
             sys.stderr.write(
-                f"Multiple resolutions for '{custom_command}' passed to"
+                f"Multiple resolutions for '{custom_command}' alias passed to"
                 ' --command-alias arguments.\n',
             )
             sys.exit(1)
