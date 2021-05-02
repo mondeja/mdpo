@@ -11,7 +11,6 @@ repos:
       - id: trailing-whitespace
         name: trailing-whitespace
       - id: end-of-file-fixer
-        exclude: ^test/test_po2md/translate-examples/markuptext/(blockquotes-with-others)\.md\.expect\.md
         name: end-of-file-fixer
       - id: double-quote-string-fixer
         name: double-quote-string-fixer

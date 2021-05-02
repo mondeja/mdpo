@@ -45,19 +45,6 @@ def test_translate_markuptext(filename):
 
     assert output == expected_output
 
-    _previous_line_blank = False
-    for i, line in enumerate(output.splitlines()):
-        if _previous_line_blank:
-            if not line.strip():
-                assert False, (
-                    f'Found two followed blank lines ({i} and {i+1}) in file'
-                    f" '{filename}'"
-                )
-            _previous_line_blank = False
-        else:
-            if not line.strip():
-                _previous_line_blank = True
-
 
 @pytest.mark.parametrize(
     'filename', [EXAMPLES['markuptext']['filenames'][0]],

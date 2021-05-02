@@ -489,24 +489,16 @@ class Po2Md:
                 _thead_split = re.split(r'[^\\](\|)', self._current_line)
             thead_separator += '| '
 
+            _antepenultimate_thead_i = len(_thead_split) - 2
             for i, title in enumerate(_thead_split):
-                if (i % 2) != 0 or i > len(_thead_split) - 2:
+                if (i % 2) != 0 or i > _antepenultimate_thead_i:
                     continue
-                title_length = len(title)-3
-                if i == 0:
-                    title_length -= 1
-                title_length = max(3, title_length)
                 align = self._current_thead_aligns.pop(0)
-                if align in [0, 3]:
-                    thead_separator += '-'
-                else:
-                    thead_separator += ':'
-                thead_separator += ('-' * title_length)
+                thead_separator += '{}-{}'.format(
+                    '-' if align in [0, 3] else ':',
+                    '-' if align in [0, 1] else ':',
+                )
 
-                if align in [0, 1]:
-                    thead_separator += '-'
-                else:
-                    thead_separator += ':'
                 thead_separator += ' |'
                 if i < len(_thead_split) - 3:
                     thead_separator += ' '
@@ -518,7 +510,8 @@ class Po2Md:
                 self._outputlines.pop()
             self._save_current_line()
         elif block.value == md4c.BlockType.TABLE:
-            self._save_current_line()
+            if not self._inside_quoteblock:
+                self._save_current_line()
         elif block.value == md4c.BlockType.DOC:
             pass
         elif block.value == md4c.BlockType.HTML:
