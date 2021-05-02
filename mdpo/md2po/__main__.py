@@ -121,6 +121,8 @@ def build_parser():
         metavar='Key:Value',
         help='Custom metadata key-value pairs to include in the produced'
              ' PO file. This argument can be passed multiple times.'
+             ' If the file contains previous metadata fields, these will'
+             ' be updated preserving the values of the already defined.'
              ' For example, to define utf-8 encoding and Spanish language use'
              ' -d "Content-Type: text/plain; charset=utf-8" -d "Language: es"',
     )

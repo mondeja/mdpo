@@ -718,7 +718,9 @@ def markdown_to_pofile(
             instead of ``<!-- mdpo-enable -->``, you can pass the dictionaries
             ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
             parameter.
-        metadata (dict): Metadata to include in the produced PO file.
+        metadata (dict): Metadata to include in the produced PO file. If the
+            file contains previous metadata fields, these will be updated
+            preserving the values of the already defined.
 
     Examples:
         >>> content = 'Some text with `inline code`'
