@@ -16,10 +16,8 @@ Fenced code block with tildes
 
     Indented code block
 
-
 !!! note
 
     I'm coming from
     admonition Python-Markdown extension and I'm a note
     but you think that I'm an indented code block
-

@@ -5,7 +5,7 @@ from mdpo.mdpo2html import markdown_pofile_to_html
 from mdpo.po2md import pofile_to_markdown
 
 
-__version__ = '0.3.28'
+__version__ = '0.3.29'
 __title__ = 'mdpo'
 __description__ = ('Markdown file translation utilities using pofiles')
 __all__ = (

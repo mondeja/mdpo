@@ -19,11 +19,9 @@ This must be translated.
     markdown_output = '''    var hola = "mundo";
     var esto;
 
-
 Esto debe ser traducido.
 
     var thisCodeMustNotBeEdited = undefined;
-
 '''
 
     pofile_content = '''#

@@ -1,6 +1,5 @@
 import glob
 import os
-import random
 import tempfile
 
 import pytest
@@ -46,9 +45,22 @@ def test_translate_markuptext(filename):
 
     assert output == expected_output
 
+    _previous_line_blank = False
+    for i, line in enumerate(output.splitlines()):
+        if _previous_line_blank:
+            if not line.strip():
+                assert False, (
+                    f'Found two followed blank lines ({i} and {i+1}) in file'
+                    f" '{filename}'"
+                )
+            _previous_line_blank = False
+        else:
+            if not line.strip():
+                _previous_line_blank = True
+
 
 @pytest.mark.parametrize(
-    'filename', [random.choice(EXAMPLES['markuptext']['filenames'])],
+    'filename', [EXAMPLES['markuptext']['filenames'][0]],
 )
 def test_translate_save(filename):
     filepath_in = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)

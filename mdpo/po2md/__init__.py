@@ -436,9 +436,12 @@ class Po2Md:
                     indent,
                     details['fence_char']*3,
                 )
+
             self._save_current_line()
             if not self._inside_liblock:
-                self._save_current_line()
+                # prevent two newlines after indented code block
+                if 'fence_char' in details:
+                    self._save_current_line()
         elif block.value == md4c.BlockType.H:
             self._save_current_msgid()
             if not self._inside_quoteblock:
