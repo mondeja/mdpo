@@ -14,3 +14,13 @@ markdownlint romperá la regla MD013.
 - Un elemento de lista que excede el ancho máximo linteando y, debido a ello
 decidimos insertar un salto de línea para evitar romper la regla de linting
 markdown de largo de línea.
+
++ Este elemento de lista contiene un bloque de código dentro.
+   ```
+   codeblock
+   ```
+
+- **`make jslint`** Lintea el `código` <https://Javascript> (mira *Linteando*
+*abajo*).
+- **`make pylint`** Lintea el `código` <file://Python> (mira **Linteando**
+**arriba**).

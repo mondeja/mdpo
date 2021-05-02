@@ -31,3 +31,6 @@ msgstr "C"
 
 msgid "D"
 msgstr "D"
+
+msgid "Ordered list item with"
+msgstr "Elemento de lista ordenada con"

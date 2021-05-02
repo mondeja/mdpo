@@ -10,3 +10,6 @@ msgstr "Tarea resuelta."
 
 msgid "Another solved task."
 msgstr "Otra tarea resuelta."
+
+msgid "You need to add this hack:"
+msgstr "Necesitas añadir este hack:"

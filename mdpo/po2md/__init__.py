@@ -344,8 +344,19 @@ class Po2Md:
             self._inside_pblock = True
         elif block.value == md4c.BlockType.CODE:
             self._inside_codeblock = True
+            indent = ''
+
+            if self._inside_liblock:
+                self._save_current_msgid()
+                if self._current_line:
+                    self._save_current_line()
+                indent += '   ' * len(self._current_list_type)
+
             if 'fence_char' in details:
-                self._current_line += '%s' % (details['fence_char']*3)
+                self._current_line += '{}{}'.format(
+                    indent,
+                    details['fence_char']*3,
+                )
             if details['lang']:
                 self._current_line += details['lang'][0][1]
             if 'fence_char' not in details:
@@ -366,10 +377,11 @@ class Po2Md:
                     '   ' * (len(self._ol_marks) - 1),
                     self._ol_marks[-1][1],
                 )
+                self._current_list_type[-1][-1].append(False)
             else:
                 # inside UL
                 self._current_line += '{}{} '.format(
-                    '    ' * (len(self._ul_marks) - 1), self._ul_marks[-1],
+                    '   ' * (len(self._ul_marks) - 1), self._ul_marks[-1],
                 )
                 if details['is_task']:
                     self._current_line += '[%s] ' % details['task_mark']
@@ -413,10 +425,20 @@ class Po2Md:
             self._save_current_msgid()
             self._inside_codeblock = False
             self._inside_indented_codeblock = False
+
+            indent = ''
+            if self._inside_liblock:
+                indent += '   ' * len(self._current_list_type)
             if 'fence_char' in details:
-                self._current_line += '%s' % (details['fence_char']*3)
+                if self._inside_liblock:
+                    self._save_current_line()
+                self._current_line += '{}{}'.format(
+                    indent,
+                    details['fence_char']*3,
+                )
             self._save_current_line()
-            self._save_current_line()
+            if not self._inside_liblock:
+                self._save_current_line()
         elif block.value == md4c.BlockType.H:
             self._save_current_msgid()
             if not self._inside_quoteblock:
@@ -436,14 +458,14 @@ class Po2Md:
             self._current_list_type.pop()
             if self._inside_quoteblock:
                 self._current_line += '> '
-            if not self._ul_marks:
+            if not self._ul_marks and self._outputlines[-1]:
                 self._save_current_line()
         elif block.value == md4c.BlockType.OL:
             self._ol_marks.pop()
             self._current_list_type.pop()
             if self._inside_quoteblock:
                 self._current_line += '> '
-            if not self._ol_marks:
+            if not self._ol_marks and self._outputlines[-1]:
                 self._save_current_line()
         elif block.value in (md4c.BlockType.TH, md4c.BlockType.TD):
             self._save_current_msgid()
@@ -608,6 +630,11 @@ class Po2Md:
                     return
                 self._current_msgid += polib.escape(text)
             else:
+
+                if self._inside_liblock:
+                    indent = '   ' * len(self._current_list_type)
+                    if self._current_line[:len(indent)+1] != indent:
+                        self._current_line += indent
                 self._current_msgid += text
         else:
             self._process_command(text)

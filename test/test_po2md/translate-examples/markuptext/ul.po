@@ -40,3 +40,18 @@ msgstr ""
 "Un elemento de lista que excede el ancho máximo linteando y, debido a ello "
 "decidimos insertar un salto de línea para evitar romper la regla de linting "
 "markdown de largo de línea."
+
+msgid "This list element contains a codeblock inside."
+msgstr "Este elemento de lista contiene un bloque de código dentro."
+
+msgid ""
+"**`make jslint`** Lint [https://Javascript] `code` (see *Linting* *below*)."
+msgstr ""
+"**`make jslint`** Lintea el `código` [https://Javascript] (mira *Linteando*"
+" *abajo*)."
+
+msgid ""
+"**`make pylint`** Lint [file://Python] `code` (see **Linting** **above**)."
+msgstr ""
+"**`make pylint`** Lintea el `código` [file://Python] (mira **Linteando** "
+"**arriba**)."
