@@ -1,38 +1,6 @@
 import pytest
 
-from mdpo.cli import (
-    parse_command_aliases_cli_argument,
-    parse_escaped_pair_cli_argument,
-)
-
-
-@pytest.mark.parametrize(
-    ('text', 'expected_key', 'expected_value', 'expected_error'),
-    (
-        ('foo:bar', 'foo', 'bar', None),
-        ('foo:Bar:', 'foo', 'Bar:', None),
-        ('foo:Bar\\:', 'foo', 'Bar\\:', None),
-        (r'foo\\:Bar:baz', 'foo:Bar', 'baz', None),
-        (r'foo\\:Bar:baz\\', 'foo:Bar', r'baz\\', None),
-        # : at the beginning means escaped
-        (r':foo\\:Bar:baz\\', ':foo:Bar', r'baz\\', None),
-        ('foo', None, None, ValueError),
-        (':', None, None, ValueError),
-    ),
-)
-def test_parse_escaped_pair_cli_argument(
-    text,
-    expected_key,
-    expected_value,
-    expected_error,
-):
-    if expected_error:
-        with pytest.raises(expected_error):
-            parse_escaped_pair_cli_argument(text)
-    else:
-        key, value = parse_escaped_pair_cli_argument(text)
-        assert key == expected_key
-        assert value == expected_value
+from mdpo.cli import parse_command_aliases_cli_arguments
 
 
 @pytest.mark.parametrize(
@@ -70,7 +38,7 @@ def test_parse_escaped_pair_cli_argument(
         ),
     ),
 )
-def test_parse_command_aliases_cli_argument(
+def test_parse_command_aliases_cli_arguments(
     command_aliases,
     expected_response,
     expected_stderr,
@@ -78,10 +46,10 @@ def test_parse_command_aliases_cli_argument(
 ):
     if expected_stderr:
         with pytest.raises(SystemExit):
-            parse_command_aliases_cli_argument(command_aliases)
+            parse_command_aliases_cli_arguments(command_aliases)
         out, err = capsys.readouterr()
         assert expected_stderr in err
     else:
-        assert parse_command_aliases_cli_argument(
+        assert parse_command_aliases_cli_arguments(
             command_aliases,
         ) == expected_response

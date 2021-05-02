@@ -8,7 +8,7 @@ import sys
 from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
-    parse_command_aliases_cli_argument,
+    parse_command_aliases_cli_arguments,
     parse_list_cli_argument,
 )
 from mdpo.mdpo2html import markdown_pofile_to_html
@@ -74,7 +74,7 @@ def parse_options(args):
         opts.filepath_or_content = opts.filepath_or_content[0]
     if opts.ignore:
         opts.ignore = parse_list_cli_argument(opts.ignore)
-    opts.command_aliases = parse_command_aliases_cli_argument(
+    opts.command_aliases = parse_command_aliases_cli_arguments(
         opts.command_aliases,
     )
 

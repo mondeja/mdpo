@@ -31,7 +31,7 @@ class Md2Po:
         'extensions',
         'plaintext',
         'include_codeblocks',
-        'xheaders',
+        'metadata',
 
         '_current_msgid',
         '_current_tcomment',
@@ -41,7 +41,6 @@ class Md2Po:
         '_disable_next_line',
         '_enable_next_line',
         '_include_next_codeblock',
-        '_include_xheaders',
 
         '_enterspan_replacer',
         '_leavespan_replacer',
@@ -128,8 +127,7 @@ class Md2Po:
 
         self._include_next_codeblock = False
 
-        self.xheaders = None
-        _include_xheaders = False
+        self.metadata = {}
 
         if not self.plaintext:
             self.bold_start_string = kwargs.get('bold_start_string', '**')
@@ -168,8 +166,9 @@ class Md2Po:
             self.link_end_string = kwargs.get('link_end_string', ']')
 
             _include_xheaders = kwargs.get('xheaders', False)
+
             if _include_xheaders:
-                self.xheaders = {
+                self.metadata.update({
                     'x-mdpo-bold-start': self.bold_start_string,
                     'x-mdpo-bold-end': self.bold_end_string,
                     'x-mdpo-italic-start': self.italic_start_string,
@@ -178,7 +177,7 @@ class Md2Po:
                     'x-mdpo-code-end': self.code_end_string,
                     'x-mdpo-link-start': self.link_start_string,
                     'x-mdpo-link-end': self.link_end_string,
-                }
+                })
 
             self._enterspan_replacer = {
                 md4c.SpanType.STRONG: self.bold_start_string,
@@ -208,7 +207,7 @@ class Md2Po:
                     self.strikethrough_end_string
 
                 if _include_xheaders:
-                    self.xheaders.update({
+                    self.metadata.update({
                         'x-mdpo-strikethrough-start':
                             self.strikethrough_start_string,
                         'x-mdpo-strikethrough-end':
@@ -241,7 +240,7 @@ class Md2Po:
                     self.latexmathdisplay_end_string
 
                 if _include_xheaders:
-                    self.xheaders.update({
+                    self.metadata.update({
                         'x-mdpo-latexmath-start': self.latexmath_start_string,
                         'x-mdpo-latexmath-end': self.latexmath_end_string,
                         'x-mdpo-latexmathdisplay-start':
@@ -264,7 +263,7 @@ class Md2Po:
                     self.wikilink_end_string
 
                 if _include_xheaders:
-                    self.xheaders.update({
+                    self.metadata.update({
                         'x-mdpo-wikilink-start': self.wikilink_start_string,
                         'x-mdpo-wikilink-end': self.wikilink_end_string,
                     })
@@ -284,7 +283,7 @@ class Md2Po:
                     self.underline_end_string
 
                 if _include_xheaders:
-                    self.xheaders.update({
+                    self.metadata.update({
                         'x-mdpo-underline-start': self.underline_start_string,
                         'x-mdpo-underline-end': self.underline_end_string,
                     })
@@ -306,6 +305,9 @@ class Md2Po:
         self._current_aspan_href = None
         self._current_wikilink_target = None
         self._current_imgspan = {}
+
+        if 'metadata' in kwargs:
+            self.metadata.update(kwargs['metadata'])
 
         # ULs deep
         self._uls_deep = 0
@@ -631,8 +633,8 @@ class Md2Po:
                     else:
                         entry.obsolete = False
 
-        if self.xheaders:
-            self.pofile.metadata.update(self.xheaders)
+        if self.metadata:
+            self.pofile.metadata.update(self.metadata)
 
         if save and _po_filepath:
             self.pofile.save(fpath=_po_filepath)
@@ -658,6 +660,7 @@ def markdown_to_pofile(
     include_codeblocks=False,
     ignore_msgids=[],
     command_aliases={},
+    metadata={},
     **kwargs,
 ):
     """Extracts all the msgids from a string of Markdown content or a group of
@@ -715,6 +718,7 @@ def markdown_to_pofile(
             instead of ``<!-- mdpo-enable -->``, you can pass the dictionaries
             ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
             parameter.
+        metadata (dict): Metadata to include in the produced PO file.
 
     Examples:
         >>> content = 'Some text with `inline code`'
@@ -743,6 +747,7 @@ def markdown_to_pofile(
         include_codeblocks=include_codeblocks,
         ignore_msgids=ignore_msgids,
         command_aliases=command_aliases,
+        metadata=metadata,
         **kwargs,
     ).extract(
         po_filepath=po_filepath,

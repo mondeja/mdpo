@@ -8,8 +8,9 @@ import sys
 from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
-    parse_command_aliases_cli_argument,
+    parse_command_aliases_cli_arguments,
     parse_list_cli_argument,
+    parse_metadata_cli_arguments,
 )
 from mdpo.md2po import markdown_to_pofile
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
@@ -115,6 +116,14 @@ def build_parser():
         help='Path to a plain text file where all msgids to ignore from being'
              ' extracted are located, separated by newlines.',
     )
+    parser.add_argument(
+        '-d', '--metadata', dest='metadata', default=[], action='append',
+        metavar='Key:Value',
+        help='Custom metadata key-value pairs to include in the produced'
+             ' PO file. This argument can be passed multiple times.'
+             ' For example, to define utf-8 encoding and Spanish language use'
+             ' -d "Content-Type: text/plain; charset=utf-8" -d "Language: es"',
+    )
     add_common_cli_latest_arguments(parser)
     return parser
 
@@ -139,8 +148,11 @@ def parse_options(args=[]):
     else:
         opts.ignore_msgids = []
 
-    opts.command_aliases = parse_command_aliases_cli_argument(
+    opts.command_aliases = parse_command_aliases_cli_arguments(
         opts.command_aliases,
+    )
+    opts.metadata = parse_metadata_cli_arguments(
+        opts.metadata,
     )
 
     return opts
@@ -163,6 +175,7 @@ def run(args=[]):
         include_codeblocks=opts.include_codeblocks,
         ignore_msgids=opts.ignore_msgids,
         command_aliases=opts.command_aliases,
+        metadata=opts.metadata,
     )
     if isinstance(opts.wrapwidth, int):
         kwargs['wrapwidth'] = opts.wrapwidth

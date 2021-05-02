@@ -1,13 +1,10 @@
 """mdpo command line interface utilities."""
 
 import argparse
-import re
 import sys
 
 from mdpo import __version__
-
-
-ESCAPED_PAIR_RE = re.compile(r'([^\\]:)')  # ':' is the separator
+from mdpo.text import parse_escaped_pairs
 
 
 def parse_list_cli_argument(value, splitter=','):
@@ -27,27 +24,36 @@ def parse_list_cli_argument(value, splitter=','):
     return tuple(filter(None, value.split(splitter)))
 
 
-def parse_escaped_pair_cli_argument(value):
-    r"""Escapes a pair value separated by the character ':'.
+def parse_escaped_pairs_cli_argument(
+    pairs,
+    value_error_message,
+    key_error_message,
+):
+    """Parses a key argument made by key-value pairs.
 
-    The separator can be escaped using the character '\'.
+    If an error happens, shows an appropiate message and exists with code 1.
 
     Args:
-        value (str): String to be converted to a pair key-value.
-
-    Raises:
-        ValueError: The value doesn't contains an unescaped separator.
+        pairs (list): List of key-value pairs.
+        value_error_message (str): Error message schema shown when a pair
+            can't be parsed.
+        key_error_message (str): Error message schema shown when a key is
+            repeated.
 
     Returns:
-        tuple: Parsed key-value pair.
+        dict: Parsed key-value pairs.
     """
-    splits = re.split(ESCAPED_PAIR_RE, value, maxsplit=1)
-    if len(splits) == 1:
-        raise ValueError()
-    return ((splits[0] + splits[1][0]).replace(r'\\:', ':', 1), splits[2])
+    try:
+        return parse_escaped_pairs(pairs)
+    except ValueError as err:
+        sys.stderr.write(value_error_message.format(err.args[0]))
+        sys.exit(1)
+    except KeyError as err:
+        sys.stderr.write(key_error_message.format(err.args[0]))
+        sys.exit(1)
 
 
-def parse_command_aliases_cli_argument(command_aliases):
+def parse_command_aliases_cli_arguments(command_aliases):
     """Parse ``--command-alias`` argument values passed to CLIs.
 
     If a value can't be passed or a custom command is duplicated, writes an
@@ -59,29 +65,43 @@ def parse_command_aliases_cli_argument(command_aliases):
     Returns:
         dict: Command aliases mapping ni the format accepted by the API.
     """
-    response = {}
-    for alias_pair in command_aliases:
-        try:
-            custom_command, mdpo_command = parse_escaped_pair_cli_argument(
-                alias_pair,
-            )
-        except ValueError:
-            sys.stderr.write(
-                f"The value '{alias_pair}' passed to argument --command-alias"
-                " can't be parsed. Please, separate the pair "
-                "'<custom-command:mdpo-command>' with a ':' character.\n",
-            )
-            sys.exit(1)
+    return parse_escaped_pairs_cli_argument(
+        command_aliases,
+        (
+            "The value '{}' passed to argument --command-alias"
+            " can't be parsed. Please, separate the pair "
+            "'<custom-command:mdpo-command>' with a ':' character.\n"
+        ),
+        (
+            "Multiple resolutions for '{}' alias passed to"
+            ' --command-alias arguments.\n'
+        ),
+    )
 
-        if custom_command not in response:
-            response[custom_command] = mdpo_command
-        else:
-            sys.stderr.write(
-                f"Multiple resolutions for '{custom_command}' alias passed to"
-                ' --command-alias arguments.\n',
-            )
-            sys.exit(1)
-    return response
+
+def parse_metadata_cli_arguments(metadata):
+    """Parse ``--metadata`` argument values passed to CLIs.
+
+    If a value can't be passed or a metadata key is duplicated, writes an
+    appropiate error message to STDERR and exits with code 1.
+
+    Args:
+        metadata (list): Values taken by ``--metadata`` arguments.
+
+    Returns:
+        dict: Metadata mapping ni the format accepted by the API.
+    """
+    return parse_escaped_pairs_cli_argument(
+        metadata,
+        (
+            "The value '{}' passed to argument --metadata"
+            " can't be parsed. Please, separate the pair "
+            "'<key:value>' with a ':' character.\n"
+        ),
+        (
+            "Repeated key '{}' passed to --metadata arguments.\n"
+        ),
+    )
 
 
 def add_common_cli_first_arguments(parser):

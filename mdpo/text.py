@@ -1,5 +1,6 @@
 """Text utilities for mdpo."""
 
+import re
 import textwrap
 
 
@@ -67,6 +68,60 @@ def min_not_max_chars_in_a_row(char, text, default=1):
                 break
     else:
         response = default
+    return response
+
+
+def parse_escaped_pair(value, separator=':'):
+    r"""Escapes a pair key-value separated by a character.
+
+    The separator can be escaped using the character '\'.
+
+    Args:
+        value (str): String to be converted to a pair key-value.
+        separator (str): Separator to use for the split.
+
+    Raises:
+        ValueError: The value doesn't contains an unescaped valid separator.
+
+    Returns:
+        tuple: Parsed key-value pair.
+    """
+    regex = re.compile(fr'([^\\]{separator})')
+
+    splits = re.split(regex, value.lstrip(r'\\'), maxsplit=1)
+    if len(splits) == 1:
+        raise ValueError()
+    return (
+        (splits[0] + splits[1][0]).replace(rf'\\{separator}', separator, 1),
+        splits[2].lstrip(),
+    )
+
+
+def parse_escaped_pairs(pairs, separator=':'):
+    r"""Escapes multiples pairs key-value separated by a character.
+
+    The separator can be escaped using the character '\'.
+
+    Args:
+        pairs (list): List of texts to parse.
+        separator (str): Separator to use for the splits.
+
+    Raises:
+        ValueError: A value doesn't contains an unescaped valid separator.
+        KeyError: Repeated keys in pairs.
+
+    Returns:
+        dict: Key-value pairs.
+    """
+    response = {}
+    for pair in pairs:
+        try:
+            key, value = parse_escaped_pair(pair, separator=separator)
+        except ValueError:
+            raise ValueError(pair)
+        if key in response:
+            raise KeyError(key)
+        response[key] = value
     return response
 
 

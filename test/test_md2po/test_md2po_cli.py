@@ -285,8 +285,8 @@ msgstr ""
 '''
 
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output
+    assert pofile.__unicode__() == expected_output
 
 
 @pytest.mark.parametrize('arg', ['--ignore-msgids'])
@@ -304,20 +304,20 @@ msgstr ""
     out, err = capsys.readouterr()
 
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output
+    assert pofile.__unicode__() == expected_output
 
 
 @pytest.mark.parametrize('arg', ['--command-alias'])
 def test_command_aliases(capsys, arg, tmp_file):
-    markdown_content = '''<!-- \\:off -->
+    markdown_content = '''<!-- :off -->
 This should be ignored.
 
 <!-- mdpo-on -->
 
 This should be included.
 
-<!-- \\:off -->
+<!-- :off -->
 
 This should be also ignored.
 '''
@@ -338,5 +338,29 @@ msgstr ""
     out, err = capsys.readouterr()
 
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output
+    assert pofile.__unicode__() == expected_output
+
+
+@pytest.mark.parametrize('arg', ['-d', '--metadata'])
+def test_metadata(capsys, arg, tmp_file):
+    expected_output = '''#
+msgid ""
+msgstr ""
+"Language: es\\n"
+"Content-Type: text/plain; charset=utf-8\\n"
+
+msgid "Some content"
+msgstr ""
+'''
+
+    pofile, exitcode = run([
+        'Some content',
+        arg, 'Language: es',
+        arg, 'Content-Type: text/plain; charset=utf-8',
+    ])
+    out, err = capsys.readouterr()
+
+    assert exitcode == 0
+    assert striplastline(out) == expected_output
+    assert pofile.__unicode__() == expected_output
