@@ -14,10 +14,10 @@ msgstr ""
 msgid "The quarterly results look great"
 msgstr ""
 
-msgid "Revenue was off the chart"
+msgid "Revenue was `off` the chart"
 msgstr ""
 
-msgid "Profits were higher than https://ever.com has been"
+msgid "Profits were higher than [https://ever.com](https://ever.com) has been"
 msgstr ""
 
 msgid "The first item of an ordered list."
@@ -26,7 +26,7 @@ msgstr ""
 msgid "The second item of an ordered list."
 msgstr ""
 
-msgid "Everything is going according to the plan."
+msgid "*Everything* is `going` according to the **plan**."
 msgstr ""
 
 msgid "Another blockquote"

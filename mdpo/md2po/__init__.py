@@ -414,6 +414,7 @@ class Md2Po:
 
     def enter_block(self, block, details):
         # print("ENTER BLOCK:", block.name)
+
         if block.value == md4c.BlockType.P:
             self._inside_pblock = True
         elif block.value == md4c.BlockType.CODE:
@@ -425,11 +426,15 @@ class Md2Po:
             if self._uls_deep > 1:
                 # changing UL deeep
                 self._save_current_msgid()
+        elif block.value == md4c.BlockType.QUOTE:
+            if self._inside_liblock:
+                self._save_current_msgid()
         elif block.value == md4c.BlockType.HTML:
             self._inside_htmlblock = True
 
     def leave_block(self, block, details):
         # print("LEAVE BLOCK:", block.name)
+
         if block.value == md4c.BlockType.CODE:
             self._inside_codeblock = False
             if not self._disable_next_codeblock:
@@ -450,6 +455,7 @@ class Md2Po:
 
     def enter_span(self, span, details, *args):
         # print("ENTER SPAN:", span.name, details)
+
         if not self.plaintext:
             # underline spans for double '_' character enters two times
             if not self._inside_uspan:
@@ -484,6 +490,7 @@ class Md2Po:
 
     def leave_span(self, span, details):
         # print("LEAVE SPAN:", span.name)
+
         if not self.plaintext:
             if not self._inside_uspan:
                 if span.value == md4c.SpanType.WIKILINK:
@@ -527,7 +534,8 @@ class Md2Po:
                 self._inside_uspan = False
 
     def text(self, block, text):
-        # print("TEXT:", text)
+        # print(f"TEXT: '{text}'")
+
         if not self._inside_htmlblock:
             if not self._inside_codeblock:
                 if self._inside_liblock and text == '\n':

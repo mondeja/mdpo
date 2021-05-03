@@ -26,6 +26,9 @@ msgstr "Elemento de lista desordenada"
 msgid "Quote block inside unordered list item"
 msgstr "Bloque de cita dentro de elemento de lista desordenada"
 
+msgid "Another quote block inside unordered list item"
+msgstr "Otro bloque de cita dentro de elemento de lista desordenada"
+
 msgid "Nested unordered list item"
 msgstr "Elemento de lista desordenada anidado"
 

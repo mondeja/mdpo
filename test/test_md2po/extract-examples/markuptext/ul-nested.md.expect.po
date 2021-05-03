@@ -1,0 +1,39 @@
+#
+msgid ""
+msgstr ""
+
+msgid "A list item"
+msgstr ""
+
+msgid "A nested list item"
+msgstr ""
+
+msgid "A double nested list item"
+msgstr ""
+
+msgid "Another double nested list item"
+msgstr ""
+
+msgid "Another nested list item"
+msgstr ""
+
+msgid "Another list item"
+msgstr ""
+
+msgid "Unordered list item"
+msgstr ""
+
+msgid "Quote block inside unordered list item"
+msgstr ""
+
+msgid "Another quote block inside unordered list item"
+msgstr ""
+
+msgid "Nested unordered list item"
+msgstr ""
+
+msgid "Another more nested quoteblock inside nested unordered list item"
+msgstr ""
+
+msgid "Quoteblock after unordered list"
+msgstr ""
