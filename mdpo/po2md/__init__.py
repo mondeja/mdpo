@@ -72,6 +72,7 @@ class Po2Md:
         '_inside_indented_codeblock',
         '_inside_pblock',
         '_inside_liblock',
+        '_inside_liblock_first_p',
         '_inside_codespan',
         '_codespan_start_index',
         '_codespan_backticks',
@@ -179,6 +180,8 @@ class Po2Md:
 
         self._inside_pblock = False
         self._inside_liblock = False
+        # first li block paragraph (li block "title")
+        self._inside_liblock_first_p = False
 
         self._inside_codespan = False
         self._codespan_start_index = None
@@ -388,6 +391,7 @@ class Po2Md:
                     self._current_line += '[%s] ' % details['task_mark']
                 self._current_list_type[-1][-1].append(details['is_task'])
             self._inside_liblock = True
+            self._inside_liblock_first_p = True
         elif block.value == md4c.BlockType.UL:
             if self._current_list_type:
                 self._save_current_msgid()
@@ -421,19 +425,31 @@ class Po2Md:
 
         if block.value == md4c.BlockType.P:
             self._save_current_msgid()
-            if not self._inside_liblock:
-                self._save_current_line()
-            elif self._inside_quoteblock:  # inside quoteblock and li
-                self._current_line = '{}{}'.format(
-                    '   ' * len(self._current_list_type),
-                    self._current_line,
-                )
+
+            if self._inside_liblock:
+                if self._inside_quoteblock:
+                    self._current_line = '{}{}'.format(
+                        '   ' * len(self._current_list_type),
+                        self._current_line,
+                    )
+                    self._save_current_line()
+                else:
+                    if self._inside_liblock_first_p:
+                        self._inside_liblock_first_p = False
+                    else:
+                        self._current_line = '\n{}{}'.format(
+                            '   ' * len(self._current_list_type),
+                            self._current_line,
+                        )
+                        self._save_current_line()
+            else:
                 self._save_current_line()
 
             self._inside_pblock = False
             if self._inside_quoteblock:
                 self._current_line = '>'
                 self._save_current_line()
+
         elif block.value == md4c.BlockType.CODE:
             self._save_current_msgid()
             self._inside_codeblock = False

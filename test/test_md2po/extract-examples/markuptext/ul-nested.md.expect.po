@@ -29,6 +29,12 @@ msgstr ""
 msgid "Another quote block inside unordered list item"
 msgstr ""
 
+msgid "Paragraph inside unordered list item after quoteblock"
+msgstr ""
+
+msgid "Quoteblock after paragraph inside unordered list item"
+msgstr ""
+
 msgid "Nested unordered list item"
 msgstr ""
 
