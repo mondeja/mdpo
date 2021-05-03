@@ -6,3 +6,13 @@
       ```
       codeblock
       ```
+
+---
+
+1. Elemento de lista ordenada
+   - Elemento de lista desordenada anidado
+      + Otro elemento de lista desordenada anidado
+         ```
+         codeblock
+         ```
+      + Otro elemento de lista desordenada anidado después de bloque de código

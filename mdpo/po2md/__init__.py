@@ -374,21 +374,22 @@ class Po2Md:
                         self._save_current_line()
                 self._ol_marks[-1][0] += 1
                 self._current_line += '{}1{} '.format(
-                    '   ' * (len(self._ol_marks) - 1),
+                    '   ' * (len(self._current_list_type) - 1),
                     self._ol_marks[-1][1],
                 )
                 self._current_list_type[-1][-1].append(False)
             else:
                 # inside UL
                 self._current_line += '{}{} '.format(
-                    '   ' * (len(self._ul_marks) - 1), self._ul_marks[-1],
+                    '   ' * (len(self._current_list_type) - 1),
+                    self._ul_marks[-1],
                 )
                 if details['is_task']:
                     self._current_line += '[%s] ' % details['task_mark']
                 self._current_list_type[-1][-1].append(details['is_task'])
             self._inside_liblock = True
         elif block.value == md4c.BlockType.UL:
-            if len(self._ul_marks) > 0:
+            if self._current_list_type:
                 self._save_current_msgid()
                 self._save_current_line()
             self._current_list_type.append(['ul', []])

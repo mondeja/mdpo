@@ -16,3 +16,15 @@ msgstr "Segundo elemento de lista ordenada anidada"
 
 msgid "Third nested ordered list item"
 msgstr "Tercer elemento de lista ordenada anidada"
+
+msgid "Ordered list item"
+msgstr "Elemento de lista ordenada"
+
+msgid "Nested unordered list item"
+msgstr "Elemento de lista desordenada anidado"
+
+msgid "Other nested unordered list item"
+msgstr "Otro elemento de lista desordenada anidado"
+
+msgid "Another nested unordered list item after codeblock"
+msgstr "Otro elemento de lista desordenada anidado después de bloque de código"
