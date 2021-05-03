@@ -7,9 +7,7 @@
       codeblock
       ```
 
----
-
-1. Elemento de lista ordenada
+1) Elemento de lista ordenada
    - Elemento de lista desordenada anidado
       + Otro elemento de lista desordenada anidado
          ```

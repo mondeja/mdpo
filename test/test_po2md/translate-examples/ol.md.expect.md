@@ -7,3 +7,6 @@
    ```
    code block inside
    ```
+
+1) Elemento con diferente delimitador
+1) Otro elemento con diferente delimitador

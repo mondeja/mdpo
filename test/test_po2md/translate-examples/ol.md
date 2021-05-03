@@ -7,3 +7,6 @@
    ```
    code block inside
    ```
+
+1) Item with different delimiter
+1) Other item with different delimiter

@@ -7,9 +7,7 @@
       codeblock
       ```
 
----
-
-1. Elemento de lista ordenada
+1) Elemento de lista ordenada
    - Nested unordered list item
       + Other nested unordered list item
          ```

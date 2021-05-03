@@ -34,3 +34,9 @@ msgstr "D"
 
 msgid "Ordered list item with"
 msgstr "Elemento de lista ordenada con"
+
+msgid "Item with different delimiter"
+msgstr "Elemento con diferente delimitador"
+
+msgid "Other item with different delimiter"
+msgstr "Otro elemento con diferente delimitador"
