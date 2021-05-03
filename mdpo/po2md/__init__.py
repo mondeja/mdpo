@@ -409,6 +409,9 @@ class Po2Md:
         elif block.value == md4c.BlockType.TD:
             self._current_line += '| '
         elif block.value == md4c.BlockType.QUOTE:
+            if self._inside_liblock:
+                self._save_current_msgid()
+                self._save_current_line()
             self._inside_quoteblock = True
         elif block.value == md4c.BlockType.HTML:
             self._inside_htmlblock = True
@@ -420,6 +423,13 @@ class Po2Md:
             self._save_current_msgid()
             if not self._inside_liblock:
                 self._save_current_line()
+            elif self._inside_quoteblock:  # inside quoteblock and li
+                self._current_line = '{}{}'.format(
+                    '   ' * len(self._current_list_type),
+                    self._current_line,
+                )
+                self._save_current_line()
+
             self._inside_pblock = False
             if self._inside_quoteblock:
                 self._current_line = '>'
@@ -511,7 +521,9 @@ class Po2Md:
         elif block.value == md4c.BlockType.QUOTE:
             if self._outputlines[-1] == '>':
                 self._outputlines.pop()
-            self._save_current_line()
+            if not self._inside_liblock:
+                self._save_current_line()
+            self._inside_quoteblock = False
         elif block.value == md4c.BlockType.TABLE:
             if not self._inside_quoteblock:
                 self._save_current_line()

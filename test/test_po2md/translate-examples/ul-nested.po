@@ -19,3 +19,18 @@ msgstr "Otro elemento de lista anidado"
 
 msgid "Another list item"
 msgstr "Otro elemento de lista"
+
+msgid "Unordered list item"
+msgstr "Elemento de lista desordenada"
+
+msgid "Quote block inside unordered list item"
+msgstr "Bloque de cita dentro de elemento de lista desordenada"
+
+msgid "Nested unordered list item"
+msgstr "Elemento de lista desordenada anidado"
+
+msgid "Another more nested quoteblock inside nested unordered list item"
+msgstr "Otro bloque de cita más anidado dentro de elemento de lista desordenada anidado"
+
+msgid "Quoteblock after unordered list"
+msgstr "Bloque de cita después de lista desordenada"
