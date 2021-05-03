@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 
-msgid "The quarterly results look great!"
-msgstr "¡Los resultados trimestrales se ven muy bien!"
+msgid "The quarterly results look great"
+msgstr "Los resultados trimestrales se ven muy bien"
 
 msgid "Revenue was `off` the chart"
 msgstr "Los ingresos estaban `fuera` del gráfico"

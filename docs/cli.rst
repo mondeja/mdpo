@@ -41,6 +41,21 @@ po2md
    :prog: po2md
    :title:
 
+markdownlint compatible configuration
+*************************************
+
+The output produced by :ref:`po2md-cli` is compatible with the following
+`Markdownlint configuration`_:
+
+.. code-block:: json
+
+   {
+     "no-blanks-blockquote": false,
+     "ul-indent": {
+       "indent": 3
+     }
+   }
+
 .. raw:: html
 
    <hr>
@@ -62,6 +77,10 @@ mdpo2html
    var argumentsSubsectionTitles = document.getElementsByTagName("H3");
    for (let i=0; i<argumentsSubsectionTitles.length; i++) {
      let subsectionTitle = argumentsSubsectionTitles[i].childNodes[0];
-     subsectionTitle.data = subsectionTitle.data.split(" ").slice(1).join(" ");
+     if (subsectionTitle.data.indexOf("markdownlint") == -1) {
+       subsectionTitle.data = subsectionTitle.data.split(" ").slice(1).join(" ");
+     }
    }
    </script>
+
+.. _Markdownlint configuration: https://github.com/DavidAnson/markdownlint#configuration

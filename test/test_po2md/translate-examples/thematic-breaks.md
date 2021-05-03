@@ -12,7 +12,6 @@ ___
 
 Goodbye
 
-
 Interrupting
 ***
 a paragraph

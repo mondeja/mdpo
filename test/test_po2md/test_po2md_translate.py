@@ -8,30 +8,15 @@ from mdpo.po2md import pofile_to_markdown
 
 
 EXAMPLES_DIR = os.path.join('test', 'test_po2md', 'translate-examples')
+EXAMPLES = sorted([
+    os.path.basename(fp) for fp in glob.glob(EXAMPLES_DIR + os.sep + '*.md')
+    if not fp.endswith('.expect.md')
+])
 
 
-def _build_examples(dirname):
-    examples_dir = os.path.join(EXAMPLES_DIR, dirname)
-    examples_glob = glob.glob(examples_dir + os.sep + '*.md')
-    examples_filenames = sorted([
-        os.path.basename(fp) for fp in examples_glob
-        if not fp.endswith('.expect.md')
-    ])
-    return (examples_dir, examples_filenames)
-
-
-EXAMPLES = {}
-for suite in os.listdir(EXAMPLES_DIR):
-    dirpath, filenames = _build_examples(suite)
-    EXAMPLES[suite] = {
-        'filenames': filenames,
-        'dirpath': dirpath,
-    }
-
-
-@pytest.mark.parametrize('filename', EXAMPLES['markuptext']['filenames'])
+@pytest.mark.parametrize('filename', EXAMPLES)
 def test_translate_markuptext(filename):
-    filepath_in = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
+    filepath_in = os.path.join(EXAMPLES_DIR, filename)
     filepath_out = filepath_in + '.expect.md'
     po_filepath = os.path.join(
         os.path.dirname(filepath_in),
@@ -47,10 +32,10 @@ def test_translate_markuptext(filename):
 
 
 @pytest.mark.parametrize(
-    'filename', [EXAMPLES['markuptext']['filenames'][0]],
+    'filename', [EXAMPLES[0]],
 )
 def test_translate_save(filename):
-    filepath_in = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
+    filepath_in = os.path.join(EXAMPLES_DIR, filename)
     filepath_out = filepath_in + '.expect.md'
     po_filepath = os.path.join(
         os.path.dirname(filepath_in),

@@ -1,4 +1,4 @@
-> #### ¡Los resultados trimestrales se ven muy bien!
+> # Los resultados trimestrales se ven muy bien
 >
 > - Los ingresos estaban `fuera` del gráfico
 > - Los beneficios fueron superiores a los que <https://nunca.com> habían sido

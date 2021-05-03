@@ -397,9 +397,11 @@ class Po2Md:
             self._current_list_type.append(['ol', []])
             self._ol_marks.append([0, details['mark_delimiter']])
         elif block.value == md4c.BlockType.HR:
-            self._current_line += '---'
             if not self._inside_liblock:
-                self._current_line += '\n\n'
+                self._current_line += '---\n\n'
+            else:
+                # inside lists, the separator '---' can't be used
+                self._current_line += '***'
         elif block.value == md4c.BlockType.TH:
             self._current_line += '| '
             self._current_thead_aligns.append(details['align'].value)

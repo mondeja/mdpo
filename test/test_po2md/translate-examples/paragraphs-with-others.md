@@ -8,9 +8,7 @@ deb http://archive.ubuntu.com/ubuntu focal-updates main restricted universe mult
 
 Tests are developed using `pytest`, that is a Python testing framework.
 
-
 this is a paragraph and
 **the next line starts with bold markup**
-
 
 This is a line with ``code that `contains ` backticks``, as you see

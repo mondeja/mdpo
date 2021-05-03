@@ -31,6 +31,7 @@ rules:
       .pre-commit-config.yaml
       .github
       .readthedocs.yml
+      test/test_po2md/.markdownlint-cli2.yaml
   line-length:
     allow-non-breakable-words: true
     ignore:

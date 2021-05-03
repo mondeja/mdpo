@@ -1,0 +1,31 @@
+# Markdownlint tests configuration
+#
+# These are executed using pre-commit with 'markdownlint-cli2'.
+# pre-commit run -a markdownlint-cli2
+
+config:
+  # Stylistic rules, don't needed for testing
+  blanks-around-fences: false
+  code-block-style: false
+  code-fence-style: false
+  fenced-code-language: false
+  first-line-heading: false
+  hr-style: false
+  line-length: false
+  no-alt-text: false
+  no-emphasis-as-heading: false
+  ul-style: false
+
+  # MD4C parser treats blockquotes separated by one blank line as different
+  no-blanks-blockquote: false
+
+  # UL inside UL should have an indentation of 2 characters according to
+  # markdownlint default configuration. But the MD4C parser complicates this
+  # because is able to parse ULs with indentation of 2 if are not found inside
+  # OLs, for which case should have 3 of indentation (this isn't treated by
+  # markdownlint as error). If we want to stick to this inconsistent rule,
+  # it would be ULs with indentation 3 (nested inside OLs) and others with 2,
+  # adding the complexity of compute the indentation, so ignore this default
+  # configuration defining the indentation spaces for unordered lists to 3.
+  ul-indent:
+    indent: 3

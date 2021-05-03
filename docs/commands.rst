@@ -5,7 +5,7 @@ Customizing extraction
 You can customize the string extraction process using HTML comments in
 your Markdown files.
 
-.. note::
+.. tip::
 
    If you want to specify next commands with other names, take a look at the
    argument :ref:`md2po---command-alias` of :ref:`md2po CLI<md2po-cli>` or the

@@ -68,3 +68,14 @@ repos:
         args:
           - -c
           - .yamllint
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.1.3
+    hooks:
+      - id: markdownlint-cli2
+        name: markdownlint-po2md-tests
+        language: node
+        entry: bash -c 'cd test/test_po2md && exec markdownlint-cli2 translate-examples/*.md wrapwidth-examples/*.md'
+        pass_filenames: false
+        types:
+          - markdown
+        files: ^test/test_po2md/

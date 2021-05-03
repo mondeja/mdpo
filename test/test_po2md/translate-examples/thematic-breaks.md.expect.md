@@ -19,5 +19,5 @@ Interrumpiendo
 un párrafo
 
 - Dentro de
-- ---
+- ***
 - una lista
