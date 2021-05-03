@@ -25,7 +25,7 @@
 
    > Quoteblock after paragraph inside ordered list item
 
-   1. Nested ordered list item
+   2. Nested ordered list item
       > Another more nested quoteblock inside nested ordered list item
 
 > Quoteblock after ordered list

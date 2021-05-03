@@ -1,0 +1,48 @@
+#
+msgid ""
+msgstr ""
+
+msgid "First ordered list item"
+msgstr ""
+
+msgid "Second ordered list itemFirst nested ordered list item"
+msgstr ""
+
+msgid "Second nested ordered list item"
+msgstr ""
+
+msgid "Third nested ordered list item"
+msgstr ""
+
+msgid "Elemento de lista ordenadaNested unordered list item"
+msgstr ""
+
+msgid "Other nested unordered list item"
+msgstr ""
+
+msgid "Another nested unordered list item after codeblock"
+msgstr ""
+
+msgid "Ordered list item"
+msgstr ""
+
+msgid "Quote block inside ordered list item"
+msgstr ""
+
+msgid "Another quote block inside ordered list item"
+msgstr ""
+
+msgid "Paragraph inside ordered list item after quoteblock"
+msgstr ""
+
+msgid "Quoteblock after paragraph inside ordered list item"
+msgstr ""
+
+msgid "Nested ordered list item"
+msgstr ""
+
+msgid "Another more nested quoteblock inside nested ordered list item"
+msgstr ""
+
+msgid "Quoteblock after ordered list"
+msgstr ""
