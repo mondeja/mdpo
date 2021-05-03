@@ -41,6 +41,7 @@ class Md2Po:
         '_disable_next_line',
         '_enable_next_line',
         '_include_next_codeblock',
+        '_disable_next_codeblock',
 
         '_enterspan_replacer',
         '_leavespan_replacer',
@@ -126,6 +127,7 @@ class Md2Po:
         self._enable_next_line = False
 
         self._include_next_codeblock = False
+        self._disable_next_codeblock = False
 
         self.metadata = {}
 
@@ -377,6 +379,14 @@ class Md2Po:
             self._disable = False
         elif command == 'mdpo-enable-next-line':
             self._enable_next_line = True
+        elif command == 'mdpo-include-codeblock':
+            self._include_next_codeblock = True
+        elif command == 'mdpo-disable-codeblock':
+            self._disable_next_codeblock = True
+        elif command == 'mdpo-disable-codeblocks':
+            self.include_codeblocks = False
+        elif command == 'mdpo-include-codeblocks':
+            self.include_codeblocks = True
         elif command == 'mdpo-translator':
             if not comment:
                 raise ValueError(
@@ -392,8 +402,6 @@ class Md2Po:
                     f' context with the command \'{original_command}\'.',
                 )
             self._current_msgctxt = comment.rstrip()
-        elif command == 'mdpo-include-codeblock':
-            self._include_next_codeblock = True
         elif command == 'mdpo-include':
             if not comment:
                 raise ValueError(
@@ -424,9 +432,11 @@ class Md2Po:
         # print("LEAVE BLOCK:", block.name)
         if block.value == md4c.BlockType.CODE:
             self._inside_codeblock = False
-            if self._include_next_codeblock or self.include_codeblocks:
-                self._save_current_msgid()
-                self._include_next_codeblock = False
+            if not self._disable_next_codeblock:
+                if self.include_codeblocks or self._include_next_codeblock:
+                    self._save_current_msgid()
+            self._include_next_codeblock = False
+            self._disable_next_codeblock = False
         elif block.value == md4c.BlockType.HTML:
             self._inside_htmlblock = False
         else:
@@ -558,8 +568,9 @@ class Md2Po:
                     return
                 self._current_msgid += text
             else:
-                if self._include_next_codeblock or self.include_codeblocks:
-                    self._current_msgid += text
+                if not self._disable_next_codeblock:
+                    if self.include_codeblocks or self._include_next_codeblock:
+                        self._current_msgid += text
         else:
             self._process_command(text)
 

@@ -15,6 +15,9 @@ MDPO_COMMANDS = [
     'enable-next-line',
     'include',
     'include-codeblock',
+    'include-codeblocks',
+    'disable-codeblock',
+    'disable-codeblocks',
     'translator',
 ]
 

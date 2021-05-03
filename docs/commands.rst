@@ -135,12 +135,22 @@ You can specify contexts for msgids using next command:
 
 .. _include-codeblock-command:
 
-Extracting code blocks
+Code blocks extraction
 ======================
 
-You can extract code blocks inside the pofile, using next command:
+You can enable and disable code blocks extraction inside the PO file using
+the next commands:
 
-* ``<!-- mdpo-include-codeblock -->``
+* ``<!-- mdpo-include-codeblocks -->``: Include all codeblocks placed after
+  this command (same behaviour as passing the argument
+  :ref:`md2po---include-codeblocks` or ``include_codeblocks=True`` if you are
+  using the :ref:`programmatic interface<md2po-init>`.).
+* ``<!-- mdpo-disable-codeblocks -->``: Does not include codeblocks placed
+  after this command.
+* ``<!-- mdpo-include-codeblock -->``: Include next codeblock placed after this
+  command.
+* ``<!-- mdpo-disable-codeblock -->``: Does not include next codeblock placed
+  after this command.
 
 .. rubric:: Indented code block example:
 
@@ -191,12 +201,6 @@ You can extract code blocks inside the pofile, using next command:
    "var hola = \"mundo\";\n"
    msgstr ""
 
-
-.. note::
-
-   If you want to include all the codeblocks, use the argument
-   :ref:`md2po---include-codeblocks` or ``include_codeblocks=True`` if you are
-   using the :ref:`programmatic interface<md2po-init>`.
 
 Extracting comments itself
 ==========================
