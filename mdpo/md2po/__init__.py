@@ -32,6 +32,7 @@ class Md2Po:
         'plaintext',
         'include_codeblocks',
         'metadata',
+        'events',
 
         '_current_msgid',
         '_current_tcomment',
@@ -117,6 +118,9 @@ class Md2Po:
             'extensions',
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
         )
+        self.events = {}
+        if 'events' in kwargs:
+            self.events.update(kwargs['events'])
 
         self.plaintext = kwargs.get('plaintext', False)
 
@@ -361,6 +365,62 @@ class Md2Po:
         self._current_tcomment = None
         self._current_msgctxt = None
 
+    def command(self, mdpo_command, comment, original_command):
+        # raise 'command' event
+        try:
+            pre_event = self.events['command']
+        except KeyError:
+            pass
+        else:
+            if pre_event(
+                self,
+                mdpo_command,
+                comment,
+                original_command,
+            ) is False:
+                return
+
+        if mdpo_command == 'mdpo-disable-next-line':
+            self._disable_next_line = True
+        elif mdpo_command == 'mdpo-disable':
+            self._disable = True
+        elif mdpo_command == 'mdpo-enable':
+            self._disable = False
+        elif mdpo_command == 'mdpo-enable-next-line':
+            self._enable_next_line = True
+        elif mdpo_command == 'mdpo-include-codeblock':
+            self._include_next_codeblock = True
+        elif mdpo_command == 'mdpo-disable-codeblock':
+            self._disable_next_codeblock = True
+        elif mdpo_command == 'mdpo-disable-codeblocks':
+            self.include_codeblocks = False
+        elif mdpo_command == 'mdpo-include-codeblocks':
+            self.include_codeblocks = True
+        elif mdpo_command == 'mdpo-translator':
+            if not comment:
+                raise ValueError(
+                    'You need to specify a string for the'
+                    ' extracted comment with the command'
+                    f' \'{original_command}\'.',
+                )
+            self._current_tcomment = comment.rstrip()
+        elif mdpo_command == 'mdpo-context':
+            if not comment:
+                raise ValueError(
+                    'You need to specify a string for the'
+                    f' context with the command \'{original_command}\'.',
+                )
+            self._current_msgctxt = comment.rstrip()
+        elif mdpo_command == 'mdpo-include':
+            if not comment:
+                raise ValueError(
+                    'You need to specify a message for the'
+                    ' comment to include with the command'
+                    f' \'{original_command}\'.',
+                )
+            self._current_msgid = comment.rstrip()
+            self._save_current_msgid()
+
     def _process_command(self, text):
         original_command, comment = parse_mdpo_html_command(text)
         if original_command is None:
@@ -371,49 +431,20 @@ class Md2Po:
         except KeyError:  # not custom command
             command = original_command
 
-        if command == 'mdpo-disable-next-line':
-            self._disable_next_line = True
-        elif command == 'mdpo-disable':
-            self._disable = True
-        elif command == 'mdpo-enable':
-            self._disable = False
-        elif command == 'mdpo-enable-next-line':
-            self._enable_next_line = True
-        elif command == 'mdpo-include-codeblock':
-            self._include_next_codeblock = True
-        elif command == 'mdpo-disable-codeblock':
-            self._disable_next_codeblock = True
-        elif command == 'mdpo-disable-codeblocks':
-            self.include_codeblocks = False
-        elif command == 'mdpo-include-codeblocks':
-            self.include_codeblocks = True
-        elif command == 'mdpo-translator':
-            if not comment:
-                raise ValueError(
-                    'You need to specify a string for the'
-                    ' extracted comment with the command'
-                    f' \'{original_command}\'.',
-                )
-            self._current_tcomment = comment.rstrip()
-        elif command == 'mdpo-context':
-            if not comment:
-                raise ValueError(
-                    'You need to specify a string for the'
-                    f' context with the command \'{original_command}\'.',
-                )
-            self._current_msgctxt = comment.rstrip()
-        elif command == 'mdpo-include':
-            if not comment:
-                raise ValueError(
-                    'You need to specify a message for the'
-                    ' comment to include with the command'
-                    f' \'{original_command}\'.',
-                )
-            self._current_msgid = comment.rstrip()
-            self._save_current_msgid()
+        # process solved command
+        self.command(command, comment, original_command)
 
     def enter_block(self, block, details):
         # print("ENTER BLOCK:", block.name)
+
+        # raise 'enter_block' event
+        try:
+            pre_event = self.events['enter_block']
+        except KeyError:
+            pass
+        else:
+            if pre_event(self, block, details) is False:
+                return
 
         if block.value == md4c.BlockType.P:
             self._inside_pblock = True
@@ -435,6 +466,15 @@ class Md2Po:
     def leave_block(self, block, details):
         # print("LEAVE BLOCK:", block.name)
 
+        # raise 'leave_block' event
+        try:
+            pre_event = self.events['leave_block']
+        except KeyError:
+            pass
+        else:
+            if pre_event(self, block, details) is False:
+                return
+
         if block.value == md4c.BlockType.CODE:
             self._inside_codeblock = False
             if not self._disable_next_codeblock:
@@ -453,8 +493,17 @@ class Md2Po:
                 self._uls_deep -= 1
             self._save_current_msgid()
 
-    def enter_span(self, span, details, *args):
+    def enter_span(self, span, details):
         # print("ENTER SPAN:", span.name, details)
+
+        # raise 'enter_span' event
+        try:
+            pre_event = self.events['enter_span']
+        except KeyError:
+            pass
+        else:
+            if pre_event(self, span, details) is False:
+                return
 
         if not self.plaintext:
             # underline spans for double '_' character enters two times
@@ -490,6 +539,15 @@ class Md2Po:
 
     def leave_span(self, span, details):
         # print("LEAVE SPAN:", span.name)
+
+        # raise 'leave_span' event
+        try:
+            pre_event = self.events['leave_span']
+        except KeyError:
+            pass
+        else:
+            if pre_event(self, span, details) is False:
+                return
 
         if not self.plaintext:
             if not self._inside_uspan:
@@ -535,6 +593,15 @@ class Md2Po:
 
     def text(self, block, text):
         # print(f"TEXT: '{text}'")
+
+        # raise 'text' event
+        try:
+            pre_event = self.events['text']
+        except KeyError:
+            pass
+        else:
+            if pre_event(self, block, text) is False:
+                return
 
         if not self._inside_htmlblock:
             if not self._inside_codeblock:
@@ -680,6 +747,7 @@ def markdown_to_pofile(
     ignore_msgids=[],
     command_aliases={},
     metadata={},
+    events={},
     **kwargs,
 ):
     """Extracts all the msgids from a string of Markdown content or a group of
@@ -740,6 +808,21 @@ def markdown_to_pofile(
         metadata (dict): Metadata to include in the produced PO file. If the
             file contains previous metadata fields, these will be updated
             preserving the values of the already defined.
+        events (dict): MD4C preprocessing events executed during the parsing
+            process. You can use these to customize the extraction process.
+            Takes functions are values. If one of these functions returns
+            ``False``, the block parsing is skipped by md2po. The available
+            events are:
+
+            * ``enter_block``: Executed when the parsing a Markdown block
+              starts.
+            * ``leave_block``: Executed when the parsing a Markdown block ends.
+            * ``enter_span``: Executed when the parsing of a Markdown span
+              starts.
+            * ``leave_span``: Executed when the parsing of a Markdown span
+              ends.
+            * ``text``: Executed when the parsing of text starts ends.
+            * ``command``: Executed when a mdpo HTML command is found.
 
     Examples:
         >>> content = 'Some text with `inline code`'
@@ -769,6 +852,7 @@ def markdown_to_pofile(
         ignore_msgids=ignore_msgids,
         command_aliases=command_aliases,
         metadata=metadata,
+        events=events,
         **kwargs,
     ).extract(
         po_filepath=po_filepath,
