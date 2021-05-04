@@ -364,3 +364,78 @@ msgstr ""
     assert exitcode == 0
     assert striplastline(out) == expected_output
     assert pofile.__unicode__() == expected_output
+
+
+@pytest.mark.parametrize('arg', ('-m', '--merge-pofiles'))
+def test_merge_pofiles(capsys, arg, tmp_file):
+    md_content = '# bar\n\n\nbaz\n'
+    pofile_content = '''#
+msgid ""
+msgstr ""
+
+msgid "foo"
+msgstr "foo language"
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "foo"
+msgstr "foo language"
+
+msgid "bar"
+msgstr ""
+
+msgid "baz"
+msgstr ""
+'''
+
+    with tmp_file(pofile_content, '.po') as po_filepath:
+        pofile, exitcode = run([
+            md_content,
+            '--po-filepath', po_filepath,
+            arg,
+        ])
+    out, err = capsys.readouterr()
+
+    assert exitcode == 0
+    assert striplastline(out) == expected_output
+    assert pofile.__unicode__() == expected_output
+
+
+@pytest.mark.parametrize('arg', ('-r', '--remove-not-found'))
+def test_remove_not_found(capsys, arg, tmp_file):
+    md_content = '# bar\n\n\nbaz\n'
+    pofile_content = '''#
+msgid ""
+msgstr ""
+
+msgid "foo"
+msgstr "foo language"
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "bar"
+msgstr ""
+
+msgid "baz"
+msgstr ""
+'''
+
+    with tmp_file(pofile_content, '.po') as po_filepath:
+        pofile, exitcode = run([
+            md_content,
+            '--po-filepath',
+            po_filepath,
+            arg,
+            '--merge-pofiles',
+        ])
+    out, err = capsys.readouterr()
+
+    assert exitcode == 0
+    assert striplastline(out) == expected_output
+    assert pofile.__unicode__() == expected_output

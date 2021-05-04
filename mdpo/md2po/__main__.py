@@ -75,10 +75,17 @@ def build_parser():
         '-m', '--merge-pofiles',
         dest='mark_not_found_as_obsolete',
         action='store_false',
-        help='New found msgids not present in the pofile passed at '
-             '\'--po-filepath\' parameter will be preserved in the new pofile,'
-             ' even when are not been found in the current extraction. If this'
-             ' argument is not passed, will be marked as obsolete strings.',
+        help='Messages not found which are already stored in the PO file'
+             ' passed as \'--po-filepath\' argument will not be marked as'
+             ' obsolete.',
+    )
+    parser.add_argument(
+        '-r', '--remove-not-found',
+        dest='preserve_not_found',
+        action='store_false',
+        help='Messages not found which are already stored in the PO file'
+             ' passed as \'--po-filepath\' parameter will be removed.'
+             ' Only has effect used in combination with \'--merge-pofiles\'.',
     )
     parser.add_argument(
         '-x', '--extensions', dest='extensions',
@@ -171,6 +178,7 @@ def run(args=[]):
         mo_filepath=opts.mo_filepath,
         plaintext=opts.plaintext,
         mark_not_found_as_obsolete=opts.mark_not_found_as_obsolete,
+        preserve_not_found=opts.preserve_not_found,
         extensions=opts.extensions,
         po_encoding=opts.po_encoding,
         md_encoding=opts.md_encoding,

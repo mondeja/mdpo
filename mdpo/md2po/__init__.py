@@ -28,6 +28,7 @@ class Md2Po:
         'ignore_msgids',
         'command_aliases',
         'mark_not_found_as_obsolete',
+        'preserve_not_found',
         'extensions',
         'plaintext',
         'include_codeblocks',
@@ -113,6 +114,7 @@ class Md2Po:
         self.mark_not_found_as_obsolete = kwargs.get(
             'mark_not_found_as_obsolete', True,
         )
+        self.preserve_not_found = kwargs.get('preserve_not_found', True)
 
         self.extensions = kwargs.get(
             'extensions',
@@ -700,7 +702,9 @@ class Md2Po:
             for entry in self.pofile:
                 if entry not in self.found_entries:
                     _equal_not_obsolete_found = find_entry_in_entries(
-                        entry, self.found_entries, compare_obsolete=False,
+                        entry,
+                        self.found_entries,
+                        compare_obsolete=False,
                     )
                     if _equal_not_obsolete_found:
                         self.pofile.remove(entry)
@@ -708,16 +712,16 @@ class Md2Po:
                         entry.obsolete = True
                 else:
                     entry.obsolete = False
-        else:
+        elif not self.preserve_not_found:
             for entry in self.pofile:
                 if entry not in self.found_entries:
                     _equal_not_obsolete_found = find_entry_in_entries(
-                        entry, self.found_entries, compare_obsolete=False,
+                        entry,
+                        self.found_entries,
+                        compare_obsolete=False,
                     )
-                    if _equal_not_obsolete_found:
+                    if not _equal_not_obsolete_found:
                         self.pofile.remove(entry)
-                    else:
-                        entry.obsolete = False
 
         if self.metadata:
             self.pofile.metadata.update(self.metadata)
@@ -739,6 +743,7 @@ def markdown_to_pofile(
     plaintext=False,
     wrapwidth=78,
     mark_not_found_as_obsolete=True,
+    preserve_not_found=True,
     extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
     po_encoding=None,
     md_encoding='utf-8',
@@ -785,6 +790,9 @@ def markdown_to_pofile(
         mark_not_found_as_obsolete (bool): The strings extracted from markdown
             that will not be found inside the provided pofile will be marked
             as obsolete.
+        preserve_not_found (bool): The strings extracted from markdown that
+            will not be found inside the provided pofile wouldn't be removed.
+            Only has effect if ``mark_not_found_as_obsolete`` is ``False``.
         extensions (list): md4c extensions used to parse markdown content,
             formatted as a list of 'pymd4c' keyword arguments. You can see all
             available at `pymd4c repository <https://github.com/dominickpastore
@@ -846,6 +854,7 @@ def markdown_to_pofile(
         plaintext=plaintext,
         wrapwidth=wrapwidth,
         mark_not_found_as_obsolete=mark_not_found_as_obsolete,
+        preserve_not_found=preserve_not_found,
         extensions=extensions,
         xheaders=xheaders,
         include_codeblocks=include_codeblocks,

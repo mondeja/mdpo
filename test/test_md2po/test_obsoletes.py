@@ -6,21 +6,6 @@ import pytest
 from mdpo.md2po import markdown_to_pofile
 
 
-@pytest.mark.parametrize('mark_not_found_as_obsolete', (True, False))
-def test_obsolete_equal_found(tmp_file, mark_not_found_as_obsolete):
-    markdown_content = '# Foo'
-    pofile_content = \
-        '#\nmsgid ""\nmsgstr ""\n\n#~ msgid "Foo"\n#~ msgstr ""\n'
-    expected_output = '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n'
-
-    with tmp_file(pofile_content, '.po') as po_filepath:
-        output = markdown_to_pofile(
-            markdown_content, po_filepath=po_filepath,
-            mark_not_found_as_obsolete=mark_not_found_as_obsolete,
-        ).__unicode__()
-    assert output == expected_output
-
-
 @pytest.mark.parametrize(
     ('mark_not_found_as_obsolete', 'expected_output'), (
         (
