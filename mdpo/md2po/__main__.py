@@ -42,7 +42,8 @@ def build_parser():
         default=None,
         help='Merge new msgids in the po file indicated at this parameter (if'
              ' ``--save`` argument is passed) or use the msgids of the file as'
-             ' reference for ``--mark-not-found-as-obsolete`` parameter.',
+             ' reference for mark not found as obsoletes if'
+             ' ``--merge-pofiles`` parameter is not passed.',
         metavar='OUTPUT_PO_FILEPATH',
     )
     parser.add_argument(
