@@ -33,7 +33,7 @@ def build_parser():
     )
     parser.add_argument(
         '-i', '--ignore', dest='ignore', default=[],
-        help='Filepaths to ignore when ``GLOB_OR_CONTENT`` argument'
+        help='Filepaths to ignore when \'GLOB_OR_CONTENT\' argument'
              ' is a glob, as a list of comma separated values.',
         metavar='PATH_1,PATH_2...',
     )
@@ -41,15 +41,15 @@ def build_parser():
         '-po', '--po-filepath', dest='po_filepath',
         default=None,
         help='Merge new msgids in the po file indicated at this parameter (if'
-             ' ``--save`` argument is passed) or use the msgids of the file as'
+             ' \'--save\' argument is passed) or use the msgids of the file as'
              ' reference for mark not found as obsoletes if'
-             ' ``--merge-pofiles`` parameter is not passed.',
+             ' \'--merge-pofiles\' parameter is not passed.',
         metavar='OUTPUT_PO_FILEPATH',
     )
     parser.add_argument(
         '-s', '--save', dest='save', action='store_true',
         help='Save new found msgids to the po file'
-             ' indicated as parameter ``--filepath``.',
+             ' indicated as parameter \'--filepath\'.',
     )
     parser.add_argument(
         '-mo', '--mo-filepath', dest='mo_filepath',
@@ -67,8 +67,8 @@ def build_parser():
     )
     parser.add_argument(
         '-w', '--wrapwidth', dest='wrapwidth',
-        help='Wrap width for po file indicated at ``--filepath`` parameter.'
-             ' Only useful when the ``-w`` option was passed to xgettext.',
+        help='Wrap width for po file indicated at \'--filepath\' parameter.'
+             ' Only useful when the \'-w\' option was passed to xgettext.',
         metavar='N', type=int,
     )
     parser.add_argument(
@@ -76,7 +76,7 @@ def build_parser():
         dest='mark_not_found_as_obsolete',
         action='store_false',
         help='New found msgids not present in the pofile passed at '
-             '``--po-filepath`` parameter will be preserved in the new pofile,'
+             '\'--po-filepath\' parameter will be preserved in the new pofile,'
              ' even when are not been found in the current extraction. If this'
              ' argument is not passed, will be marked as obsolete strings.',
     )
@@ -86,7 +86,7 @@ def build_parser():
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
         ),
         help='md4c extensions used to parse markdown content, separated by'
-             ' ``,`` and formatted as pymd4c extension keyword arguments.'
+             ' \',\' and formatted as pymd4c extension keyword arguments.'
              ' You can see all available at https://github.com/dominickpastore'
              '/pymd4c#parser-option-flags',
     )
@@ -102,7 +102,7 @@ def build_parser():
         '-a', '--xheaders', dest='xheaders',
         action='store_true',
         help='Include mdpo specification x-headers. These only will be'
-             ' included if you do not pass the parameter ``--plaintext``.',
+             ' included if you do not pass the parameter \'--plaintext\'.',
     )
     parser.add_argument(
         '-c', '--include-codeblocks',
