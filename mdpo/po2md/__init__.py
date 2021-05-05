@@ -32,6 +32,7 @@ class Po2Md:
         'output',
         'extensions',
         'disabled_entries',
+        'translated_entries',
         'translations',
         'translations_with_msgctxt',
         'command_aliases',
@@ -57,6 +58,7 @@ class Po2Md:
         # internal config
         '_current_msgid',
         '_current_msgctxt',
+        '_current_tcomment',
         '_current_line',
         '_outputlines',
         '_disable_next_line',
@@ -90,7 +92,7 @@ class Po2Md:
 
     def __init__(self, pofiles, ignore=[], po_encoding=None, **kwargs):
         self.pofiles = [
-            polib.pofile(pofilepath, encoding=po_encoding) for pofilepath in
+            polib.pofile(po_filepath, encoding=po_encoding) for po_filepath in
             filter_paths(glob.glob(pofiles), ignore_paths=ignore)
         ]
 
@@ -101,6 +103,7 @@ class Po2Md:
 
         self._current_msgid = ''
         self._current_msgctxt = None
+        self._current_tcomment = None
         self._current_line = ''
         self._outputlines = []
 
@@ -108,6 +111,7 @@ class Po2Md:
         self._disable = False
         self._enable_next_line = False
         self.disabled_entries = []
+        self.translated_entries = []
 
         self.translations = None
         self.translations_with_msgctxt = None
@@ -231,8 +235,11 @@ class Po2Md:
             self._disable = False
         elif command == 'mdpo-enable-next-line':
             self._enable_next_line = True
-        elif command == 'mdpo-context' and comment:
-            self._current_msgctxt = comment.rstrip()
+        elif comment:
+            if command == 'mdpo-context':
+                self._current_msgctxt = comment.rstrip()
+            elif command == 'mdpo-translator':
+                self._current_tcomment = comment.rstrip()
 
     def _escape_translation(self, text):
         # escape '"' characters inside links and image titles
@@ -248,15 +255,27 @@ class Po2Md:
             link_end_string=self.link_end_string,
         )
 
-    def _translate_msgid(self, msgid, msgctxt):
+    def _translate_msgid(self, msgid, msgctxt, tcomment):
         try:
             if msgctxt:
-                response = self.translations_with_msgctxt[msgctxt][msgid]
+                msgstr = self.translations_with_msgctxt[msgctxt][msgid]
             else:
-                response = self.translations[msgid]
+                msgstr = self.translations[msgid]
         except KeyError:
-            response = msgid
-        return response or msgid
+            return msgid
+        else:
+            if msgstr:
+                self.translated_entries.append(
+                    polib.POEntry(
+                        msgid=msgid,
+                        msgctxt=msgctxt,
+                        msgstr=msgstr,
+                        tcomment=tcomment,
+                    ),
+                )
+                return msgstr
+            else:
+                return msgid
 
     def _save_current_msgid(self):
         if (not self._disable and not self._disable_next_line) or \
@@ -264,6 +283,7 @@ class Po2Md:
             translation = self._translate_msgid(
                 self._current_msgid,
                 self._current_msgctxt,
+                self._current_tcomment,
             )
         else:
             translation = self._current_msgid
@@ -272,6 +292,7 @@ class Po2Md:
                     msgid=translation,
                     msgstr='',
                     msgctxt=self._current_msgctxt,
+                    tcomment=self._current_tcomment,
                 ),
             )
 
@@ -323,6 +344,7 @@ class Po2Md:
 
         self._current_msgid = ''
         self._current_msgctxt = None
+        self._current_tcomment = None
 
         self._disable_next_line = False
         self._enable_next_line = False
