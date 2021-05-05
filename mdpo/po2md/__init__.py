@@ -200,7 +200,7 @@ class Po2Md:
         # current table head alignments
         self._current_thead_aligns = []
 
-        # if title are found in images of links for the current msgid,
+        # if title are found in images of links for the current msgid
         # we need to escape them after translate it because ``polib.unescape``
         # removes the scapes
         self._aimg_title_inside_current_msgid = False
@@ -340,7 +340,7 @@ class Po2Md:
                     break_long_words=False,
                 )
             translation = '\n'.join(lines) + '\n'
-        self._current_line += polib.unescape(translation)
+        self._current_line += translation
 
         self._current_msgid = ''
         self._current_msgctxt = None
@@ -623,15 +623,13 @@ class Po2Md:
             )
             self._codespan_backticks = None
         elif span.value == md4c.SpanType.IMG:
-            self._current_msgid += polib.escape(
-                '![{}]({}'.format(
-                    self._current_imgspan['text'],
-                    self._current_imgspan['src'],
-                ),
+            self._current_msgid += '![{}]({}'.format(
+                self._current_imgspan['text'],
+                self._current_imgspan['src'],
             )
             if self._current_imgspan['title']:
-                self._current_msgid += ' "%s"' % (
-                    polib.escape(self._current_imgspan['title'])
+                self._current_msgid += ' "%s"' % polib.escape(
+                    self._current_imgspan['title'],
                 )
             self._current_msgid += ')'
             self._current_imgspan = {}
@@ -677,7 +675,7 @@ class Po2Md:
                             self._current_wikilink_target, text,
                         )
                     return
-                self._current_msgid += polib.escape(text)
+                self._current_msgid += text
             else:
 
                 if self._inside_liblock:

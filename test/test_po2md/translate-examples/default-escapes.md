@@ -37,3 +37,7 @@ Some text with literal backtick \`, `code` markup, double literal backtick \`\` 
 [//]: # (Escape link titles "")
 
 [this is a link](href "title with \" characters")
+
+[//]: # (Python-Markdown attr_list extension)
+
+[qux](http://foobar.baz){: title="A title" mdpo }
