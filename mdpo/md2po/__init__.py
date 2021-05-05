@@ -11,7 +11,12 @@ from mdpo.command import (
 )
 from mdpo.io import filter_paths, to_glob_or_content
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-from mdpo.po import find_entry_in_entries, po_escaped_string
+from mdpo.po import (
+    find_entry_in_entries,
+    mark_not_found_entries_as_obsoletes,
+    po_escaped_string,
+    remove_not_found_entries,
+)
 from mdpo.polib import *  # noqa
 from mdpo.text import min_not_max_chars_in_a_row
 
@@ -319,32 +324,6 @@ class Md2Po:
 
         # ULs deep
         self._uls_deep = 0
-
-    def _mark_not_found_entries_as_obsolete(self):
-        for entry in self.pofile:
-            if entry not in self.found_entries:
-                _equal_not_obsolete_found = find_entry_in_entries(
-                    entry,
-                    self.found_entries,
-                    compare_obsolete=False,
-                )
-                if _equal_not_obsolete_found:
-                    self.pofile.remove(entry)
-                else:
-                    entry.obsolete = True
-            else:
-                entry.obsolete = False
-
-    def _remove_not_found_entries(self):
-        for entry in self.pofile:
-            if entry not in self.found_entries:
-                _equal_not_obsolete_found = find_entry_in_entries(
-                    entry,
-                    self.found_entries,
-                    compare_obsolete=False,
-                )
-                if not _equal_not_obsolete_found:
-                    self.pofile.remove(entry)
 
     def _save_msgid(self, msgid, tcomment=None, msgctxt=None):
         if msgid in self.ignore_msgids:
@@ -725,9 +704,15 @@ class Md2Po:
                 self._enable_next_line = False
 
         if self.mark_not_found_as_obsolete:
-            self._mark_not_found_entries_as_obsolete()
+            mark_not_found_entries_as_obsoletes(
+                self.pofile,
+                self.found_entries,
+            )
         elif not self.preserve_not_found:
-            self._remove_not_found_entries()
+            remove_not_found_entries(
+                self.pofile,
+                self.found_entries,
+            )
 
         if self.metadata:
             self.pofile.metadata.update(self.metadata)

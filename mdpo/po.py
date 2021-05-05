@@ -38,3 +38,51 @@ def find_entry_in_entries(entry, entries, **kwargs):
             response = compared_entry
             break
     return response
+
+
+def mark_not_found_entries_as_obsoletes(
+    pofile,
+    entries,
+):
+    """Marks entries in a PO file obsoletes if are not in a set of entries.
+
+    If an entry of the PO file is found in the set of entries, will be marked
+    as no obsolete.
+
+    Args:
+        pofile (:py:class:`polib.POFile`): PO file in which the missing entries
+            will be marked as obsoletes.
+        entries (list): Entries to search against.
+    """
+    for entry in pofile:
+        if entry not in entries:
+            _equal_not_obsolete_found = find_entry_in_entries(
+                entry,
+                entries,
+                compare_obsolete=False,
+            )
+            if _equal_not_obsolete_found:
+                pofile.remove(entry)
+            else:
+                entry.obsolete = True
+        else:
+            entry.obsolete = False
+
+
+def remove_not_found_entries(pofile, entries):
+    """Removes entries in a PO file if are not in a set of entries.
+
+    Args:
+        pofile (:py:class:`polib.POFile`): PO file for which the missing
+            entries will be removed.
+        entries (list): Entries to search against.
+    """
+    for entry in pofile:
+        if entry not in entries:
+            _equal_not_obsolete_found = find_entry_in_entries(
+                entry,
+                entries,
+                compare_obsolete=False,
+            )
+            if not _equal_not_obsolete_found:
+                pofile.remove(entry)
