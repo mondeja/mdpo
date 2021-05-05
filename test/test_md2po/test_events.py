@@ -100,3 +100,34 @@ def test_command_event(abort_event):
         assert str(exc.value) == 'unhandled command for testing'
     else:
         md2po.extract()
+
+
+def test_msgid_event():
+    def dont_save_hate_msgid(self, msgid):
+        if msgid == 'hate':
+            return False
+
+    content = '''<!-- mdpo-disable-next-line -->
+hate
+
+love
+
+equilibrium
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "equilibrium"
+msgstr ""
+'''
+
+    output = markdown_to_pofile(
+        content,
+        events={
+            'msgid': dont_save_hate_msgid,
+        },
+    )
+
+    assert output == expected_output

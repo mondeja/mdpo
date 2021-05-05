@@ -349,6 +349,15 @@ class Md2Po:
         self.found_entries.append(entry)
 
     def _save_current_msgid(self):
+        # raise 'msgid' event
+        try:
+            pre_event = self.events['msgid']
+        except KeyError:
+            pass
+        else:
+            if pre_event(self, self._current_msgid) is False:
+                return
+
         if self._current_msgid:
             if (not self._disable_next_line and not self._disable) or \
                     self._enable_next_line:
@@ -822,6 +831,7 @@ def markdown_to_pofile(
               ends.
             * ``text``: Executed when the parsing of text starts ends.
             * ``command``: Executed when a mdpo HTML command is found.
+            * ``msgid``: Executed when a msgid is going to be saved.
 
     Examples:
         >>> content = 'Some text with `inline code`'
