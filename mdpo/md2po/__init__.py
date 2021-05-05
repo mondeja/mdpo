@@ -320,6 +320,32 @@ class Md2Po:
         # ULs deep
         self._uls_deep = 0
 
+    def _mark_not_found_entries_as_obsolete(self):
+        for entry in self.pofile:
+            if entry not in self.found_entries:
+                _equal_not_obsolete_found = find_entry_in_entries(
+                    entry,
+                    self.found_entries,
+                    compare_obsolete=False,
+                )
+                if _equal_not_obsolete_found:
+                    self.pofile.remove(entry)
+                else:
+                    entry.obsolete = True
+            else:
+                entry.obsolete = False
+
+    def _remove_not_found_entries(self):
+        for entry in self.pofile:
+            if entry not in self.found_entries:
+                _equal_not_obsolete_found = find_entry_in_entries(
+                    entry,
+                    self.found_entries,
+                    compare_obsolete=False,
+                )
+                if not _equal_not_obsolete_found:
+                    self.pofile.remove(entry)
+
     def _save_msgid(self, msgid, tcomment=None, msgctxt=None):
         if msgid in self.ignore_msgids:
             return
@@ -699,29 +725,9 @@ class Md2Po:
                 self._enable_next_line = False
 
         if self.mark_not_found_as_obsolete:
-            for entry in self.pofile:
-                if entry not in self.found_entries:
-                    _equal_not_obsolete_found = find_entry_in_entries(
-                        entry,
-                        self.found_entries,
-                        compare_obsolete=False,
-                    )
-                    if _equal_not_obsolete_found:
-                        self.pofile.remove(entry)
-                    else:
-                        entry.obsolete = True
-                else:
-                    entry.obsolete = False
+            self._mark_not_found_entries_as_obsolete()
         elif not self.preserve_not_found:
-            for entry in self.pofile:
-                if entry not in self.found_entries:
-                    _equal_not_obsolete_found = find_entry_in_entries(
-                        entry,
-                        self.found_entries,
-                        compare_obsolete=False,
-                    )
-                    if not _equal_not_obsolete_found:
-                        self.pofile.remove(entry)
+            self._remove_not_found_entries()
 
         if self.metadata:
             self.pofile.metadata.update(self.metadata)
