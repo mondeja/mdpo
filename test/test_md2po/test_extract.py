@@ -68,6 +68,7 @@ def test_extract_save(filename):
 
     markdown_to_pofile(
         filepath, plaintext=True, save=True, po_filepath=save_file.name,
+        location=False,
     )
     save_file.seek(0)
 

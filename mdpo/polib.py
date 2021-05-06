@@ -6,7 +6,13 @@ See https://github.com/izimobil/polib/pulls for details.
 from polib import POEntry
 
 
-def _poentry__cmp__(self, other, compare_obsolete=True, compare_msgstr=True):
+def _poentry__cmp__(
+    self,
+    other,
+    compare_obsolete=True,
+    compare_msgstr=True,
+    compare_occurrences=True,
+):
     """Custom comparation ``__cmp__`` function for :py:class:`polib.POEntry`.
 
     This function acts like a workaround for
@@ -19,10 +25,12 @@ def _poentry__cmp__(self, other, compare_obsolete=True, compare_msgstr=True):
     Args:
         self (:py:class:`polib.POEntry`): Entry to be compared.
         other (:py:class:`polib.POEntry`): Entry to compare against.
-        compare_obsolete (bool): Indicates if the ``obsolete`` attribute of the
+        compare_obsolete (bool): Indicates if the ``obsolete`` property of the
             entries will be used comparing them.
-        compare_msgstr (bool): Indicates if the ``msgstr`` attribute of the
+        compare_msgstr (bool): Indicates if the ``msgstr`` property of the
             entries will be used comparing them.
+        compare_occurrences (bool): Indicates if the ``occurrences`` property
+            of the entries will be used comparing them.
     """
     if compare_obsolete:
         if self.obsolete != other.obsolete:
@@ -30,12 +38,13 @@ def _poentry__cmp__(self, other, compare_obsolete=True, compare_msgstr=True):
                 return -1
             else:
                 return 1
-    occ1 = sorted(self.occurrences[:])
-    occ2 = sorted(other.occurrences[:])
-    if occ1 > occ2:
-        return 1
-    if occ1 < occ2:
-        return -1
+    if compare_occurrences:
+        occ1 = sorted(self.occurrences[:])
+        occ2 = sorted(other.occurrences[:])
+        if occ1 > occ2:
+            return 1
+        if occ1 < occ2:
+            return -1
     msgctxt = self.msgctxt or '0'
     othermsgctxt = other.msgctxt or '0'
     if msgctxt > othermsgctxt:

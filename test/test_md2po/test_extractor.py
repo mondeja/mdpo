@@ -37,13 +37,15 @@ def test_mark_not_found_as_obsolete(tmp_file):
     with tmp_file(original_md_file_content, '.md') as original_md_filepath:
         md2po = Md2Po(original_md_filepath)
         po = md2po.extract(po_filepath=po_file.name, save=True)
-    assert po.__unicode__() == '''#
+    assert po.__unicode__() == f'''#
 msgid ""
 msgstr ""
 
+#: {po_file.name}:block 1 (paragraph)
 msgid "Some string in the markdown"
 msgstr ""
 
+#: {po_file.name}:block 2 (paragraph)
 msgid "Another string"
 msgstr ""
 '''
@@ -54,10 +56,11 @@ msgstr ""
             mark_not_found_as_obsolete=True,
         )
         po = md2po.extract(po_filepath=po_file.name)
-    assert po.__unicode__() == '''#
+    assert po.__unicode__() == f'''#
 msgid ""
 msgstr ""
 
+#: {po_file.name}:block 1 (paragraph)
 msgid "A new string"
 msgstr ""
 

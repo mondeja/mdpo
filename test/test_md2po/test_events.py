@@ -34,6 +34,24 @@ def test_enter_leave_block_event(abort_event):
     assert bool(md2po._uls_deep) is abort_event
 
 
+@pytest.mark.parametrize(('abort_event'), (True, False))
+def test_enter_block_event(abort_event):
+    content = 'Hello\n'
+
+    md2po = Md2Po(
+        content,
+        events={
+            'enter_block': lambda *_: not abort_event,
+        },
+    )
+
+    md2po.extract()
+
+    assert md2po._current_top_level_block_number == (
+        1 if not abort_event else 0
+    )
+
+
 @pytest.mark.parametrize(
     ('abort_event', 'expected_msgid'),
     (

@@ -33,7 +33,7 @@ jobs:
           pip list
       - name: Test with pytest
         # https://github.com/actions/runner/issues/241#issuecomment-577360161
-        run: script -e -c 'pytest -svv --cov=mdpo --cov-config setup.cfg'
+        run: script -e -c 'pytest -svv --cov=mdpo --cov-config=setup.cfg'
       - name: Coveralls
         run: coveralls
         env:

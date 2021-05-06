@@ -55,11 +55,16 @@ def mark_not_found_entries_as_obsoletes(
         entries (list): Entries to search against.
     """
     for entry in pofile:
-        if entry not in entries:
+        if not find_entry_in_entries(
+            entry,
+            entries,
+            compare_occurrences=False,
+        ):
             _equal_not_obsolete_found = find_entry_in_entries(
                 entry,
                 entries,
                 compare_obsolete=False,
+                compare_occurrences=False,
             )
             if _equal_not_obsolete_found:
                 pofile.remove(entry)
@@ -78,11 +83,16 @@ def remove_not_found_entries(pofile, entries):
         entries (list): Entries to search against.
     """
     for entry in pofile:
-        if entry not in entries:
+        if not find_entry_in_entries(
+            entry,
+            entries,
+            compare_occurrences=False,
+        ):
             _equal_not_obsolete_found = find_entry_in_entries(
                 entry,
                 entries,
                 compare_obsolete=False,
+                compare_occurrences=False,
             )
             if not _equal_not_obsolete_found:
                 pofile.remove(entry)

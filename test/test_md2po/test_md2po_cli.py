@@ -63,7 +63,13 @@ msgstr ""
 '''
 
     with tmp_file(pofile_content, '.po') as pofile_path:
-        pofile, exitcode = run(['# Bar\n', arg, pofile_path, '-m'])
+        pofile, exitcode = run([
+            '# Bar\n',
+            arg,
+            pofile_path,
+            '-m',
+            '--no-location',
+        ])
         out, err = capsys.readouterr()
 
     assert exitcode == 0
@@ -92,7 +98,14 @@ msgstr ""
 '''
 
     with tmp_file(pofile_content, '.po') as pofile_path:
-        pofile, exitcode = run(['# Bar\n', arg, '-po', pofile_path, '-m'])
+        pofile, exitcode = run([
+            '# Bar\n',
+            arg,
+            '-po',
+            pofile_path,
+            '-m',
+            '--no-location',
+        ])
         out, err = capsys.readouterr()
 
         with open(pofile_path) as f:
@@ -377,21 +390,24 @@ msgid "foo"
 msgstr "foo language"
 '''
 
-    expected_output = '''#
+    with tmp_file(pofile_content, '.po') as po_filepath:
+
+        expected_output = f'''#
 msgid ""
 msgstr ""
 
 msgid "foo"
 msgstr "foo language"
 
+#: {po_filepath}:block 1 (header)
 msgid "bar"
 msgstr ""
 
+#: {po_filepath}:block 2 (paragraph)
 msgid "baz"
 msgstr ""
 '''
 
-    with tmp_file(pofile_content, '.po') as po_filepath:
         pofile, exitcode = run([
             md_content,
             '--po-filepath', po_filepath,
@@ -415,18 +431,20 @@ msgid "foo"
 msgstr "foo language"
 '''
 
-    expected_output = '''#
+    with tmp_file(pofile_content, '.po') as po_filepath:
+        expected_output = f'''#
 msgid ""
 msgstr ""
 
+#: {po_filepath}:block 1 (header)
 msgid "bar"
 msgstr ""
 
+#: {po_filepath}:block 2 (paragraph)
 msgid "baz"
 msgstr ""
 '''
 
-    with tmp_file(pofile_content, '.po') as po_filepath:
         pofile, exitcode = run([
             md_content,
             '--po-filepath',

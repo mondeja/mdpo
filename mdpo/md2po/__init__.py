@@ -10,7 +10,10 @@ from mdpo.command import (
     parse_mdpo_html_command,
 )
 from mdpo.io import filter_paths, to_glob_or_content
-from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
+from mdpo.md4c import (
+    DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
+    READABLE_BLOCK_NAMES,
+)
 from mdpo.po import (
     find_entry_in_entries,
     mark_not_found_entries_as_obsoletes,
@@ -26,6 +29,7 @@ class Md2Po:
         'filepaths',
         'content',
         'pofile',
+        'po_filepath',
         'msgstr',
         'found_entries',
         'disabled_entries',
@@ -39,6 +43,10 @@ class Md2Po:
         'include_codeblocks',
         'metadata',
         'events',
+
+        'location',
+        '_current_top_level_block_number',
+        '_current_top_level_block_type',
 
         '_current_msgid',
         '_current_tcomment',
@@ -84,6 +92,9 @@ class Md2Po:
         '_inside_pblock',
         '_inside_liblock',
         '_inside_codespan',
+        '_inside_olblock',
+        '_inside_hblock',
+        '_quoteblocks_deep',
         '_codespan_start_index',
         '_codespan_backticks',
         '_current_aspan_href',
@@ -103,6 +114,7 @@ class Md2Po:
             self.content = glob_or_content
 
         self.pofile = None
+        self.po_filepath = None
         self.msgstr = kwargs.get('msgstr', '')
         self.found_entries = []
         self.disabled_entries = []
@@ -120,6 +132,10 @@ class Md2Po:
             'mark_not_found_as_obsolete', True,
         )
         self.preserve_not_found = kwargs.get('preserve_not_found', True)
+
+        self.location = kwargs.get('location', True)
+        self._current_top_level_block_number = 0
+        self._current_top_level_block_type = None
 
         self.extensions = kwargs.get(
             'extensions',
@@ -310,6 +326,10 @@ class Md2Po:
         self._inside_codeblock = False
         self._inside_pblock = False
         self._inside_liblock = False
+        self._inside_hblock = False
+        self._inside_olblock = False
+        self._quoteblocks_deep = 0
+        self._uls_deep = 0
 
         self._inside_codespan = False
         self._codespan_start_index = None
@@ -322,9 +342,6 @@ class Md2Po:
         if 'metadata' in kwargs:
             self.metadata.update(kwargs['metadata'])
 
-        # ULs deep
-        self._uls_deep = 0
-
     def _save_msgid(self, msgid, tcomment=None, msgctxt=None):
         if msgid in self.ignore_msgids:
             return
@@ -334,19 +351,50 @@ class Md2Po:
             comment=tcomment,
             msgctxt=msgctxt,
         )
+
+        occurrence = None
+        if self.location and self.po_filepath:
+            # here could happen a KeyError if someone has aborted an ,
+            # enter event, in which case we do not have access to the
+            # block type because ``self._current_top_level_block_type is None``
+            current_block_name = READABLE_BLOCK_NAMES[
+                self._current_top_level_block_type
+            ]
+            # TODO: when all tests added and the location feature is fully
+            #       tested, we could ignore the KeyError event keeping an
+            #       incomplete occurrence place string, and raising a warning
+            #       if the user has configured an `enter_block` or
+            #       `leave_block` event remembering that
+            #       `_current_top_level_block_number` and
+            #       _current_top_level_block_type` properties must be handled
+            #       accordingly
+
+            occurrence = (
+                self.po_filepath,
+                (
+                    f'block {self._current_top_level_block_number}'
+                    f' ({current_block_name})'
+                ),
+            )
+
+            if occurrence not in entry.occurrences:
+                entry.occurrences.append(occurrence)
+
         _equal_entry = find_entry_in_entries(
             entry,
             self.pofile,
             compare_obsolete=False,
             compare_msgstr=False,
+            compare_occurrences=False,
         )
+
         if _equal_entry and _equal_entry.msgstr:
             entry.msgstr = _equal_entry.msgstr
             if _equal_entry.fuzzy and not entry.fuzzy:
                 entry.flags.append('fuzzy')
         if entry not in self.pofile:
             self.pofile.append(entry)
-        self.found_entries.append(entry)
+            self.found_entries.append(entry)
 
     def _save_current_msgid(self):
         # raise 'msgid' event
@@ -359,6 +407,7 @@ class Md2Po:
                 return
 
         if self._current_msgid:
+
             if (not self._disable_next_line and not self._disable) or \
                     self._enable_next_line:
                 self._save_msgid(
@@ -395,6 +444,9 @@ class Md2Po:
                 original_command,
             ) is False:
                 return
+
+        # don't count mdpo commands as blocks
+        self._current_top_level_block_number -= 1
 
         if mdpo_command == 'mdpo-disable-next-line':
             self._disable_next_line = True
@@ -436,6 +488,8 @@ class Md2Po:
                 )
             self._current_msgid = comment.rstrip()
             self._save_current_msgid()
+        else:
+            self._current_top_level_block_number += 1
 
     def _process_command(self, text):
         original_command, comment = parse_mdpo_html_command(text)
@@ -464,8 +518,23 @@ class Md2Po:
 
         if block.value == md4c.BlockType.P:
             self._inside_pblock = True
+            if not any([
+                self._inside_hblock,
+                self._uls_deep,
+                self._quoteblocks_deep,
+                self._inside_olblock,
+            ]):
+                self._current_top_level_block_number += 1
+                self._current_top_level_block_type = md4c.BlockType.P.value
         elif block.value == md4c.BlockType.CODE:
             self._inside_codeblock = True
+            if not any([
+                self._quoteblocks_deep,
+                self._uls_deep,
+                self._inside_olblock,
+            ]):
+                self._current_top_level_block_number += 1
+                self._current_top_level_block_type = md4c.BlockType.CODE.value
         elif block.value == md4c.BlockType.LI:
             self._inside_liblock = True
         elif block.value == md4c.BlockType.UL:
@@ -473,11 +542,57 @@ class Md2Po:
             if self._uls_deep > 1:
                 # changing UL deeep
                 self._save_current_msgid()
+            elif not any([
+                self._quoteblocks_deep,
+                self._inside_olblock,
+            ]):
+                self._current_top_level_block_number += 1
+                self._current_top_level_block_type = md4c.BlockType.UL.value
+        elif block.value == md4c.BlockType.H:
+            self._inside_hblock = True
+            if not any([
+                self._quoteblocks_deep,
+                self._uls_deep,
+                self._inside_olblock,
+            ]):
+                self._current_top_level_block_number += 1
+                self._current_top_level_block_type = md4c.BlockType.H.value
         elif block.value == md4c.BlockType.QUOTE:
+            self._quoteblocks_deep += 1
             if self._inside_liblock:
                 self._save_current_msgid()
+            if self._quoteblocks_deep == 1:
+                self._current_top_level_block_number += 1
+                self._current_top_level_block_type = md4c.BlockType.QUOTE.value
+        elif block.value == md4c.BlockType.OL:
+            if not any([
+                self._quoteblocks_deep,
+                self._uls_deep,
+                self._inside_olblock,
+            ]):
+                self._current_top_level_block_number += 1
+                self._current_top_level_block_type = md4c.BlockType.OL.value
+
+            if self._inside_olblock:
+                self._save_current_msgid()
+            self._inside_olblock = True
         elif block.value == md4c.BlockType.HTML:
             self._inside_htmlblock = True
+            if not any([
+                self._quoteblocks_deep,
+                self._inside_olblock,
+                self._uls_deep,
+            ]):
+                self._current_top_level_block_number += 1
+                self._current_top_level_block_type = md4c.BlockType.HTML.value
+        elif block.value == md4c.BlockType.TABLE:
+            if not any([
+                self._quoteblocks_deep,
+                self._inside_olblock,
+                self._uls_deep,
+            ]):
+                self._current_top_level_block_number += 1
+                self._current_top_level_block_type = md4c.BlockType.TABLE.value
 
     def leave_block(self, block, details):
         # print("LEAVE BLOCK:", block.name)
@@ -507,6 +622,12 @@ class Md2Po:
                 self._inside_liblock = True
             elif block.value == md4c.BlockType.UL:
                 self._uls_deep -= 1
+            elif block.value == md4c.BlockType.H:
+                self._inside_hblock = False
+            elif block.value == md4c.BlockType.QUOTE:
+                self._quoteblocks_deep -= 1
+            elif block.value == md4c.BlockType.OL:
+                self._inside_olblock = False
             self._save_current_msgid()
 
     def enter_span(self, span, details):
@@ -666,23 +787,27 @@ class Md2Po:
             self._process_command(text)
 
     def extract(
-        self, po_filepath=None, save=False, mo_filepath=None, po_encoding=None,
+        self,
+        po_filepath=None,
+        save=False,
+        mo_filepath=None,
+        po_encoding=None,
         md_encoding='utf-8',
     ):
-        _po_filepath = None
         if not po_filepath:
-            po_filepath = ''
+            self.po_filepath = ''
         else:
-            _po_filepath = po_filepath
+            self.po_filepath = po_filepath
             if not os.path.exists(po_filepath):
-                po_filepath = ''
+                self.po_filepath = ''
 
         pofile_kwargs = (
             dict(autodetect_encoding=False, encoding=po_encoding)
             if po_encoding else {}
         )
         self.pofile = polib.pofile(
-            po_filepath, wrapwidth=self.wrapwidth,
+            self.po_filepath,
+            wrapwidth=self.wrapwidth,
             **pofile_kwargs,
         )
 
@@ -726,8 +851,8 @@ class Md2Po:
         if self.metadata:
             self.pofile.metadata.update(self.metadata)
 
-        if save and _po_filepath:
-            self.pofile.save(fpath=_po_filepath)
+        if save and self.po_filepath:
+            self.pofile.save(fpath=self.po_filepath)
         if mo_filepath:
             self.pofile.save_as_mofile(mo_filepath)
         return self.pofile
@@ -744,6 +869,7 @@ def markdown_to_pofile(
     wrapwidth=78,
     mark_not_found_as_obsolete=True,
     preserve_not_found=True,
+    location=True,
     extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
     po_encoding=None,
     md_encoding='utf-8',
@@ -793,6 +919,8 @@ def markdown_to_pofile(
         preserve_not_found (bool): The strings extracted from markdown that
             will not be found inside the provided pofile wouldn't be removed.
             Only has effect if ``mark_not_found_as_obsolete`` is ``False``.
+        location (bool): Store references of top-level blocks in which are
+            found the messages in PO file `#: reference` comments.
         extensions (list): md4c extensions used to parse markdown content,
             formatted as a list of 'pymd4c' keyword arguments. You can see all
             available at `pymd4c repository <https://github.com/dominickpastore
@@ -856,6 +984,7 @@ def markdown_to_pofile(
         wrapwidth=wrapwidth,
         mark_not_found_as_obsolete=mark_not_found_as_obsolete,
         preserve_not_found=preserve_not_found,
+        location=location,
         extensions=extensions,
         xheaders=xheaders,
         include_codeblocks=include_codeblocks,

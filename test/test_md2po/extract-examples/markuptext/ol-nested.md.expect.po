@@ -5,7 +5,10 @@ msgstr ""
 msgid "First ordered list item"
 msgstr ""
 
-msgid "Second ordered list itemFirst nested ordered list item"
+msgid "Second ordered list item"
+msgstr ""
+
+msgid "First nested ordered list item"
 msgstr ""
 
 msgid "Second nested ordered list item"
