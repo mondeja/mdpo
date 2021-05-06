@@ -1,6 +1,5 @@
 """HTML-produced-from-Markdown files translator using PO files as reference."""
 
-import glob
 import html
 import re
 import warnings
@@ -14,7 +13,11 @@ from mdpo.command import (
     parse_mdpo_html_command,
 )
 from mdpo.html import get_html_attrs_tuple_attr, html_attrs_tuple_to_string
-from mdpo.io import filter_paths, to_file_content_if_is_file
+from mdpo.io import to_file_content_if_is_file
+from mdpo.po import (
+    paths_or_globs_to_unique_pofiles,
+    pofiles_to_unique_translations_dicts,
+)
 from mdpo.polib import *  # noqa
 
 
@@ -40,10 +43,11 @@ class MdPo2HTML(HTMLParser):
         po_encoding=None,
         command_aliases={},
     ):
-        self.pofiles = [
-            polib.pofile(pofilepath, encoding=po_encoding) for pofilepath in
-            filter_paths(glob.glob(pofiles), ignore_paths=ignore)
-        ]
+        self.pofiles = paths_or_globs_to_unique_pofiles(
+            pofiles,
+            ignore,
+            po_encoding=po_encoding,
+        )
         self.output = ''
         self.replacer = []
         self._raw_replacement = ''
@@ -421,17 +425,9 @@ class MdPo2HTML(HTMLParser):
             encoding=html_encoding,
         )
 
-        self.translations, self.translations_with_msgctxt = ({}, {})
-        for pofile in self.pofiles:
-            for entry in pofile:
-                if entry.msgctxt:
-                    if entry.msgctxt not in self.translations_with_msgctxt:
-                        self.translations_with_msgctxt[entry.msgctxt] = {}
-                    self.translations_with_msgctxt[
-                        entry.msgctxt
-                    ][entry.msgid] = entry.msgstr
-                else:
-                    self.translations[entry.msgid] = entry.msgstr
+        self.translations, self.translations_with_msgctxt = (
+            pofiles_to_unique_translations_dicts(self.pofiles)
+        )
 
         self.feed(content)
 

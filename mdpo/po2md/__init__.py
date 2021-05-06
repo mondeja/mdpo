@@ -1,6 +1,5 @@
 """Markdown files translator using PO files as reference."""
 
-import glob
 import re
 import textwrap
 
@@ -11,14 +10,18 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
-from mdpo.io import filter_paths, to_file_content_if_is_file
+from mdpo.io import to_file_content_if_is_file
 from mdpo.md import (
     escape_links_titles,
     fixwrap_codespans,
     inline_untexted_links,
 )
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-from mdpo.po import po_escaped_string
+from mdpo.po import (
+    paths_or_globs_to_unique_pofiles,
+    po_escaped_string,
+    pofiles_to_unique_translations_dicts,
+)
 from mdpo.polib import *  # noqa
 from mdpo.text import (
     min_not_max_chars_in_a_row,
@@ -92,10 +95,11 @@ class Po2Md:
     )
 
     def __init__(self, pofiles, ignore=[], po_encoding=None, **kwargs):
-        self.pofiles = [
-            polib.pofile(po_filepath, encoding=po_encoding) for po_filepath in
-            filter_paths(glob.glob(pofiles), ignore_paths=ignore)
-        ]
+        self.pofiles = paths_or_globs_to_unique_pofiles(
+            pofiles,
+            ignore,
+            po_encoding=po_encoding,
+        )
 
         self.extensions = kwargs.get(
             'extensions',
@@ -698,7 +702,6 @@ class Po2Md:
                     return
                 self._current_msgid += text
             else:
-
                 if self._inside_liblock:
                     indent = '   ' * len(self._current_list_type)
                     if self._current_line[:len(indent)+1] != indent:
@@ -707,24 +710,20 @@ class Po2Md:
         else:
             self._process_command(text)
 
-    def translate(self, filepath_or_content, save=None, md_encoding='utf-8'):
+    def translate(
+        self,
+        filepath_or_content,
+        save=None,
+        md_encoding='utf-8',
+    ):
         content = to_file_content_if_is_file(
             filepath_or_content,
             encoding=md_encoding,
         )
 
-        self.translations = {}
-        self.translations_with_msgctxt = {}
-        for pofile in self.pofiles:
-            for entry in pofile:
-                if entry.msgctxt:
-                    if entry.msgctxt not in self.translations_with_msgctxt:
-                        self.translations_with_msgctxt[entry.msgctxt] = {}
-                    self.translations_with_msgctxt[
-                        entry.msgctxt
-                    ][entry.msgid] = entry.msgstr
-                else:
-                    self.translations[entry.msgid] = entry.msgstr
+        self.translations, self.translations_with_msgctxt = (
+            pofiles_to_unique_translations_dicts(self.pofiles)
+        )
 
         parser = md4c.GenericParser(
             0,
@@ -770,8 +769,9 @@ def pofile_to_markdown(
 
     Args:
         filepath_or_content (str): Markdown filepath or content to translate.
-        pofiles (str): Glob matching a set of pofiles from where to extract
-            references to make the replacements translating strings.
+        pofiles (str, list) Glob or list of globs matching a set of pofiles
+            from where to extract messages to make the replacements translating
+            strings.
         ignore (list): Paths of pofiles to ignore. Useful when a glob does not
             fit your requirements indicating the files to extract content.
             Also, filename or a dirname can be defined without indicate the

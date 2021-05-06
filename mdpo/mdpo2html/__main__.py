@@ -3,6 +3,7 @@
 """mdpo2html command line interface."""
 
 import argparse
+import itertools
 import sys
 
 from mdpo.cli import (
@@ -30,9 +31,10 @@ def build_parser():
              ' read from STDIN.',
     )
     parser.add_argument(
-        '-p', '--pofiles', metavar='POFILES',
+        '-p', '--pofiles', metavar='POFILES', action='append', nargs='*',
         help='Glob matching a set of PO files from where to extract references'
-             ' to make the replacements translating strings.',
+             ' to make the replacements translating strings. This argument'
+             ' can be passed multiple times.',
     )
     parser.add_argument(
         '-i', '--ignore', dest='ignore', default=[],
@@ -74,9 +76,12 @@ def parse_options(args):
         opts.filepath_or_content = opts.filepath_or_content[0]
     if opts.ignore:
         opts.ignore = parse_list_cli_argument(opts.ignore)
+
     opts.command_aliases = parse_command_aliases_cli_arguments(
         opts.command_aliases,
     )
+
+    opts.pofiles = set(itertools.chain(*opts.pofiles))  # flatten
 
     return opts
 
