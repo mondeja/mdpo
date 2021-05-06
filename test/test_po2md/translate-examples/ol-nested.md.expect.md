@@ -24,7 +24,17 @@
 
    > Bloque de cita después de párrafo dentro de elemento de lista ordenada
 
+   | Sintaxis | Descripción | Estilo | A |
+   | --- | :-- | --: | :-: |
+   | Encabezado | Título | Foo | B |
+   | Párrafo | Texto | Bar | C |
+
    1. Elemento de lista ordenada anidado
       > Otro bloque de cita anidado más dentro de elemento de lista ordenada anidado
+
+      > | Sintaxis | Descripción | Estilo | A |
+      > | --- | :-- | --: | :-: |
+      > | Encabezado | Título | Foo | B |
+      > | Párrafo | Texto | Bar | C |
 
 > Bloque de cita tras lista ordenada

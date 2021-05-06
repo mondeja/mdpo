@@ -7,7 +7,7 @@
       codeblock
       ```
 
-1) Elemento de lista ordenada
+1) Ordered list item
    - Nested unordered list item
       + Other nested unordered list item
          ```
@@ -25,7 +25,17 @@
 
    > Quoteblock after paragraph inside ordered list item
 
+   | Syntax | Description | Style | A |
+   | --- | :-- | --: | :-: |
+   | Header | Title | Foo | B |
+   | Paragraph | Text | Bar | C |
+
    1. Nested ordered list item
       > Another more nested quoteblock inside nested ordered list item
+
+      > | Syntax | Description | Style | A |
+      > | --- | :-- | --: | :-: |
+      > | Header | Title | Foo | B |
+      > | Paragraph | Text | Bar | C |
 
 > Quoteblock after ordered list

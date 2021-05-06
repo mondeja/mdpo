@@ -14,11 +14,21 @@
 
    > Another quote block inside unordered list item
 
+   > | Syntax | Description | Style | A |
+   > | --- | :-- | --: | :-: |
+   > | Header | Title | Foo | B |
+   > | Paragraph | Text | Bar | C |
+
    Paragraph inside unordered list item after quoteblock
 
    > Quoteblock after paragraph inside unordered list item
 
    - Nested unordered list item
       > Another more nested quoteblock inside nested unordered list item
+
+      | Syntax | Description | Style | A |
+      | --- | :-- | --: | :-: |
+      | Header | Title | Foo | B |
+      | Paragraph | Text | Bar | C |
 
 > Quoteblock after unordered list

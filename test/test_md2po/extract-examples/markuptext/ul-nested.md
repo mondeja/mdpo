@@ -21,4 +21,9 @@
    - Nested unordered list item
       > Another more nested quoteblock inside nested unordered list item
 
+      | Syntax      | Description  | Style | A    |
+      | ----------- | :----------- | ----: | :--: |
+      | Header      | Title        | Foo   | B    |
+      | Paragraph   | Text         | Bar   | C    |
+
 > Quoteblock after unordered list

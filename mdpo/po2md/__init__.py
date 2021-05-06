@@ -22,6 +22,7 @@ from mdpo.po import po_escaped_string
 from mdpo.polib import *  # noqa
 from mdpo.text import (
     min_not_max_chars_in_a_row,
+    removesuffix,
     wrap_different_first_line_width,
 )
 
@@ -429,16 +430,31 @@ class Po2Md:
             else:
                 # inside lists, the separator '---' can't be used
                 self._current_line += '***'
+        elif block.value == md4c.BlockType.TR:
+            self._current_line += '   ' * len(self._current_list_type)
+            if self._current_line.startswith('>    '):
+                self._current_line = self._current_line.replace('> ', '')
         elif block.value == md4c.BlockType.TH:
+            if self._inside_quoteblock:
+                if not self._current_line.replace(' ', '') == '>':
+                    self._current_line = removesuffix(self._current_line, '> ')
             self._current_line += '| '
             self._current_thead_aligns.append(details['align'].value)
         elif block.value == md4c.BlockType.TD:
+            if self._inside_quoteblock:
+                if not self._current_line.replace(' ', '') == '>':
+                    self._current_line = removesuffix(self._current_line, '> ')
             self._current_line += '| '
         elif block.value == md4c.BlockType.QUOTE:
             if self._inside_liblock:
                 self._save_current_msgid()
                 self._save_current_line()
             self._inside_quoteblock = True
+        elif block.value == md4c.BlockType.TABLE:
+            if self._current_list_type and not self._inside_quoteblock:
+                if self._current_line:
+                    self._save_current_line()
+                self._save_current_line()
         elif block.value == md4c.BlockType.HTML:
             self._inside_htmlblock = True
 
@@ -533,11 +549,15 @@ class Po2Md:
             thead_separator = ''
             if self._inside_quoteblock:
                 _thead_split = re.split(r'[^\\](\|)', self._current_line)
+                if self._current_list_type:
+                    _thead_split = _thead_split[1:]
                 self._current_line += '|'
                 thead_separator += '> '
             else:
                 self._current_line += '|'
                 _thead_split = re.split(r'[^\\](\|)', self._current_line)
+                if self._current_list_type:
+                    _thead_split = _thead_split[1:-1]
             thead_separator += '| '
 
             _antepenultimate_thead_i = len(_thead_split) - 2
@@ -554,7 +574,10 @@ class Po2Md:
                 if i < len(_thead_split) - 3:
                     thead_separator += ' '
 
-            self._current_line += '\n%s' % thead_separator
+            self._current_line += '\n{}{}'.format(
+                '   ' * len(self._current_list_type),
+                thead_separator,
+            )
             self._save_current_line()
         elif block.value == md4c.BlockType.QUOTE:
             if self._outputlines[-1] == '>':
@@ -563,10 +586,8 @@ class Po2Md:
                 self._save_current_line()
             self._inside_quoteblock = False
         elif block.value == md4c.BlockType.TABLE:
-            if not self._inside_quoteblock:
+            if not self._inside_quoteblock and not self._current_list_type:
                 self._save_current_line()
-        elif block.value == md4c.BlockType.DOC:
-            pass
         elif block.value == md4c.BlockType.HTML:
             self._inside_htmlblock = False
 

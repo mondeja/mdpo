@@ -41,5 +41,41 @@ msgstr ""
 msgid "Another more nested quoteblock inside nested unordered list item"
 msgstr ""
 
+msgid "Syntax"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Style"
+msgstr ""
+
+msgid "A"
+msgstr ""
+
+msgid "Header"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Foo"
+msgstr ""
+
+msgid "B"
+msgstr ""
+
+msgid "Paragraph"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Bar"
+msgstr ""
+
+msgid "C"
+msgstr ""
+
 msgid "Quoteblock after unordered list"
 msgstr ""

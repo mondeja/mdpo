@@ -50,5 +50,41 @@ msgstr "Elemento de lista ordenada anidado"
 msgid "Another more nested quoteblock inside nested ordered list item"
 msgstr "Otro bloque de cita anidado más dentro de elemento de lista ordenada anidado"
 
+msgid "Syntax"
+msgstr "Sintaxis"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Style"
+msgstr "Estilo"
+
+msgid "A"
+msgstr "A"
+
+msgid "Header"
+msgstr "Encabezado"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Foo"
+msgstr "Foo"
+
+msgid "B"
+msgstr "B"
+
+msgid "Paragraph"
+msgstr "Párrafo"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Bar"
+msgstr "Bar"
+
+msgid "C"
+msgstr "C"
+
 msgid "Quoteblock after ordered list"
 msgstr "Bloque de cita tras lista ordenada"
