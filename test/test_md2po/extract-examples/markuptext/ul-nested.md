@@ -26,4 +26,7 @@
       | Header      | Title        | Foo   | B    |
       | Paragraph   | Text         | Bar   | C    |
 
+   - ## Crazy header inside nested unordered list item
+      > ### Another header in nested unordered list item inside quote
+
 > Quoteblock after unordered list

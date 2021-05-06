@@ -77,5 +77,11 @@ msgstr ""
 msgid "C"
 msgstr ""
 
+msgid "Crazy header inside nested unordered list item"
+msgstr ""
+
+msgid "Another header in nested unordered list item inside quote"
+msgstr ""
+
 msgid "Quoteblock after unordered list"
 msgstr ""

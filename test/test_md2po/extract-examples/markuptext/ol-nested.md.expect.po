@@ -50,5 +50,11 @@ msgstr ""
 msgid "Another more nested quoteblock inside nested ordered list item"
 msgstr ""
 
+msgid "Crazy header inside nested ordered list item"
+msgstr ""
+
+msgid "Another header in nested ordered list item inside quote"
+msgstr ""
+
 msgid "Quoteblock after ordered list"
 msgstr ""
