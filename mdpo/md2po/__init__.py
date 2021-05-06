@@ -539,7 +539,7 @@ class Md2Po:
             self._inside_liblock = True
         elif block.value == md4c.BlockType.UL:
             self._uls_deep += 1
-            if self._uls_deep > 1:
+            if self._uls_deep > 1 or self._inside_olblock:
                 # changing UL deeep
                 self._save_current_msgid()
             elif not any([
@@ -573,7 +573,7 @@ class Md2Po:
                 self._current_top_level_block_number += 1
                 self._current_top_level_block_type = md4c.BlockType.OL.value
 
-            if self._inside_olblock:
+            if self._inside_olblock or self._uls_deep:
                 self._save_current_msgid()
             self._inside_olblock = True
         elif block.value == md4c.BlockType.HTML:

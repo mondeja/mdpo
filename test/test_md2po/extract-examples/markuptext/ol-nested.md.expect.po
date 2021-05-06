@@ -17,7 +17,10 @@ msgstr ""
 msgid "Third nested ordered list item"
 msgstr ""
 
-msgid "Elemento de lista ordenadaNested unordered list item"
+msgid "Elemento de lista ordenada"
+msgstr ""
+
+msgid "Nested unordered list item"
 msgstr ""
 
 msgid "Other nested unordered list item"
