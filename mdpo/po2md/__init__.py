@@ -269,18 +269,15 @@ class Po2Md:
         except KeyError:
             return msgid
         else:
-            if msgstr:
-                self.translated_entries.append(
-                    polib.POEntry(
-                        msgid=msgid,
-                        msgctxt=msgctxt,
-                        msgstr=msgstr,
-                        tcomment=tcomment,
-                    ),
-                )
-                return msgstr
-            else:
-                return msgid
+            self.translated_entries.append(
+                polib.POEntry(
+                    msgid=msgid,
+                    msgctxt=msgctxt,
+                    msgstr=msgstr,
+                    tcomment=tcomment,
+                ),
+            )
+            return msgstr
 
     def _save_current_msgid(self):
         if (not self._disable and not self._disable_next_line) or \
