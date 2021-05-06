@@ -445,9 +445,6 @@ class Md2Po:
             ) is False:
                 return
 
-        # don't count mdpo commands as blocks
-        self._current_top_level_block_number -= 1
-
         if mdpo_command == 'mdpo-disable-next-line':
             self._disable_next_line = True
         elif mdpo_command == 'mdpo-disable':
@@ -488,8 +485,6 @@ class Md2Po:
                 )
             self._current_msgid = comment.rstrip()
             self._save_current_msgid()
-        else:
-            self._current_top_level_block_number += 1
 
     def _process_command(self, text):
         original_command, comment = parse_mdpo_html_command(text)

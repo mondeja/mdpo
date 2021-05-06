@@ -336,3 +336,212 @@ msgstr ""
 
         output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
     assert str(output) == expected_output
+
+
+def test_location_code_blocks(tmp_file):
+    markdown_content = '''<!-- mdpo-include-codeblock -->
+```python
+foo = "bar"
+```
+
+```javascript
+var foo = "bar";
+```
+
+<!-- mdpo-include-codeblock -->
+
+    int foo;
+
+- Foo
+   - Bar
+
+      <!-- mdpo-include-codeblock -->
+      ```python
+      code_which_must_be_included = True
+      ```
+
+> <!-- mdpo-include-codeblock -->
+> ```javascript
+> var codeWhichMustBeIncluded = true;
+> ```
+'''
+
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+        expected_output = f'''#
+msgid ""
+msgstr ""
+
+#: {po_filepath}:block 2 (code)
+msgid "foo = \\"bar\\"\\n"
+msgstr ""
+
+#: {po_filepath}:block 5 (code)
+msgid "int foo;\\n"
+msgstr ""
+
+#: {po_filepath}:block 6 (unordered list)
+msgid "Foo"
+msgstr ""
+
+#: {po_filepath}:block 6 (unordered list)
+msgid "Bar"
+msgstr ""
+
+#: {po_filepath}:block 6 (unordered list)
+msgid "code_which_must_be_included = True\\n"
+msgstr ""
+
+#: {po_filepath}:block 7 (quote)
+msgid "var codeWhichMustBeIncluded = true;\\n"
+msgstr ""
+'''
+
+        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+    assert str(output) == expected_output
+
+
+def test_location_html(tmp_file):
+    markdown_content = '''<!-- a comment -->
+
+<!-- another comment -->
+
+paragraph
+'''
+
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+        expected_output = f'''#
+msgid ""
+msgstr ""
+
+#: {po_filepath}:block 3 (paragraph)
+msgid "paragraph"
+msgstr ""
+'''
+
+        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+    assert str(output) == expected_output
+
+
+def test_location_tables(tmp_file):
+    markdown_content = '''paragraph
+
+| Foo 1      | Foo 2  | Foo 3  | Foo 4  |
+| ---------- | :----- | -----: | :----: |
+| Foo 5      | Foo 6  | Foo 7  | Foo 8  |
+| Foo 9      | Foo 10 | Foo 11 | Foo 12 |
+
+> | Bar 1      | Bar 2  | Bar 3  | Bar 4  |
+> | ---------- | :----- | -----: | :----: |
+> | Bar 5      | Bar 6  | Bar 7  | Bar 8  |
+> | Bar 9      | Bar 10 | Bar 11 | Bar 12 |
+'''
+
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+        expected_output = f'''#
+msgid ""
+msgstr ""
+
+#: {po_filepath}:block 1 (paragraph)
+msgid "paragraph"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 1"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 2"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 3"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 4"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 5"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 6"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 7"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 8"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 9"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 10"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 11"
+msgstr ""
+
+#: {po_filepath}:block 2 (table)
+msgid "Foo 12"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 1"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 2"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 3"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 4"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 5"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 6"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 7"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 8"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 9"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 10"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 11"
+msgstr ""
+
+#: {po_filepath}:block 3 (quote)
+msgid "Bar 12"
+msgstr ""
+'''
+
+        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+
+    assert str(output) == expected_output

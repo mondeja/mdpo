@@ -172,7 +172,7 @@ msgid ""
 msgstr ""
 
 #. Comment for translator
-#: {po_filepath}:block 1 (header)
+#: {po_filepath}:block 2 (header)
 msgid "Hello"
 msgstr "Hola"
 '''
@@ -199,7 +199,7 @@ def test_obsolete_with_msgctxt_matching_msgstr_fallback(tmp_file):
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (header)
+#: {po_filepath}:block 2 (header)
 msgctxt "Context"
 msgid "Hello"
 msgstr "Hola"
@@ -229,7 +229,7 @@ def test_obsolete_with_msgctxt_not_matching_msgstr_fallback(tmp_file):
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (header)
+#: {po_filepath}:block 2 (header)
 msgctxt "First context"
 msgid "Hello"
 msgstr ""
