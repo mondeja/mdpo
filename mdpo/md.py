@@ -3,6 +3,11 @@
 import re
 
 
+LINK_REFERENCE_RE = re.compile(
+    r'^\s{0,3}\[([^\]]+)\]:\s+<?([^\s>]+)>?\s*["\'\(]?([^"\'\)]+)?',
+)
+
+
 def escape_links_titles(text, link_start_string='[', link_end_string=']'):
     r"""Escapes ``"`` characters found inside link titles.
 
@@ -104,6 +109,26 @@ def n_chars_until_chars(text, chars=[' ', '\n']):
         else:
             if value < response:
                 response = value
+    return response
+
+
+def parse_link_references(content):
+    """Parses link references found in a Markdown content.
+
+    Args:
+        content (str): Markdown content to be parsed.
+
+    Returns:
+        list: Tuples with 3 values, target, href and title for each link
+            reference.
+    """
+    response = []
+    for line in content.splitlines():
+        linestrip = line.strip()
+        if linestrip and linestrip[0] == '[':
+            match = re.search(LINK_REFERENCE_RE, linestrip)
+            if match:
+                response.append(match.groups())
     return response
 
 

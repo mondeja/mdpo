@@ -8,18 +8,26 @@ Visita <https://www.github.com/mondeja/mdpo>
 Escribe un correo electrónico a [fake@example.com](mailto:fake@example.com) si
 quieres ayuda.
 
-[Referencia A](https://github.com/mondeja/mdpo)
+[Referencia A][1]
 
-[Referencia B](https://github.com/mondeja/mdpo "Segunda referencia")
+[Referencia B][2]
 
-[Referencia C](https://github.com/mondeja/mdpo "Tercera referencia")
+[Referencia C][3]
 
-[Referencia D](https://github.com/mondeja/mdpo "Cuarta referencia")
+[Referencia D][4]
 
-[Referencia E](https://github.com/mondeja/mdpo)
+[Referencia E][1]
 
-[Referencia F](https://github.com/mondeja/mdpo "Sexta referencia")
+[Referencia F][6]
 
-[Referencia G](https://github.com/mondeja/mdpo "Séptima referencia")
+[Referencia G][7]
 
-[Referencia H](https://github.com/mondeja/mdpo "Octava referencia")
+[Referencia H][8]
+
+[1]: https://github.com/mondeja/mdpo
+[2]: https://github.com/mondeja/mdpo "Segunda referencia"
+[3]: https://github.com/mondeja/mdpo "Tercera referencia"
+[4]: https://github.com/mondeja/mdpo "Cuarta referencia"
+[6]: https://github.com/mondeja/mdpo "Sexta referencia"
+[7]: https://github.com/mondeja/mdpo "Séptima referencia"
+[8]: https://github.com/mondeja/mdpo "Octava referencia"

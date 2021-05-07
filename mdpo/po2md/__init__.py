@@ -15,6 +15,7 @@ from mdpo.md import (
     escape_links_titles,
     fixwrap_codespans,
     inline_untexted_links,
+    parse_link_references,
 )
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import (
@@ -34,6 +35,7 @@ class Po2Md:
     __slots__ = (
         'pofiles',
         'output',
+        'content',
         'extensions',
         'disabled_entries',
         'translated_entries',
@@ -71,7 +73,6 @@ class Po2Md:
         '_enterspan_replacer',
         '_leavespan_replacer',
 
-
         # state
         '_inside_htmlblock',
         '_inside_codeblock',
@@ -84,6 +85,7 @@ class Po2Md:
         '_codespan_backticks',
         '_codespan_inside_current_msgid',
         '_inside_quoteblock',
+        '_current_aspan_target',
         '_current_aspan_href',
         '_current_imgspan',
         '_current_thead_aligns',
@@ -92,6 +94,7 @@ class Po2Md:
         '_ol_marks',
         '_current_list_type',
         '_current_wikilink_target',
+        '_link_references',
     )
 
     def __init__(self, pofiles, ignore=[], po_encoding=None, **kwargs):
@@ -199,7 +202,9 @@ class Po2Md:
 
         self._inside_quoteblock = False
 
+        self._current_aspan_target = None
         self._current_aspan_href = None
+        self._link_references = None
         self._current_imgspan = {}
 
         # current table head alignments
@@ -277,7 +282,7 @@ class Po2Md:
                     tcomment=tcomment,
                 ),
             )
-            return msgstr
+            return msgstr or msgid
 
     def _save_current_msgid(self):
         if (not self._disable and not self._disable_next_line) or \
@@ -601,7 +606,27 @@ class Po2Md:
             pass
 
         if span.value == md4c.SpanType.A:
+            if self._link_references is None:
+                self._link_references = parse_link_references(self.content)
+
             self._current_aspan_href = details['href'][0][1]
+            self._current_aspan_target = None
+
+            if details['title']:
+                current_aspan_title = details['title'][0][1]
+                for target, href, title in self._link_references:
+                    if (
+                        href == self._current_aspan_href and
+                        title == current_aspan_title
+                    ):
+                        self._current_aspan_target = target
+                        break
+            else:
+                for target, href, title in self._link_references:
+                    if href == self._current_aspan_href:
+                        self._current_aspan_target = target
+                        break
+
         elif span.value == md4c.SpanType.CODE:
             self._inside_codespan = True
             self._codespan_start_index = len(self._current_msgid)-1
@@ -627,17 +652,19 @@ class Po2Md:
             pass
 
         if span.value == md4c.SpanType.A:
-            if self._current_aspan_href:
-                # is not self-referenced link
-                self._current_msgid += '(%s' % self._current_aspan_href
-
-                if details['title']:
-                    self._aimg_title_inside_current_msgid = True
-                    self._current_msgid += ' "%s"' % polib.escape(
-                        details['title'][0][1],
-                    )
-                self._current_msgid += ')'
-                self._current_aspan_href = None
+            if self._current_aspan_target:
+                self._current_msgid += f'[{self._current_aspan_target}]'
+                self._current_aspan_target = None
+            else:
+                if self._current_aspan_href:
+                    self._current_msgid += '({}'.format(details['href'][0][1])
+                    if details['title']:
+                        self._aimg_title_inside_current_msgid = True
+                        self._current_msgid += ' "{}"'.format(
+                            polib.escape(details['title'][0][1]),
+                        )
+                    self._current_msgid += ')'
+            self._current_aspan_href = None
         elif span.value == md4c.SpanType.CODE:
             self._inside_codespan = False
             self._current_msgid += (
@@ -687,10 +714,10 @@ class Po2Md:
 
                 if self._inside_pblock:
                     text = text.replace('\n', ' ')
-                if self._current_aspan_href:
-                    if text == self._current_aspan_href:
-                        # self-referenced link
-                        self._current_aspan_href = None
+                if text == self._current_aspan_href:
+                    # self-referenced wiki or inline link
+                    self._current_aspan_href = None
+
                 elif self._current_wikilink_target:
                     if text != self._current_wikilink_target:
                         self._current_wikilink_target = '{}|{}'.format(
@@ -707,13 +734,34 @@ class Po2Md:
         else:
             self._process_command(text)
 
+    def _append_link_references(self):
+        if self._link_references:
+            self._disable_next_line = False
+            self._disable = False
+
+            _references_added = []  # don't repeat references
+            for target, href, title in self._link_references:
+                href_part = '{}{}'.format(
+                    f' {href}' if href else '',
+                    f' "{title}"' if title else '',
+                )
+                if href_part in _references_added:
+                    continue
+
+                msgid = '{}{}'.format(f'[{target}]:', href_part)
+                self._outputlines.append(
+                    self._translate_msgid(msgid, None, None),
+                )
+                _references_added.append(href_part)
+            self._outputlines.append('')
+
     def translate(
         self,
         filepath_or_content,
         save=None,
         md_encoding='utf-8',
     ):
-        content = to_file_content_if_is_file(
+        self.content = to_file_content_if_is_file(
             filepath_or_content,
             encoding=md_encoding,
         )
@@ -727,16 +775,19 @@ class Po2Md:
             **{ext: True for ext in self.extensions},
         )
         parser.parse(
-            content,
+            self.content,
             self.enter_block,
             self.leave_block,
             self.enter_span,
             self.leave_span,
             self.text,
         )
+        self._append_link_references()
+
         self._disable_next_line = False
         self._disable = False
         self._enable_next_line = False
+        self._link_references = None
 
         self.output = '\n'.join(self._outputlines)
 

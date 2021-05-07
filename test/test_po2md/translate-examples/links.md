@@ -1,16 +1,10 @@
 My favorite PEP is [PEP 0](https://www.python.org/dev/peps/).
 
-[//]: # (Link with title)
-
 My favorite search engine is [Duck Duck Go](https://duckduckgo.com "The best search engine for privacy").
-
-[//]: # (Simple links)
 
 Visit <https://www.github.com/mondeja/mdpo>
 
 Write an email to <fake@example.com> if you want help.
-
-[//]: # (Links by reference)
 
 [Reference A][1]
 

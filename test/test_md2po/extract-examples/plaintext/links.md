@@ -1,19 +1,10 @@
 My favorite PEP is [PEP 0](https://www.python.org/dev/peps/).
 
-
-[//]: # (Link with title)
-
 My favorite search engine is [Duck Duck Go](https://duckduckgo.com "The best search engine for privacy").
-
-
-[//]: # (Simple links)
 
 Visit <https://www.github.com/mondeja/md2po>
 
 Write an email to <fake@example.com> if you want help
-
-
-[//]: # (Links by reference)
 
 [Reference A][1]
 
@@ -39,7 +30,5 @@ Write an email to <fake@example.com> if you want help
 [6]: <https://github.com/mondeja/md2po> "Sixth reference"
 [7]: <https://github.com/mondeja/md2po> 'Seventh reference'
 [8]: <https://github.com/mondeja/md2po> (Eighth reference)
-
-[//]: # (Void link)
 
 ![](/url)

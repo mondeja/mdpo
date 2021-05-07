@@ -10,6 +10,7 @@ from mdpo.command import (
     parse_mdpo_html_command,
 )
 from mdpo.io import filter_paths, to_glob_or_content
+from mdpo.md import parse_link_references
 from mdpo.md4c import (
     DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
     READABLE_BLOCK_NAMES,
@@ -97,10 +98,11 @@ class Md2Po:
         '_quoteblocks_deep',
         '_codespan_start_index',
         '_codespan_backticks',
-        '_current_aspan_href',
+        '_current_aspan_target',
         '_current_wikilink_target',
         '_current_imgspan',
         '_uls_deep',
+        '_link_references',
     )
 
     def __init__(self, glob_or_content, **kwargs):
@@ -335,7 +337,8 @@ class Md2Po:
         self._codespan_start_index = None
         self._codespan_backticks = None
 
-        self._current_aspan_href = None
+        self._current_aspan_target = None
+        self._link_references = None
         self._current_wikilink_target = None
         self._current_imgspan = {}
 
@@ -407,7 +410,6 @@ class Md2Po:
                 return
 
         if self._current_msgid:
-
             if (not self._disable_next_line and not self._disable) or \
                     self._enable_next_line:
                 self._save_msgid(
@@ -646,7 +648,27 @@ class Md2Po:
                     pass
 
             if span.value == md4c.SpanType.A:
-                self._current_aspan_href = details['href'][0][1]
+                if self._link_references is None:
+                    self._link_references = parse_link_references(self.content)
+
+                current_aspan_href = details['href'][0][1]
+                self._current_aspan_target = None
+
+                if details['title']:
+                    current_aspan_title = details['title'][0][1]
+                    for target, href, title in self._link_references:
+                        if (
+                            href == current_aspan_href and
+                            title == current_aspan_title
+                        ):
+                            self._current_aspan_target = target
+                            break
+                else:
+                    for target, href, title in self._link_references:
+                        if href == current_aspan_href:
+                            self._current_aspan_target = target
+                            break
+
             elif span.value == md4c.SpanType.CODE:
                 self._inside_codespan = True
 
@@ -670,7 +692,7 @@ class Md2Po:
                 self._save_msgid(details['title'][0][1])
 
     def leave_span(self, span, details):
-        # print("LEAVE SPAN:", span.name)
+        # print("LEAVE SPAN:", span.name, details)
 
         # raise 'leave_span' event
         try:
@@ -693,14 +715,16 @@ class Md2Po:
                     pass
 
             if span.value == md4c.SpanType.A:
-                if self._current_aspan_href:
+                if self._current_aspan_target:  # reference link
+                    self._current_msgid += f'[{self._current_aspan_target}]'
+                    self._current_aspan_target = None
+                else:
                     self._current_msgid += '({}{})'.format(
-                        self._current_aspan_href,
-                        '' if not details['title'] else ' "%s"' % (
-                            details['title'][0][1]
+                        details['href'][0][1],
+                        '' if not details['title'] else ' "{}"'.format(
+                            details['title'][0][1],
                         ),
                     )
-                    self._current_aspan_href = None
             elif span.value == md4c.SpanType.CODE:
                 self._inside_codespan = False
                 self._codespan_start_index = None
@@ -781,6 +805,19 @@ class Md2Po:
         else:
             self._process_command(text)
 
+    def _dump_link_references(self):
+        if self._link_references:
+            self._disable_next_line = False
+            self._disable = False
+
+            for target, href, title in self._link_references:
+                self._current_msgid = '[{}]:{}{}'.format(
+                    target,
+                    f' {href}' if href else '',
+                    f' "{title}"' if title else '',
+                )
+                self._save_current_msgid()
+
     def extract(
         self,
         po_filepath=None,
@@ -820,17 +857,20 @@ class Md2Po:
                 self.leave_span,
                 self.text,
             )
+            self._dump_link_references()
 
         if hasattr(self, 'content'):
             _parse(self.content)
         else:
             for filepath in self.filepaths:
                 with open(filepath, encoding=md_encoding) as f:
-                    content = f.read()
-                _parse(content)
+                    self.content = f.read()
+                _parse(self.content)
+
                 self._disable_next_line = False
                 self._disable = False
                 self._enable_next_line = False
+                self._link_references = None
 
         if self.mark_not_found_as_obsolete:
             mark_not_found_entries_as_obsoletes(
