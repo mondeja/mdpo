@@ -1,4 +1,5 @@
 import io
+import re
 import sys
 from contextlib import redirect_stdout
 
@@ -148,4 +149,50 @@ msgstr ""
         },
     )
 
-    assert output == expected_output
+    assert str(output) == expected_output
+
+
+def test_link_reference_event():
+    def process_footnotes(self, target, href, title):
+        if re.match(r'^\^\d', target):
+            return False
+
+    content = '''This is a footnote[^1]. This is another[^2].
+
+Here is a [link reference][foo].
+
+[^1]: This is a footnote content.
+
+[^2]: This is another footnote content.
+
+[foo]: https://github.com/mondeja/mdpo
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "This is a footnote[^1]. This is another[^2]."
+msgstr ""
+
+msgid "Here is a [link reference][foo]."
+msgstr ""
+
+msgid "[^1]: This is a footnote content."
+msgstr ""
+
+msgid "[^2]: This is another footnote content."
+msgstr ""
+
+msgid "[foo]: https://github.com/mondeja/mdpo"
+msgstr ""
+'''
+
+    output = markdown_to_pofile(
+        content,
+        events={
+            'link_reference': process_footnotes,
+        },
+    )
+
+    assert str(output) == expected_output

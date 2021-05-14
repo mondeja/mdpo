@@ -810,7 +810,13 @@ class Md2Po:
             self._disable_next_line = False
             self._disable = False
 
+            # 'link_reference' event
+            pre_event = self.events.get('link_reference')
+
             for target, href, title in self._link_references:
+                if pre_event and pre_event(self, target, href, title) is False:
+                    continue
+
                 self._current_msgid = '[{}]:{}{}'.format(
                     target,
                     f' {href}' if href else '',
@@ -995,6 +1001,8 @@ def markdown_to_pofile(
             * ``text``: Executed when the parsing of text starts ends.
             * ``command``: Executed when a mdpo HTML command is found.
             * ``msgid``: Executed when a msgid is going to be stored.
+            * ``link_reference``: Executed when a link reference is going to be
+              stored.
 
     Examples:
         >>> content = 'Some text with `inline code`'

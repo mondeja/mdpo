@@ -742,10 +742,7 @@ class Po2Md:
             self._disable_next_line = False
             self._disable = False
 
-            try:
-                pre_event = self.events['link_reference']
-            except KeyError:
-                pre_event = None
+            pre_event = self.events.get('link_reference')
 
             _references_added = []  # don't repeat references
             for target, href, title in self._link_references:
