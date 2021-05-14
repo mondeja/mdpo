@@ -979,11 +979,11 @@ def markdown_to_pofile(
         metadata (dict): Metadata to include in the produced PO file. If the
             file contains previous metadata fields, these will be updated
             preserving the values of the already defined.
-        events (dict): MD4C preprocessing events executed during the parsing
+        events (dict): Preprocessing events executed during the parsing
             process. You can use these to customize the extraction process.
             Takes functions are values. If one of these functions returns
-            ``False``, the block parsing is skipped by md2po. The available
-            events are:
+            ``False``, that part of the parsing is skipped by md2po (usually a
+            MD4C event). The available events are:
 
             * ``enter_block``: Executed when the parsing a Markdown block
               starts.
@@ -994,7 +994,7 @@ def markdown_to_pofile(
               ends.
             * ``text``: Executed when the parsing of text starts ends.
             * ``command``: Executed when a mdpo HTML command is found.
-            * ``msgid``: Executed when a msgid is going to be saved.
+            * ``msgid``: Executed when a msgid is going to be stored.
 
     Examples:
         >>> content = 'Some text with `inline code`'

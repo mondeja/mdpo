@@ -37,6 +37,7 @@ class Po2Md:
         'output',
         'content',
         'extensions',
+        'events',
         'disabled_entries',
         'translated_entries',
         'translations',
@@ -108,6 +109,8 @@ class Po2Md:
             'extensions',
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
         )
+
+        self.events = kwargs.get('events', {})
 
         self._current_msgid = ''
         self._current_msgctxt = None
@@ -739,8 +742,18 @@ class Po2Md:
             self._disable_next_line = False
             self._disable = False
 
+            try:
+                pre_event = self.events['link_reference']
+            except KeyError:
+                pre_event = None
+
             _references_added = []  # don't repeat references
             for target, href, title in self._link_references:
+
+                # 'link_reference' event
+                if pre_event and pre_event(self, target, href, title) is False:
+                    continue
+
                 href_part = '{}{}'.format(
                     f' {href}' if href else '',
                     f' "{title}"' if title else '',
@@ -807,6 +820,7 @@ def pofile_to_markdown(
     po_encoding=None,
     command_aliases={},
     wrapwidth=80,
+    events={},
     **kwargs,
 ):
     r"""Translate Markdown content or a file using PO files for message replacing.
@@ -838,6 +852,14 @@ def pofile_to_markdown(
             ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
             parameter.
         wrapwidth (int): Maximum width used rendering the Markdown output.
+        events (dict): Preprocessing events executed during the translation
+            process. You can use these to customize the output. Takes functions
+            are values. If one of these functions returns ``False``, that part
+            of the translation process is skipped by po2md. The available
+            events are:
+
+            * ``link_reference``: Executed when each reference link is being
+                written in the output (at the end of the translation process).
 
     Returns:
         str: Markdown output file with translated content.
@@ -848,6 +870,7 @@ def pofile_to_markdown(
         po_encoding=po_encoding,
         command_aliases=command_aliases,
         wrapwidth=wrapwidth,
+        events=events,
         **kwargs,
     ).translate(
         filepath_or_content,
