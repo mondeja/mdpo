@@ -9,7 +9,8 @@ The traditional approach
 ========================
 
 Use one Markdown file for each language. This is the most commonly used.
-For example, Jekyll plugins like `jekyll-multiple-languages-plugin`_ uses it:
+For example, site generator plugins like `jekyll-multiple-languages-plugin`_
+and `mkdocs-static-i18n-plugin`_ use it:
 
 Advantages
 ----------
@@ -47,3 +48,4 @@ Disadvantages
   hidden to the translator.
 
 .. _jekyll-multiple-languages-plugin: https://github.com/kurtsson/jekyll-multiple-languages-plugin
+.. _mkdocs-static-i18n-plugin: https://ultrabug.github.io/mkdocs-static-i18n/en/
