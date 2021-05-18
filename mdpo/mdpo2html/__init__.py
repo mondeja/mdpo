@@ -18,7 +18,6 @@ from mdpo.po import (
     paths_or_globs_to_unique_pofiles,
     pofiles_to_unique_translations_dicts,
 )
-from mdpo.polib import *  # noqa
 
 
 PROCESS_REPLACER_TAGS = [

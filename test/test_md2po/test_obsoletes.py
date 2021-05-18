@@ -118,8 +118,8 @@ def test_tcomment_obsolete_msgstr_fallback_without_found_tcomment(
     default_msgstr,
 ):
     """If a translated message is marked as obsolete and has a translator
-    comment, and his msgid is found in markdown content and the found message
-    has not translator comment, must be directly translated but the tcomment
+    comment, his msgid is found in markdown content and the found message
+    hasn't translator comment, must be directly translated but the tcomment
     of the obsolete one is ignored. This behaviour is preferred over default
     msgstr using ``msgstr`` parameter.
     """

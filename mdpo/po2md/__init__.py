@@ -23,7 +23,6 @@ from mdpo.po import (
     po_escaped_string,
     pofiles_to_unique_translations_dicts,
 )
-from mdpo.polib import *  # noqa
 from mdpo.text import (
     min_not_max_chars_in_a_row,
     removesuffix,

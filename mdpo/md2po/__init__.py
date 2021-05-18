@@ -21,7 +21,6 @@ from mdpo.po import (
     po_escaped_string,
     remove_not_found_entries,
 )
-from mdpo.polib import *  # noqa
 from mdpo.text import min_not_max_chars_in_a_row
 
 
@@ -399,7 +398,7 @@ class Md2Po:
                 entry.flags.append('fuzzy')
         if entry not in self.pofile:
             self.pofile.append(entry)
-            self.found_entries.append(entry)
+        self.found_entries.append(entry)
 
     def _save_current_msgid(self):
         # raise 'msgid' event

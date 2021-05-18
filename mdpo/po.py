@@ -5,6 +5,7 @@ import glob
 import polib
 
 from mdpo.io import filter_paths
+from mdpo.polib import poentry__cmp__
 
 
 def po_escaped_string(chars):
@@ -40,7 +41,7 @@ def find_entry_in_entries(entry, entries, **kwargs):
     """
     response = None
     for compared_entry in entries:
-        if entry.__cmp__(compared_entry, **kwargs) == 0:
+        if poentry__cmp__(entry, compared_entry, **kwargs) == 0:
             response = compared_entry
             break
     return response

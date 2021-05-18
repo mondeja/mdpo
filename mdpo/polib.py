@@ -3,10 +3,8 @@
 See https://github.com/izimobil/polib/pulls for details.
 """
 
-from polib import POEntry
 
-
-def _poentry__cmp__(
+def poentry__cmp__(
     self,
     other,
     compare_obsolete=True,
@@ -73,6 +71,3 @@ def _poentry__cmp__(
         elif self.msgstr < other.msgstr:
             return -1
     return 0
-
-
-POEntry.__cmp__ = _poentry__cmp__
