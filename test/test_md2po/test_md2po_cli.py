@@ -147,7 +147,12 @@ def test_ignore_files_by_filepath(capsys, arg):
                 f.write(content)
 
         _glob = os.path.join(filesdir, '*.md')
-        pofile, exitcode = run([_glob, arg, os.path.join(filesdir, 'baz.md')])
+        pofile, exitcode = run([
+            _glob,
+            arg,
+            os.path.join(filesdir, 'baz.md'),
+            '--no-location',
+        ])
         out, err = capsys.readouterr()
 
     expected_output = '''#
@@ -390,24 +395,21 @@ msgid "foo"
 msgstr "foo language"
 '''
 
-    with tmp_file(pofile_content, '.po') as po_filepath:
-
-        expected_output = f'''#
+    expected_output = '''#
 msgid ""
 msgstr ""
 
 msgid "foo"
 msgstr "foo language"
 
-#: {po_filepath}:block 1 (header)
 msgid "bar"
 msgstr ""
 
-#: {po_filepath}:block 2 (paragraph)
 msgid "baz"
 msgstr ""
 '''
 
+    with tmp_file(pofile_content, '.po') as po_filepath:
         pofile, exitcode = run([
             md_content,
             '--po-filepath', po_filepath,
@@ -431,20 +433,18 @@ msgid "foo"
 msgstr "foo language"
 '''
 
-    with tmp_file(pofile_content, '.po') as po_filepath:
-        expected_output = f'''#
+    expected_output = '''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (header)
 msgid "bar"
 msgstr ""
 
-#: {po_filepath}:block 2 (paragraph)
 msgid "baz"
 msgstr ""
 '''
 
+    with tmp_file(pofile_content, '.po') as po_filepath:
         pofile, exitcode = run([
             md_content,
             '--po-filepath',

@@ -48,6 +48,7 @@ class Md2Po:
         'location',
         '_current_top_level_block_number',
         '_current_top_level_block_type',
+        '_current_markdown_filepath',
 
         '_current_msgid',
         '_current_tcomment',
@@ -138,6 +139,7 @@ class Md2Po:
         self.location = kwargs.get('location', True)
         self._current_top_level_block_number = 0
         self._current_top_level_block_type = None
+        self._current_markdown_filepath = None
 
         self.extensions = kwargs.get(
             'extensions',
@@ -356,7 +358,7 @@ class Md2Po:
         )
 
         occurrence = None
-        if self.location and self.po_filepath:
+        if self.location and self._current_markdown_filepath:
             # here could happen a KeyError if someone has aborted an ,
             # enter event, in which case we do not have access to the
             # block type because ``self._current_top_level_block_type is None``
@@ -373,7 +375,7 @@ class Md2Po:
             #       accordingly
 
             occurrence = (
-                self.po_filepath,
+                self._current_markdown_filepath,
                 (
                     f'block {self._current_top_level_block_number}'
                     f' ({current_block_name})'
@@ -871,6 +873,7 @@ class Md2Po:
             for filepath in self.filepaths:
                 with open(filepath, encoding=md_encoding) as f:
                     self.content = f.read()
+                self._current_markdown_filepath = filepath
                 _parse(self.content)
 
                 self._disable_next_line = False

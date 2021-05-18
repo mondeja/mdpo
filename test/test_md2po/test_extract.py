@@ -31,7 +31,7 @@ for suite in os.listdir(EXAMPLES_DIR):
 @pytest.mark.parametrize('filename', EXAMPLES['plaintext']['filenames'])
 def test_extract_plaintext(filename):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
-    pofile = markdown_to_pofile(filepath, plaintext=True)
+    pofile = markdown_to_pofile(filepath, plaintext=True, location=False)
 
     with open(filepath + '.expect.po') as expect_file:
         assert pofile.__unicode__() == expect_file.read()
@@ -40,7 +40,7 @@ def test_extract_plaintext(filename):
 @pytest.mark.parametrize('filename', EXAMPLES['markuptext']['filenames'])
 def test_extract_markuptext(filename):
     filepath = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
-    pofile = markdown_to_pofile(filepath, plaintext=False)
+    pofile = markdown_to_pofile(filepath, plaintext=False, location=False)
 
     with open(filepath + '.expect.po') as expect_file:
         assert pofile.__unicode__() == expect_file.read()
@@ -50,8 +50,10 @@ def test_extract_markuptext(filename):
 def test_extract_underline(filename):
     filepath = os.path.join(EXAMPLES['underline']['dirpath'], filename)
     pofile = markdown_to_pofile(
-        filepath, plaintext=False,
+        filepath,
+        plaintext=False,
         extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS + ['underline'],
+        location=False,
     )
 
     with open(filepath + '.expect.po') as expect_file:
@@ -67,7 +69,10 @@ def test_extract_save(filename):
     save_file = tempfile.NamedTemporaryFile(suffix='.po')
 
     markdown_to_pofile(
-        filepath, plaintext=True, save=True, po_filepath=save_file.name,
+        filepath,
+        plaintext=True,
+        save=True,
+        po_filepath=save_file.name,
         location=False,
     )
     save_file.seek(0)

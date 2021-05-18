@@ -66,11 +66,10 @@ def test_obsolete_msgstr_fallback(tmp_file, default_msgstr):
     )
 
     with tmp_file(pofile_content, '.po') as po_filepath:
-        expected_output = f'''#
+        expected_output = '''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (header)
 msgid "Hello"
 msgstr "Hola"
 '''
@@ -96,11 +95,10 @@ def test_fuzzy_obsolete_msgstr_fallback(tmp_file, default_msgstr):
     )
 
     with tmp_file(pofile_content, '.po') as po_filepath:
-        expected_output = f'''#
+        expected_output = '''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (header)
 #, fuzzy
 msgid "Hello"
 msgstr "Hola"
@@ -132,11 +130,10 @@ def test_tcomment_obsolete_msgstr_fallback_without_found_tcomment(
     )
 
     with tmp_file(pofile_content, '.po') as po_filepath:
-        expected_output = f'''#
+        expected_output = '''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (header)
 msgid "Hello"
 msgstr "Hola"
 '''
@@ -167,12 +164,11 @@ def test_tcomment_obsolete_msgstr_fallback_with_found_tcomment(
     )
 
     with tmp_file(pofile_content, '.po') as po_filepath:
-        expected_output = f'''#
+        expected_output = '''#
 msgid ""
 msgstr ""
 
 #. Comment for translator
-#: {po_filepath}:block 2 (header)
 msgid "Hello"
 msgstr "Hola"
 '''
@@ -195,11 +191,10 @@ def test_obsolete_with_msgctxt_matching_msgstr_fallback(tmp_file):
     )
 
     with tmp_file(pofile_content, '.po') as po_filepath:
-        expected_output = f'''#
+        expected_output = '''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 2 (header)
 msgctxt "Context"
 msgid "Hello"
 msgstr "Hola"
@@ -225,11 +220,10 @@ def test_obsolete_with_msgctxt_not_matching_msgstr_fallback(tmp_file):
     )
 
     with tmp_file(pofile_content, '.po') as po_filepath:
-        expected_output = f'''#
+        expected_output = '''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 2 (header)
 msgctxt "First context"
 msgid "Hello"
 msgstr ""

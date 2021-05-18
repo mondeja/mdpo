@@ -19,49 +19,50 @@ def test_location_paragraphs(tmp_file):
 > 1. Foo 9
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
+            tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (paragraph)
+#: {md_filepath}:block 1 (paragraph)
 msgid "Foo 1"
 msgstr ""
 
-#: {po_filepath}:block 2 (header)
+#: {md_filepath}:block 2 (header)
 msgid "Foo 2"
 msgstr ""
 
-#: {po_filepath}:block 3 (unordered list)
+#: {md_filepath}:block 3 (unordered list)
 msgid "Foo 3"
 msgstr ""
 
-#: {po_filepath}:block 3 (unordered list)
+#: {md_filepath}:block 3 (unordered list)
 msgid "Foo 4"
 msgstr ""
 
-#: {po_filepath}:block 4 (ordered list)
+#: {md_filepath}:block 4 (ordered list)
 msgid "Foo 5"
 msgstr ""
 
-#: {po_filepath}:block 4 (ordered list)
+#: {md_filepath}:block 4 (ordered list)
 msgid "Foo 6"
 msgstr ""
 
-#: {po_filepath}:block 5 (quote)
+#: {md_filepath}:block 5 (quote)
 msgid "Foo 7"
 msgstr ""
 
-#: {po_filepath}:block 5 (quote)
+#: {md_filepath}:block 5 (quote)
 msgid "Foo 8"
 msgstr ""
 
-#: {po_filepath}:block 5 (quote)
+#: {md_filepath}:block 5 (quote)
 msgid "Foo 9"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
     assert str(output) == expected_output
 
 
@@ -81,45 +82,46 @@ def test_location_headers(tmp_file):
 > 1. # Foo 8
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
+            tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (header)
+#: {md_filepath}:block 1 (header)
 msgid "Foo 1"
 msgstr ""
 
-#: {po_filepath}:block 2 (unordered list)
+#: {md_filepath}:block 2 (unordered list)
 msgid "Foo 2"
 msgstr ""
 
-#: {po_filepath}:block 2 (unordered list)
+#: {md_filepath}:block 2 (unordered list)
 msgid "Foo 3"
 msgstr ""
 
-#: {po_filepath}:block 3 (ordered list)
+#: {md_filepath}:block 3 (ordered list)
 msgid "Foo 4"
 msgstr ""
 
-#: {po_filepath}:block 3 (ordered list)
+#: {md_filepath}:block 3 (ordered list)
 msgid "Foo 5"
 msgstr ""
 
-#: {po_filepath}:block 4 (quote)
+#: {md_filepath}:block 4 (quote)
 msgid "Foo 6"
 msgstr ""
 
-#: {po_filepath}:block 4 (quote)
+#: {md_filepath}:block 4 (quote)
 msgid "Foo 7"
 msgstr ""
 
-#: {po_filepath}:block 4 (quote)
+#: {md_filepath}:block 4 (quote)
 msgid "Foo 8"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
     assert str(output) == expected_output
 
 
@@ -137,41 +139,42 @@ def test_location_quotes(tmp_file):
 > > Foo 7
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
+            tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (quote)
+#: {md_filepath}:block 1 (quote)
 msgid "Foo 1"
 msgstr ""
 
-#: {po_filepath}:block 2 (unordered list)
+#: {md_filepath}:block 2 (unordered list)
 msgid "Foo 2"
 msgstr ""
 
-#: {po_filepath}:block 2 (unordered list)
+#: {md_filepath}:block 2 (unordered list)
 msgid "Foo 3"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Foo 4"
 msgstr ""
 
-#: {po_filepath}:block 4 (ordered list)
+#: {md_filepath}:block 4 (ordered list)
 msgid "Foo 5"
 msgstr ""
 
-#: {po_filepath}:block 5 (quote)
+#: {md_filepath}:block 5 (quote)
 msgid "Foo 6"
 msgstr ""
 
-#: {po_filepath}:block 5 (quote)
+#: {md_filepath}:block 5 (quote)
 msgid "Foo 7"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
 
     assert str(output) == expected_output
 
@@ -195,64 +198,65 @@ def test_location_unordered_lists(tmp_file):
 >    - Foo 13
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
+            tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (unordered list)
+#: {md_filepath}:block 1 (unordered list)
 msgid "Foo 1"
 msgstr ""
 
-#: {po_filepath}:block 1 (unordered list)
+#: {md_filepath}:block 1 (unordered list)
 msgid "Foo 2"
 msgstr ""
 
-#: {po_filepath}:block 1 (unordered list)
+#: {md_filepath}:block 1 (unordered list)
 msgid "Foo 3"
 msgstr ""
 
-#: {po_filepath}:block 1 (unordered list)
+#: {md_filepath}:block 1 (unordered list)
 msgid "Foo 4"
 msgstr ""
 
-#: {po_filepath}:block 1 (unordered list)
+#: {md_filepath}:block 1 (unordered list)
 msgid "Foo 5"
 msgstr ""
 
-#: {po_filepath}:block 1 (unordered list)
+#: {md_filepath}:block 1 (unordered list)
 msgid "Foo 6"
 msgstr ""
 
-#: {po_filepath}:block 2 (ordered list)
+#: {md_filepath}:block 2 (ordered list)
 msgid "Foo 7"
 msgstr ""
 
-#: {po_filepath}:block 2 (ordered list)
+#: {md_filepath}:block 2 (ordered list)
 msgid "Foo 8"
 msgstr ""
 
-#: {po_filepath}:block 2 (ordered list)
+#: {md_filepath}:block 2 (ordered list)
 msgid "Foo 9"
 msgstr ""
 
-#: {po_filepath}:block 2 (ordered list)
+#: {md_filepath}:block 2 (ordered list)
 msgid "Foo 10"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Foo 11"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Foo 12"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Foo 13"
 msgstr ""
 '''
-        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
 
     assert str(output) == expected_output
 
@@ -276,65 +280,66 @@ def test_location_ordered_lists(tmp_file):
 >    1. Foo 13
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
+            tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (ordered list)
+#: {md_filepath}:block 1 (ordered list)
 msgid "Foo 1"
 msgstr ""
 
-#: {po_filepath}:block 1 (ordered list)
+#: {md_filepath}:block 1 (ordered list)
 msgid "Foo 2"
 msgstr ""
 
-#: {po_filepath}:block 1 (ordered list)
+#: {md_filepath}:block 1 (ordered list)
 msgid "Foo 3"
 msgstr ""
 
-#: {po_filepath}:block 1 (ordered list)
+#: {md_filepath}:block 1 (ordered list)
 msgid "Foo 4"
 msgstr ""
 
-#: {po_filepath}:block 1 (ordered list)
+#: {md_filepath}:block 1 (ordered list)
 msgid "Foo 5"
 msgstr ""
 
-#: {po_filepath}:block 1 (ordered list)
+#: {md_filepath}:block 1 (ordered list)
 msgid "Foo 6"
 msgstr ""
 
-#: {po_filepath}:block 2 (unordered list)
+#: {md_filepath}:block 2 (unordered list)
 msgid "Foo 7"
 msgstr ""
 
-#: {po_filepath}:block 2 (unordered list)
+#: {md_filepath}:block 2 (unordered list)
 msgid "Foo 8"
 msgstr ""
 
-#: {po_filepath}:block 2 (unordered list)
+#: {md_filepath}:block 2 (unordered list)
 msgid "Foo 9"
 msgstr ""
 
-#: {po_filepath}:block 2 (unordered list)
+#: {md_filepath}:block 2 (unordered list)
 msgid "Foo 10"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Foo 11"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Foo 12"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Foo 13"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
     assert str(output) == expected_output
 
 
@@ -366,37 +371,38 @@ var foo = "bar";
 > ```
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
+            tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 2 (code)
+#: {md_filepath}:block 2 (code)
 msgid "foo = \\"bar\\"\\n"
 msgstr ""
 
-#: {po_filepath}:block 5 (code)
+#: {md_filepath}:block 5 (code)
 msgid "int foo;\\n"
 msgstr ""
 
-#: {po_filepath}:block 6 (unordered list)
+#: {md_filepath}:block 6 (unordered list)
 msgid "Foo"
 msgstr ""
 
-#: {po_filepath}:block 6 (unordered list)
+#: {md_filepath}:block 6 (unordered list)
 msgid "Bar"
 msgstr ""
 
-#: {po_filepath}:block 6 (unordered list)
+#: {md_filepath}:block 6 (unordered list)
 msgid "code_which_must_be_included = True\\n"
 msgstr ""
 
-#: {po_filepath}:block 7 (quote)
+#: {md_filepath}:block 7 (quote)
 msgid "var codeWhichMustBeIncluded = true;\\n"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
     assert str(output) == expected_output
 
 
@@ -408,17 +414,18 @@ def test_location_html(tmp_file):
 paragraph
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
+            tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 3 (paragraph)
+#: {md_filepath}:block 3 (paragraph)
 msgid "paragraph"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
     assert str(output) == expected_output
 
 
@@ -436,112 +443,113 @@ def test_location_tables(tmp_file):
 > | Bar 9      | Bar 10 | Bar 11 | Bar 12 |
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath:
+    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
+            tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
 
-#: {po_filepath}:block 1 (paragraph)
+#: {md_filepath}:block 1 (paragraph)
 msgid "paragraph"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 1"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 2"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 3"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 4"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 5"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 6"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 7"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 8"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 9"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 10"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 11"
 msgstr ""
 
-#: {po_filepath}:block 2 (table)
+#: {md_filepath}:block 2 (table)
 msgid "Foo 12"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 1"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 2"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 3"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 4"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 5"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 6"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 7"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 8"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 9"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 10"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 11"
 msgstr ""
 
-#: {po_filepath}:block 3 (quote)
+#: {md_filepath}:block 3 (quote)
 msgid "Bar 12"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(markdown_content, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
 
     assert str(output) == expected_output

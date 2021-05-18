@@ -41,11 +41,11 @@ def test_mark_not_found_as_obsolete(tmp_file):
 msgid ""
 msgstr ""
 
-#: {po_file.name}:block 1 (paragraph)
+#: {original_md_filepath}:block 1 (paragraph)
 msgid "Some string in the markdown"
 msgstr ""
 
-#: {po_file.name}:block 2 (paragraph)
+#: {original_md_filepath}:block 2 (paragraph)
 msgid "Another string"
 msgstr ""
 '''
@@ -60,7 +60,7 @@ msgstr ""
 msgid ""
 msgstr ""
 
-#: {po_file.name}:block 1 (paragraph)
+#: {new_md_filepath}:block 1 (paragraph)
 msgid "A new string"
 msgstr ""
 
