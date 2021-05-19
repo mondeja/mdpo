@@ -122,7 +122,7 @@ def test_command_event(abort_event):
 
 
 def test_msgid_event():
-    def dont_save_hate_msgid(self, msgid):
+    def dont_save_hate_msgid(self, msgid, *args):
         if msgid == 'hate':
             return False
 

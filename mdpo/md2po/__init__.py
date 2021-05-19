@@ -9,6 +9,7 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
+from mdpo.event import raise_skip_event
 from mdpo.io import filter_paths, to_glob_or_content
 from mdpo.md import parse_link_references
 from mdpo.md4c import (
@@ -146,7 +147,10 @@ class Md2Po:
         )
         self.events = {}
         if 'events' in kwargs:
-            self.events.update(kwargs['events'])
+            for event_name, functions in kwargs['events'].items():
+                self.events[event_name] = (
+                    [functions] if callable(functions) else functions
+                )
 
         self.plaintext = kwargs.get('plaintext', False)
 
@@ -410,13 +414,17 @@ class Md2Po:
 
     def _save_current_msgid(self, msgstr='', fuzzy=False):
         # raise 'msgid' event
-        try:
-            pre_event = self.events['msgid']
-        except KeyError:
-            pass
-        else:
-            if pre_event(self, self._current_msgid) is False:
-                return
+        if raise_skip_event(
+            self.events,
+            'msgid',
+            self,
+            self._current_msgid,
+            msgstr,
+            self._current_msgctxt,
+            self._current_tcomment,
+            ['fuzzy'] if fuzzy else [],
+        ):
+            return
 
         if self._current_msgid:
             if (not self._disable_next_line and not self._disable) or \
@@ -424,8 +432,8 @@ class Md2Po:
                 self._save_msgid(
                     self._current_msgid,
                     msgstr=msgstr or self.msgstr,
-                    tcomment=self._current_tcomment,
                     msgctxt=self._current_msgctxt,
+                    tcomment=self._current_tcomment,
                     fuzzy=fuzzy,
                 )
             else:
@@ -433,9 +441,9 @@ class Md2Po:
                     polib.POEntry(
                         msgid=self._current_msgid,
                         msgstr=msgstr or self.msgstr,
-                        comment=self._current_tcomment,
                         msgctxt=self._current_msgctxt,
-                        fuzzy=fuzzy,
+                        tcomment=self._current_tcomment,
+                        flags=['fuzzy'] if fuzzy else [],
                     ),
                 )
         self._disable_next_line = False
@@ -446,18 +454,15 @@ class Md2Po:
 
     def command(self, mdpo_command, comment, original_command):
         # raise 'command' event
-        try:
-            pre_event = self.events['command']
-        except KeyError:
-            pass
-        else:
-            if pre_event(
-                self,
-                mdpo_command,
-                comment,
-                original_command,
-            ) is False:
-                return
+        if raise_skip_event(
+            self.events,
+            'command',
+            self,
+            mdpo_command,
+            comment,
+            original_command,
+        ):
+            return
 
         if mdpo_command == 'mdpo-disable-next-line':
             self._disable_next_line = True
@@ -517,13 +522,8 @@ class Md2Po:
         # print("ENTER BLOCK:", block.name)
 
         # raise 'enter_block' event
-        try:
-            pre_event = self.events['enter_block']
-        except KeyError:
-            pass
-        else:
-            if pre_event(self, block, details) is False:
-                return
+        if raise_skip_event(self.events, 'enter_block', self, block, details):
+            return
 
         if block.value == md4c.BlockType.P:
             self._inside_pblock = True
@@ -607,13 +607,8 @@ class Md2Po:
         # print("LEAVE BLOCK:", block.name)
 
         # raise 'leave_block' event
-        try:
-            pre_event = self.events['leave_block']
-        except KeyError:
-            pass
-        else:
-            if pre_event(self, block, details) is False:
-                return
+        if raise_skip_event(self.events, 'leave_block', self, block, details):
+            return
 
         if block.value == md4c.BlockType.CODE:
             self._inside_codeblock = False
@@ -643,13 +638,8 @@ class Md2Po:
         # print("ENTER SPAN:", span.name, details)
 
         # raise 'enter_span' event
-        try:
-            pre_event = self.events['enter_span']
-        except KeyError:
-            pass
-        else:
-            if pre_event(self, span, details) is False:
-                return
+        if raise_skip_event(self.events, 'enter_span', self, span, details):
+            return
 
         if not self.plaintext:
             # underline spans for double '_' character enters two times
@@ -707,13 +697,8 @@ class Md2Po:
         # print("LEAVE SPAN:", span.name, details)
 
         # raise 'leave_span' event
-        try:
-            pre_event = self.events['leave_span']
-        except KeyError:
-            pass
-        else:
-            if pre_event(self, span, details) is False:
-                return
+        if raise_skip_event(self.events, 'leave_span', self, span, details):
+            return
 
         if not self.plaintext:
             if not self._inside_uspan:
@@ -763,13 +748,8 @@ class Md2Po:
         # print(f"TEXT: '{text}'")
 
         # raise 'text' event
-        try:
-            pre_event = self.events['text']
-        except KeyError:
-            pass
-        else:
-            if pre_event(self, block, text) is False:
-                return
+        if raise_skip_event(self.events, 'text', self, block, text):
+            return
 
         if not self._inside_htmlblock:
             if not self._inside_codeblock:
@@ -823,11 +803,16 @@ class Md2Po:
             self._disable = False
 
             # 'link_reference' event
-            pre_event = self.events.get('link_reference')
+            pre_events = self.events.get('link_reference')
 
             for target, href, title in self._link_references:
-                if pre_event and pre_event(self, target, href, title) is False:
-                    continue
+                if pre_events:
+                    skip = False
+                    for event in pre_events:
+                        if event(self, target, href, title) is False:
+                            skip = True
+                    if skip:
+                        continue
 
                 self._current_msgid = '[{}]:{}{}'.format(
                     target,
@@ -1003,22 +988,37 @@ def markdown_to_pofile(
             preserving the values of the already defined.
         events (dict): Preprocessing events executed during the parsing
             process. You can use these to customize the extraction process.
-            Takes functions are values. If one of these functions returns
-            ``False``, that part of the parsing is skipped by md2po (usually a
-            MD4C event). The available events are:
+            Takes functions or list of functions as values. If one of these
+            functions returns ``False``, that part of the parsing is skipped
+            by md2po (usually a MD4C event). The available events are:
 
-            * ``enter_block``: Executed when the parsing a Markdown block
+            * ``enter_block(self, block, details)``: Executed when the parsing
+              a Markdown block starts.
+            * ``leave_block(self, block, details)``: Executed when the parsing
+              a Markdown block ends.
+            * ``enter_span(self, span, details)``: Executed when the parsing of
+              a Markdown span starts.
+            * ``leave_span(self, span, details)``: Executed when the parsing of
+              a Markdown span ends.
+            * ``text(self, block, text)``: Executed when the parsing of text
               starts.
-            * ``leave_block``: Executed when the parsing a Markdown block ends.
-            * ``enter_span``: Executed when the parsing of a Markdown span
-              starts.
-            * ``leave_span``: Executed when the parsing of a Markdown span
-              ends.
-            * ``text``: Executed when the parsing of text starts ends.
-            * ``command``: Executed when a mdpo HTML command is found.
-            * ``msgid``: Executed when a msgid is going to be stored.
-            * ``link_reference``: Executed when a link reference is going to be
-              stored.
+            * ``command(self, mdpo_command, comment, original command)``:
+              Executed when a mdpo HTML command is found.
+            * ``msgid(self, msgid, msgstr, msgctxt, tcomment, flags)``:
+              Executed when a msgid is going to be stored.
+            * ``link_reference(self, target, href, title)``: Executed when a
+              link reference is going to be stored.
+
+            All ``self`` arguments are an instance of Md2Po parser. You can
+            take advanced control of the parsing process manipulating the
+            state of the parser. For example, if you want to skip a certain
+            msgid to be included, you can do:
+
+            .. code-block:: python
+
+               def msgid_event(self, msgid, *args):
+                   if msgid == 'foo':
+                       self._disable_next_line = True
 
     Examples:
         >>> content = 'Some text with `inline code`'

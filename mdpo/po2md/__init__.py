@@ -109,7 +109,12 @@ class Po2Md:
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
         )
 
-        self.events = kwargs.get('events', {})
+        self.events = {}
+        if 'events' in kwargs:
+            for event_name, functions in kwargs['events'].items():
+                self.events[event_name] = (
+                    [functions] if callable(functions) else functions
+                )
 
         self._current_msgid = ''
         self._current_msgctxt = None
@@ -741,14 +746,18 @@ class Po2Md:
             self._disable_next_line = False
             self._disable = False
 
-            pre_event = self.events.get('link_reference')
+            # 'link_reference' event
+            pre_events = self.events.get('link_reference')
 
             _references_added = []  # don't repeat references
             for target, href, title in self._link_references:
-
-                # 'link_reference' event
-                if pre_event and pre_event(self, target, href, title) is False:
-                    continue
+                if pre_events:
+                    skip = False
+                    for event in pre_events:
+                        if event(self, target, href, title) is False:
+                            skip = True
+                    if skip:
+                        continue
 
                 href_part = '{}{}'.format(
                     f' {href}' if href else '',
@@ -854,8 +863,9 @@ def pofile_to_markdown(
             of the translation process is skipped by po2md. The available
             events are:
 
-            * ``link_reference``: Executed when each reference link is being
-                written in the output (at the end of the translation process).
+            * ``link_reference(self, target, href, title)``: Executed when each
+              reference link is being written in the output (at the end of the
+              translation process).
 
     Returns:
         str: Markdown output file with translated content.
