@@ -150,6 +150,8 @@ def test_ignore_files_by_filepath(capsys, arg):
         pofile, exitcode = run([
             _glob,
             arg,
+            os.path.join(filesdir, 'bar.md'),
+            arg,
             os.path.join(filesdir, 'baz.md'),
             '--no-location',
         ])
@@ -157,9 +159,6 @@ def test_ignore_files_by_filepath(capsys, arg):
 
     expected_output = '''#
 msgid ""
-msgstr ""
-
-msgid "Bar with `inline code`"
 msgstr ""
 
 msgid "Foo"

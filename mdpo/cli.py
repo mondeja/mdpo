@@ -7,23 +7,6 @@ from mdpo import __version__
 from mdpo.text import parse_escaped_pairs
 
 
-def parse_list_cli_argument(value, splitter=','):
-    """Converts values in a string separated by characters into a tuple.
-
-    This function is needed by mdpo command line interfaces to convert
-    some arguments values separated by commas into iterables.
-
-    Args:
-        value (str): String to be converted to list separating it by
-            ``splitter`` argument value.
-        splitter (str): Separator used for separate the ``value`` argument.
-
-    Returns:
-        tuple: Strings separated.
-    """
-    return tuple(filter(None, value.split(splitter)))
-
-
 def parse_escaped_pairs_cli_argument(
     pairs,
     value_error_message,

@@ -90,10 +90,19 @@ def test_ignore_files_by_filepath(capsys, arg, tmp_file):
                 'msgstr "Excluida"\n\n'
             ),
         ),
+        (
+            uuid4().hex + '.po',
+            (
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded 2"\n'
+                'msgstr "Excluida 2"\n\n'
+            ),
+        ),
     ]
 
-    html_input = '<p>Included</p>\n\n<p>Excluded</p>\n\n'
-    expected_output = '<p>Incluida</p>\n\n<p>Excluded</p>\n\n'
+    html_input = '<p>Included</p>\n\n<p>Excluded</p>\n\n<p>Excluded 2</p>\n\n'
+    expected_output = (
+        '<p>Incluida</p>\n\n<p>Excluded</p>\n\n<p>Excluded 2</p>\n\n'
+    )
 
     with tempfile.TemporaryDirectory() as filesdir:
         for pofile in pofiles:
@@ -101,9 +110,13 @@ def test_ignore_files_by_filepath(capsys, arg, tmp_file):
                 f.write(pofile[1])
         with tmp_file(html_input, '.html') as html_input_filepath:
             output, exitcode = run([
-                html_input_filepath, '-p',
+                html_input_filepath,
+                '-p',
                 os.path.join(filesdir, '*.po'),
-                arg, pofiles[1][0],
+                arg,
+                pofiles[1][0],
+                arg,
+                pofiles[2][0],
             ])
             out, err = capsys.readouterr()
 

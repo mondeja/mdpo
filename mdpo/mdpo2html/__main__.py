@@ -10,7 +10,6 @@ from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
     parse_command_aliases_cli_arguments,
-    parse_list_cli_argument,
 )
 from mdpo.mdpo2html import markdown_pofile_to_html
 
@@ -37,10 +36,10 @@ def build_parser():
              ' can be passed multiple times.',
     )
     parser.add_argument(
-        '-i', '--ignore', dest='ignore', default=[],
-        help='Filepaths to ignore when \'--pofiles\' argument value is a glob,'
-             ' as a list of comma separated values.',
-        metavar='PATH_1,PATH_2...',
+        '-i', '--ignore', dest='ignore', default=[], action='append',
+        help='Filepaths to ignore when \'--pofiles\' argument value is a glob.'
+             ' This argument can be passed multiple times.',
+        metavar='PATH',
     )
     parser.add_argument(
         '-s', '--save', dest='save', default=None,
@@ -74,8 +73,6 @@ def parse_options(args):
         opts.filepath_or_content = sys.stdin.read().strip('\n')
     elif isinstance(opts.filepath_or_content, list):
         opts.filepath_or_content = opts.filepath_or_content[0]
-    if opts.ignore:
-        opts.ignore = parse_list_cli_argument(opts.ignore)
 
     opts.command_aliases = parse_command_aliases_cli_arguments(
         opts.command_aliases,

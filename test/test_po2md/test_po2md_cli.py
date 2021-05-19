@@ -87,13 +87,20 @@ def test_ignore_files_by_filepath(capsys, arg):
         (
             uuid4().hex + '.po',
             (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Excluded"\n'
                 'msgstr "Excluida"\n\n'
+            ),
+        ),
+        (
+            uuid4().hex + '.po',
+            (
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Excluded 2"\n'
+                'msgstr "Excluida 2"\n\n'
             ),
         ),
     ]
 
-    expected_output = 'Incluida\n\nExcluded\n'
+    expected_output = 'Incluida\n\nExcluded\n\nExcluded 2\n'
 
     with tempfile.TemporaryDirectory() as filesdir:
         for pofile in pofiles:
@@ -102,12 +109,15 @@ def test_ignore_files_by_filepath(capsys, arg):
 
         input_md_filepath = os.path.join(filesdir, uuid4().hex + '.md')
         with open(input_md_filepath, 'w') as f:
-            f.write('Included\n\nExcluded\n\n')
+            f.write('Included\n\nExcluded\n\nExcluded 2\n')
 
         output, exitcode = run([
             input_md_filepath, '-p',
             os.path.join(filesdir, '*.po'),
-            arg, os.path.join(filesdir, pofiles[1][0]),
+            arg,
+            os.path.join(filesdir, pofiles[1][0]),
+            arg,
+            os.path.join(filesdir, pofiles[2][0]),
         ])
         out, err = capsys.readouterr()
 

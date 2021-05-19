@@ -9,7 +9,6 @@ from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
     parse_command_aliases_cli_arguments,
-    parse_list_cli_argument,
     parse_metadata_cli_arguments,
 )
 from mdpo.md2po import markdown_to_pofile
@@ -32,10 +31,10 @@ def build_parser():
              ' If not provided, will be read from STDIN.',
     )
     parser.add_argument(
-        '-i', '--ignore', dest='ignore', default=[],
-        help='Filepaths to ignore when \'GLOB_OR_CONTENT\' argument'
-             ' is a glob, as a list of comma separated values.',
-        metavar='PATH_1,PATH_2...',
+        '-i', '--ignore', dest='ignore', default=[], action='append',
+        help='Filepath to ignore when \'GLOB_OR_CONTENT\' argument'
+             ' is a glob. This argument can be passed multiple times.',
+        metavar='PATH',
     )
     parser.add_argument(
         '-po', '--po-filepath', dest='po_filepath',
@@ -158,8 +157,7 @@ def parse_options(args=[]):
         opts.glob_or_content = sys.stdin.read().strip('\n')
     elif isinstance(opts.glob_or_content, list):
         opts.glob_or_content = opts.glob_or_content[0]
-    if opts.ignore:
-        opts.ignore = parse_list_cli_argument(opts.ignore)
+
     opts.extensions = opts.extensions.split(',')
     if opts.ignore_msgids is not None:
         with open(opts.ignore_msgids) as f:
