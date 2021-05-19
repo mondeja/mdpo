@@ -346,14 +346,22 @@ class Md2Po:
         if 'metadata' in kwargs:
             self.metadata.update(kwargs['metadata'])
 
-    def _save_msgid(self, msgid, tcomment=None, msgctxt=None):
+    def _save_msgid(
+        self,
+        msgid,
+        msgstr='',
+        tcomment=None,
+        msgctxt=None,
+        fuzzy=False,
+    ):
         if msgid in self.ignore_msgids:
             return
         entry = polib.POEntry(
             msgid=msgid,
-            msgstr=self.msgstr,
+            msgstr=msgstr,
             comment=tcomment,
             msgctxt=msgctxt,
+            flags=[] if not fuzzy else ['fuzzy'],
         )
 
         occurrence = None
@@ -400,7 +408,7 @@ class Md2Po:
             self.pofile.append(entry)
         self.found_entries.append(entry)
 
-    def _save_current_msgid(self):
+    def _save_current_msgid(self, msgstr='', fuzzy=False):
         # raise 'msgid' event
         try:
             pre_event = self.events['msgid']
@@ -415,16 +423,19 @@ class Md2Po:
                     self._enable_next_line:
                 self._save_msgid(
                     self._current_msgid,
+                    msgstr=msgstr or self.msgstr,
                     tcomment=self._current_tcomment,
                     msgctxt=self._current_msgctxt,
+                    fuzzy=fuzzy,
                 )
             else:
                 self.disabled_entries.append(
                     polib.POEntry(
                         msgid=self._current_msgid,
-                        msgstr=self.msgstr,
+                        msgstr=msgstr or self.msgstr,
                         comment=self._current_tcomment,
                         msgctxt=self._current_msgctxt,
+                        fuzzy=fuzzy,
                     ),
                 )
         self._disable_next_line = False
@@ -823,7 +834,10 @@ class Md2Po:
                     f' {href}' if href else '',
                     f' "{title}"' if title else '',
                 )
-                self._save_current_msgid()
+                self._save_current_msgid(
+                    msgstr=self._current_msgid,
+                    fuzzy=True,
+                )
 
     def extract(
         self,

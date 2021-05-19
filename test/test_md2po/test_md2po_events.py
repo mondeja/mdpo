@@ -184,8 +184,9 @@ msgstr ""
 msgid "[^2]: This is another footnote content."
 msgstr ""
 
+#, fuzzy
 msgid "[foo]: https://github.com/mondeja/mdpo"
-msgstr ""
+msgstr "[foo]: https://github.com/mondeja/mdpo"
 '''
 
     output = markdown_to_pofile(

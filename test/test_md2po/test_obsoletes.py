@@ -8,7 +8,7 @@ from mdpo.md2po import markdown_to_pofile
 
 @pytest.mark.parametrize(
     ('mark_not_found_as_obsolete', 'expected_output'), (
-        (
+        pytest.param(
             True,
             '''#
 msgid ""
@@ -20,8 +20,9 @@ msgstr ""
 #~ msgid "Bar"
 #~ msgstr ""
 ''',
+            id='mark_not_found_as_obsolete=True',
         ),
-        (
+        pytest.param(
             False,
             '''#
 msgid ""
@@ -33,6 +34,7 @@ msgstr ""
 msgid "Foo"
 msgstr ""
 ''',
+            id='mark_not_found_as_obsolete=False',
         ),
     ),
 )

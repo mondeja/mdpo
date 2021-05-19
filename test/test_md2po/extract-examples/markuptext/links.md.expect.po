@@ -44,26 +44,34 @@ msgstr ""
 msgid "[Reference H][8]"
 msgstr ""
 
+#, fuzzy
 msgid "[1]: https://github.com/mondeja/mdpo"
-msgstr ""
+msgstr "[1]: https://github.com/mondeja/mdpo"
 
+#, fuzzy
 msgid "[2]: https://github.com/mondeja/mdpo \"Second reference\""
-msgstr ""
+msgstr "[2]: https://github.com/mondeja/mdpo \"Second reference\""
 
+#, fuzzy
 msgid "[3]: https://github.com/mondeja/mdpo \"Third reference\""
-msgstr ""
+msgstr "[3]: https://github.com/mondeja/mdpo \"Third reference\""
 
+#, fuzzy
 msgid "[4]: https://github.com/mondeja/mdpo \"Fourth reference\""
-msgstr ""
+msgstr "[4]: https://github.com/mondeja/mdpo \"Fourth reference\""
 
+#, fuzzy
 msgid "[5]: https://github.com/mondeja/mdpo"
-msgstr ""
+msgstr "[5]: https://github.com/mondeja/mdpo"
 
+#, fuzzy
 msgid "[6]: https://github.com/mondeja/mdpo \"Sixth reference\""
-msgstr ""
+msgstr "[6]: https://github.com/mondeja/mdpo \"Sixth reference\""
 
+#, fuzzy
 msgid "[7]: https://github.com/mondeja/mdpo \"Seventh reference\""
-msgstr ""
+msgstr "[7]: https://github.com/mondeja/mdpo \"Seventh reference\""
 
+#, fuzzy
 msgid "[8]: https://github.com/mondeja/mdpo \"Eighth reference\""
-msgstr ""
+msgstr "[8]: https://github.com/mondeja/mdpo \"Eighth reference\""
