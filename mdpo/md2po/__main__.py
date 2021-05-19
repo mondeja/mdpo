@@ -96,14 +96,15 @@ def build_parser():
              "--no-location'.",
     )
     parser.add_argument(
-        '-x', '--extensions', dest='extensions',
-        default=','.join(
-            DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
-        ),
-        help='md4c extensions used to parse markdown content, separated by'
-             ' \',\' and formatted as pymd4c extension keyword arguments.'
-             ' You can see all available at https://github.com/dominickpastore'
-             '/pymd4c#parser-option-flags',
+        '-x', '--extension', dest='extensions', action='append',
+        default=None,
+        help='md4c extension used to parse markdown content formatted as'
+             ' pymd4c extension keyword arguments. This argument can be passed'
+             ' multiple times. If is not passed, next extensions are used:'
+             f' {", ".join(DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS)}.'
+             ' You can see all available at'
+             ' https://github.com/dominickpastore/pymd4c#parser-option-flags',
+        metavar='<EXTENSION>',
     )
     parser.add_argument(
         '--po-encoding', dest='po_encoding', default=None,
@@ -158,7 +159,9 @@ def parse_options(args=[]):
     elif isinstance(opts.glob_or_content, list):
         opts.glob_or_content = opts.glob_or_content[0]
 
-    opts.extensions = opts.extensions.split(',')
+    if opts.extensions is None:
+        opts.extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
+
     if opts.ignore_msgids is not None:
         with open(opts.ignore_msgids) as f:
             opts.ignore_msgids = f.read().splitlines()
@@ -202,7 +205,7 @@ def run(args=[]):
     pofile = markdown_to_pofile(opts.glob_or_content, **kwargs)
 
     if not opts.quiet:
-        sys.stdout.write('%s\n' % pofile.__unicode__())
+        sys.stdout.write(pofile.__unicode__() + '\n')
 
     return (pofile, 0)
 

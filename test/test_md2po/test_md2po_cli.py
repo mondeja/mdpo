@@ -456,3 +456,66 @@ msgstr ""
     assert exitcode == 0
     assert striplastline(out) == expected_output
     assert pofile.__unicode__() == expected_output
+
+
+@pytest.mark.parametrize(
+    'arg',
+    ('-x', '--extension'),
+    ids=["argument '-x'", "argument '--extension'"],
+)
+@pytest.mark.parametrize(
+    ('extensions', 'md_content', 'expected_output'),
+    (
+        pytest.param(
+            None,
+            '''| Foo | Bar |
+| :-: | :-: |
+| Baz | Qux |
+''',
+            '''#
+msgid ""
+msgstr ""
+
+msgid "Foo"
+msgstr ""
+
+msgid "Bar"
+msgstr ""
+
+msgid "Baz"
+msgstr ""
+
+msgid "Qux"
+msgstr ""
+''',
+            id='tables (included by default)',
+        ),
+        pytest.param(
+            ['strikethrough'],
+            '''| Foo | Bar |
+| :-: | :-: |
+| Baz | Qux |
+''',
+            '''#
+msgid ""
+msgstr ""
+
+msgid "| Foo | Bar | | :-: | :-: | | Baz | Qux |"
+msgstr ""
+''',
+            id='strikethrough (overwrite default extensions)',
+        ),
+    ),
+)
+def test_extensions(arg, extensions, md_content, expected_output, capsys):
+    extensions_arguments = []
+    if extensions:
+        for extension in extensions:
+            extensions_arguments.extend([arg, extension])
+
+    pofile, exitcode = run([md_content, *extensions_arguments])
+    out, err = capsys.readouterr()
+
+    assert exitcode == 0
+    assert striplastline(out) == expected_output
+    assert pofile.__unicode__() == expected_output

@@ -95,7 +95,7 @@ def run(args=[]):
     )
 
     if not opts.quiet and not opts.save:
-        sys.stdout.write('%s\n' % output)
+        sys.stdout.write(output + '\n')
 
     return (output, 0)
 
