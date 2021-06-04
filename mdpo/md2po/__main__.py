@@ -48,7 +48,7 @@ def build_parser():
     parser.add_argument(
         '-s', '--save', dest='save', action='store_true',
         help='Save new found msgids to the po file'
-             ' indicated as parameter \'--filepath\'.',
+             ' indicated as parameter \'--po-filepath\'.',
     )
     parser.add_argument(
         '-mo', '--mo-filepath', dest='mo_filepath',
@@ -66,7 +66,7 @@ def build_parser():
     )
     parser.add_argument(
         '-w', '--wrapwidth', dest='wrapwidth',
-        help='Wrap width for po file indicated at \'--filepath\' parameter.'
+        help='Wrap width for po file indicated at \'--po-filepath\' parameter.'
              ' Only useful when the \'-w\' option was passed to xgettext.',
         metavar='N', type=int,
     )
