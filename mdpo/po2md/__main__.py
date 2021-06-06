@@ -64,9 +64,9 @@ def build_parser():
     parser.add_argument(
         '--po-encoding', dest='po_encoding', default=None,
         help='PO files encoding. If you need different encodings for each'
-             ' file, you must define them in the "Content-Type" field of each'
-             ' PO file metadata, in the form "Content-Type: text/plain;'
-             ' charset=<ENCODING>\\n".',
+             ' file, you must define them in the Content-Type" field of each'
+             ' PO file metadata, in the form \'Content-Type: text/plain;'
+             ' charset=<ENCODING>\\n\'.',
         metavar='<ENCODING>',
     )
     add_common_cli_latest_arguments(parser)

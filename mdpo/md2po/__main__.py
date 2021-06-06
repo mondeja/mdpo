@@ -141,7 +141,8 @@ def build_parser():
              ' If the file contains previous metadata fields, these will'
              ' be updated preserving the values of the already defined.'
              ' For example, to define utf-8 encoding and Spanish language use'
-             ' -d "Content-Type: text/plain; charset=utf-8" -d "Language: es"',
+             ' \'-d "Content-Type: text/plain; charset=utf-8"'
+             ' -d "Language: es"\'.',
     )
     add_common_cli_latest_arguments(parser)
     return parser
