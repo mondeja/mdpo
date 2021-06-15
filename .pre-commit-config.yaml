@@ -79,3 +79,10 @@ repos:
         types:
           - markdown
         files: ^test/test_po2md/
+  - repo: https://github.com/mondeja/repo-stream
+    rev: v1.0.0
+    hooks:
+      - id: repo-stream
+        args:
+          - -config=https://github.com/mondeja/repo-stream-config
+          - -updater=upstream
