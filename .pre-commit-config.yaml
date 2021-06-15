@@ -80,7 +80,7 @@ repos:
           - markdown
         files: ^test/test_po2md/
   - repo: https://github.com/mondeja/repo-stream
-    rev: v1.0.0
+    rev: v1.0.2
     hooks:
       - id: repo-stream
         args:
