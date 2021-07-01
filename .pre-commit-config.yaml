@@ -54,7 +54,7 @@ repos:
           - flake8-implicit-str-concat
         files: ^docs/
   - repo: https://github.com/PyCQA/isort
-    rev: 5.8.0
+    rev: 5.9.1
     hooks:
       - id: isort
         args:
