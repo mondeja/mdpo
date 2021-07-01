@@ -15,7 +15,7 @@ EXAMPLES_DIR = os.path.join('test', 'test_md2po', 'extract-examples')
 def _build_examples(dirname):
     examples_dir = os.path.join(EXAMPLES_DIR, dirname)
     examples_glob = glob.glob(examples_dir + os.sep + '*.md')
-    examples_filenames = sorted([os.path.basename(fp) for fp in examples_glob])
+    examples_filenames = sorted(os.path.basename(fp) for fp in examples_glob)
     return (examples_dir, examples_filenames)
 
 

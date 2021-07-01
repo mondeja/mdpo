@@ -7,10 +7,10 @@ from mdpo.po2md import pofile_to_markdown
 
 
 EXAMPLES_DIR = os.path.join('test', 'test_po2md', 'wrapwidth-examples')
-EXAMPLES = sorted([
+EXAMPLES = sorted(
     os.path.basename(fp) for fp in glob.glob(EXAMPLES_DIR + os.sep + '*.md')
     if not fp.endswith('.expect.md')
-])
+)
 
 
 @pytest.mark.parametrize('wrapwidth', (10, 40, 80, 9999))
