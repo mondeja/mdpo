@@ -216,30 +216,30 @@ class Md2Po:
                 })
 
             self._enterspan_replacer = {
-                md4c.SpanType.STRONG: self.bold_start_string,
-                md4c.SpanType.EM: self.italic_start_string,
-                md4c.SpanType.CODE: self.code_start_string,
-                md4c.SpanType.A: self.link_start_string,
+                md4c.SpanType.STRONG.value: self.bold_start_string,
+                md4c.SpanType.EM.value: self.italic_start_string,
+                md4c.SpanType.CODE.value: self.code_start_string,
+                md4c.SpanType.A.value: self.link_start_string,
             }
 
             self._leavespan_replacer = {
-                md4c.SpanType.STRONG: self.bold_end_string,
-                md4c.SpanType.EM: self.italic_end_string,
-                md4c.SpanType.CODE: self.code_end_string,
-                md4c.SpanType.A: self.link_end_string,
+                md4c.SpanType.STRONG.value: self.bold_end_string,
+                md4c.SpanType.EM.value: self.italic_end_string,
+                md4c.SpanType.CODE.value: self.code_end_string,
+                md4c.SpanType.A.value: self.link_end_string,
             }
 
             if 'strikethrough' in self.extensions:
                 self.strikethrough_start_string = kwargs.get(
                     'strikethrough_start_string', '~~',
                 )
-                self._enterspan_replacer[md4c.SpanType.DEL] = \
+                self._enterspan_replacer[md4c.SpanType.DEL.value] = \
                     self.strikethrough_start_string
 
                 self.strikethrough_end_string = kwargs.get(
                     'strikethrough_end_string', '~~',
                 )
-                self._leavespan_replacer[md4c.SpanType.DEL] = \
+                self._leavespan_replacer[md4c.SpanType.DEL.value] = \
                     self.strikethrough_end_string
 
                 if _include_xheaders:
@@ -254,26 +254,28 @@ class Md2Po:
                 self.latexmath_start_string = kwargs.get(
                     'latexmath_start_string', '$',
                 )
-                self._enterspan_replacer[md4c.SpanType.LATEXMATH] = \
+                self._enterspan_replacer[md4c.SpanType.LATEXMATH.value] = \
                     self.latexmath_start_string
 
                 self.latexmath_end_string = kwargs.get(
                     'latexmath_end_string', '$',
                 )
-                self._leavespan_replacer[md4c.SpanType.LATEXMATH] = \
+                self._leavespan_replacer[md4c.SpanType.LATEXMATH.value] = \
                     self.latexmath_end_string
 
                 self.latexmathdisplay_start_string = kwargs.get(
                     'latexmathdisplay_start_string', '$$',
                 )
-                self._enterspan_replacer[md4c.SpanType.LATEXMATH_DISPLAY] = \
-                    self.latexmathdisplay_start_string
+                self._enterspan_replacer[
+                    md4c.SpanType.LATEXMATH_DISPLAY.value
+                ] = self.latexmathdisplay_start_string
 
                 self.latexmathdisplay_end_string = kwargs.get(
                     'latexmathdisplay_end_string', '$$',
                 )
-                self._leavespan_replacer[md4c.SpanType.LATEXMATH_DISPLAY] = \
-                    self.latexmathdisplay_end_string
+                self._leavespan_replacer[
+                    md4c.SpanType.LATEXMATH_DISPLAY.value
+                ] = self.latexmathdisplay_end_string
 
                 if _include_xheaders:
                     self.metadata.update({
@@ -293,9 +295,9 @@ class Md2Po:
                     'wikilink_end_string', ']]',
                 )
 
-                self._enterspan_replacer[md4c.SpanType.WIKILINK] = \
+                self._enterspan_replacer[md4c.SpanType.WIKILINK.value] = \
                     self.wikilink_start_string
-                self._leavespan_replacer[md4c.SpanType.WIKILINK] = \
+                self._leavespan_replacer[md4c.SpanType.WIKILINK.value] = \
                     self.wikilink_end_string
 
                 if _include_xheaders:
@@ -309,13 +311,13 @@ class Md2Po:
                 self.underline_start_string = kwargs.get(
                     'underline_start_string', '__',
                 )
-                self._enterspan_replacer[md4c.SpanType.U] = \
+                self._enterspan_replacer[md4c.SpanType.U.value] = \
                     self.underline_start_string
 
                 self.underline_end_string = kwargs.get(
                     'underline_end_string', '__',
                 )
-                self._leavespan_replacer[md4c.SpanType.U] = \
+                self._leavespan_replacer[md4c.SpanType.U.value] = \
                     self.underline_end_string
 
                 if _include_xheaders:
@@ -525,7 +527,7 @@ class Md2Po:
         if raise_skip_event(self.events, 'enter_block', self, block, details):
             return
 
-        if block.value == md4c.BlockType.P:
+        if block is md4c.BlockType.P:
             self._inside_pblock = True
             if not any([
                 self._inside_hblock,
@@ -535,7 +537,7 @@ class Md2Po:
             ]):
                 self._current_top_level_block_number += 1
                 self._current_top_level_block_type = md4c.BlockType.P.value
-        elif block.value == md4c.BlockType.CODE:
+        elif block is md4c.BlockType.CODE:
             self._inside_codeblock = True
             if not any([
                 self._quoteblocks_deep,
@@ -544,9 +546,9 @@ class Md2Po:
             ]):
                 self._current_top_level_block_number += 1
                 self._current_top_level_block_type = md4c.BlockType.CODE.value
-        elif block.value == md4c.BlockType.LI:
+        elif block is md4c.BlockType.LI:
             self._inside_liblock = True
-        elif block.value == md4c.BlockType.UL:
+        elif block is md4c.BlockType.UL:
             self._uls_deep += 1
             if self._uls_deep > 1 or self._inside_olblock:
                 # changing UL deeep
@@ -557,7 +559,7 @@ class Md2Po:
             ]):
                 self._current_top_level_block_number += 1
                 self._current_top_level_block_type = md4c.BlockType.UL.value
-        elif block.value == md4c.BlockType.H:
+        elif block is md4c.BlockType.H:
             self._inside_hblock = True
             if not any([
                 self._quoteblocks_deep,
@@ -566,14 +568,14 @@ class Md2Po:
             ]):
                 self._current_top_level_block_number += 1
                 self._current_top_level_block_type = md4c.BlockType.H.value
-        elif block.value == md4c.BlockType.QUOTE:
+        elif block is md4c.BlockType.QUOTE:
             self._quoteblocks_deep += 1
             if self._inside_liblock:
                 self._save_current_msgid()
             if self._quoteblocks_deep == 1:
                 self._current_top_level_block_number += 1
                 self._current_top_level_block_type = md4c.BlockType.QUOTE.value
-        elif block.value == md4c.BlockType.OL:
+        elif block is md4c.BlockType.OL:
             if not any([
                 self._quoteblocks_deep,
                 self._uls_deep,
@@ -585,7 +587,7 @@ class Md2Po:
             if self._inside_olblock or self._uls_deep:
                 self._save_current_msgid()
             self._inside_olblock = True
-        elif block.value == md4c.BlockType.HTML:
+        elif block is md4c.BlockType.HTML:
             self._inside_htmlblock = True
             if not any([
                 self._quoteblocks_deep,
@@ -594,7 +596,7 @@ class Md2Po:
             ]):
                 self._current_top_level_block_number += 1
                 self._current_top_level_block_type = md4c.BlockType.HTML.value
-        elif block.value == md4c.BlockType.TABLE:
+        elif block is md4c.BlockType.TABLE:
             if not any([
                 self._quoteblocks_deep,
                 self._inside_olblock,
@@ -610,27 +612,27 @@ class Md2Po:
         if raise_skip_event(self.events, 'leave_block', self, block, details):
             return
 
-        if block.value == md4c.BlockType.CODE:
+        if block is md4c.BlockType.CODE:
             self._inside_codeblock = False
             if not self._disable_next_codeblock:
                 if self.include_codeblocks or self._include_next_codeblock:
                     self._save_current_msgid()
             self._include_next_codeblock = False
             self._disable_next_codeblock = False
-        elif block.value == md4c.BlockType.HTML:
+        elif block is md4c.BlockType.HTML:
             self._inside_htmlblock = False
         else:
-            if block.value == md4c.BlockType.P:
+            if block is md4c.BlockType.P:
                 self._inside_pblock = False
-            elif block.value == md4c.BlockType.LI:
+            elif block is md4c.BlockType.LI:
                 self._inside_liblock = True
-            elif block.value == md4c.BlockType.UL:
+            elif block is md4c.BlockType.UL:
                 self._uls_deep -= 1
-            elif block.value == md4c.BlockType.H:
+            elif block is md4c.BlockType.H:
                 self._inside_hblock = False
-            elif block.value == md4c.BlockType.QUOTE:
+            elif block is md4c.BlockType.QUOTE:
                 self._quoteblocks_deep -= 1
-            elif block.value == md4c.BlockType.OL:
+            elif block is md4c.BlockType.OL:
                 self._inside_olblock = False
             self._save_current_msgid()
 
@@ -649,7 +651,7 @@ class Md2Po:
                 except KeyError:
                     pass
 
-            if span.value == md4c.SpanType.A:
+            if span is md4c.SpanType.A:
                 if self._link_references is None:
                     self._link_references = parse_link_references(self.content)
 
@@ -671,7 +673,7 @@ class Md2Po:
                             self._current_aspan_target = target
                             break
 
-            elif span.value == md4c.SpanType.CODE:
+            elif span is md4c.SpanType.CODE:
                 self._inside_codespan = True
 
                 # entering a code span, literal backticks encountered inside
@@ -679,17 +681,17 @@ class Md2Po:
                 #
                 # save the index char of the opening backtick
                 self._codespan_start_index = len(self._current_msgid) - 1
-            elif span.value == md4c.SpanType.IMG:
+            elif span is md4c.SpanType.IMG:
                 self._current_imgspan['src'] = details['src'][0][1]
                 self._current_imgspan['title'] = '' if not details['title'] \
                     else details['title'][0][1]
                 self._current_imgspan['text'] = ''
-            elif span.value == md4c.SpanType.U:
+            elif span is md4c.SpanType.U:
                 self._inside_uspan = True
-            elif span.value == md4c.SpanType.WIKILINK:
+            elif span is md4c.SpanType.WIKILINK:
                 self._current_wikilink_target = details['target'][0][1]
         else:
-            if span.value in (md4c.SpanType.IMG, md4c.SpanType.A) and \
+            if (span is md4c.SpanType.IMG or span is md4c.SpanType.A) and \
                     details['title']:
                 self._save_msgid(details['title'][0][1])
 
@@ -702,7 +704,7 @@ class Md2Po:
 
         if not self.plaintext:
             if not self._inside_uspan:
-                if span.value == md4c.SpanType.WIKILINK:
+                if span is md4c.SpanType.WIKILINK:
                     self._current_msgid += self._current_wikilink_target
                     self._current_wikilink_target = None
 
@@ -711,7 +713,7 @@ class Md2Po:
                 except KeyError:
                     pass
 
-            if span.value == md4c.SpanType.A:
+            if span is md4c.SpanType.A:
                 if self._current_aspan_target:  # reference link
                     self._current_msgid += f'[{self._current_aspan_target}]'
                     self._current_aspan_target = None
@@ -722,7 +724,7 @@ class Md2Po:
                             details['title'][0][1],
                         ),
                     )
-            elif span.value == md4c.SpanType.CODE:
+            elif span is md4c.SpanType.CODE:
                 self._inside_codespan = False
                 self._codespan_start_index = None
                 # add backticks at the end for escape internal backticks
@@ -730,7 +732,7 @@ class Md2Po:
                     self._codespan_backticks * self.code_end_string
                 )
                 self._codespan_backticks = None
-            elif span.value == md4c.SpanType.IMG:
+            elif span is md4c.SpanType.IMG:
                 self._current_msgid += '![{}]({}'.format(
                     self._current_imgspan['text'],
                     self._current_imgspan['src'],
@@ -741,7 +743,7 @@ class Md2Po:
                     )
                 self._current_msgid += ')'
                 self._current_imgspan = {}
-            elif span.value == md4c.SpanType.U:
+            elif span is md4c.SpanType.U:
                 self._inside_uspan = False
 
     def text(self, block, text):
