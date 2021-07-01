@@ -171,26 +171,26 @@ class Po2Md:
         self.link_end_string = kwargs.get('link_end_string', ']')
 
         self._enterspan_replacer = {
-            md4c.SpanType.STRONG: self.bold_start_string,
-            md4c.SpanType.EM: self.italic_start_string,
-            md4c.SpanType.CODE: self.code_start_string,
-            md4c.SpanType.A: self.link_start_string,
+            md4c.SpanType.STRONG.value: self.bold_start_string,
+            md4c.SpanType.EM.value: self.italic_start_string,
+            md4c.SpanType.CODE.value: self.code_start_string,
+            md4c.SpanType.A.value: self.link_start_string,
         }
 
         self._leavespan_replacer = {
-            md4c.SpanType.STRONG: self.bold_end_string,
-            md4c.SpanType.EM: self.italic_end_string,
-            md4c.SpanType.CODE: self.code_end_string,
-            md4c.SpanType.A: self.link_end_string,
+            md4c.SpanType.STRONG.value: self.bold_end_string,
+            md4c.SpanType.EM.value: self.italic_end_string,
+            md4c.SpanType.CODE.value: self.code_end_string,
+            md4c.SpanType.A.value: self.link_end_string,
         }
 
         if 'wikilinks' in self.extensions:
             self.wikilink_start_string = kwargs.get('link_end_string', '[[')
             self.wikilink_end_string = kwargs.get('link_end_string', ']]')
 
-            self._enterspan_replacer[md4c.SpanType.WIKILINK] = \
+            self._enterspan_replacer[md4c.SpanType.WIKILINK.value] = \
                 self.wikilink_start_string
-            self._leavespan_replacer[md4c.SpanType.WIKILINK] = \
+            self._leavespan_replacer[md4c.SpanType.WIKILINK.value] = \
                 self.wikilink_end_string
 
         self._inside_htmlblock = False
@@ -379,9 +379,9 @@ class Po2Md:
                 not self._current_line or self._current_line[0] != '>'
         ):
             self._current_line += '> '
-        if block.value == md4c.BlockType.P:
+        if block is md4c.BlockType.P:
             self._inside_pblock = True
-        elif block.value == md4c.BlockType.CODE:
+        elif block is md4c.BlockType.CODE:
             self._inside_codeblock = True
             indent = ''
 
@@ -391,20 +391,21 @@ class Po2Md:
                     self._save_current_line()
                 indent += '   ' * len(self._current_list_type)
 
-            if 'fence_char' in details:
+            if details['fence_char'] is not None:
                 self._current_line += '{}{}'.format(
                     indent,
                     details['fence_char']*3,
                 )
-            if details['lang']:
-                self._current_line += details['lang'][0][1]
-            if 'fence_char' not in details:
+                if details['lang']:
+                    self._current_line += details['lang'][0][1]
+            else:
                 self._inside_indented_codeblock = True
+
             if self._current_line:
                 self._save_current_line()
-        elif block.value == md4c.BlockType.H:
+        elif block is md4c.BlockType.H:
             self._current_line += '%s ' % ('#' * details['level'])
-        elif block.value == md4c.BlockType.LI:
+        elif block is md4c.BlockType.LI:
             if self._current_list_type[-1][0] == 'ol':
                 # inside OL
                 if len(self._ol_marks) > 1:
@@ -428,53 +429,53 @@ class Po2Md:
                 self._current_list_type[-1][-1].append(details['is_task'])
             self._inside_liblock = True
             self._inside_liblock_first_p = True
-        elif block.value == md4c.BlockType.UL:
+        elif block is md4c.BlockType.UL:
             if self._current_list_type:
                 self._save_current_msgid()
                 self._save_current_line()
             self._current_list_type.append(['ul', []])
             self._ul_marks.append(details['mark'])
-        elif block.value == md4c.BlockType.OL:
+        elif block is md4c.BlockType.OL:
             self._current_list_type.append(['ol', []])
             self._ol_marks.append([0, details['mark_delimiter']])
-        elif block.value == md4c.BlockType.HR:
+        elif block is md4c.BlockType.HR:
             if not self._inside_liblock:
                 self._current_line += '---\n\n'
             else:
                 # inside lists, the separator '---' can't be used
                 self._current_line += '***'
-        elif block.value == md4c.BlockType.TR:
+        elif block is md4c.BlockType.TR:
             self._current_line += '   ' * len(self._current_list_type)
             if self._current_line.startswith('>    '):
                 self._current_line = self._current_line.replace('> ', '')
-        elif block.value == md4c.BlockType.TH:
+        elif block is md4c.BlockType.TH:
             if self._inside_quoteblock:
                 if not self._current_line.replace(' ', '') == '>':
                     self._current_line = removesuffix(self._current_line, '> ')
             self._current_line += '| '
             self._current_thead_aligns.append(details['align'].value)
-        elif block.value == md4c.BlockType.TD:
+        elif block is md4c.BlockType.TD:
             if self._inside_quoteblock:
                 if not self._current_line.replace(' ', '') == '>':
                     self._current_line = removesuffix(self._current_line, '> ')
             self._current_line += '| '
-        elif block.value == md4c.BlockType.QUOTE:
+        elif block is md4c.BlockType.QUOTE:
             if self._inside_liblock:
                 self._save_current_msgid()
                 self._save_current_line()
             self._inside_quoteblock = True
-        elif block.value == md4c.BlockType.TABLE:
+        elif block is md4c.BlockType.TABLE:
             if self._current_list_type and not self._inside_quoteblock:
                 if self._current_line:
                     self._save_current_line()
                 self._save_current_line()
-        elif block.value == md4c.BlockType.HTML:
+        elif block is md4c.BlockType.HTML:
             self._inside_htmlblock = True
 
     def leave_block(self, block, details):
         # print('LEAVE BLOCK', block.name, details)
 
-        if block.value == md4c.BlockType.P:
+        if block is md4c.BlockType.P:
             self._save_current_msgid()
 
             if self._inside_liblock:
@@ -501,15 +502,14 @@ class Po2Md:
                 self._current_line = '>'
                 self._save_current_line()
 
-        elif block.value == md4c.BlockType.CODE:
+        elif block is md4c.BlockType.CODE:
             self._save_current_msgid()
             self._inside_codeblock = False
-            self._inside_indented_codeblock = False
 
             indent = ''
             if self._inside_liblock:
                 indent += '   ' * len(self._current_list_type)
-            if 'fence_char' in details:
+            if not self._inside_indented_codeblock:
                 if self._inside_liblock:
                     self._save_current_line()
                 self._current_line += '{}{}'.format(
@@ -520,9 +520,10 @@ class Po2Md:
             self._save_current_line()
             if not self._inside_liblock:
                 # prevent two newlines after indented code block
-                if 'fence_char' in details:
+                if not self._inside_indented_codeblock:
                     self._save_current_line()
-        elif block.value == md4c.BlockType.H:
+            self._inside_indented_codeblock = False
+        elif block is md4c.BlockType.H:
             self._save_current_msgid()
             if not self._inside_quoteblock:
                 self._current_line += '\n'
@@ -531,33 +532,33 @@ class Po2Md:
             self._save_current_line()
             if self._inside_quoteblock:
                 self._current_line += '> '
-        elif block.value == md4c.BlockType.LI:
+        elif block is md4c.BlockType.LI:
             self._save_current_msgid()
             self._inside_liblock = False
             if self._current_line:
                 self._save_current_line()
-        elif block.value == md4c.BlockType.UL:
+        elif block is md4c.BlockType.UL:
             self._ul_marks.pop()
             self._current_list_type.pop()
             if self._inside_quoteblock:
                 self._current_line += '> '
             if not self._ul_marks and self._outputlines[-1]:
                 self._save_current_line()
-        elif block.value == md4c.BlockType.OL:
+        elif block is md4c.BlockType.OL:
             self._ol_marks.pop()
             self._current_list_type.pop()
             if self._inside_quoteblock:
                 self._current_line += '> '
             if not self._ol_marks and self._outputlines[-1]:
                 self._save_current_line()
-        elif block.value in (md4c.BlockType.TH, md4c.BlockType.TD):
+        elif block is md4c.BlockType.TH or block is md4c.BlockType.TD:
             self._save_current_msgid()
             self._current_line += ' '
-        elif block.value == md4c.BlockType.TR:
+        elif block is md4c.BlockType.TR:
             if not self._current_thead_aligns:
                 self._current_line += '|'
                 self._save_current_line()
-        elif block.value == md4c.BlockType.THEAD:
+        elif block is md4c.BlockType.THEAD:
             # build thead separator
             thead_separator = ''
             if self._inside_quoteblock:
@@ -592,16 +593,16 @@ class Po2Md:
                 thead_separator,
             )
             self._save_current_line()
-        elif block.value == md4c.BlockType.QUOTE:
+        elif block is md4c.BlockType.QUOTE:
             if self._outputlines[-1] == '>':
                 self._outputlines.pop()
             if not self._inside_liblock:
                 self._save_current_line()
             self._inside_quoteblock = False
-        elif block.value == md4c.BlockType.TABLE:
+        elif block is md4c.BlockType.TABLE:
             if not self._inside_quoteblock and not self._current_list_type:
                 self._save_current_line()
-        elif block.value == md4c.BlockType.HTML:
+        elif block is md4c.BlockType.HTML:
             self._inside_htmlblock = False
 
     def enter_span(self, span, details):
@@ -612,7 +613,7 @@ class Po2Md:
         except KeyError:
             pass
 
-        if span.value == md4c.SpanType.A:
+        if span is md4c.SpanType.A:
             if self._link_references is None:
                 self._link_references = parse_link_references(self.content)
 
@@ -634,22 +635,22 @@ class Po2Md:
                         self._current_aspan_target = target
                         break
 
-        elif span.value == md4c.SpanType.CODE:
+        elif span is md4c.SpanType.CODE:
             self._inside_codespan = True
             self._codespan_start_index = len(self._current_msgid)-1
             self._codespan_inside_current_msgid = True
-        elif span.value == md4c.SpanType.IMG:
+        elif span is md4c.SpanType.IMG:
             self._current_imgspan['title'] = '' if not details['title'] \
                 else details['title'][0][1]
             self._current_imgspan['src'] = details['src'][0][1]
             self._current_imgspan['text'] = ''
-        elif span.value == md4c.SpanType.WIKILINK:
+        elif span is md4c.SpanType.WIKILINK:
             self._current_wikilink_target = details['target'][0][1]
 
     def leave_span(self, span, details):
         # print("LEAVE SPAN", span.name, details)
 
-        if span.value == md4c.SpanType.WIKILINK:
+        if span is md4c.SpanType.WIKILINK:
             self._current_msgid += polib.escape(self._current_wikilink_target)
             self._current_wikilink_target = None
 
@@ -658,7 +659,7 @@ class Po2Md:
         except KeyError:
             pass
 
-        if span.value == md4c.SpanType.A:
+        if span is md4c.SpanType.A:
             if self._current_aspan_target:
                 self._current_msgid += f'[{self._current_aspan_target}]'
                 self._current_aspan_target = None
@@ -672,13 +673,13 @@ class Po2Md:
                         )
                     self._current_msgid += ')'
             self._current_aspan_href = None
-        elif span.value == md4c.SpanType.CODE:
+        elif span is md4c.SpanType.CODE:
             self._inside_codespan = False
             self._current_msgid += (
                 self._codespan_backticks * self.code_end_string
             )
             self._codespan_backticks = None
-        elif span.value == md4c.SpanType.IMG:
+        elif span is md4c.SpanType.IMG:
             self._current_msgid += '![{}]({}'.format(
                 self._current_imgspan['text'],
                 self._current_imgspan['src'],
