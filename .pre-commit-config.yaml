@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.12.0
+    rev: v2.19.4
     hooks:
       - id: pyupgrade
         args:
           - --py36-plus
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
       - id: trailing-whitespace
         name: trailing-whitespace
@@ -54,7 +54,7 @@ repos:
           - flake8-implicit-str-concat
         files: ^docs/
   - repo: https://github.com/PyCQA/isort
-    rev: 5.8.0
+    rev: 5.9.1
     hooks:
       - id: isort
         args:
@@ -80,13 +80,18 @@ repos:
           - markdown
         files: ^test/test_po2md/
   - repo: https://github.com/mondeja/repo-stream
-    rev: v1.0.2
+    rev: v1.1.0
     hooks:
       - id: repo-stream
         args:
           - -config=https://github.com/mondeja/repo-stream-config
           - -updater=upstream
   - repo: https://github.com/mondeja/pre-commit-hooks
-    rev: v1.5.1
+    rev: v1.5.2
     hooks:
       - id: dev-extras-required
+      - id: root-editorconfig-required
+  - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
+    rev: 2.3.5
+    hooks:
+      - id: editorconfig-checker
