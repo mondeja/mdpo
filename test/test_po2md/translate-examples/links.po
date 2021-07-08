@@ -25,6 +25,13 @@ msgstr ""
 "Escribe un correo electrónico a [fake@example.com](mailto:fake@example.com) "
 "si quieres ayuda."
 
+msgid ""
+"A [link](https://so-long-long-long-long-long-long-long-long-that-should-not-"
+"be-wrapped-in-multiple.lines)."
+msgstr ""
+"Un [enlace](https://tan-tan-tan-tan-tan-tan-tan-tan-largo-que-no-debe-ser-"
+"envuelto-en-multiples.lineas)."
+
 msgid "[Reference A][1]"
 msgstr "[Referencia A][1]"
 
