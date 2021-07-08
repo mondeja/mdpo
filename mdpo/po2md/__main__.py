@@ -36,7 +36,8 @@ def build_parser():
              ' If not provided, will be read from STDIN.',
     )
     parser.add_argument(
-        '-p', '--pofiles', metavar='POFILES', action='append', nargs='*',
+        '-p', '--po-files', '--pofiles', metavar='POFILES', action='append',
+        nargs='*', dest='pofiles',
         help='Glob matching a set of PO files from where to extract references'
              ' to make the replacements translating strings. This argument'
              ' can be passed multiple times.',

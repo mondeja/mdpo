@@ -18,3 +18,18 @@ def _tmp_file(content, suffix):
 @pytest.fixture()
 def tmp_file():
     return _tmp_file
+
+
+@pytest.fixture()
+def striplastline():
+    """Returns a text, ignoring the last line.
+
+    Args:
+        text (str): Text that will be returned ignoring its last line.
+
+    Returns:
+        str: Text wihout their last line.
+    """
+    def _striplastline(text):
+        return '\n'.join(text.split('\n')[:-1])
+    return _striplastline

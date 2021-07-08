@@ -38,7 +38,7 @@ def build_parser():
         metavar='PATH',
     )
     parser.add_argument(
-        '-po', '--po-filepath', dest='po_filepath',
+        '-po', '--po-filepath', '--pofilepath', dest='po_filepath',
         default=None,
         help='Merge new msgids in the po file indicated at this parameter (if'
              ' \'--save\' argument is passed) or use the msgids of the file as'
@@ -54,7 +54,7 @@ def build_parser():
              ' \'-po/--po-filepath\' will raise an error.',
     )
     parser.add_argument(
-        '-mo', '--mo-filepath', dest='mo_filepath',
+        '-mo', '--mo-filepath', '--mofilepath', dest='mo_filepath',
         default=None,
         help='The resulting PO file will be compiled to a mofile and saved in'
              ' the path specified at this parameter.',
@@ -75,7 +75,7 @@ def build_parser():
         metavar='N', type=int,
     )
     parser.add_argument(
-        '-m', '--merge-pofiles',
+        '-m', '--merge-po-files', '--merge-pofiles',
         dest='mark_not_found_as_obsolete',
         action='store_false',
         help='Messages not found which are already stored in the PO file'
@@ -100,7 +100,7 @@ def build_parser():
              "--no-location'.",
     )
     parser.add_argument(
-        '-x', '--extension', dest='extensions', action='append',
+        '-x', '--extension', '--ext', dest='extensions', action='append',
         default=None,
         help='md4c extension used to parse markdown content formatted as'
              ' pymd4c extension keyword arguments. This argument can be passed'

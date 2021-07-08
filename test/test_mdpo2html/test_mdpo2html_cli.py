@@ -6,7 +6,6 @@ from uuid import uuid4
 import pytest
 
 from mdpo.mdpo2html.__main__ import run
-from mdpo.text import striplastline
 
 
 EXAMPLE = {
@@ -74,7 +73,7 @@ def test_save(capsys, arg, tmp_file):
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
-def test_ignore_files_by_filepath(capsys, arg, tmp_file):
+def test_ignore_files_by_filepath(striplastline, capsys, arg, tmp_file):
     pofiles = [
         (
             uuid4().hex + '.po',

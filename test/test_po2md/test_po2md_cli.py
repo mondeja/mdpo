@@ -6,7 +6,6 @@ from uuid import uuid4
 import pytest
 
 from mdpo.po2md.__main__ import run
-from mdpo.text import striplastline
 
 
 EXAMPLE = {
@@ -25,7 +24,7 @@ msgstr "Algo de texto aquí"
 }
 
 
-def test_stdin(capsys, monkeypatch, tmp_file):
+def test_stdin(striplastline, capsys, monkeypatch, tmp_file):
     monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['markdown-input']))
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
 
@@ -75,7 +74,7 @@ def test_save(capsys, arg, tmp_file):
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
-def test_ignore_files_by_filepath(capsys, arg):
+def test_ignore_files_by_filepath(striplastline, capsys, arg):
     pofiles = [
         (
             uuid4().hex + '.po',

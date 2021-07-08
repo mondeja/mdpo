@@ -174,18 +174,6 @@ def wrap_different_first_line_width(
     )
 
 
-def striplastline(text):
-    """Returns a text, ignoring the last line.
-
-    Args:
-        text (str): Text that will be returned ignoring its last line.
-
-    Returns:
-        str: Text wihout their last line.
-    """
-    return '\n'.join(text.split('\n')[:-1])
-
-
 def removeprefix(text, prefix):
     """Removes a prefix from a string.
 
@@ -205,7 +193,7 @@ def removeprefix(text, prefix):
         return text.removeprefix(prefix)
     if text.startswith(prefix):
         return text[len(prefix):]
-    return text
+    return text  # pragma: no cover
 
 
 def removesuffix(text, suffix):
@@ -228,4 +216,4 @@ def removesuffix(text, suffix):
         return text.removesuffix(suffix)
     if suffix and text.endswith(suffix):
         return text[:-len(suffix)]
-    return text
+    return text  # pragma: no cover

@@ -5,7 +5,6 @@ import tempfile
 import pytest
 
 from mdpo.md2po.__main__ import run
-from mdpo.text import striplastline
 
 
 EXAMPLE = {
@@ -23,7 +22,7 @@ msgstr ""
 }
 
 
-def test_stdin(capsys, monkeypatch):
+def test_stdin(striplastline, capsys, monkeypatch):
     monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['input']))
     pofile, exitcode = run()
     out, err = capsys.readouterr()
@@ -42,8 +41,8 @@ def test_quiet(capsys, arg):
     assert out == ''
 
 
-@pytest.mark.parametrize('arg', ['-po', '--po-filepath'])
-def test_po_filepath(capsys, arg, tmp_file):
+@pytest.mark.parametrize('arg', ['-po', '--po-filepath', '--pofilepath'])
+def test_po_filepath(striplastline, capsys, arg, tmp_file):
     pofile_content = '''#
 msgid ""
 msgstr ""
@@ -78,7 +77,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ['-s', '--save'])
-def test_save(capsys, arg, tmp_file):
+def test_save(striplastline, capsys, arg, tmp_file):
     pofile_content = '''#
 msgid ""
 msgstr ""
@@ -116,8 +115,8 @@ msgstr ""
     assert striplastline(out) == expected_output
 
 
-@pytest.mark.parametrize('arg', ['-mo', '--mo-filepath'])
-def test_mo_filepath(capsys, arg):
+@pytest.mark.parametrize('arg', ['-mo', '--mo-filepath', '--mofilepath'])
+def test_mo_filepath(striplastline, capsys, arg):
     mo_file = tempfile.NamedTemporaryFile(suffix='.mo')
     mo_filepath = mo_file.name
     mo_file.close()
@@ -133,7 +132,7 @@ def test_mo_filepath(capsys, arg):
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
-def test_ignore_files_by_filepath(capsys, arg):
+def test_ignore_files_by_filepath(striplastline, capsys, arg):
     filesdata = {
         'foo': '### Foo\n\nFoo 2',
         'bar': '## Bar with `inline code`',
@@ -172,7 +171,7 @@ msgstr ""
     assert striplastline(out) == expected_output
 
 
-def test_markuptext(capsys):
+def test_markuptext(striplastline, capsys):
     content = (
         '# Header `with inline code`\n\n'
         'Some text with **bold characters**, *italic characters*'
@@ -201,7 +200,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ['-w', '--wrapwidth'])
-def test_wrapwidth(capsys, arg):
+def test_wrapwidth(striplastline, capsys, arg):
     content = (
         '# Some long header with **bold characters**, '
         '*italic characters* and a [link](https://nowhere.nothing).\n'
@@ -238,7 +237,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ['-a', '--xheaders'])
-def test_xheaders(capsys, arg):
+def test_xheaders(striplastline, capsys, arg):
     markdown_content = '# Foo'
 
     pofile, exitcode = run([markdown_content, arg])
@@ -274,7 +273,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ['-c', '--include-codeblocks'])
-def test_include_codeblocks(capsys, arg):
+def test_include_codeblocks(striplastline, capsys, arg):
     markdown_content = '''
     var hello = "world";
 
@@ -307,7 +306,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ['--ignore-msgids'])
-def test_ignore_msgids(capsys, arg, tmp_file):
+def test_ignore_msgids(striplastline, capsys, arg, tmp_file):
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -326,7 +325,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ['--command-alias'])
-def test_command_aliases(capsys, arg, tmp_file):
+def test_command_aliases(striplastline, capsys, arg, tmp_file):
     markdown_content = '''<!-- :off -->
 This should be ignored.
 
@@ -360,7 +359,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ['-d', '--metadata'])
-def test_metadata(capsys, arg, tmp_file):
+def test_metadata(striplastline, capsys, arg, tmp_file):
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -383,8 +382,8 @@ msgstr ""
     assert pofile.__unicode__() == expected_output
 
 
-@pytest.mark.parametrize('arg', ('-m', '--merge-pofiles'))
-def test_merge_pofiles(capsys, arg, tmp_file):
+@pytest.mark.parametrize('arg', ('-m', '--merge-pofiles', '--merge-po-files'))
+def test_merge_pofiles(striplastline, capsys, arg, tmp_file):
     md_content = '# bar\n\n\nbaz\n'
     pofile_content = '''#
 msgid ""
@@ -422,7 +421,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ('-r', '--remove-not-found'))
-def test_remove_not_found(capsys, arg, tmp_file):
+def test_remove_not_found(striplastline, capsys, arg, tmp_file):
     md_content = '# bar\n\n\nbaz\n'
     pofile_content = '''#
 msgid ""
@@ -458,11 +457,7 @@ msgstr ""
     assert pofile.__unicode__() == expected_output
 
 
-@pytest.mark.parametrize(
-    'arg',
-    ('-x', '--extension'),
-    ids=["argument '-x'", "argument '--extension'"],
-)
+@pytest.mark.parametrize('arg', ('-x', '--extension', '--ext'))
 @pytest.mark.parametrize(
     ('extensions', 'md_content', 'expected_output'),
     (
@@ -507,7 +502,14 @@ msgstr ""
         ),
     ),
 )
-def test_extensions(arg, extensions, md_content, expected_output, capsys):
+def test_extensions(
+    arg,
+    extensions,
+    md_content,
+    expected_output,
+    striplastline,
+    capsys,
+):
     extensions_arguments = []
     if extensions:
         for extension in extensions:
@@ -526,7 +528,7 @@ def test_extensions(arg, extensions, md_content, expected_output, capsys):
     (None, 'foo'),
     ids=('MDPO_CLI=', 'MDPO_CLI=foo'),
 )
-def test_md2po_cli_running_osenv(value, capsys):
+def test_md2po_cli_running_osenv(striplastline, value, capsys):
     if value is not None:
         os.environ['MDPO_CLI'] = value
     pofile, exitcode = run([EXAMPLE['input']])
