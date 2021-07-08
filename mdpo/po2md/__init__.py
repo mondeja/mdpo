@@ -620,6 +620,8 @@ class Po2Md:
             pass
 
         if span is md4c.SpanType.A:
+            self._aspan_inside_current_msgid = True
+
             if self._link_references is None:
                 self._link_references = parse_link_references(self.content)
 
