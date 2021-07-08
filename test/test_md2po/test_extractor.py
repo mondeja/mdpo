@@ -1,5 +1,7 @@
 import tempfile
 
+import pytest
+
 from mdpo.md2po import Md2Po
 
 
@@ -96,3 +98,15 @@ msgstr ""
 msgid "bar"
 msgstr ""
 '''
+
+
+def test_md2po_save_without_po_filepath():
+    content = 'foo\n\nbar\n\nbaz\n'
+    md2po = Md2Po(content)
+    with pytest.raises(ValueError) as exc:
+        md2po.extract(save=True)
+
+    assert str(exc.value) == (
+        "The argument 'save' does not make sense without passing the"
+        " argument 'po_filepath'."
+    )

@@ -519,3 +519,30 @@ def test_extensions(arg, extensions, md_content, expected_output, capsys):
     assert exitcode == 0
     assert striplastline(out) == expected_output
     assert pofile.__unicode__() == expected_output
+
+
+@pytest.mark.parametrize(
+    'value',
+    (None, 'foo'),
+    ids=('MDPO_CLI=', 'MDPO_CLI=foo'),
+)
+def test_md2po_cli_running_osenv(value, capsys):
+    if value is not None:
+        os.environ['MDPO_CLI'] = value
+    pofile, exitcode = run([EXAMPLE['input']])
+    out, err = capsys.readouterr()
+
+    assert exitcode == 0
+    assert pofile.__unicode__() == EXAMPLE['output']
+    assert striplastline(out) == EXAMPLE['output']
+    assert os.environ.get('MDPO_CLI') == value
+
+
+def test_md2po_save_without_po_filepath():
+    with pytest.raises(ValueError) as exc:
+        run([EXAMPLE['input'], '--save'])
+
+    assert str(exc.value) == (
+        "The argument '-s/--save' does not make sense without passing the"
+        " argument '-po/--po-filepath'."
+    )

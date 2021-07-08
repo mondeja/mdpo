@@ -836,6 +836,17 @@ class Md2Po:
     ):
         if not po_filepath:
             self.po_filepath = ''
+
+            if save:
+                if os.environ.get('MD2PO_CLI') == 'true':
+                    save_arg = '-s/--save'
+                    po_filepath_arg = '-po/--po-filepath'
+                else:
+                    save_arg, po_filepath_arg = ('save', 'po_filepath')
+                raise ValueError(
+                    f"The argument '{save_arg}' does not make sense"
+                    f" without passing the argument '{po_filepath_arg}'.",
+                )
         else:
             self.po_filepath = po_filepath
             if not os.path.exists(po_filepath):
@@ -942,7 +953,8 @@ def markdown_to_pofile(
             obsolete if is the case (see ``save`` and
             ``mark_not_found_as_obsolete`` optional parameters).
         save (bool): Save the new content to the pofile indicated in the
-            parameter ``po_filepath``.
+            parameter ``po_filepath``. If is enabled and ``po_filepath`` is
+            ``None`` a ``ValueError`` will be raised.
         mo_filepath (str): The resulting pofile will be compiled to a mofile
             and saved in the path specified at this parameter.
         plaintext (bool): If you pass ``True`` to this parameter (as default)
@@ -1036,6 +1048,9 @@ def markdown_to_pofile(
 
     Returns:
         :class:`polib.POFile` Pofile instance with new msgids included.
+
+    Raises
+        ValueError: when ``po_filepath`` is ``None`` and ``save`` is ``True``.
     """
     return Md2Po(
         glob_or_content,
