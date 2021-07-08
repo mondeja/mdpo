@@ -8,6 +8,3 @@ trim_trailing_whitespace = true
 
 [*.{py,md}]
 trim_trailing_whitespace = false
-
-[*.bat]
-end_of_line = crlf
