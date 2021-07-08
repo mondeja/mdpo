@@ -6,6 +6,8 @@ Visit <https://www.github.com/mondeja/mdpo>
 
 Write an email to <fake@example.com> if you want help.
 
+A [link](https://so-long-long-long-long-long-long-long-long-that-should-not-be-wrapped-in-multiple.lines).
+
 [Reference A][1]
 
 [Reference B][2]

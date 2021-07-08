@@ -84,6 +84,7 @@ class Po2Md:
         '_codespan_start_index',
         '_codespan_backticks',
         '_codespan_inside_current_msgid',
+        '_aspan_inside_current_msgid',
         '_inside_quoteblock',
         '_current_aspan_target',
         '_current_aspan_href',
@@ -213,6 +214,7 @@ class Po2Md:
         self._current_aspan_href = None
         self._link_references = None
         self._current_imgspan = {}
+        self._aspan_inside_current_msgid = False
 
         # current table head alignments
         self._current_thead_aligns = []
@@ -341,7 +343,10 @@ class Po2Md:
             translation = '\n'.join(lines)
         elif self._inside_pblock:
             # wrap paragraphs fitting with markdownlint
-            if self._codespan_inside_current_msgid:
+            if (
+                self._codespan_inside_current_msgid
+                or self._aspan_inside_current_msgid
+            ):
                 # fix codespans wrapping
                 lines = fixwrap_codespans(
                     translation.split('\n'),
@@ -365,6 +370,7 @@ class Po2Md:
 
         self._codespan_inside_current_msgid = False
         self._aimg_title_inside_current_msgid = False
+        self._aspan_inside_current_msgid = False
 
     def _save_current_line(self):
         # strip all spaces according to unicodedata database ignoring newlines,
@@ -614,6 +620,8 @@ class Po2Md:
             pass
 
         if span is md4c.SpanType.A:
+            self._aspan_inside_current_msgid = True
+
             if self._link_references is None:
                 self._link_references = parse_link_references(self.content)
 
