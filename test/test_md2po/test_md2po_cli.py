@@ -1,5 +1,7 @@
 import io
 import os
+import subprocess
+import sys
 import tempfile
 
 import pytest
@@ -29,6 +31,44 @@ def test_stdin(striplastline, capsys, monkeypatch):
     assert exitcode == 0
     assert pofile.__unicode__() == EXAMPLE['output']
     assert striplastline(out) == EXAMPLE['output']
+
+
+def test_stdin_no_atty(striplastline, tmp_file):
+    proc = subprocess.run(
+        'md2po',
+        universal_newlines=True,
+        input=EXAMPLE['input'],
+        stdout=subprocess.PIPE,
+        check=True,
+    )
+    assert proc.returncode == 0
+    assert striplastline(proc.stdout) == EXAMPLE['output']
+
+    with tmp_file(EXAMPLE['input'], '.md') as mdfile_path:
+        proc = subprocess.run(
+            ['md2po', '--no-location'],
+            universal_newlines=True,
+            input=mdfile_path,
+            stdout=subprocess.PIPE,
+            check=True,
+        )
+        assert proc.returncode == 0
+        assert striplastline(proc.stdout) == EXAMPLE['output']
+
+
+@pytest.mark.skipif(sys.platform != 'linux', reason='Linux only test')
+def test_pipe_redirect_file_stdin(striplastline, tmp_file):
+    with tmp_file(EXAMPLE['input'], '.md') as mdfile_path:
+        proc = subprocess.run(
+            f'< {mdfile_path} md2po',
+            universal_newlines=True,
+            input=EXAMPLE['input'],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=True,
+        )
+    assert striplastline(proc.stdout) == EXAMPLE['output']
+    assert proc.returncode == 0
 
 
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
