@@ -2,7 +2,7 @@
   <a href="https://github.com/mondeja/mdpo"><img src="https://raw.githubusercontent.com/mondeja/mdpo/master/mdpo.png" alt="mdpo" width="400"></a>
 </h1>
 
-<h4 align="center">Markdown file translation utilities using PO files</h4>
+<h4 align="center">Markdown files translation using PO files</h4>
 
 <p align="center">
   <a href="https://pypi.org/project/mdpo/">

@@ -337,10 +337,11 @@ class Md2Po:
         self._inside_liblock = False
         self._inside_hblock = False
         self._inside_olblock = False
+        self._inside_codespan = False
+
         self._quoteblocks_deep = 0
         self._uls_deep = 0
 
-        self._inside_codespan = False
         self._codespan_start_index = None
         self._codespan_backticks = None
 
@@ -1044,7 +1045,7 @@ def markdown_to_pofile(
         {'Some text with `inline code`': ''}
         >>> entries = markdown_to_pofile(content, msgstr='Default message')
         >>> {e.msgid: e.msgstr for e in entries}
-        {'Some text with inline code': 'Default message'}
+        {'Some text with `inline code`': 'Default message'}
 
     Returns:
         :class:`polib.POFile` Pofile instance with new msgids included.
