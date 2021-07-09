@@ -91,9 +91,7 @@ def build_parser():
              ' Only has effect used in combination with \'--merge-pofiles\'.',
     )
     parser.add_argument(
-        '--no-location',
-        dest='location',
-        action='store_false',
+        '--no-location', '--nolocation', dest='location', action='store_false',
         help="Do not write '#: filename:line' lines. Note that using this"
              ' option makes it harder for technically skilled translators to'
              " understand each message's context. Same as 'xgettext "
@@ -159,10 +157,12 @@ def parse_options(args=[]):
         sys.exit(0)
     opts, unknown = parser.parse_known_args(args)
 
+    glob_or_content = ''
     if not sys.stdin.isatty():
-        opts.glob_or_content = sys.stdin.read().strip('\n')
-    elif isinstance(opts.glob_or_content, list):
-        opts.glob_or_content = opts.glob_or_content[0]
+        glob_or_content += sys.stdin.read().strip('\n')
+    if isinstance(opts.glob_or_content, list) and opts.glob_or_content:
+        glob_or_content += opts.glob_or_content[0]
+    opts.glob_or_content = glob_or_content
 
     if opts.extensions is None:
         opts.extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
