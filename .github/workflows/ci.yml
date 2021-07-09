@@ -39,8 +39,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_SERVICE_NAME: github
-      - name: Test PIPE
-        run: echo -e "foo\n" > a.md && md2po ./a.md
 
   build-sdist:
     if: startsWith(github.ref, 'refs/tags/')
