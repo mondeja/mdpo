@@ -36,7 +36,7 @@ def _block_msg(block, details):
     return block.name
 
 
-def debug_events(program, command=True):
+def debug_events(program):
     """Debugging events for interfaces. Displays in STDOUT all event targets.
 
     Args:
@@ -93,15 +93,13 @@ def debug_events(program, command=True):
             msg += f' - title=\'{title}\''
         debug('link_reference', msg)
 
-    response = {
+    return {
         'msgid': print_msgid,
         'enter_block': print_enter_block,
         'leave_block': print_leave_block,
         'enter_span': print_enter_span,
         'leave_span': print_leave_span,
         'text': print_text,
+        'command': print_command,
         'link_reference': print_link_reference,
     }
-    if command:
-        response['command'] = print_command
-    return response

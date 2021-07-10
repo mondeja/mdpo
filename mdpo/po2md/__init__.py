@@ -118,8 +118,7 @@ class Po2Md:
                     [functions] if callable(functions) else functions
                 )
         if kwargs.get('debug'):
-            dbg_events = debug_events('po2md', command=False)
-            for event_name, function in dbg_events.items():
+            for event_name, function in debug_events('po2md').items():
                 if event_name not in self.events:
                     self.events[event_name] = []
                 self.events[event_name].append(function)
@@ -243,29 +242,44 @@ class Po2Md:
 
         self._current_wikilink_target = None
 
+    def command(self, mdpo_command, comment, original_command):
+        # raise 'command' event
+        if raise_skip_event(
+            self.events,
+            'command',
+            self,
+            mdpo_command,
+            comment,
+            original_command,
+        ):
+            return
+
+        if mdpo_command == 'mdpo-disable-next-line':
+            self._disable_next_line = True
+        elif mdpo_command == 'mdpo-disable':
+            self._disable = True
+        elif mdpo_command == 'mdpo-enable':
+            self._disable = False
+        elif mdpo_command == 'mdpo-enable-next-line':
+            self._enable_next_line = True
+        elif comment:
+            if mdpo_command == 'mdpo-context':
+                self._current_msgctxt = comment.rstrip()
+            elif mdpo_command == 'mdpo-translator':
+                self._current_tcomment = comment.rstrip()
+
     def _process_command(self, text):
-        command, comment = parse_mdpo_html_command(text)
-        if command is None:
+        original_command, comment = parse_mdpo_html_command(text)
+        if original_command is None:
             return
 
         try:
-            command = self.command_aliases[command]
+            command = self.command_aliases[original_command]
         except KeyError:  # not custom command
-            pass
+            command = original_command
 
-        if command == 'mdpo-disable-next-line':
-            self._disable_next_line = True
-        elif command == 'mdpo-disable':
-            self._disable = True
-        elif command == 'mdpo-enable':
-            self._disable = False
-        elif command == 'mdpo-enable-next-line':
-            self._enable_next_line = True
-        elif comment:
-            if command == 'mdpo-context':
-                self._current_msgctxt = comment.rstrip()
-            elif command == 'mdpo-translator':
-                self._current_tcomment = comment.rstrip()
+        # process solved command
+        self.command(command, comment, original_command)
 
     def _escape_translation(self, text):
         # escape '"' characters inside links and image titles
@@ -913,6 +927,8 @@ def pofile_to_markdown(
               a Markdown span ends.
             * ``text(self, block, text)``: Executed when the parsing of text
               starts.
+            * ``command(self, mdpo_command, comment, original command)``:
+              Executed when a mdpo HTML command is found.
             * ``msgid(self, msgid, msgstr, msgctxt, tcomment, flags)``:
               Executed when a msgid is going to be replaced.
             * ``link_reference(self, target, href, title)``: Executed when each
