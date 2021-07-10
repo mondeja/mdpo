@@ -36,7 +36,7 @@ def _block_msg(block, details):
     return block.name
 
 
-def debug_events(program):
+def debug_events(program):  # pragma: no cover
     """Debugging events for interfaces. Displays in STDOUT all event targets.
 
     Args:
