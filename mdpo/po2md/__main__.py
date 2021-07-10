@@ -70,6 +70,11 @@ def build_parser():
              ' charset=<ENCODING>\\n\'.',
         metavar='<ENCODING>',
     )
+    parser.add_argument(
+        '-D', '--debug', dest='debug', action='store_true',
+        help='Print useful messages in the parsing process showing the'
+             ' contents of all Markdown elements.',
+    )
     add_common_cli_latest_arguments(parser)
     return parser
 
@@ -110,6 +115,7 @@ def run(args=[]):
         po_encoding=opts.po_encoding,
         command_aliases=opts.command_aliases,
         wrapwidth=opts.wrapwidth,
+        debug=opts.debug,
     )
 
     if not opts.quiet and not opts.save:

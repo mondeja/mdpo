@@ -527,8 +527,6 @@ class Md2Po:
         self.command(command, comment, original_command)
 
     def enter_block(self, block, details):
-        # print("ENTER BLOCK:", block.name)
-
         # raise 'enter_block' event
         if raise_skip_event(self.events, 'enter_block', self, block, details):
             return
@@ -612,8 +610,6 @@ class Md2Po:
                 self._current_top_level_block_type = md4c.BlockType.TABLE.value
 
     def leave_block(self, block, details):
-        # print("LEAVE BLOCK:", block.name)
-
         # raise 'leave_block' event
         if raise_skip_event(self.events, 'leave_block', self, block, details):
             return
@@ -643,8 +639,6 @@ class Md2Po:
             self._save_current_msgid()
 
     def enter_span(self, span, details):
-        # print("ENTER SPAN:", span.name, details)
-
         # raise 'enter_span' event
         if raise_skip_event(self.events, 'enter_span', self, span, details):
             return
@@ -702,8 +696,6 @@ class Md2Po:
                 self._save_msgid(details['title'][0][1])
 
     def leave_span(self, span, details):
-        # print("LEAVE SPAN:", span.name, details)
-
         # raise 'leave_span' event
         if raise_skip_event(self.events, 'leave_span', self, span, details):
             return
@@ -753,8 +745,6 @@ class Md2Po:
                 self._inside_uspan = False
 
     def text(self, block, text):
-        # print(f"TEXT: '{text}'")
-
         # raise 'text' event
         if raise_skip_event(self.events, 'text', self, block, text):
             return

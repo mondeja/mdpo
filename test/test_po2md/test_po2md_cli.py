@@ -1,5 +1,8 @@
+"""Tests for po2md command line interface."""
+
 import io
 import os
+import re
 import tempfile
 from uuid import uuid4
 
@@ -49,6 +52,39 @@ def test_quiet(capsys, arg, tmp_file):
         assert exitcode == 0
         assert output == EXAMPLE['markdown-output']
         assert out == ''
+
+
+@pytest.mark.parametrize('arg', ['-D', '--debug'])
+def test_debug(capsys, arg, tmp_file):
+    with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath, \
+            tmp_file(EXAMPLE['markdown-input'], '.md') as input_md_filepath:
+
+        output, exitcode = run([input_md_filepath, '-p', po_filepath, arg])
+        out, err = capsys.readouterr()
+
+        assert exitcode == 0
+        assert output == EXAMPLE['markdown-output']
+
+        md_output_checked = False
+
+        outlines = out.splitlines()
+        for i, line in enumerate(outlines):
+            assert re.match(
+                (
+                    r'^po2md\[DEBUG\]::\d{4,}-\d\d-\d\d\s\d\d:\d\d:\d\d::'
+                    r'(text|link_reference|msgid|enter_block|'
+                    r'leave_block|enter_span|leave_span)::'
+                ),
+                line,
+            )
+            if line.endswith('leave_block:: DOC'):
+                assert (
+                    '\n'.join(outlines[i + 1:]) == EXAMPLE['markdown-output']
+                )
+                md_output_checked = True
+                break
+
+        assert md_output_checked
 
 
 @pytest.mark.parametrize('arg', ['-s', '--save'])

@@ -10,6 +10,7 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
+from mdpo.event import debug_events, raise_skip_event
 from mdpo.io import to_file_content_if_is_file
 from mdpo.md import (
     escape_links_titles,
@@ -116,6 +117,12 @@ class Po2Md:
                 self.events[event_name] = (
                     [functions] if callable(functions) else functions
                 )
+        if kwargs.get('debug'):
+            dbg_events = debug_events('po2md', command=False)
+            for event_name, function in dbg_events.items():
+                if event_name not in self.events:
+                    self.events[event_name] = []
+                self.events[event_name].append(function)
 
         self._current_msgid = ''
         self._current_msgctxt = None
@@ -294,6 +301,19 @@ class Po2Md:
             return msgstr or msgid
 
     def _save_current_msgid(self):
+        # raise 'msgid' event
+        if raise_skip_event(
+            self.events,
+            'msgid',
+            self,
+            self._current_msgid,
+            None,
+            self._current_msgctxt,
+            self._current_tcomment,
+            [],
+        ):
+            return
+
         if (not self._disable and not self._disable_next_line) or \
                 self._enable_next_line:
             translation = self._translate_msgid(
@@ -379,7 +399,9 @@ class Po2Md:
         self._current_line = ''
 
     def enter_block(self, block, details):
-        # print('ENTER BLOCK', block.name, details)
+        # raise 'enter_block' event
+        if raise_skip_event(self.events, 'enter_block', self, block, details):
+            return
 
         if self._inside_quoteblock and (
                 not self._current_line or self._current_line[0] != '>'
@@ -479,7 +501,9 @@ class Po2Md:
             self._inside_htmlblock = True
 
     def leave_block(self, block, details):
-        # print('LEAVE BLOCK', block.name, details)
+        # raise 'leave_block' event
+        if raise_skip_event(self.events, 'leave_block', self, block, details):
+            return
 
         if block is md4c.BlockType.P:
             self._save_current_msgid()
@@ -612,7 +636,9 @@ class Po2Md:
             self._inside_htmlblock = False
 
     def enter_span(self, span, details):
-        # print("ENTER SPAN", span.name, details)
+        # raise 'enter_span' event
+        if raise_skip_event(self.events, 'enter_span', self, span, details):
+            return
 
         try:
             self._current_msgid += self._enterspan_replacer[span.value]
@@ -656,7 +682,9 @@ class Po2Md:
             self._current_wikilink_target = details['target'][0][1]
 
     def leave_span(self, span, details):
-        # print("LEAVE SPAN", span.name, details)
+        # raise 'leave_span' event
+        if raise_skip_event(self.events, 'leave_span', self, span, details):
+            return
 
         if span is md4c.SpanType.WIKILINK:
             self._current_msgid += polib.escape(self._current_wikilink_target)
@@ -700,7 +728,9 @@ class Po2Md:
             self._current_imgspan = {}
 
     def text(self, block, text):
-        # print("TEXT", "'%s'" % text)
+        # raise 'text' event
+        if raise_skip_event(self.events, 'text', self, block, text):
+            return
 
         if not self._inside_htmlblock:
             if not self._inside_codeblock:
@@ -835,6 +865,7 @@ def pofile_to_markdown(
     command_aliases={},
     wrapwidth=80,
     events={},
+    debug=False,
     **kwargs,
 ):
     r"""Translate Markdown content or a file using PO files for message replacing.
@@ -872,9 +903,23 @@ def pofile_to_markdown(
             of the translation process is skipped by po2md. The available
             events are:
 
+            * ``enter_block(self, block, details)``: Executed when the parsing
+              a Markdown block starts.
+            * ``leave_block(self, block, details)``: Executed when the parsing
+              a Markdown block ends.
+            * ``enter_span(self, span, details)``: Executed when the parsing of
+              a Markdown span starts.
+            * ``leave_span(self, span, details)``: Executed when the parsing of
+              a Markdown span ends.
+            * ``text(self, block, text)``: Executed when the parsing of text
+              starts.
+            * ``msgid(self, msgid, msgstr, msgctxt, tcomment, flags)``:
+              Executed when a msgid is going to be replaced.
             * ``link_reference(self, target, href, title)``: Executed when each
               reference link is being written in the output (at the end of the
               translation process).
+        debug (bool): Add events displaying all parsed elements in the
+            translation process.
 
     Returns:
         str: Markdown output file with translated content.
@@ -886,6 +931,7 @@ def pofile_to_markdown(
         command_aliases=command_aliases,
         wrapwidth=wrapwidth,
         events=events,
+        debug=debug,
         **kwargs,
     ).translate(
         filepath_or_content,
