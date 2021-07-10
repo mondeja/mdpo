@@ -1,5 +1,8 @@
+"""Tests for md2po command line interface."""
+
 import io
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -33,7 +36,7 @@ def test_stdin(striplastline, capsys, monkeypatch):
     assert striplastline(out) == EXAMPLE['output']
 
 
-def test_stdin_no_atty(striplastline, tmp_file):
+def test_stdin_subprocess_input(striplastline, tmp_file):
     proc = subprocess.run(
         'md2po',
         universal_newlines=True,
@@ -79,6 +82,34 @@ def test_quiet(capsys, arg):
     assert exitcode == 0
     assert pofile.__unicode__() == EXAMPLE['output']
     assert out == ''
+
+
+@pytest.mark.parametrize('arg', ['-D', '--debug'])
+def test_debug(capsys, arg):
+    pofile, exitcode = run([EXAMPLE['input'], arg])
+    out, err = capsys.readouterr()
+
+    assert exitcode == 0
+    assert pofile.__unicode__() == EXAMPLE['output']
+
+    po_output_checked = False
+
+    outlines = out.splitlines()
+    for i, line in enumerate(outlines):
+        assert re.match(
+            (
+                r'^md2po\[DEBUG\]::\d{4,}-\d\d-\d\d\s\d\d:\d\d:\d\d::'
+                r'(text|link_reference|msgid|command|enter_block|'
+                r'leave_block|enter_span|leave_span)::'
+            ),
+            line,
+        )
+        if line.endswith('msgid=\'\''):
+            assert '\n'.join(outlines[i + 1:]) == EXAMPLE['output']
+            po_output_checked = True
+            break
+
+    assert po_output_checked
 
 
 @pytest.mark.parametrize('arg', ['-po', '--po-filepath', '--pofilepath'])

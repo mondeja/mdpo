@@ -146,6 +146,11 @@ def build_parser():
              ' \'-d "Content-Type: text/plain; charset=utf-8"'
              ' -d "Language: es"\'.',
     )
+    parser.add_argument(
+        '-D', '--debug', dest='debug', action='store_true',
+        help='Print useful messages in the parsing process showing the'
+             ' contents of all Markdown elements.',
+    )
     add_common_cli_latest_arguments(parser)
     return parser
 
@@ -207,6 +212,7 @@ def run(args=[]):
             ignore_msgids=opts.ignore_msgids,
             command_aliases=opts.command_aliases,
             metadata=opts.metadata,
+            debug=opts.debug,
         )
         if isinstance(opts.wrapwidth, int):
             kwargs['wrapwidth'] = opts.wrapwidth

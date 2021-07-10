@@ -9,7 +9,7 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
-from mdpo.event import raise_skip_event
+from mdpo.event import debug_events, raise_skip_event
 from mdpo.io import filter_paths, to_glob_or_content
 from mdpo.md import parse_link_references
 from mdpo.md4c import (
@@ -151,6 +151,11 @@ class Md2Po:
                 self.events[event_name] = (
                     [functions] if callable(functions) else functions
                 )
+        if kwargs.get('debug'):
+            for event_name, function in debug_events('md2po').items():
+                if event_name not in self.events:
+                    self.events[event_name] = []
+                self.events[event_name].append(function)
 
         self.plaintext = kwargs.get('plaintext', False)
 
@@ -935,6 +940,7 @@ def markdown_to_pofile(
     command_aliases={},
     metadata={},
     events={},
+    debug=False,
     **kwargs,
 ):
     """Extracts all the msgids from a string of Markdown content or a group of
@@ -1034,6 +1040,8 @@ def markdown_to_pofile(
                def msgid_event(self, msgid, *args):
                    if msgid == 'foo':
                        self._disable_next_line = True
+        debug (bool): Add events displaying all parsed elements in the
+            extraction process.
 
     Examples:
         >>> content = 'Some text with `inline code`'
@@ -1069,6 +1077,7 @@ def markdown_to_pofile(
         command_aliases=command_aliases,
         metadata=metadata,
         events=events,
+        debug=debug,
         **kwargs,
     ).extract(
         po_filepath=po_filepath,
