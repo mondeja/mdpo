@@ -13,6 +13,7 @@ Markdown files translation using pofiles. Fully complies with
    before-using
    tutorial
    commands
+   related-utilities
 
 .. toctree::
    :maxdepth: 2
