@@ -414,7 +414,12 @@ class Po2Md:
 
     def enter_block(self, block, details):
         # raise 'enter_block' event
-        if raise_skip_event(self.events, 'enter_block', self, block, details):
+        if raise_skip_event(  # pragma: no cover
+            self.events,
+            'enter_block',
+            self, block,
+            details,
+        ):
             return
 
         if self._inside_quoteblock and (
@@ -516,7 +521,13 @@ class Po2Md:
 
     def leave_block(self, block, details):
         # raise 'leave_block' event
-        if raise_skip_event(self.events, 'leave_block', self, block, details):
+        if raise_skip_event(  # pragma: no cover
+            self.events,
+            'leave_block',
+            self,
+            block,
+            details,
+        ):
             return
 
         if block is md4c.BlockType.P:
@@ -651,7 +662,13 @@ class Po2Md:
 
     def enter_span(self, span, details):
         # raise 'enter_span' event
-        if raise_skip_event(self.events, 'enter_span', self, span, details):
+        if raise_skip_event(  # pragma: no cover
+            self.events,
+            'enter_span',
+            self,
+            span,
+            details,
+        ):
             return
 
         try:
@@ -697,7 +714,13 @@ class Po2Md:
 
     def leave_span(self, span, details):
         # raise 'leave_span' event
-        if raise_skip_event(self.events, 'leave_span', self, span, details):
+        if raise_skip_event(  # pragma: no cover
+            self.events,
+            'leave_span',
+            self,
+            span,
+            details,
+        ):
             return
 
         if span is md4c.SpanType.WIKILINK:
@@ -743,7 +766,13 @@ class Po2Md:
 
     def text(self, block, text):
         # raise 'text' event
-        if raise_skip_event(self.events, 'text', self, block, text):
+        if raise_skip_event(  # pragma: no cover
+            self.events,
+            'text',
+            self,
+            block,
+            text,
+        ):
             return
 
         if not self._inside_htmlblock:
