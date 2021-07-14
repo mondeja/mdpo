@@ -2,8 +2,8 @@
 Related utilities
 *****************
 
-``mkdocs-mdpo-plugin``
-======================
+mkdocs-mdpo-plugin
+==================
 
 If you are using `Mkdocs`_ you can use the plugin `mkdocs-mdpo-plugin`_ to
 create a documentation translated by PO files using ``mdpo``.
@@ -18,12 +18,11 @@ create a documentation translated by PO files using ``mdpo``.
 
    <hr>
 
-``pre-commit-po-hooks``
-=======================
+pre-commit-po-hooks
+===================
 
 You can use `some of these hooks`_ with `pre-commit`_ in the translation
 process to check the content of the PO files.
-
 
 .. raw:: html
 

@@ -161,7 +161,8 @@ def wrap_different_first_line_width(
             width=width,
             **kwargs,
         )
-        li_subsequent_lines[0] = li_subsequent_lines[0].lstrip()
+        if li_subsequent_lines:
+            li_subsequent_lines[0] = li_subsequent_lines[0].lstrip()
         return [
             li_first_line,
             *li_subsequent_lines,
