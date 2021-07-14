@@ -373,6 +373,7 @@ class Po2Md:
                     width=self.wrapwidth,
                     first_line_width_diff=first_line_width_diff,
                     break_long_words=False,
+                    break_on_hyphens=False,
                 )
             translation = '\n'.join(lines)
         elif self._inside_pblock:
@@ -385,12 +386,14 @@ class Po2Md:
                 lines = fixwrap_codespans(
                     translation.split('\n'),
                     width=self.wrapwidth,
+                    first_line_width=self.wrapwidth,
                 )
             else:
                 lines = textwrap.wrap(
                     translation,
                     width=self.wrapwidth,
                     break_long_words=False,
+                    break_on_hyphens=False,
                 )
             translation = '\n'.join(lines) + '\n'
         self._current_line += translation

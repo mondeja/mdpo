@@ -16,3 +16,10 @@ msgstr "Un elemento de lista que debe envolverse ignorando el ancho de la marca"
 
 msgid "Another list item that should wrap ignoring the mark width"
 msgstr "Otro elemento de lista que debe envolverse ignorando el ancho de la marca"
+
+msgid ""
+"[Can I run multiple instances of MyApp on the same host machine?](#can-i-"
+"run-multiple-instances-of-myapp-on-the-same-host-machine)"
+msgstr ""
+"[¿Puedo ejecutar múltiples instancias de MyApp en la misma máquina del host?]("
+"#puedo-ejecutar-multiples-instancias-de-myapp-en-la-misma-maquina-de-host)"

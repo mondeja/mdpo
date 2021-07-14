@@ -196,16 +196,22 @@ def fixwrap_codespans(
 
         return n
 
+    # Response
     response = []
     _width = first_line_width
 
+    # State
     _curr_line = ''
 
-    _entering_codespan, _exiting_codespan, _inside_codespan = (
-        False, False, False,
-    )
-    _codespan_n_backticks_wrapper, _n_backticks_to_exit_codespan = (0, None)
+    _entering_codespan = False
+    _exiting_codespan = False
+    _inside_codespan = False
+
+    _codespan_n_backticks_wrapper = 0
+    _n_backticks_to_exit_codespan = None
+
     prev_char = None
+
     for li, line in enumerate(lines):
         for ci, ch in enumerate(line):
             if not _inside_codespan:
