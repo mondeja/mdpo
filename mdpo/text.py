@@ -156,13 +156,25 @@ def wrap_different_first_line_width(
             placeholder='?',
             **kwargs,
         )[0]
+        if len(li_first_line) > width:
+            kwargs["break_long_words"] = True
+            li_first_line = textwrap.wrap(
+            text,
+            width=width + first_line_width_diff,
+            max_lines=4,
+            placeholder='?',
+            **kwargs,
+        )[0]
         li_subsequent_lines = textwrap.wrap(
             text[len(li_first_line):],
             width=width,
             **kwargs,
         )
-        if li_subsequent_lines:
-            li_subsequent_lines[0] = li_subsequent_lines[0].lstrip()
+        li_subsequent_lines[0] = li_subsequent_lines[0].lstrip()
+        return [
+            li_first_line,
+            *li_subsequent_lines,
+        ]
         return [
             li_first_line,
             *li_subsequent_lines,
