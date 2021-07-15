@@ -6,6 +6,7 @@ import re
 import subprocess
 import sys
 import tempfile
+from uuid import uuid4
 
 import pytest
 
@@ -180,6 +181,32 @@ msgstr ""
 
         with open(pofile_path) as f:
             assert f.read() == expected_output
+
+    assert exitcode == 0
+    assert pofile.__unicode__() == expected_output
+    assert striplastline(out) == expected_output
+
+    # new PO file creation
+    pofile_path = os.path.join(tempfile.gettempdir(), uuid4().hex[:8])
+    pofile, exitcode = run([
+        '# Bar\n',
+        arg,
+        '-po',
+        pofile_path,
+        '-m',
+        '--no-location',
+    ])
+    out, err = capsys.readouterr()
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "Bar"
+msgstr ""
+'''
+    with open(pofile_path) as f:
+        assert f.read() == expected_output
 
     assert exitcode == 0
     assert pofile.__unicode__() == expected_output

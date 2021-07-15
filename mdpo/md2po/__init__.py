@@ -902,8 +902,8 @@ class Md2Po:
         if self.metadata:
             self.pofile.metadata.update(self.metadata)
 
-        if save and self.po_filepath:
-            self.pofile.save(fpath=self.po_filepath)
+        if save and po_filepath:
+            self.pofile.save(fpath=po_filepath)
         if mo_filepath:
             self.pofile.save_as_mofile(mo_filepath)
         return self.pofile
