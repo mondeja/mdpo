@@ -13,6 +13,7 @@ from mdpo.command import (
 from mdpo.event import debug_events, raise_skip_event
 from mdpo.io import to_file_content_if_is_file
 from mdpo.md import (
+    MarkdownWrapper,
     escape_links_titles,
     fixwrap_codespans,
     inline_untexted_links,
@@ -32,7 +33,7 @@ from mdpo.text import (
 
 
 class Po2Md:
-    __slots__ = (
+    __slots__ = {
         'pofiles',
         'output',
         'content',
@@ -82,6 +83,7 @@ class Po2Md:
         '_inside_liblock',
         '_inside_liblock_first_p',
         '_inside_codespan',
+        '_inside_hblock',
         '_codespan_start_index',
         '_codespan_backticks',
         '_codespan_inside_current_msgid',
@@ -97,7 +99,7 @@ class Po2Md:
         '_current_list_type',
         '_current_wikilink_target',
         '_link_references',
-    )
+    }
 
     def __init__(self, pofiles, ignore=[], po_encoding=None, **kwargs):
         self.pofiles = paths_or_globs_to_unique_pofiles(
@@ -190,10 +192,19 @@ class Po2Md:
             md4c.SpanType.CODE.value: self.code_end_string,
             md4c.SpanType.A.value: self.link_end_string,
         }
+        
+        self.wikilink_start_string = '[['
+        self.wikilink_end_string = ']]'
 
         if 'wikilinks' in self.extensions:
-            self.wikilink_start_string = kwargs.get('link_end_string', '[[')
-            self.wikilink_end_string = kwargs.get('link_end_string', ']]')
+            self.wikilink_start_string = kwargs.get(
+                'link_end_string',
+                self.wikilink_start_string,
+            )
+            self.wikilink_end_string = kwargs.get(
+                'link_end_string',
+                self.wikilink_end_string,
+            )
 
             self._enterspan_replacer[md4c.SpanType.WIKILINK.value] = \
                 self.wikilink_start_string
@@ -203,7 +214,7 @@ class Po2Md:
         self._inside_htmlblock = False
         self._inside_codeblock = False
         self._inside_indented_codeblock = False
-
+        self._inside_hblock = False
         self._inside_pblock = False
         self._inside_liblock = False
         # first li block paragraph (li block "title")
@@ -345,22 +356,35 @@ class Po2Md:
                     tcomment=self._current_tcomment,
                 ),
             )
-
-        if not self._inside_codeblock:
-            translation = self._escape_translation(translation)
-        elif self._inside_indented_codeblock:
-            # add 4 spaces before each line including next indented block code
+        if self._inside_indented_codeblock:
             translation = '    %s' % re.sub('\n', '\n    ', translation)
+        else:
+            if not self._inside_codeblock:
+                translation = self._escape_translation(translation)
+            
+            first_line_width_diff = 0
+            if self._inside_liblock or self._inside_quoteblock:
+                first_line_width_diff = -2
+                if self._inside_liblock:
+                    if self._current_list_type[-1][0] == 'ul':
+                        if self._current_list_type[-1][-1][-1] is True:
+                            first_line_width_diff = -6
+                    else:
+                        first_line_width_diff = -3
 
-        if self._inside_liblock or self._inside_quoteblock:
-            first_line_width_diff = -2
-            if self._inside_liblock:
-                if self._current_list_type[-1][0] == 'ul':
-                    if self._current_list_type[-1][-1][-1] is True:
-                        first_line_width_diff = -6
-                else:
-                    first_line_width_diff = -3
+            if not self._inside_codeblock:
+                translation = MarkdownWrapper(
+                    width=self.wrapwidth,
+                    first_line_width=self.wrapwidth + first_line_width_diff,
+                    code_start_string=self.code_start_string,
+                    code_end_string=self.code_end_string,
+                    md4c_extensions=self.extensions,
+                ).wrap(translation)
+            
+            if self._inside_hblock:
+                translation = translation[:-1]
 
+        """
             if self._codespan_inside_current_msgid:
                 lines = fixwrap_codespans(
                     translation.split('\n'),
@@ -396,6 +420,7 @@ class Po2Md:
                     break_on_hyphens=False,
                 )
             translation = '\n'.join(lines) + '\n'
+        """
         self._current_line += translation
 
         self._current_msgid = ''
@@ -454,6 +479,7 @@ class Po2Md:
             if self._current_line:
                 self._save_current_line()
         elif block is md4c.BlockType.H:
+            self._inside_hblock = True
             self._current_line += '%s ' % ('#' * details['level'])
         elif block is md4c.BlockType.LI:
             if self._current_list_type[-1][0] == 'ol':
@@ -567,9 +593,9 @@ class Po2Md:
             indent = ''
             if self._inside_liblock:
                 indent += '   ' * len(self._current_list_type)
+            self._current_line = self._current_line.rstrip("\n")
+            self._save_current_line()
             if not self._inside_indented_codeblock:
-                if self._inside_liblock:
-                    self._save_current_line()
                 self._current_line += '{}{}'.format(
                     indent,
                     details['fence_char']*3,
@@ -582,6 +608,7 @@ class Po2Md:
                     self._save_current_line()
             self._inside_indented_codeblock = False
         elif block is md4c.BlockType.H:
+
             self._save_current_msgid()
             if not self._inside_quoteblock:
                 self._current_line += '\n'
@@ -590,6 +617,7 @@ class Po2Md:
             self._save_current_line()
             if self._inside_quoteblock:
                 self._current_line += '> '
+            self._inside_hblock = False
         elif block is md4c.BlockType.LI:
             self._save_current_msgid()
             self._inside_liblock = False

@@ -26,7 +26,7 @@ from mdpo.text import min_not_max_chars_in_a_row
 
 
 class Md2Po:
-    __slots__ = (
+    __slots__ = {
         'filepaths',
         'content',
         'pofile',
@@ -104,7 +104,7 @@ class Md2Po:
         '_current_imgspan',
         '_uls_deep',
         '_link_references',
-    )
+    }
 
     def __init__(self, glob_or_content, **kwargs):
         is_glob, glob_or_content = to_glob_or_content(glob_or_content)

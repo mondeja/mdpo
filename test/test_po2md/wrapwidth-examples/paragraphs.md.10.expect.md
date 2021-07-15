@@ -26,7 +26,8 @@ largo
 enlace
 cuyo
 objetivo
-no debería
+no
+debería
 ser
 envuelto
 en

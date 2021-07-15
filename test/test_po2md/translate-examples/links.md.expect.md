@@ -8,8 +8,7 @@ Visita <https://www.github.com/mondeja/mdpo>
 Escribe un correo electrónico a [fake@example.com](mailto:fake@example.com) si
 quieres ayuda.
 
-Un
-[enlace](https://tan-tan-tan-tan-tan-tan-tan-tan-largo-que-no-debe-ser-envuelto-en-multiples.lineas).
+Un [enlace](https://tan-tan-tan-tan-tan-tan-tan-tan-largo-que-no-debe-ser-envuelto-en-multiples.lineas).
 
 [Referencia A][1]
 

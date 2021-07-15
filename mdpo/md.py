@@ -2,6 +2,10 @@
 
 import re
 
+import md4c
+
+from mdpo.text import min_not_max_chars_in_a_row
+
 
 LINK_REFERENCE_RE = re.compile(
     r'^\s{0,3}\[([^\]]+)\]:\s+<?([^\s>]+)>?\s*["\'\(]?([^"\'\)]+)?',
@@ -132,6 +136,181 @@ def parse_link_references(content):
     return response
 
 
+class MarkdownWrapper:
+    __slots__ = {
+        # arguments
+        'width',
+        'first_line_width',
+        'md4c_extensions',
+
+        'bold_start_string',
+        'bold_end_string',
+        'italic_start_string',
+        'italic_end_string',
+        'code_start_string',
+        'code_end_string',
+        'link_start_string',
+        'link_end_string',
+        'wikilink_start_string',
+        'wikilink_end_string',
+
+        # state
+        'output',
+        '_current_line',
+        '_inside_aspan',
+        '_inside_codespan',
+        '_current_wikilink_target',
+    }
+    
+    def __init__(
+        self,
+        width=80,
+        first_line_width=80,
+        md4c_extensions={},
+        **kwargs,
+    ):
+        self.width = width
+        self.first_line_width = first_line_width
+        self.md4c_extensions = md4c_extensions
+        
+        self.output = ''
+        self._current_line = ''
+        
+        self.bold_start_string = kwargs.get('bold_start_string', '**')
+        self.bold_end_string = kwargs.get('bold_end_string', '**')
+        self.italic_start_string = kwargs.get('italic_start_string', '*')
+        self.italic_end_string = kwargs.get('italic_end_string', '*')
+        self.code_start_string = kwargs.get('code_start_string', '`')[0]
+        self.code_end_string = kwargs.get('code_end_string', '`')[0]
+        self.link_start_string = kwargs.get('link_start_string', '[')
+        self.link_end_string = kwargs.get('link_end_string', ']')
+        self.wikilink_start_string = kwargs.get('wikilink_start_string', '[[')
+        self.wikilink_end_string = kwargs.get('wikilink_end_string', ']]')
+
+        self._inside_aspan = False
+        self._inside_codespan = False
+        self._current_wikilink_target = None
+    
+    def _get_currently_applied_width(self):
+        if not self.output:
+            return self.first_line_width
+        return self.width
+    
+    def enter_block(self, block, details):
+        pass
+    
+    def leave_block(self, block, details):
+        pass
+    
+    def enter_span(self, span, details):        
+        if span is md4c.SpanType.CODE:
+            self._inside_codespan = True
+            self._current_line += self.code_start_string
+        elif span is md4c.SpanType.A:
+            self._inside_aspan = True
+            self._current_line += self.link_start_string
+        elif span is md4c.SpanType.STRONG:
+            self._current_line += self.bold_start_string
+        elif span is md4c.SpanType.EM:
+            self._current_line += self.italic_start_string
+        elif span is md4c.SpanType.WIKILINK:
+            self._current_line += self.wikilink_start_string
+            self._current_wikilink_target = details['target'][0][1]
+
+    def leave_span(self, span, details):
+        if span is md4c.SpanType.CODE:
+            self._inside_codespan = False
+            self._current_line += self.code_end_string
+        elif span is md4c.SpanType.A:
+            self._inside_aspan = False
+            href = details['href'][0][1]
+            self._current_line += f'{self.link_end_string}({href}'
+            
+            self._current_line += ')'
+        elif span is md4c.SpanType.STRONG:
+            self._current_line += self.bold_end_string
+        elif span is md4c.SpanType.EM:
+            self._current_line += self.italic_end_string
+        elif span is md4c.SpanType.WIKILINK:
+            self._current_line += self.wikilink_end_string
+            self._current_wikilink_target = None
+    
+    def text(self, block, text):
+        # print(f"TEXT: '{text}'")
+        
+        if self._inside_codespan:
+            width = self._get_currently_applied_width()
+
+            if len(self._current_line) + len(text) + 1 > width:
+                self._current_line = self._current_line.rstrip('`').rstrip(' ')
+                self.output += f'{self._current_line}\n'
+                self._current_line = '`'
+
+            n_backticks = min_not_max_chars_in_a_row(
+                self.code_start_string[0],
+                text,
+            ) - 1
+            if n_backticks:
+                self._current_line += n_backticks * '`'
+
+            self._current_line += f'{text}{n_backticks * "`"}'
+        else:
+            if self._current_wikilink_target:
+                if text != self._current_wikilink_target:
+                    self._current_line += (
+                        f'{self._current_wikilink_target}|{text}'
+                    )
+                else:
+                    self._current_line += text
+                return
+            
+            text_splits = text.split(' ')
+            width = self._get_currently_applied_width()
+            if self._inside_aspan:  # links wrapping
+                if len(self._current_line) + len(text_splits[0]) + 1 > width:
+                    # new link text in newline
+                    self._current_line = self._current_line[:-1].rstrip(' ')
+                    self.output += f'{self._current_line}\n'
+                    self._current_line = '['
+                width *= .95        # latest word in newline
+            
+            for i, text_split in enumerate(text_splits):
+                # +1 is a space here
+                if len(self._current_line) + len(text_split) + 1 > width:
+                    if i or (self._current_line and self._current_line[-1] == ' '):
+                        self.output += f'{self._current_line}\n'
+                        self._current_line = ''
+                        width = self._get_currently_applied_width()
+                        if self._inside_aspan:
+                            width *= .95
+                    elif not self._inside_aspan and i and i + 1 <= len(text_splits):
+                        self._current_line += ' '
+                elif i:
+                    self._current_line += ' '
+                self._current_line += text_split
+    
+    def wrap(self, text):
+        """Wraps reasonably Markdown lines."""
+        parser = md4c.GenericParser(
+            0,
+            **{ext: True for ext in self.md4c_extensions},
+        )
+        parser.parse(
+            text,
+            self.enter_block,
+            self.leave_block,
+            self.enter_span,
+            self.leave_span,
+            self.text,
+        )
+        
+        if self._current_line:
+            self.output += f'{self._current_line}'
+        if self.first_line_width == self.width:  # is not blockquote nor list
+            self.output += '\n'
+        return self.output
+
+
 def fixwrap_codespans(
     lines,
     code_start_string='`',
@@ -139,7 +318,7 @@ def fixwrap_codespans(
     width=80,
     first_line_width=80,
 ):
-    """Wraps reasonably Markdown lines containing codespans.
+    """
 
     Given a set of lines wrapped by `:py:class:textwrap.TextWrapper`,
     unwraps reasonably all markdown codespans that are found inside the lines.

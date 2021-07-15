@@ -3,8 +3,7 @@
 1 texto
 roto
 - 34 6 8 0
-texto
-roto
+texto roto
 - Un
 elemento
 de lista
@@ -31,5 +30,4 @@ de MyApp
 en la
 misma
 máquina
-del
-host?](#puedo-ejecutar-multiples-instancias-de-myapp-en-la-misma-maquina-de-host)
+del host?](#puedo-ejecutar-multiples-instancias-de-myapp-en-la-misma-maquina-de-host)
