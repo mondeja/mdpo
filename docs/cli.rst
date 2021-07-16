@@ -60,6 +60,21 @@ The output produced by :ref:`po2md-cli` is compatible with the following
 
    <hr>
 
+.. _md2po2md-cli:
+
+md2po2md
+========
+
+.. sphinx_argparse_cli::
+   :module: mdpo.md2po2md.__main__
+   :func: build_parser
+   :prog: md2po2md
+   :title:
+
+.. raw:: html
+
+   <hr>
+
 .. _mdpo2html-cli:
 
 mdpo2html

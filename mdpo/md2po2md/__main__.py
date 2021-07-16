@@ -40,13 +40,13 @@ def build_parser():
     parser.add_argument(
         '-o', '--output', dest='output_paths_schema',
         required=True, type=str,
-        help='Path schema for outputs, built usingplaceholders. There is a'
+        help='Path schema for outputs, built using placeholders. There is a'
              ' mandatory placeholder for languages: \'{lang}\'; and two for'
              ' the output basename and extension: \'{basename}\' and'
              ' \'{ext}\'. For example, for the schema'
              ' \'locale/{lang}/{basename}.{ext}\', the languages \'es\' and'
              ' \'fr\' and a \'README.md\' as input, the next files will be'
-             ' written: \'locale/es/README.po\', \'locale/es/README.md\\,'
+             ' written: \'locale/es/README.po\', \'locale/es/README.md\','
              ' \'locale/fr/README.po\' and \'locale/fr/README.md\'.'
              ' You can also omit \'{basename}\' and \'{ext}\', specifying a'
              ' directory for each language with \'locale/{lang}\' for this'

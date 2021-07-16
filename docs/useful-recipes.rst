@@ -6,7 +6,7 @@ Simple README file translation
 ==============================
 
 This is the simplest way that I've found to translate the READMEs of my
-projects. Just execute the next command:
+projects. Just use :ref:`md2po2md CLI<md2po2md-cli>`:
 
 .. code-block:: bash
 
