@@ -42,8 +42,8 @@ def build_parser():
         '-o', '--output', dest='output_paths_schema',
         required=True, type=str,
         help='Path schema for outputs, built using placeholders. There is a'
-             ' mandatory placeholder for languages: \'{lang}\'; and two for'
-             ' the output basename and extension: \'{basename}\' and'
+             ' mandatory placeholder for languages: \'{lang}\'; and two'
+             ' optional for output basename and extension: \'{basename}\' and'
              ' \'{ext}\'. For example, for the schema'
              ' \'locale/{lang}/{basename}.{ext}\', the languages \'es\' and'
              ' \'fr\' and a \'README.md\' as input, the next files will be'

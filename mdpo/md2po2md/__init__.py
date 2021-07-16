@@ -26,7 +26,7 @@ def markdown_to_pofile_to_markdown(
         input_paths_glob (str): Glob covering Markdown files to translate.
         output_paths_schema (str): Path schema for outputs, built using
             placeholders. There is a mandatory placeholder for languages:
-            ``{lang}``; and two for the output basename and extension:
+            ``{lang}``; and two optional for output basename and extension:
             ``{basename}`` and ``{ext}``.
             For example, for the schema ``locale/{lang}/{basename}.{ext}``,
             the languages ``['es', 'fr']`` and a ``README.md`` as input,
