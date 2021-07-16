@@ -4,6 +4,7 @@ import argparse
 import sys
 
 from mdpo import __version__
+from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.text import parse_escaped_pairs
 
 
@@ -87,12 +88,13 @@ def parse_metadata_cli_arguments(metadata):
     )
 
 
-def add_common_cli_first_arguments(parser):
-    """Adds common mdpo arguments to an argument parser at the beginning.
+def add_common_cli_first_arguments(parser, quiet=True):
+    """Add common mdpo arguments to an argument parser at the beginning.
 
     Args:
         parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
             extend.
+        quiet (bool): Include the argument ``-q/--quiet``.
     """
     parser.add_argument(
         '-h', '--help', action='help',
@@ -104,14 +106,15 @@ def add_common_cli_first_arguments(parser):
         version=f'%(prog)s {__version__}',
         help='Show program version number and exit.',
     )
-    parser.add_argument(
-        '-q', '--quiet', action='store_true',
-        help='Do not print output to STDOUT.',
-    )
+    if quiet:
+        parser.add_argument(
+            '-q', '--quiet', action='store_true',
+            help='Do not print output to STDOUT.',
+        )
 
 
 def add_common_cli_latest_arguments(parser):
-    """Adds common mdpo arguments to an argument parser at the end.
+    """Add common mdpo arguments to an argument parser at the end.
 
     Args:
         parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
@@ -127,4 +130,38 @@ def add_common_cli_latest_arguments(parser):
              " to use '<!-- mdpo-on -->' instead of '<!-- mdpo-enable -->',"
              ' you can pass either \'--command-alias "mdpo-on:mdpo-enable"\''
              ' or \'--command-alias "mdpo-on:enable"\' arguments.',
+    )
+
+
+def add_extensions_argument(parser):
+    """Add the ``-x/--extension`` argument to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
+            extend.
+    """
+    parser.add_argument(
+        '-x', '--extension', '--ext', dest='extensions', action='append',
+        default=None,
+        help='md4c extension used to parse markdown content formatted as'
+             ' pymd4c extension keyword arguments. This argument can be passed'
+             ' multiple times. If is not passed, next extensions are used:'
+             f' {", ".join(DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS)}.'
+             ' You can see all available at'
+             ' https://github.com/dominickpastore/pymd4c#parser-option-flags',
+        metavar='EXTENSION',
+    )
+
+
+def add_debug_option(parser):
+    """Add the ``-D/--debug`` option to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
+            extend.
+    """
+    parser.add_argument(
+        '-D', '--debug', dest='debug', action='store_true',
+        help='Print useful messages in the parsing process showing the'
+             ' contents of all Markdown elements.',
     )
