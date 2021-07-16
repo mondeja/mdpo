@@ -378,16 +378,18 @@ class Po2Md:
                 translation = MarkdownSpanWrapper(
                     width=self.wrapwidth,
                     first_line_width=self.wrapwidth + first_line_width_diff,
-                    code_start_string=self.code_start_string,
-                    code_end_string=self.code_end_string,
                     indent=indent,
                     md4c_extensions=self.extensions,
+                    code_start_string=self.code_start_string,
+                    code_end_string=self.code_end_string,
                     italic_start_string_escaped=(
                         self.italic_start_string_escaped
                     ),
                     italic_end_string_escaped=self.italic_end_string_escaped,
                     code_start_string_escaped=self.code_start_string_escaped,
                     code_end_string_escaped=self.code_end_string_escaped,
+                    wikilink_start_string=self.wikilink_start_string,
+                    wikilink_end_string=self.wikilink_end_string,
                 ).wrap(self._escape_translation(translation))
 
                 if self._inside_hblock or self._inside_table:
@@ -580,7 +582,6 @@ class Po2Md:
                     self._save_current_line()
             self._inside_indented_codeblock = False
         elif block is md4c.BlockType.H:
-
             self._save_current_msgid()
             if not self._inside_quoteblock:
                 self._current_line += '\n'
