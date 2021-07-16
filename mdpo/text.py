@@ -1,7 +1,6 @@
 """Text utilities for mdpo."""
 
 import re
-import textwrap
 
 
 def max_char_in_a_row(char, text):
@@ -123,56 +122,6 @@ def parse_escaped_pairs(pairs, separator=':'):
             raise KeyError(key)
         response[key] = value
     return response
-
-
-def wrap_different_first_line_width(
-    text,
-    width=80,
-    first_line_width_diff=0,
-    **kwargs,
-):
-    """Wraps lines using a different width for first line.
-
-    Uses :py:func:`wrap.textwrap`, but the first line is wrapped with a
-    different width.
-
-    Args:
-        text (str): Text to wrap in lines.
-        width (int): Lines maximum width.
-        first_line_width_diff (int): Difference in width against the ``width``
-            parameter used for the first line.
-        **kwargs: Additional optional arguments passed to
-            :py:func:`wrap.textwrap` function.
-
-    Returns:
-        list: Wrapped lines.
-    """
-    if len(text) > width - first_line_width_diff:
-        # correct wrapping for list items
-        li_first_line = textwrap.wrap(
-            text,
-            width=width + first_line_width_diff,
-            max_lines=4,
-            placeholder='?',
-            **kwargs,
-        )[0]
-        li_subsequent_lines = textwrap.wrap(
-            text[len(li_first_line):],
-            width=width,
-            **kwargs,
-        )
-        if li_subsequent_lines:
-            li_subsequent_lines[0] = li_subsequent_lines[0].lstrip()
-        return [
-            li_first_line,
-            *li_subsequent_lines,
-        ]
-
-    return textwrap.wrap(
-        text,
-        width=width,
-        **kwargs,
-    )
 
 
 def removeprefix(text, prefix):

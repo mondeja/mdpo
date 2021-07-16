@@ -1,7 +1,6 @@
 Mi PEP favorito es [PEP 0](https://www.python.org/dev/peps/).
 
-Mi motor de búsqueda favorito es [Duck Duck Go](https://duckduckgo.com "El mejor
-motor de búsqueda para privacidad").
+Mi motor de búsqueda favorito es [Duck Duck Go](https://duckduckgo.com "El mejor motor de búsqueda para privacidad").
 
 Visita <https://www.github.com/mondeja/mdpo>
 
