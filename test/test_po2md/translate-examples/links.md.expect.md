@@ -1,15 +1,13 @@
 Mi PEP favorito es [PEP 0](https://www.python.org/dev/peps/).
 
-Mi motor de búsqueda favorito es [Duck Duck Go](https://duckduckgo.com "El mejor
-motor de búsqueda para privacidad").
+Mi motor de búsqueda favorito es [Duck Duck Go](https://duckduckgo.com "El mejor motor de búsqueda para privacidad").
 
 Visita <https://www.github.com/mondeja/mdpo>
 
 Escribe un correo electrónico a [fake@example.com](mailto:fake@example.com) si
 quieres ayuda.
 
-Un
-[enlace](https://tan-tan-tan-tan-tan-tan-tan-tan-largo-que-no-debe-ser-envuelto-en-multiples.lineas).
+Un [enlace](https://tan-tan-tan-tan-tan-tan-tan-tan-largo-que-no-debe-ser-envuelto-en-multiples.lineas).
 
 [Referencia A][1]
 
@@ -26,6 +24,8 @@ Un
 [Referencia G][7]
 
 [Referencia H][8]
+
+- [list item link name](https://example.com/a-big-link-with-a-very-very-long-and-big-url-name-on-it)
 
 [1]: https://github.com/mondeja/mdpo
 [2]: https://github.com/mondeja/mdpo "Segunda referencia"

@@ -3,5 +3,5 @@
 - [x] 7 9 1 3 5 texto roto
 - [ ] Un elemento de lista de tareas que debe envolverse ignorando el ancho del
 checkbox
-- [X] Otro elemento de lista de tareas que debe envolverse ignorando el ancho del
-checkbox
+- [X] Otro elemento de lista de tareas que debe envolverse ignorando el ancho
+del checkbox
