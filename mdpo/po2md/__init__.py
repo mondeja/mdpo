@@ -147,7 +147,7 @@ class Po2Md:
         self.wrapwidth = (
             # infinte gives some undesired rendering
             (
-                2 ** 32 if kwargs['wrapwidth'] in [math.inf, 0]
+                2 ** 24 if kwargs['wrapwidth'] in [math.inf, 0]
                 else parse_wrapwidth_argument(kwargs['wrapwidth'])
             ) if 'wrapwidth' in kwargs else 80
         )
