@@ -22,7 +22,7 @@ from mdpo.po import (
     po_escaped_string,
     remove_not_found_entries,
 )
-from mdpo.text import min_not_max_chars_in_a_row
+from mdpo.text import min_not_max_chars_in_a_row, parse_wrapwidth_argument
 
 
 class Md2Po:
@@ -34,7 +34,6 @@ class Md2Po:
         'msgstr',
         'found_entries',
         'disabled_entries',
-        'wrapwidth',
         'ignore_msgids',
         'command_aliases',
         'mark_not_found_as_obsolete',
@@ -125,7 +124,6 @@ class Md2Po:
         self._current_tcomment = None
         self._current_msgctxt = None
 
-        self.wrapwidth = kwargs.get('wrapwidth', 78)
         self.ignore_msgids = kwargs.get('ignore_msgids', [])
         self.command_aliases = normalize_mdpo_command_aliases(
             kwargs.get('command_aliases', {}),
@@ -829,12 +827,13 @@ class Md2Po:
         mo_filepath=None,
         po_encoding=None,
         md_encoding='utf-8',
+        wrapwidth=78,
     ):
         if not po_filepath:
             self.po_filepath = ''
 
             if save:
-                if os.environ.get('MD2PO_CLI') == 'true':
+                if os.environ.get('_MDPO_RUNNING') == 'true':
                     save_arg = '-s/--save'
                     po_filepath_arg = '-po/--po-filepath'
                 else:
@@ -854,7 +853,7 @@ class Md2Po:
         )
         self.pofile = polib.pofile(
             self.po_filepath,
-            wrapwidth=self.wrapwidth,
+            wrapwidth=parse_wrapwidth_argument(wrapwidth),
             **pofile_kwargs,
         )
 
@@ -1056,7 +1055,6 @@ def markdown_to_pofile(
         ignore=ignore,
         msgstr=msgstr,
         plaintext=plaintext,
-        wrapwidth=wrapwidth,
         mark_not_found_as_obsolete=mark_not_found_as_obsolete,
         preserve_not_found=preserve_not_found,
         location=location,
@@ -1075,4 +1073,5 @@ def markdown_to_pofile(
         mo_filepath=mo_filepath,
         po_encoding=po_encoding,
         md_encoding=md_encoding,
+        wrapwidth=wrapwidth,
     )

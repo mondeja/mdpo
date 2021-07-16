@@ -1,5 +1,6 @@
 """Markdown files translator using PO files as reference."""
 
+import math
 import re
 
 import md4c
@@ -23,7 +24,11 @@ from mdpo.po import (
     po_escaped_string,
     pofiles_to_unique_translations_dicts,
 )
-from mdpo.text import min_not_max_chars_in_a_row, removesuffix
+from mdpo.text import (
+    min_not_max_chars_in_a_row,
+    parse_wrapwidth_argument,
+    removesuffix,
+)
 
 
 class Po2Md:
@@ -139,7 +144,13 @@ class Po2Md:
             kwargs.get('command_aliases', {}),
         )
 
-        self.wrapwidth = kwargs.get('wrapwidth', 80)
+        self.wrapwidth = (
+            # infinte gives some undesired rendering
+            (
+                2 ** 24 if kwargs['wrapwidth'] in [math.inf, 0]
+                else parse_wrapwidth_argument(kwargs['wrapwidth'])
+            ) if 'wrapwidth' in kwargs else 80
+        )
 
         self.bold_start_string = kwargs.get('bold_start_string', '**')
         self.bold_start_string_escaped = po_escaped_string(

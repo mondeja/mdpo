@@ -4,6 +4,7 @@
 
 import argparse
 import itertools
+import os
 import sys
 
 from mdpo.cli import (
@@ -54,9 +55,10 @@ def build_parser():
              ' specified at this parameter.', metavar='PATH',
     )
     parser.add_argument(
-        '-w', '--wrapwidth', dest='wrapwidth', default=80, type=int,
-        help='Maximum width rendering the Markdown output.',
-        metavar='N',
+        '-w', '--wrapwidth', dest='wrapwidth', default='80', type=str,
+        help='Maximum width rendering the Markdown output, when possible. You'
+             ' can use the values \'0\' and \'inf\' for infinite width.',
+        metavar='N/inf',
     )
     parser.add_argument(
         '--md-encoding', dest='md_encoding', default='utf-8',
@@ -83,7 +85,7 @@ def parse_options(args):
     parser = build_parser()
     if '-h' in args or '--help' in args:
         parser.print_help()
-        sys.exit(0)
+        sys.exit(1)
     opts = parser.parse_args(args)
 
     filepath_or_content = ''
@@ -106,21 +108,29 @@ def parse_options(args):
 
 
 def run(args=[]):
-    opts = parse_options(args)
+    prev_mdpo_running = os.environ.get('_MDPO_RUNNING')
+    os.environ['_MDPO_RUNNING'] = 'true'
 
-    output = pofile_to_markdown(
-        opts.filepath_or_content, opts.pofiles,
-        ignore=opts.ignore, save=opts.save,
-        md_encoding=opts.md_encoding,
-        po_encoding=opts.po_encoding,
-        command_aliases=opts.command_aliases,
-        wrapwidth=opts.wrapwidth,
-        debug=opts.debug,
-    )
+    try:
+        opts = parse_options(args)
 
-    if not opts.quiet and not opts.save:
-        sys.stdout.write(output + '\n')
+        output = pofile_to_markdown(
+            opts.filepath_or_content, opts.pofiles,
+            ignore=opts.ignore, save=opts.save,
+            md_encoding=opts.md_encoding,
+            po_encoding=opts.po_encoding,
+            command_aliases=opts.command_aliases,
+            wrapwidth=opts.wrapwidth,
+            debug=opts.debug,
+        )
 
+        if not opts.quiet and not opts.save:
+            sys.stdout.write(output + '\n')
+    finally:
+        if prev_mdpo_running is None:
+            del os.environ['_MDPO_RUNNING']
+        else:
+            os.environ['_MDPO_RUNNING'] = prev_mdpo_running
     return (output, 0)
 
 

@@ -1,6 +1,9 @@
 """Text utilities for mdpo."""
 
+import math
+import os
 import re
+import sys
 
 
 def min_not_max_chars_in_a_row(char, text, default=1):
@@ -98,6 +101,44 @@ def parse_escaped_pairs(pairs, separator=':'):
             raise KeyError(key)
         response[key] = value
     return response
+
+
+def parse_strint_0_inf(value):
+    """Parse a string to a integer accepting infinte values.
+
+    Converts an integer passed as string in an integer or ``math.inf`` if
+    the passed value is ``"0"`` or ``math.inf``.
+
+    Args:
+        value (str): Value to parse.
+    """
+    try:
+        num = int(value)
+    except ValueError:
+        if value.lower() == 'inf':
+            return math.inf
+        raise ValueError(value)
+    return num if num else math.inf
+
+
+def parse_wrapwidth_argument(value):
+    """Parse the argument ``-w/--wrapwidth`` passed to CLIs.
+
+    Args:
+        value (str): Wrapwidth value.
+    """
+    try:
+        value = parse_strint_0_inf(value)
+    except ValueError as err:
+        if os.environ.get('_MDPO_RUNNING'):
+            sys.stderr.write(
+                f"Invalid value '{err.value}' for -w/--wrapwidth argument.\n",
+            )
+            sys.exit(1)
+        raise ValueError(
+            f"Invalid value '{err.value}' for wrapwidth argument.\n",
+        )
+    return value
 
 
 def removeprefix(text, prefix):
