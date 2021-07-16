@@ -1,0 +1,5 @@
+- id: md2po2md
+  name: md2po2md
+  entry: md2po2md
+  description: Translates Markdown files using PO files for a set of predefined language codes creating multiple directories, one for each language
+  language: python

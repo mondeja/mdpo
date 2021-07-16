@@ -18,8 +18,8 @@ from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 
 DESCRIPTION = (
-    'Translates Markdown files for a set of predefined language codes'
-    ' creating multiple directories, one for each language.'
+    'Translates Markdown files using PO files for a set of predefined language'
+    ' codes creating multiple directories, one for each language.'
 )
 
 
