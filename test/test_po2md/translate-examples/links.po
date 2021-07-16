@@ -79,3 +79,8 @@ msgstr "[7]: https://github.com/mondeja/mdpo \"Séptima referencia\""
 
 msgid "[8]: https://github.com/mondeja/mdpo \"Eighth reference\""
 msgstr "[8]: https://github.com/mondeja/mdpo \"Octava referencia\""
+
+msgid ""
+"[paragraph link name](https://example.com/a-big-link-with-a-very-very-long-"
+"and-big-url-name-on-it)"
+msgstr ""
