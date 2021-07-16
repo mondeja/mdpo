@@ -11,6 +11,7 @@ from mdpo.cli import (
     add_common_cli_latest_arguments,
     add_debug_option,
     add_extensions_argument,
+    add_nolocation_option,
     parse_command_aliases_cli_arguments,
     parse_metadata_cli_arguments,
 )
@@ -93,13 +94,7 @@ def build_parser():
              ' passed as \'-po/--po-filepath\' parameter will be removed.'
              ' Only has effect used in combination with \'--merge-pofiles\'.',
     )
-    parser.add_argument(
-        '--no-location', '--nolocation', dest='location', action='store_false',
-        help="Do not write '#: filename:line' lines. Note that using this"
-             ' option makes it harder for technically skilled translators to'
-             " understand each message's context. Same as 'xgettext "
-             "--no-location'.",
-    )
+    add_nolocation_option(parser)
     add_extensions_argument(parser)
     parser.add_argument(
         '--po-encoding', dest='po_encoding', default=None,

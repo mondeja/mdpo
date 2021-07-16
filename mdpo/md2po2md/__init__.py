@@ -14,6 +14,7 @@ def markdown_to_pofile_to_markdown(
     output_paths_schema,
     extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
     command_aliases={},
+    location=True,
     debug=False,
     md2po_kwargs={},
     po2md_kwargs={},
@@ -51,6 +52,8 @@ def markdown_to_pofile_to_markdown(
             instead of ``<!-- mdpo-enable -->``, you can pass the dictionaries
             ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
             parameter.
+        location (bool): Store references of top-level blocks in which are
+            found the messages in PO file `#: reference` comments.
         debug (bool): Add events displaying all parsed elements in the
             extraction process.
         md2po_kwargs (dict): Additional optional arguments passed to
@@ -109,6 +112,7 @@ def markdown_to_pofile_to_markdown(
                 extensions=extensions,
                 command_aliases=command_aliases,
                 debug=debug,
+                location=location,
                 **md2po_kwargs,
             )
 

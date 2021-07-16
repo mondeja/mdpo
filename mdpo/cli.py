@@ -165,3 +165,19 @@ def add_debug_option(parser):
         help='Print useful messages in the parsing process showing the'
              ' contents of all Markdown elements.',
     )
+
+
+def add_nolocation_option(parser):
+    """Add the ``--no-location/--nolocation`` option to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
+            extend.
+    """
+    parser.add_argument(
+        '--no-location', '--nolocation', dest='location', action='store_false',
+        help="Do not write '#: filename:line' lines. Note that using this"
+             ' option makes it harder for technically skilled translators to'
+             " understand each message's context. Same as 'xgettext "
+             "--no-location'.",
+    )

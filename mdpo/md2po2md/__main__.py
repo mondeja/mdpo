@@ -11,6 +11,7 @@ from mdpo.cli import (
     add_common_cli_latest_arguments,
     add_debug_option,
     add_extensions_argument,
+    add_nolocation_option,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.md2po2md import markdown_to_pofile_to_markdown
@@ -55,6 +56,7 @@ def build_parser():
              ' the execution.',
         metavar='PATH_SCHEMA',
     )
+    add_nolocation_option(parser)
     add_extensions_argument(parser)
     add_common_cli_latest_arguments(parser)
     add_debug_option(parser)
@@ -96,6 +98,7 @@ def run(args=[]):
             extensions=opts.extensions,
             command_aliases=opts.command_aliases,
             debug=opts.debug,
+            location=opts.location,
         )
 
         markdown_to_pofile_to_markdown(
