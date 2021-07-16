@@ -5,16 +5,14 @@ Useful recipes
 Simple README file translation
 ==============================
 
-I think that this is the simplest way that I've found to translate the READMEs
-of my projects. Just create a folder ``locale/`` with language folders inside
-and execute the next line (posix shell):
+This is the simplest way that I've found to translate the READMEs of my
+projects. Just execute the next command:
 
 .. code-block:: bash
 
-   langs=( es ); for l in "${langs[@]}"; do md2po -qs README.md -po locale/$l/README.po && po2md -q README.md -s locale/$l/README.md -p locale/$l/README.po; done
+   md2po2md README.md -l es -l fr -o "locale/{lang}"
 
-Define the languages to translate into using the ``langs`` variable separating
-them by spaces.
+Define the languages to translate into using the ``-l`` option.
 
 You also can use the next snippet to include links for the translations:
 
@@ -25,6 +23,8 @@ You also can use the next snippet to include links for the translations:
    > Read this document in other languages:
    >
    > - [Español][readme-es]
+   > - [Français][readme-fr]
    <!-- mdpo-enable -->
 
    [readme-es]: https://github.com/user/repo/blob/master/locale/es/README.md
+   [readme-fr]: https://github.com/user/repo/blob/master/locale/fr/README.md
