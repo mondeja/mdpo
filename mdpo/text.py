@@ -104,7 +104,7 @@ def parse_escaped_pairs(pairs, separator=':'):
 
 
 def parse_strint_0_inf(value):
-    """Parses a string to a integer accepting infinte values.
+    """Parse a string to a integer accepting infinte values.
 
     Converts an integer passed as string in an integer or ``math.inf`` if
     the passed value is ``"0"`` or ``math.inf``.
@@ -122,7 +122,7 @@ def parse_strint_0_inf(value):
 
 
 def parse_wrapwidth_argument(value):
-    """Parses the argument ``-w/--wrapwidth`` passed to CLIs.
+    """Parse the argument ``-w/--wrapwidth`` passed to CLIs.
 
     Args:
         value (str): Wrapwidth value.
