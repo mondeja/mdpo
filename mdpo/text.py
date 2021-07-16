@@ -3,30 +3,6 @@
 import re
 
 
-def max_char_in_a_row(char, text):
-    """Returns the maximum numbers of characters in a row found inside a string.
-
-    Args:
-        char (str): Character to search.
-        text (str): Text inside which find the character repeated in a row.
-
-    Returns:
-        int: Maximum repeats in a row of the character inside the text.
-    """
-    response, partial_response = (0, 0)
-    _in_the_row = False
-
-    for ch in text:
-        if ch == char:
-            partial_response += 1
-            _in_the_row = True
-        elif _in_the_row:
-            _in_the_row = False
-            response = max(response, partial_response)
-            partial_response = 0
-    return max(response, partial_response)
-
-
 def min_not_max_chars_in_a_row(char, text, default=1):
     r"""Returns the minimum possible of characters not found in a row for a string.
 
