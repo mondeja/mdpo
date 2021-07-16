@@ -99,7 +99,7 @@ def test_debug(capsys, arg):
     for i, line in enumerate(outlines):
         assert re.match(
             (
-                r'^md2po\[DEBUG\]::\d{4,}-\d\d-\d\d\s\d\d:\d\d:\d\d::'
+                r'^md2po\[DEBUG\]::\d{4,}-\d\d-\d\d\s\d\d:\d\d:\d\d\.\d+::'
                 r'(text|link_reference|msgid|command|enter_block|'
                 r'leave_block|enter_span|leave_span)::'
             ),

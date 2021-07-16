@@ -47,7 +47,7 @@ def debug_events(program):  # pragma: no cover
         dict: Event target printing functions.
     """
     def debug(event, msg):
-        date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
         sys.stdout.write(f'{program}[DEBUG]::{date}::{event}:: {msg}\n')
 
     def print_msgid(self, msgid, msgstr, msgctxt, tcomment, flags):
