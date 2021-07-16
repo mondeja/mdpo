@@ -68,11 +68,12 @@ def build_parser():
              ' [link](target).',
     )
     parser.add_argument(
-        '-w', '--wrapwidth', dest='wrapwidth',
+        '-w', '--wrapwidth', dest='wrapwidth', metavar='N/inf', type=str,
+        default='78',
         help='Wrap width for po file indicated at \'-po/--po-filepath\''
              ' parameter. Only useful when the \'-w\' option was passed to'
-             ' xgettext.',
-        metavar='N', type=int,
+             ' xgettext. You can use the values \'0\' and \'inf\' for infinite'
+             ' width.',
     )
     parser.add_argument(
         '-m', '--merge-po-files', '--merge-pofiles',
@@ -159,7 +160,7 @@ def parse_options(args=[]):
     parser = build_parser()
     if '-h' in args or '--help' in args:
         parser.print_help()
-        sys.exit(0)
+        sys.exit(1)
     opts, unknown = parser.parse_known_args(args)
 
     glob_or_content = ''
@@ -189,8 +190,8 @@ def parse_options(args=[]):
 
 
 def run(args=[]):
-    prev_mdpo_running = os.environ.get('MD2PO_CLI')
-    os.environ['MD2PO_CLI'] = 'true'
+    prev_mdpo_running = os.environ.get('MDPO_CLI')
+    os.environ['MDPO_CLI'] = 'true'
 
     try:
         opts = parse_options(args)
@@ -223,9 +224,9 @@ def run(args=[]):
             sys.stdout.write(pofile.__unicode__() + '\n')
     finally:
         if prev_mdpo_running is None:
-            del os.environ['MD2PO_CLI']
+            del os.environ['MDPO_CLI']
         else:
-            os.environ['MD2PO_CLI'] = prev_mdpo_running
+            os.environ['MDPO_CLI'] = prev_mdpo_running
     return (pofile, 0)
 
 

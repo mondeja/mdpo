@@ -298,40 +298,26 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ['-w', '--wrapwidth'])
-def test_wrapwidth(striplastline, capsys, arg):
+@pytest.mark.parametrize('value', ['0', 'inf'])
+def test_wrapwidth(striplastline, capsys, arg, value):
     content = (
         '# Some long header with **bold characters**, '
         '*italic characters* and a [link](https://nowhere.nothing).\n'
     )
-    width = 20
 
-    pofile, exitcode = run([content, arg, str(width), '-p'])
+    pofile, exitcode = run([content, arg, value, '-p'])
     out, err = capsys.readouterr()
 
     expected_output = '''#
 msgid ""
 msgstr ""
 
-msgid ""
-"Some long header "
-"with bold "
-"characters, italic"
-" characters and a "
-"link."
+msgid "Some long header with bold characters, italic characters and a link."
 msgstr ""
 '''
-
     assert exitcode == 0
     assert pofile.__unicode__() == expected_output
     assert striplastline(out) == expected_output
-
-    _line_with_provided_width_found = False
-    for line in pofile.__unicode__().split('\n'):
-        if len(line) == width:
-            _line_with_provided_width_found = True
-            break
-
-    assert _line_with_provided_width_found
 
 
 @pytest.mark.parametrize('arg', ['-a', '--xheaders'])

@@ -67,7 +67,7 @@ def parse_options(args):
     parser = build_parser()
     if '-h' in args or '--help' in args:
         parser.print_help()
-        sys.exit(0)
+        sys.exit(1)
     opts = parser.parse_args(args)
 
     filepath_or_content = ''

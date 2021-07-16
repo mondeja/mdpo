@@ -54,9 +54,10 @@ def build_parser():
              ' specified at this parameter.', metavar='PATH',
     )
     parser.add_argument(
-        '-w', '--wrapwidth', dest='wrapwidth', default=80, type=int,
-        help='Maximum width rendering the Markdown output.',
-        metavar='N',
+        '-w', '--wrapwidth', dest='wrapwidth', default='80', type=str,
+        help='Maximum width rendering the Markdown output, when possible. You'
+             ' can use the values \'0\' and \'inf\' for infinite width.',
+        metavar='N/inf',
     )
     parser.add_argument(
         '--md-encoding', dest='md_encoding', default='utf-8',
@@ -83,7 +84,7 @@ def parse_options(args):
     parser = build_parser()
     if '-h' in args or '--help' in args:
         parser.print_help()
-        sys.exit(0)
+        sys.exit(1)
     opts = parser.parse_args(args)
 
     filepath_or_content = ''
@@ -99,6 +100,7 @@ def parse_options(args):
     opts.command_aliases = parse_command_aliases_cli_arguments(
         opts.command_aliases,
     )
+    opts.wrapwidth = opts.wrapwidth
 
     opts.pofiles = set(itertools.chain(*opts.pofiles))  # flatten
 
