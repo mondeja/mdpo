@@ -833,7 +833,7 @@ class Md2Po:
             self.po_filepath = ''
 
             if save:
-                if os.environ.get('MDPO_CLI') == 'true':
+                if os.environ.get('_MDPO_RUNNING') == 'true':
                     save_arg = '-s/--save'
                     po_filepath_arg = '-po/--po-filepath'
                 else:

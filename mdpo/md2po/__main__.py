@@ -190,8 +190,8 @@ def parse_options(args=[]):
 
 
 def run(args=[]):
-    prev_mdpo_running = os.environ.get('MDPO_CLI')
-    os.environ['MDPO_CLI'] = 'true'
+    prev_mdpo_running = os.environ.get('_MDPO_RUNNING')
+    os.environ['_MDPO_RUNNING'] = 'true'
 
     try:
         opts = parse_options(args)
@@ -224,9 +224,9 @@ def run(args=[]):
             sys.stdout.write(pofile.__unicode__() + '\n')
     finally:
         if prev_mdpo_running is None:
-            del os.environ['MDPO_CLI']
+            del os.environ['_MDPO_RUNNING']
         else:
-            os.environ['MDPO_CLI'] = prev_mdpo_running
+            os.environ['_MDPO_RUNNING'] = prev_mdpo_running
     return (pofile, 0)
 
 

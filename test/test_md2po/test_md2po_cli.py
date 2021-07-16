@@ -610,18 +610,18 @@ def test_extensions(
 @pytest.mark.parametrize(
     'value',
     (None, 'foo'),
-    ids=('MDPO_CLI=', 'MDPO_CLI=foo'),
+    ids=('_MDPO_RUNNING=', '_MDPO_RUNNING=foo'),
 )
 def test_md2po_cli_running_osenv(striplastline, value, capsys):
     if value is not None:
-        os.environ['MDPO_CLI'] = value
+        os.environ['_MDPO_RUNNING'] = value
     pofile, exitcode = run([EXAMPLE['input']])
     out, err = capsys.readouterr()
 
     assert exitcode == 0
     assert pofile.__unicode__() == EXAMPLE['output']
     assert striplastline(out) == EXAMPLE['output']
-    assert os.environ.get('MDPO_CLI') == value
+    assert os.environ.get('_MDPO_RUNNING') == value
 
 
 def test_md2po_save_without_po_filepath():

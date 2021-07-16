@@ -4,6 +4,7 @@
 
 import argparse
 import itertools
+import os
 import sys
 
 from mdpo.cli import (
@@ -108,21 +109,29 @@ def parse_options(args):
 
 
 def run(args=[]):
-    opts = parse_options(args)
+    prev_mdpo_running = os.environ.get('_MDPO_RUNNING')
+    os.environ['_MDPO_RUNNING'] = 'true'
 
-    output = pofile_to_markdown(
-        opts.filepath_or_content, opts.pofiles,
-        ignore=opts.ignore, save=opts.save,
-        md_encoding=opts.md_encoding,
-        po_encoding=opts.po_encoding,
-        command_aliases=opts.command_aliases,
-        wrapwidth=opts.wrapwidth,
-        debug=opts.debug,
-    )
+    try:
+        opts = parse_options(args)
 
-    if not opts.quiet and not opts.save:
-        sys.stdout.write(output + '\n')
+        output = pofile_to_markdown(
+            opts.filepath_or_content, opts.pofiles,
+            ignore=opts.ignore, save=opts.save,
+            md_encoding=opts.md_encoding,
+            po_encoding=opts.po_encoding,
+            command_aliases=opts.command_aliases,
+            wrapwidth=opts.wrapwidth,
+            debug=opts.debug,
+        )
 
+        if not opts.quiet and not opts.save:
+            sys.stdout.write(output + '\n')
+    finally:
+        if prev_mdpo_running is None:
+            del os.environ['_MDPO_RUNNING']
+        else:
+            os.environ['_MDPO_RUNNING'] = prev_mdpo_running
     return (output, 0)
 
 
