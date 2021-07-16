@@ -14,7 +14,6 @@ Markdown files translation using pofiles. Fully complies with
    tutorial
    commands
    related-utilities
-   useful-recipes
 
 .. toctree::
    :maxdepth: 2
