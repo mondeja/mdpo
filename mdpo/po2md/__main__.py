@@ -101,7 +101,6 @@ def parse_options(args):
     opts.command_aliases = parse_command_aliases_cli_arguments(
         opts.command_aliases,
     )
-    opts.wrapwidth = opts.wrapwidth
 
     opts.pofiles = set(itertools.chain(*opts.pofiles))  # flatten
 
