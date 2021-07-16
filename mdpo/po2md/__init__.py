@@ -516,8 +516,6 @@ class Po2Md:
         elif block is md4c.BlockType.TABLE:
             self._inside_table = True
             if self._current_list_type and not self._inside_quoteblock:
-                if self._current_line:
-                    self._save_current_line()
                 self._save_current_line()
         elif block is md4c.BlockType.HTML:
             self._inside_htmlblock = True

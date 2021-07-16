@@ -318,12 +318,6 @@ class MarkdownSpanWrapper:
                         width = self._get_currently_applied_width()
                         if self._current_aspan_href:
                             width *= .95
-                    elif (
-                        not self._current_aspan_href
-                        and i
-                        and i + 1 <= len(text_splits)
-                    ):
-                        self._current_line += ' '
                 elif i:
                     self._current_line += ' '
                 self._current_line += text_split
