@@ -42,14 +42,13 @@ def build_parser():
         '-o', '--output', dest='output_paths_schema',
         required=True, type=str,
         help='Path schema for outputs, built using placeholders. There is a'
-             ' mandatory placeholder for languages: \'{lang}\'; and two'
-             ' optional for output basename and extension: \'{basename}\' and'
-             ' \'{ext}\'. For example, for the schema'
-             ' \'locale/{lang}/{basename}.{ext}\', the languages \'es\' and'
+             ' mandatory placeholder for languages: \'{lang}\'; and one'
+             ' optional for output basename: \'{basename}\'. For example,'
+             ' for the schema \'locale/{lang}\', the languages \'es\' and'
              ' \'fr\' and a \'README.md\' as input, the next files will be'
              ' written: \'locale/es/README.po\', \'locale/es/README.md\','
              ' \'locale/fr/README.po\' and \'locale/fr/README.md\'.'
-             ' You can also omit \'{basename}\' and \'{ext}\', specifying a'
+             ' Note that you can omit \'{basename}\', specifying a'
              ' directory for each language with \'locale/{lang}\' for this'
              ' example. Unexistent directories and files will be created, '
              ' so you don\'t have to prepare the output directories before'

@@ -33,7 +33,7 @@ from mdpo.md2po2md.__main__ import run
                 ),
                 'locale/es/README.md': 'Foo\n\nBar\n',
             },
-            id='README-es-locale/{lang}',
+            id='es-locale/{lang}',
         ),
         pytest.param(
             ['es', 'fr'],
@@ -60,7 +60,65 @@ from mdpo.md2po2md.__main__ import run
             'locale/',
             {},
             ValueError,
-            id='README-es-locale/-ValueError',
+            id='es-locale/-ValueError',
+        ),
+        pytest.param(
+            ['es'],
+            'README.md',
+            'locale/{lang}/{basename}',
+            {'README.md': 'Foo\n\nBar\n'},
+            {
+                'locale/es/README.po': (
+                    '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n\n'
+                    'msgid "Bar"\nmsgstr ""\n'
+                ),
+                'locale/es/README': 'Foo\n\nBar\n',
+            },
+            id='es-locale/{lang}/{basename}',
+        ),
+        pytest.param(
+            ['es'],
+            'README.md',
+            '{lang}/{basename}',
+            {'README.md': 'Foo\n\nBar\n'},
+            {
+                'es/README.po': (
+                    '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n\n'
+                    'msgid "Bar"\nmsgstr ""\n'
+                ),
+                'es/README': 'Foo\n\nBar\n',
+            },
+            id='es-{lang}/{basename}',
+        ),
+        pytest.param(
+            ['es'],
+            'README.md',
+            '{lang}',
+            {'README.md': 'Foo\n\nBar\n'},
+            {
+                'es/README.md.po': (
+                    '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n\n'
+                    'msgid "Bar"\nmsgstr ""\n'
+                ),
+                'es/README.md': 'Foo\n\nBar\n',
+            },
+            id='es-{lang}',
+        ),
+        pytest.param(
+            ['es'],
+            '[s-m]',
+            '{lang}/{basename}',
+            {},
+            ValueError,
+            id='invalid-glob-ValueError',
+        ),
+        pytest.param(
+            ['es'],
+            'foobar*',
+            '{lang}/{basename}',
+            {},
+            FileNotFoundError,
+            id='no-files-matching-input-glob',
         ),
     ),
 )

@@ -1,8 +1,9 @@
 """Markdown to PO file to Markdown translator."""
 
+import glob
 import os
+import re
 
-from mdpo.io import to_glob_or_content
 from mdpo.md2po import markdown_to_pofile
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po2md import pofile_to_markdown
@@ -26,20 +27,18 @@ def markdown_to_pofile_to_markdown(
         input_paths_glob (str): Glob covering Markdown files to translate.
         output_paths_schema (str): Path schema for outputs, built using
             placeholders. There is a mandatory placeholder for languages:
-            ``{lang}``; and two optional for output basename and extension:
-            ``{basename}`` and ``{ext}``.
-            For example, for the schema ``locale/{lang}/{basename}.{ext}``,
-            the languages ``['es', 'fr']`` and a ``README.md`` as input,
-            the next files will be written:
+            ``{lang}``; and one optional for output basename: ``{basename}``.
+            For example, for the schema ``locale/{lang}``, the languages
+            ``['es', 'fr']`` and a ``README.md`` as input, the next files will
+            be written:
 
             * ``locale/es/README.po``
             * ``locale/es/README.md``
             * ``locale/fr/README.po``
             * ``locale/fr/README.md``
 
-            You can also omit ``{basename}`` and ``{ext}``, specifying a
-            directory for each language with ``locale/{lang}`` for this
-            example.
+            Note that you can omit ``{basename}``, specifying a directory for
+            each language with ``locale/{lang}`` for this example.
             Unexistent directories and files will be created, so you don't
             have to prepare the output directories before the execution.
         extensions (list): md4c extensions used to parse markdown content,
@@ -67,27 +66,39 @@ def markdown_to_pofile_to_markdown(
             " 'output_paths_schema'.",
         )
 
-    is_glob, input_paths_glob = to_glob_or_content(input_paths_glob)
-    if not is_glob:
+    try:
+        input_paths_glob_ = glob.glob(input_paths_glob)
+    except re.error:
+        # some strings like '[s-m]' will produce
+        # 're.error: bad character range ... at position'
         raise ValueError(
             "The argument 'input_paths_glob' must be a valid glob or file"
             ' path.',
         )
+    else:
+        if not input_paths_glob_:
+            raise FileNotFoundError(
+                f'The glob \'{input_paths_glob}\' does not match any file.',
+            )
 
-    for filepath in input_paths_glob:
+    for filepath in input_paths_glob_:
         for lang in langs:
             md_ext = os.path.splitext(filepath)[-1]
 
+            file_basename = os.path.splitext(os.path.basename(filepath))[0]
+
             format_kwargs = {'lang': lang}
             if '{basename}' in output_paths_schema:
-                format_kwargs['basename'] = os.path.basename(filepath)
+                format_kwargs['basename'] = file_basename
             if '{ext}' in output_paths_schema:
                 format_kwargs['ext'] = 'po'
             po_filepath = output_paths_schema.format(**format_kwargs)
 
+            po_basename = os.path.basename(po_filepath)
             po_dirpath = (
                 os.path.dirname(po_filepath)
-                if '.' in os.path.basename(po_filepath) else po_filepath
+                if (po_basename.count('.') or file_basename == po_basename)
+                else po_filepath
             )
 
             os.makedirs(os.path.abspath(po_dirpath), exist_ok=True)
@@ -96,6 +107,8 @@ def markdown_to_pofile_to_markdown(
                     po_filepath.rstrip(os.sep) + os.sep +
                     os.path.basename(filepath) + '.po'
                 )
+            if not po_filepath.endswith('.po'):
+                po_filepath += '.po'
 
             format_kwargs['ext'] = md_ext.lstrip('.')
             md_filepath = output_paths_schema.format(**format_kwargs)
