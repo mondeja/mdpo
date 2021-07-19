@@ -4,7 +4,6 @@
 
 import argparse
 import itertools
-import os
 import sys
 
 from mdpo.cli import (
@@ -13,6 +12,7 @@ from mdpo.cli import (
     add_debug_option,
     parse_command_aliases_cli_arguments,
 )
+from mdpo.context import environ
 from mdpo.po2md import pofile_to_markdown
 
 
@@ -52,7 +52,7 @@ def build_parser():
     )
     parser.add_argument(
         '-s', '--save', dest='save', default=None,
-        help='Saves the output content in file whose path is'
+        help='Saves the output content in a file whose path is'
              ' specified at this parameter.', metavar='PATH',
     )
     parser.add_argument(
@@ -105,10 +105,7 @@ def parse_options(args):
 
 
 def run(args=[]):
-    prev_mdpo_running = os.environ.get('_MDPO_RUNNING')
-    os.environ['_MDPO_RUNNING'] = 'true'
-
-    try:
+    with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
         output = pofile_to_markdown(
@@ -123,11 +120,6 @@ def run(args=[]):
 
         if not opts.quiet and not opts.save:
             sys.stdout.write(output + '\n')
-    finally:
-        if prev_mdpo_running is None:
-            del os.environ['_MDPO_RUNNING']
-        else:
-            os.environ['_MDPO_RUNNING'] = prev_mdpo_running
     return (output, 0)
 
 

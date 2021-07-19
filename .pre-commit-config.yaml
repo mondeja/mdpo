@@ -97,12 +97,3 @@ repos:
       - id: editorconfig-checker
         args:
           - -exclude=docs/.+\.bat
-  - repo: https://github.com/mondeja/mdpo
-    rev: pc-hooks
-    hooks:
-      - id: md2po
-        args:
-          - prueba.md
-          - -po
-          - prueba_pc.po
-          - -sq

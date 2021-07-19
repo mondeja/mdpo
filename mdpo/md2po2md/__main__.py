@@ -3,7 +3,6 @@
 """md2po2md command line interface."""
 
 import argparse
-import os
 import sys
 
 from mdpo.cli import (
@@ -14,6 +13,7 @@ from mdpo.cli import (
     add_nolocation_option,
     parse_command_aliases_cli_arguments,
 )
+from mdpo.context import environ
 from mdpo.md2po2md import markdown_to_pofile_to_markdown
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
@@ -87,10 +87,7 @@ def parse_options(args=[]):
 
 
 def run(args=[]):
-    prev_mdpo_running = os.environ.get('_MDPO_RUNNING')
-    os.environ['_MDPO_RUNNING'] = 'true'
-
-    try:
+    with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
         kwargs = dict(
@@ -106,11 +103,6 @@ def run(args=[]):
             opts.output_paths_schema,
             **kwargs,
         )
-    finally:
-        if prev_mdpo_running is None:
-            del os.environ['_MDPO_RUNNING']
-        else:
-            os.environ['_MDPO_RUNNING'] = prev_mdpo_running
     return 0
 
 

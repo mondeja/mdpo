@@ -11,6 +11,7 @@ from mdpo.cli import (
     add_common_cli_latest_arguments,
     parse_command_aliases_cli_arguments,
 )
+from mdpo.context import environ
 from mdpo.mdpo2html import markdown_pofile_to_html
 
 
@@ -90,18 +91,19 @@ def parse_options(args):
 
 
 def run(args=[]):
-    opts = parse_options(args)
+    with environ(_MDPO_RUNNING='true'):
+        opts = parse_options(args)
 
-    output = markdown_pofile_to_html(
-        opts.filepath_or_content, opts.pofiles,
-        ignore=opts.ignore, save=opts.save,
-        po_encoding=opts.po_encoding,
-        html_encoding=opts.html_encoding,
-        command_aliases=opts.command_aliases,
-    )
+        output = markdown_pofile_to_html(
+            opts.filepath_or_content, opts.pofiles,
+            ignore=opts.ignore, save=opts.save,
+            po_encoding=opts.po_encoding,
+            html_encoding=opts.html_encoding,
+            command_aliases=opts.command_aliases,
+        )
 
-    if not opts.quiet and not opts.save:
-        sys.stdout.write(output + '\n')
+        if not opts.quiet and not opts.save:
+            sys.stdout.write(output + '\n')
 
     return (output, 0)
 
