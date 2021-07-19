@@ -1,12 +1,11 @@
 """``.po`` files related stuff."""
 
 import glob
-import hashlib
 import os
 
 import polib
 
-from mdpo.io import filter_paths
+from mdpo.io import filehash, filter_paths
 from mdpo.polib import poentry__cmp__
 
 
@@ -179,14 +178,8 @@ def save_pofile_checking_file_changed(pofile, po_filepath):
         pofile.save(fpath=po_filepath)
         return True
 
-    pre_hasher = hashlib.md5()
-    with open(po_filepath, 'rb') as f:
-        pre_hasher.update(f.read())
-
+    pre_hash = filehash(po_filepath)
     pofile.save(fpath=po_filepath)
+    post_hash = filehash(po_filepath)
 
-    post_hasher = hashlib.md5()
-    with open(po_filepath, 'rb') as f:
-        post_hasher.update(f.read())
-
-    return pre_hasher.hexdigest() != post_hasher.hexdigest()
+    return pre_hash != post_hash

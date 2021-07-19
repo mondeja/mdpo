@@ -11,6 +11,7 @@ from mdpo.cli import (
     add_debug_option,
     add_extensions_argument,
     add_nolocation_option,
+    add_pre_commit_option,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.context import environ
@@ -59,6 +60,7 @@ def build_parser():
     add_extensions_argument(parser)
     add_common_cli_latest_arguments(parser)
     add_debug_option(parser)
+    add_pre_commit_option(parser)
     return parser
 
 
@@ -87,6 +89,8 @@ def parse_options(args=[]):
 
 
 def run(args=[]):
+    exitcode = 0
+
     with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
@@ -97,13 +101,16 @@ def run(args=[]):
             location=opts.location,
         )
 
-        markdown_to_pofile_to_markdown(
+        _saved_files_changed = markdown_to_pofile_to_markdown(
             opts.langs,
             opts.input_paths_glob,
             opts.output_paths_schema,
+            _check_saved_files_changed=opts.check_saved_files_changed,
             **kwargs,
         )
-    return 0
+        if opts.check_saved_files_changed and _saved_files_changed:
+            exitcode = 1
+    return exitcode
 
 
 def main():

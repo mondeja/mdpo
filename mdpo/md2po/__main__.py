@@ -11,6 +11,7 @@ from mdpo.cli import (
     add_debug_option,
     add_extensions_argument,
     add_nolocation_option,
+    add_pre_commit_option,
     parse_command_aliases_cli_arguments,
     parse_metadata_cli_arguments,
 )
@@ -134,13 +135,9 @@ def build_parser():
              ' \'-d "Content-Type: text/plain; charset=utf-8"'
              ' -d "Language: es"\'.',
     )
-    parser.add_argument(
-        '--pre-commit', dest='check_saved_files_changed', action='store_true',
-        help='Run in pre-commit mode, which returns code 1 at exit when a file'
-             ' has been changed.',
-    )
     add_common_cli_latest_arguments(parser)
     add_debug_option(parser)
+    add_pre_commit_option(parser)
     return parser
 
 

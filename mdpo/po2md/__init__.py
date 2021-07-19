@@ -11,7 +11,7 @@ from mdpo.command import (
     parse_mdpo_html_command,
 )
 from mdpo.event import debug_events, raise_skip_event
-from mdpo.io import to_file_content_if_is_file
+from mdpo.io import save_file_checking_file_changed, to_file_content_if_is_file
 from mdpo.md import (
     MarkdownSpanWrapper,
     escape_links_titles,
@@ -73,6 +73,7 @@ class Po2Md:
         '_enable_next_line',
         '_enterspan_replacer',
         '_leavespan_replacer',
+        '_saved_files_changed',
 
         # state
         '_inside_htmlblock',
@@ -150,6 +151,10 @@ class Po2Md:
                 2 ** 24 if kwargs['wrapwidth'] in [math.inf, 0]
                 else parse_wrapwidth_argument(kwargs['wrapwidth'])
             ) if 'wrapwidth' in kwargs else 80
+        )
+
+        self._saved_files_changed = (
+            False if kwargs.get('_check_saved_files_changed') else None
         )
 
         self.bold_start_string = kwargs.get('bold_start_string', '**')
@@ -898,7 +903,7 @@ class Po2Md:
             self.leave_span,
             self.text,
         )
-        self._append_link_references()
+        self._append_link_references()  # add link references to the end
 
         self._disable_next_line = False
         self._disable = False
@@ -908,9 +913,15 @@ class Po2Md:
         self.output = '\n'.join(self._outputlines)
 
         if save:
-            with open(save, 'w', encoding=md_encoding) as f:
-                f.write(self.output)
-
+            if self._saved_files_changed is False:
+                self._saved_files_changed = save_file_checking_file_changed(
+                    save,
+                    self.output,
+                    encoding=md_encoding,
+                )
+            else:
+                with open(save, 'w', encoding=md_encoding) as f:
+                    f.write(self.output)
         return self.output
 
 
@@ -927,7 +938,7 @@ def pofile_to_markdown(
     debug=False,
     **kwargs,
 ):
-    r"""Translate Markdown content or a file using PO files for message replacing.
+    r"""Translate Markdown content or file using PO files as reference.
 
     This implementation reproduces the same valid Markdown output, given the
     provided AST, with replaced translations, but doesn't rebuilds the same

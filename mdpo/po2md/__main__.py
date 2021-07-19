@@ -10,10 +10,11 @@ from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
     add_debug_option,
+    add_pre_commit_option,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.context import environ
-from mdpo.po2md import pofile_to_markdown
+from mdpo.po2md import Po2Md
 
 
 DESCRIPTION = (
@@ -75,6 +76,7 @@ def build_parser():
     )
     add_common_cli_latest_arguments(parser)
     add_debug_option(parser)
+    add_pre_commit_option(parser)
     return parser
 
 
@@ -108,18 +110,29 @@ def run(args=[]):
     with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
-        output = pofile_to_markdown(
-            opts.filepath_or_content, opts.pofiles,
-            ignore=opts.ignore, save=opts.save,
-            md_encoding=opts.md_encoding,
+        po2md = Po2Md(
+            opts.pofiles,
+            ignore=opts.ignore,
             po_encoding=opts.po_encoding,
             command_aliases=opts.command_aliases,
             wrapwidth=opts.wrapwidth,
             debug=opts.debug,
+            _check_saved_files_changed=opts.check_saved_files_changed,
+        )
+
+        output = po2md.translate(
+            opts.filepath_or_content,
+            save=opts.save,
+            md_encoding=opts.md_encoding,
         )
 
         if not opts.quiet and not opts.save:
             sys.stdout.write(output + '\n')
+
+        # pre-commit mode
+        if opts.check_saved_files_changed and po2md._saved_files_changed:
+            return (output, 1)
+
     return (output, 0)
 
 

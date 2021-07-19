@@ -5,11 +5,11 @@
   language: python
 - id: po2md
   name: po2md
-  entry: po2md
+  entry: po2md --pre-commit
   description: Markdown files translator using pofiles as reference
   language: python
 - id: md2po2md
   name: md2po2md
-  entry: md2po2md
+  entry: md2po2md --pre-commit
   description: Translates Markdown files using PO files for a set of predefined language codes creating multiple directories, one for each language
   language: python

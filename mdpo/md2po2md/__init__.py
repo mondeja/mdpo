@@ -4,9 +4,9 @@ import glob
 import os
 import re
 
-from mdpo.md2po import markdown_to_pofile
+from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-from mdpo.po2md import pofile_to_markdown
+from mdpo.po2md import Po2Md
 
 
 def markdown_to_pofile_to_markdown(
@@ -19,6 +19,7 @@ def markdown_to_pofile_to_markdown(
     debug=False,
     md2po_kwargs={},
     po2md_kwargs={},
+    _check_saved_files_changed=False,
 ):
     """Translate a set of Markdown files using PO files.
 
@@ -81,6 +82,8 @@ def markdown_to_pofile_to_markdown(
                 f'The glob \'{input_paths_glob}\' does not match any file.',
             )
 
+    _saved_files_changed = None if not _check_saved_files_changed else False
+
     for filepath in input_paths_glob_:
         for lang in langs:
             md_ext = os.path.splitext(filepath)[-1]
@@ -116,22 +119,36 @@ def markdown_to_pofile_to_markdown(
                     os.path.basename(filepath)
                 )
 
-            markdown_to_pofile(
+            # md2po
+            md2po = Md2Po(
                 filepath,
-                save=True,
-                po_filepath=po_filepath,
                 extensions=extensions,
                 command_aliases=command_aliases,
                 debug=debug,
                 location=location,
+                _check_saved_files_changed=_check_saved_files_changed,
                 **md2po_kwargs,
             )
+            md2po.extract(
+                save=True,
+                po_filepath=po_filepath,
+            )
+            if _check_saved_files_changed and _saved_files_changed is False:
+                _saved_files_changed = md2po._saved_files_changed
 
-            pofile_to_markdown(
-                filepath,
+            # po2md
+            po2md = Po2Md(
                 [po_filepath],
-                save=md_filepath,
                 command_aliases=command_aliases,
                 debug=debug,
+                _check_saved_files_changed=_check_saved_files_changed,
                 **po2md_kwargs,
             )
+            po2md.translate(
+                filepath,
+                save=md_filepath,
+            )
+            if _check_saved_files_changed and _saved_files_changed is False:
+                _saved_files_changed = po2md._saved_files_changed
+
+    return _saved_files_changed
