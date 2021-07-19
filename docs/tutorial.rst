@@ -2,8 +2,8 @@
 Tutorial
 ********
 
-mdpo provides flexible ways for doing Markdown markup translations. In this
-tutorial are covered the two most common workflows.
+**mdpo** provides flexible ways for doing Markdown markup translations. In this
+tutorial are covered the most common workflows.
 
 .. raw:: html
 
@@ -86,6 +86,17 @@ You also can use the next snippet to include links for the translations:
 
   [readme-es]: https://github.com/user/repo/blob/master/locale/es/README.md
   [readme-fr]: https://github.com/user/repo/blob/master/locale/fr/README.md
+
+This will be the output after the previous command:
+
+.. code-block:: bash
+
+   .
+   ├── locale
+   │   └── es
+   │       ├── README.md
+   │       └── readme.po 
+   └── README.md
 
 .. seealso::
    * :ref:`md2po2md CLI<md2po2md-cli>`
