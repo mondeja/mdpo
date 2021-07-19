@@ -3,17 +3,19 @@
 """md2po2md command line interface."""
 
 import argparse
-import os
 import sys
 
 from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
     add_debug_option,
+    add_encoding_arguments,
     add_extensions_argument,
     add_nolocation_option,
+    add_pre_commit_option,
     parse_command_aliases_cli_arguments,
 )
+from mdpo.context import environ
 from mdpo.md2po2md import markdown_to_pofile_to_markdown
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
@@ -58,7 +60,9 @@ def build_parser():
     add_nolocation_option(parser)
     add_extensions_argument(parser)
     add_common_cli_latest_arguments(parser)
+    add_encoding_arguments(parser)
     add_debug_option(parser)
+    add_pre_commit_option(parser)
     return parser
 
 
@@ -87,10 +91,9 @@ def parse_options(args=[]):
 
 
 def run(args=[]):
-    prev_mdpo_running = os.environ.get('_MDPO_RUNNING')
-    os.environ['_MDPO_RUNNING'] = 'true'
+    exitcode = 0
 
-    try:
+    with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
         kwargs = dict(
@@ -98,20 +101,22 @@ def run(args=[]):
             command_aliases=opts.command_aliases,
             debug=opts.debug,
             location=opts.location,
+            po_encoding=opts.po_encoding,
+            md_encoding=opts.md_encoding,
         )
 
-        markdown_to_pofile_to_markdown(
+        _saved_files_changed = markdown_to_pofile_to_markdown(
             opts.langs,
             opts.input_paths_glob,
             opts.output_paths_schema,
+            _check_saved_files_changed=opts.check_saved_files_changed,
             **kwargs,
         )
-    finally:
-        if prev_mdpo_running is None:
-            del os.environ['_MDPO_RUNNING']
-        else:
-            os.environ['_MDPO_RUNNING'] = prev_mdpo_running
-    return 0
+        if (  # pragma: no cover
+            opts.check_saved_files_changed and _saved_files_changed
+        ):
+            exitcode = 1
+    return exitcode
 
 
 def main():

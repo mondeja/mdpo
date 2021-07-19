@@ -1,6 +1,7 @@
 """mdpo I/O utilities."""
 
 import glob
+import hashlib
 import os
 import re
 
@@ -82,3 +83,38 @@ def to_glob_or_content(value):
         # assumes it is content
         return (False, value)
     return (True, parsed)
+
+
+def filehash(filepath):
+    """Compute the hash of a file.
+
+    Args:
+        filepath (str): Path to the file.
+    """
+    hasher = hashlib.md5()
+    with open(filepath, 'rb') as f:
+        hasher.update(f.read())
+    return hasher.hexdigest()
+
+
+def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
+    """Save a file checking if the content has changed.
+
+    Args:
+        pofile (:py:class:`polib.POFile`): POFile to save.
+        po_filepath (str): Path to the new file to save in.
+
+    Returns:
+        bool: If the PO file content has been changed.
+    """
+    if not os.path.isfile(filepath):
+        with open(filepath, 'w', encoding=encoding) as f:
+            f.write(content)
+        return True
+
+    pre_hash = filehash(filepath)
+    with open(filepath, 'w', encoding=encoding) as f:
+        f.write(content)
+    post_hash = filehash(filepath)
+
+    return pre_hash != post_hash

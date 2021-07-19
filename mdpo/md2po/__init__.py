@@ -21,6 +21,7 @@ from mdpo.po import (
     mark_not_found_entries_as_obsoletes,
     po_escaped_string,
     remove_not_found_entries,
+    save_pofile_checking_file_changed,
 )
 from mdpo.text import min_not_max_chars_in_a_row, parse_wrapwidth_argument
 
@@ -58,6 +59,7 @@ class Md2Po:
         '_enable_next_line',
         '_include_next_codeblock',
         '_disable_next_codeblock',
+        '_saved_files_changed',
 
         '_enterspan_replacer',
         '_leavespan_replacer',
@@ -165,6 +167,10 @@ class Md2Po:
 
         self._include_next_codeblock = False
         self._disable_next_codeblock = False
+
+        self._saved_files_changed = (  # pragma: no cover
+            False if kwargs.get('_check_saved_files_changed') else None
+        )
 
         self.metadata = {}
 
@@ -902,7 +908,13 @@ class Md2Po:
             self.pofile.metadata.update(self.metadata)
 
         if save and po_filepath:
-            self.pofile.save(fpath=po_filepath)
+            if self._saved_files_changed is False:  # pragma: no cover
+                self._saved_files_changed = save_pofile_checking_file_changed(
+                    self.pofile,
+                    po_filepath,
+                )
+            else:
+                self.pofile.save(fpath=po_filepath)
         if mo_filepath:
             self.pofile.save_as_mofile(mo_filepath)
         return self.pofile

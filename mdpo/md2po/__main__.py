@@ -3,19 +3,21 @@
 """md2po command line interface."""
 
 import argparse
-import os
 import sys
 
 from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
     add_debug_option,
+    add_encoding_arguments,
     add_extensions_argument,
     add_nolocation_option,
+    add_pre_commit_option,
     parse_command_aliases_cli_arguments,
     parse_metadata_cli_arguments,
 )
-from mdpo.md2po import markdown_to_pofile
+from mdpo.context import environ
+from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 
@@ -96,13 +98,9 @@ def build_parser():
     )
     add_nolocation_option(parser)
     add_extensions_argument(parser)
-    parser.add_argument(
-        '--po-encoding', dest='po_encoding', default=None,
-        help='Resulting PO file encoding.', metavar='<ENCODING>',
-    )
-    parser.add_argument(
-        '--md-encoding', dest='md_encoding', default='utf-8',
-        help='Markdown content encoding.', metavar='<ENCODING>',
+    add_encoding_arguments(
+        parser,
+        po_encoding_help='Resulting PO file encoding.',
     )
     parser.add_argument(
         '-a', '--xheaders', dest='xheaders',
@@ -136,6 +134,7 @@ def build_parser():
     )
     add_common_cli_latest_arguments(parser)
     add_debug_option(parser)
+    add_pre_commit_option(parser)
     return parser
 
 
@@ -173,42 +172,46 @@ def parse_options(args=[]):
 
 
 def run(args=[]):
-    prev_mdpo_running = os.environ.get('_MDPO_RUNNING')
-    os.environ['_MDPO_RUNNING'] = 'true'
-
-    try:
+    with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
-        kwargs = dict(
-            po_filepath=opts.po_filepath,
+        init_kwargs = dict(
             ignore=opts.ignore,
-            save=opts.save,
-            mo_filepath=opts.mo_filepath,
             plaintext=opts.plaintext,
             mark_not_found_as_obsolete=opts.mark_not_found_as_obsolete,
             preserve_not_found=opts.preserve_not_found,
             location=opts.location,
             extensions=opts.extensions,
-            po_encoding=opts.po_encoding,
-            md_encoding=opts.md_encoding,
             xheaders=opts.xheaders,
             include_codeblocks=opts.include_codeblocks,
             ignore_msgids=opts.ignore_msgids,
             command_aliases=opts.command_aliases,
             metadata=opts.metadata,
-            wrapwidth=opts.wrapwidth,
             debug=opts.debug,
+            _check_saved_files_changed=opts.check_saved_files_changed,
         )
 
-        pofile = markdown_to_pofile(opts.glob_or_content, **kwargs)
+        extract_kwargs = dict(
+            po_filepath=opts.po_filepath,
+            save=opts.save,
+            mo_filepath=opts.mo_filepath,
+            po_encoding=opts.po_encoding,
+            md_encoding=opts.md_encoding,
+            wrapwidth=opts.wrapwidth,
+        )
+
+        md2po = Md2Po(opts.glob_or_content, **init_kwargs)
+        pofile = md2po.extract(**extract_kwargs)
 
         if not opts.quiet:
             sys.stdout.write(pofile.__unicode__() + '\n')
-    finally:
-        if prev_mdpo_running is None:
-            del os.environ['_MDPO_RUNNING']
-        else:
-            os.environ['_MDPO_RUNNING'] = prev_mdpo_running
+
+        # pre-commit mode
+        if (  # pragma: no cover
+            opts.check_saved_files_changed and md2po._saved_files_changed
+        ):
+            return (pofile, 1)
+
     return (pofile, 0)
 
 

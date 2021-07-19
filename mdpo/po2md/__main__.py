@@ -4,16 +4,18 @@
 
 import argparse
 import itertools
-import os
 import sys
 
 from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
     add_debug_option,
+    add_encoding_arguments,
+    add_pre_commit_option,
     parse_command_aliases_cli_arguments,
 )
-from mdpo.po2md import pofile_to_markdown
+from mdpo.context import environ
+from mdpo.po2md import Po2Md
 
 
 DESCRIPTION = (
@@ -52,7 +54,7 @@ def build_parser():
     )
     parser.add_argument(
         '-s', '--save', dest='save', default=None,
-        help='Saves the output content in file whose path is'
+        help='Saves the output content in a file whose path is'
              ' specified at this parameter.', metavar='PATH',
     )
     parser.add_argument(
@@ -61,20 +63,10 @@ def build_parser():
              ' can use the values \'0\' and \'inf\' for infinite width.',
         metavar='N/inf',
     )
-    parser.add_argument(
-        '--md-encoding', dest='md_encoding', default='utf-8',
-        help='Markdown content encoding.', metavar='<ENCODING>',
-    )
-    parser.add_argument(
-        '--po-encoding', dest='po_encoding', default=None,
-        help='PO files encoding. If you need different encodings for each'
-             ' file, you must define them in the Content-Type" field of each'
-             ' PO file metadata, in the form \'Content-Type: text/plain;'
-             ' charset=<ENCODING>\\n\'.',
-        metavar='<ENCODING>',
-    )
+    add_encoding_arguments(parser)
     add_common_cli_latest_arguments(parser)
     add_debug_option(parser)
+    add_pre_commit_option(parser)
     return parser
 
 
@@ -105,29 +97,34 @@ def parse_options(args):
 
 
 def run(args=[]):
-    prev_mdpo_running = os.environ.get('_MDPO_RUNNING')
-    os.environ['_MDPO_RUNNING'] = 'true'
-
-    try:
+    with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
-        output = pofile_to_markdown(
-            opts.filepath_or_content, opts.pofiles,
-            ignore=opts.ignore, save=opts.save,
-            md_encoding=opts.md_encoding,
+        po2md = Po2Md(
+            opts.pofiles,
+            ignore=opts.ignore,
             po_encoding=opts.po_encoding,
             command_aliases=opts.command_aliases,
             wrapwidth=opts.wrapwidth,
             debug=opts.debug,
+            _check_saved_files_changed=opts.check_saved_files_changed,
+        )
+
+        output = po2md.translate(
+            opts.filepath_or_content,
+            save=opts.save,
+            md_encoding=opts.md_encoding,
         )
 
         if not opts.quiet and not opts.save:
             sys.stdout.write(output + '\n')
-    finally:
-        if prev_mdpo_running is None:
-            del os.environ['_MDPO_RUNNING']
-        else:
-            os.environ['_MDPO_RUNNING'] = prev_mdpo_running
+
+        # pre-commit mode
+        if (  # pragma: no cover
+            opts.check_saved_files_changed and po2md._saved_files_changed
+        ):
+            return (output, 1)
+
     return (output, 0)
 
 
