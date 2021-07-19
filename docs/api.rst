@@ -16,6 +16,12 @@ po2md
 .. automodule:: mdpo.po2md
    :members: pofile_to_markdown
 
+md2po2md
+========
+
+.. automodule:: mdpo.md2po2md
+  :members: markdown_to_pofile_to_markdown
+
 mdpo2html
 =========
 

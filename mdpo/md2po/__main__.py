@@ -9,6 +9,9 @@ import sys
 from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
+    add_debug_option,
+    add_extensions_argument,
+    add_nolocation_option,
     parse_command_aliases_cli_arguments,
     parse_metadata_cli_arguments,
 )
@@ -91,24 +94,8 @@ def build_parser():
              ' passed as \'-po/--po-filepath\' parameter will be removed.'
              ' Only has effect used in combination with \'--merge-pofiles\'.',
     )
-    parser.add_argument(
-        '--no-location', '--nolocation', dest='location', action='store_false',
-        help="Do not write '#: filename:line' lines. Note that using this"
-             ' option makes it harder for technically skilled translators to'
-             " understand each message's context. Same as 'xgettext "
-             "--no-location'.",
-    )
-    parser.add_argument(
-        '-x', '--extension', '--ext', dest='extensions', action='append',
-        default=None,
-        help='md4c extension used to parse markdown content formatted as'
-             ' pymd4c extension keyword arguments. This argument can be passed'
-             ' multiple times. If is not passed, next extensions are used:'
-             f' {", ".join(DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS)}.'
-             ' You can see all available at'
-             ' https://github.com/dominickpastore/pymd4c#parser-option-flags',
-        metavar='<EXTENSION>',
-    )
+    add_nolocation_option(parser)
+    add_extensions_argument(parser)
     parser.add_argument(
         '--po-encoding', dest='po_encoding', default=None,
         help='Resulting PO file encoding.', metavar='<ENCODING>',
@@ -147,12 +134,8 @@ def build_parser():
              ' \'-d "Content-Type: text/plain; charset=utf-8"'
              ' -d "Language: es"\'.',
     )
-    parser.add_argument(
-        '-D', '--debug', dest='debug', action='store_true',
-        help='Print useful messages in the parsing process showing the'
-             ' contents of all Markdown elements.',
-    )
     add_common_cli_latest_arguments(parser)
+    add_debug_option(parser)
     return parser
 
 
@@ -213,10 +196,9 @@ def run(args=[]):
             ignore_msgids=opts.ignore_msgids,
             command_aliases=opts.command_aliases,
             metadata=opts.metadata,
+            wrapwidth=opts.wrapwidth,
             debug=opts.debug,
         )
-        if isinstance(opts.wrapwidth, int):
-            kwargs['wrapwidth'] = opts.wrapwidth
 
         pofile = markdown_to_pofile(opts.glob_or_content, **kwargs)
 

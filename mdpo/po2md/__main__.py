@@ -10,6 +10,7 @@ import sys
 from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
+    add_debug_option,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.po2md import pofile_to_markdown
@@ -72,12 +73,8 @@ def build_parser():
              ' charset=<ENCODING>\\n\'.',
         metavar='<ENCODING>',
     )
-    parser.add_argument(
-        '-D', '--debug', dest='debug', action='store_true',
-        help='Print useful messages in the parsing process showing the'
-             ' contents of all Markdown elements.',
-    )
     add_common_cli_latest_arguments(parser)
+    add_debug_option(parser)
     return parser
 
 

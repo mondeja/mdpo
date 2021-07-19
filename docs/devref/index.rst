@@ -17,3 +17,4 @@ mdpo/
    mdpo/md2po/mdpo.md2po.index
    mdpo/mdpo2html/mdpo.mdpo2html.index
    mdpo/po2md/mdpo.po2md.index
+   mdpo/md2po2md/mdpo.md2po2md.index
