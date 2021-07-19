@@ -108,7 +108,9 @@ def run(args=[]):
             _check_saved_files_changed=opts.check_saved_files_changed,
             **kwargs,
         )
-        if opts.check_saved_files_changed and _saved_files_changed:
+        if (  # pragma: no cover
+            opts.check_saved_files_changed and _saved_files_changed
+        ):
             exitcode = 1
     return exitcode
 

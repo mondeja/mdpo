@@ -153,7 +153,7 @@ class Po2Md:
             ) if 'wrapwidth' in kwargs else 80
         )
 
-        self._saved_files_changed = (
+        self._saved_files_changed = (  # pragma: no cover
             False if kwargs.get('_check_saved_files_changed') else None
         )
 
@@ -913,7 +913,7 @@ class Po2Md:
         self.output = '\n'.join(self._outputlines)
 
         if save:
-            if self._saved_files_changed is False:
+            if self._saved_files_changed is False:  # pragma: no cover
                 self._saved_files_changed = save_file_checking_file_changed(
                     save,
                     self.output,

@@ -133,7 +133,9 @@ def markdown_to_pofile_to_markdown(
                 save=True,
                 po_filepath=po_filepath,
             )
-            if _check_saved_files_changed and _saved_files_changed is False:
+            if (  # pragma: no cover
+                _check_saved_files_changed and _saved_files_changed is False
+            ):
                 _saved_files_changed = md2po._saved_files_changed
 
             # po2md
@@ -148,7 +150,9 @@ def markdown_to_pofile_to_markdown(
                 filepath,
                 save=md_filepath,
             )
-            if _check_saved_files_changed and _saved_files_changed is False:
+            if (  # pragma: no cover
+                _check_saved_files_changed and _saved_files_changed is False
+            ):
                 _saved_files_changed = po2md._saved_files_changed
 
     return _saved_files_changed

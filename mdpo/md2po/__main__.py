@@ -210,7 +210,9 @@ def run(args=[]):
             sys.stdout.write(pofile.__unicode__() + '\n')
 
         # pre-commit mode
-        if opts.check_saved_files_changed and md2po._saved_files_changed:
+        if (  # pragma: no cover
+            opts.check_saved_files_changed and md2po._saved_files_changed
+        ):
             return (pofile, 1)
 
     return (pofile, 0)
