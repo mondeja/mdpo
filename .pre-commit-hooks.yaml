@@ -1,3 +1,8 @@
+- id: md2po
+  name: md2po
+  entry: md2po -sq
+  description: Utility like xgettext to extract Markdown content dumping it inside PO files
+  language: python
 - id: md2po2md
   name: md2po2md
   entry: md2po2md

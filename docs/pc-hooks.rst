@@ -2,6 +2,20 @@
 pre-commit hooks
 ****************
 
+md2po
+=====
+
+.. code-block:: yaml
+
+   - repo: https://github.com/mondeja/mdpo
+     rev: pc-hooks
+     hooks:
+       - id: md2po
+         args:
+           - README.md
+           - -po
+           - README.po
+
 md2po2md
 ========
 
