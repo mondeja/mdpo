@@ -183,6 +183,31 @@ def add_nolocation_option(parser):
     )
 
 
+def add_encoding_arguments(parser, po_encoding_help=None):
+    """Add ``--po-encoding`` ``--md_encoding`` arguments to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
+            extend.
+        po_encoding_help (str): Help text for the ``--po-encoding`` argument.
+    """
+    parser.add_argument(
+        '--md-encoding', dest='md_encoding', default='utf-8',
+        help='Markdown content encoding.', metavar='ENCODING',
+    )
+
+    po_encoding_help = (
+        'PO files encoding. If you need different encodings for each'
+        ' file, you must define them in the Content-Type" field of each'
+        ' PO file metadata, in the form \'Content-Type: text/plain;'
+        ' charset=<ENCODING>\\n\'.'
+    ) if po_encoding_help is None else po_encoding_help
+    parser.add_argument(
+        '--po-encoding', dest='po_encoding', default=None, metavar='ENCODING',
+        help=po_encoding_help,
+    )
+
+
 def add_pre_commit_option(parser):
     """Add the ``--pre-commit`` option to an argument parser.
 

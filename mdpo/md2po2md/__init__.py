@@ -17,6 +17,8 @@ def markdown_to_pofile_to_markdown(
     command_aliases={},
     location=True,
     debug=False,
+    po_encoding=None,
+    md_encoding=None,
     md2po_kwargs={},
     po2md_kwargs={},
     _check_saved_files_changed=False,
@@ -56,6 +58,8 @@ def markdown_to_pofile_to_markdown(
             found the messages in PO file `#: reference` comments.
         debug (bool): Add events displaying all parsed elements in the
             extraction process.
+        po_encoding (str): PO files encoding.
+        md_encoding (str): Markdown files encoding.
         md2po_kwargs (dict): Additional optional arguments passed to
             ``markdown_to_pofile`` function.
         po2md_kwargs (dict): Additional optional arguments passed to
@@ -132,6 +136,8 @@ def markdown_to_pofile_to_markdown(
             md2po.extract(
                 save=True,
                 po_filepath=po_filepath,
+                po_encoding=po_encoding,
+                md_encoding=md_encoding,
             )
             if (  # pragma: no cover
                 _check_saved_files_changed and _saved_files_changed is False
@@ -143,12 +149,14 @@ def markdown_to_pofile_to_markdown(
                 [po_filepath],
                 command_aliases=command_aliases,
                 debug=debug,
+                po_encoding=po_encoding,
                 _check_saved_files_changed=_check_saved_files_changed,
                 **po2md_kwargs,
             )
             po2md.translate(
                 filepath,
                 save=md_filepath,
+                md_encoding=md_encoding,
             )
             if (  # pragma: no cover
                 _check_saved_files_changed and _saved_files_changed is False

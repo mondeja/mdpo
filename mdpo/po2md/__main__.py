@@ -10,6 +10,7 @@ from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
     add_debug_option,
+    add_encoding_arguments,
     add_pre_commit_option,
     parse_command_aliases_cli_arguments,
 )
@@ -62,18 +63,7 @@ def build_parser():
              ' can use the values \'0\' and \'inf\' for infinite width.',
         metavar='N/inf',
     )
-    parser.add_argument(
-        '--md-encoding', dest='md_encoding', default='utf-8',
-        help='Markdown content encoding.', metavar='<ENCODING>',
-    )
-    parser.add_argument(
-        '--po-encoding', dest='po_encoding', default=None,
-        help='PO files encoding. If you need different encodings for each'
-             ' file, you must define them in the Content-Type" field of each'
-             ' PO file metadata, in the form \'Content-Type: text/plain;'
-             ' charset=<ENCODING>\\n\'.',
-        metavar='<ENCODING>',
-    )
+    add_encoding_arguments(parser)
     add_common_cli_latest_arguments(parser)
     add_debug_option(parser)
     add_pre_commit_option(parser)

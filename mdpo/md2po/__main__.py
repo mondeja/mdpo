@@ -9,6 +9,7 @@ from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
     add_debug_option,
+    add_encoding_arguments,
     add_extensions_argument,
     add_nolocation_option,
     add_pre_commit_option,
@@ -97,13 +98,9 @@ def build_parser():
     )
     add_nolocation_option(parser)
     add_extensions_argument(parser)
-    parser.add_argument(
-        '--po-encoding', dest='po_encoding', default=None,
-        help='Resulting PO file encoding.', metavar='<ENCODING>',
-    )
-    parser.add_argument(
-        '--md-encoding', dest='md_encoding', default='utf-8',
-        help='Markdown content encoding.', metavar='<ENCODING>',
+    add_encoding_arguments(
+        parser,
+        po_encoding_help='Resulting PO file encoding.',
     )
     parser.add_argument(
         '-a', '--xheaders', dest='xheaders',

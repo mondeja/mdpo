@@ -9,6 +9,7 @@ from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
     add_debug_option,
+    add_encoding_arguments,
     add_extensions_argument,
     add_nolocation_option,
     add_pre_commit_option,
@@ -59,6 +60,7 @@ def build_parser():
     add_nolocation_option(parser)
     add_extensions_argument(parser)
     add_common_cli_latest_arguments(parser)
+    add_encoding_arguments(parser)
     add_debug_option(parser)
     add_pre_commit_option(parser)
     return parser
@@ -99,6 +101,8 @@ def run(args=[]):
             command_aliases=opts.command_aliases,
             debug=opts.debug,
             location=opts.location,
+            po_encoding=opts.po_encoding,
+            md_encoding=opts.md_encoding,
         )
 
         _saved_files_changed = markdown_to_pofile_to_markdown(
