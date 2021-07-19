@@ -21,6 +21,7 @@ Markdown files translation using pofiles. Fully complies with
 
    cli
    api
+   pc-hooks
    changelog
 
 .. toctree::

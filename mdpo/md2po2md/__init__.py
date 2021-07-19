@@ -90,8 +90,6 @@ def markdown_to_pofile_to_markdown(
             format_kwargs = {'lang': lang}
             if '{basename}' in output_paths_schema:
                 format_kwargs['basename'] = file_basename
-            if '{ext}' in output_paths_schema:
-                format_kwargs['ext'] = 'po'
             po_filepath = output_paths_schema.format(**format_kwargs)
 
             po_basename = os.path.basename(po_filepath)
