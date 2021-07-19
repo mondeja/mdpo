@@ -2,19 +2,20 @@
 pre-commit hooks
 ****************
 
+For all hooks, there are two different ways to set input paths, using first
+positional arguments inside ``args`` property or the ``files`` property as a
+regex.
+
 md2po
 =====
 
 The ``--save`` and ``--quiet`` options are passed automatically to ``md2po``,
-so you don't need to specify them in the ``args`` hook property.
-
-There is different ways to set input paths, using first positional arguments
-inside ``args`` property or setting the ``files`` property as a regex.
+so you don't need to specify them.
 
 .. code-block:: yaml
 
    - repo: https://github.com/mondeja/mdpo
-     rev: v0.3.65
+     rev: v0.3.66
      hooks:
        - id: md2po
          args:
@@ -42,11 +43,24 @@ po2md
 .. code-block:: yaml
 
    - repo: https://github.com/mondeja/mdpo
-     rev: v0.3.65
+     rev: v0.3.66
      hooks:
        - id: po2md
          args:
            - README.md
+           - -po
+           - README.es.po
+           - -s
+           - README.es.md
+
+.. code-block:: yaml
+
+   - repo: https://github.com/mondeja/mdpo
+     rev: v0.3.66
+     hooks:
+       - id: po2md
+         files: README\.md
+         args:
            - -po
            - README.es.po
            - -s
@@ -61,11 +75,24 @@ md2po2md
 .. code-block:: yaml
 
    - repo: https://github.com/mondeja/mdpo
-     rev: v0.3.65
+     rev: v0.3.66
      hooks:
        - id: md2po2md
          args:
-           - prueba.md
+           - README.md
+           - -l
+           - es
+           - -o
+           - locale/{lang}
+
+.. code-block:: yaml
+
+   - repo: https://github.com/mondeja/mdpo
+     rev: v0.3.66
+     hooks:
+       - id: md2po2md
+         files: README\.md
+         args:
            - -l
            - es
            - -o
