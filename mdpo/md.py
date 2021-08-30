@@ -52,37 +52,6 @@ def escape_links_titles(text, link_start_string='[', link_end_string=']'):
     return text
 
 
-def inline_untexted_links(text, link_start_string='[', link_end_string=']'):
-    """Replace Markdown self-referenced links delimiters by ``<`` and ``>``.
-
-    Given a string like ``"Text with [self-referenced-link]"``, replaces self
-    referenced links markup characters by new ones, in this case would becomes
-    ``"Text with <self-referenced-link>"``.
-
-    Wikilinks are not replaced (strings started with ``[[`` and ended with
-    ``]]`` string chunks).
-
-    Args:
-        text (str): Text that could contain self-referenced links.
-        link_start_string (str): String that delimites the start of a link.
-        link_end_string (str): String that delimites the end of a link.
-
-    Returns:
-        str: Same text as input with replaced link delimiters characters found
-        inside titles.
-
-    Examples:
-        >>> inline_untexted_links('Text with [self-referenced-link]')
-        'Text with <self-referenced-link>'
-    """
-    return re.sub(
-        (
-            re.escape(link_start_string) + r'(\w{1,5}:\/\/[^\s]+)' +
-            re.escape(link_end_string)
-        ), r'<\g<1>>', text,
-    )
-
-
 def parse_link_references(content):
     """Parses link references found in a Markdown content.
 

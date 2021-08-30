@@ -30,3 +30,18 @@ Write an email to <fake@example.com> if you want help
 [6]: <https://github.com/mondeja/mdpo> "Sixth reference"
 [7]: <https://github.com/mondeja/mdpo> 'Seventh reference'
 [8]: <https://github.com/mondeja/mdpo> (Eighth reference)
+
+Autolink to <https://foo.bar>.
+
+Autolink to [https://foo.bar](https://foo.bar).
+
+Autolink to [https://foo.bar](https://foo.bar "with title").
+
+Autolink to <https://0.0.78.94:8000>.
+
+Uppercased autolink like <MAILTO:FOO@BAR.BAZ>.
+
+Autolink with title like <https://foo.bar "hello">.
+
+Intended to be autolink but has markup characters inside text
+[**http**://`example`.*org*](http://example.org).
