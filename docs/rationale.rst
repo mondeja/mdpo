@@ -73,6 +73,9 @@ the text that needs to be translated, including markdown characters:
   dumped as ``*Underline text*``.
 
 
+.. seealso::
+   * :ref:`Implementation notes<implementation-notes>`
+
 Advantages
 ----------
 

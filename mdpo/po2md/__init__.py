@@ -767,7 +767,12 @@ class Po2Md:
             else:
                 if self._current_aspan_text == self._current_aspan_href:
                     # autolink vs link clash (see implementation notes)
-                    self._current_msgid += f'<{self._current_aspan_text}>'
+                    self._current_msgid += f'<{self._current_aspan_text}'
+                    if details['title']:
+                        self._current_msgid += ' "{}"'.format(
+                            polib.escape(details['title'][0][1]),
+                        )
+                    self._current_msgid += '>'
                 elif self._current_aspan_href:
                     self._current_msgid += '[{}]({}'.format(
                         self._current_aspan_text,

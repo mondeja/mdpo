@@ -26,6 +26,12 @@ A [link](https://so-long-long-long-long-long-long-long-long-that-should-not-be-w
 
 - [list item link name](https://example.com/a-big-link-with-a-very-very-long-and-big-url-name-on-it)
 
+Autolink to <http://127.0.0.1:8080/>.
+
+Autolink with title like <https://foo.bar "hello">.
+
+Another autolink with title like [https://foo.bar](https://foo.bar "hello").
+
 [1]: https://github.com/mondeja/mdpo
 [2]: https://github.com/mondeja/mdpo "Second reference"
 [3]: https://github.com/mondeja/mdpo 'Third reference'
@@ -34,5 +40,3 @@ A [link](https://so-long-long-long-long-long-long-long-long-that-should-not-be-w
 [6]: <https://github.com/mondeja/mdpo> "Sixth reference"
 [7]: <https://github.com/mondeja/mdpo> 'Seventh reference'
 [8]: <https://github.com/mondeja/mdpo> (Eighth reference)
-
-Autolink to <http://127.0.0.1:8080/>.

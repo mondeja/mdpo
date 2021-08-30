@@ -29,6 +29,7 @@ Markdown files translation using pofiles. Complies with
    :caption: In depth
 
    rationale
+   implementation-notes
 
 .. raw:: html
 
@@ -39,7 +40,6 @@ Markdown files translation using pofiles. Complies with
    :caption: Developer reference
 
    devref/index
-   implementation-notes
 
 .. _CommonMark Specification: https://spec.commonmark.org/
 .. _v0.29: https://spec.commonmark.org/0.29

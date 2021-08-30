@@ -87,3 +87,9 @@ msgstr ""
 
 msgid "Autolink to <http://127.0.0.1:8080/>."
 msgstr "Link automático hacia <http://127.0.0.1:8080/>."
+
+msgid "Autolink with title like <https://foo.bar \"hello\">."
+msgstr "Link automático con título como <https://foo.bar \"hola\">."
+
+msgid "Another autolink with title like <https://foo.bar \"hello\">."
+msgstr "Otro link automático con título como <https://foo.bar \"hola\">."

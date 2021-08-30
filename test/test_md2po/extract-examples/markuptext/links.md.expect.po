@@ -45,6 +45,9 @@ msgstr ""
 msgid "Autolink to <https://foo.bar>."
 msgstr ""
 
+msgid "Autolink to <https://foo.bar \"with title\">."
+msgstr ""
+
 msgid "Autolink to <https://0.0.78.94:8000>."
 msgstr ""
 

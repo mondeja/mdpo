@@ -35,6 +35,8 @@ Autolink to <https://foo.bar>.
 
 Autolink to [https://foo.bar](https://foo.bar).
 
+Autolink to [https://foo.bar](https://foo.bar "with title").
+
 Autolink to <https://0.0.78.94:8000>.
 
 Uppercased autolink like <MAILTO:FOO@BAR.BAZ>.

@@ -748,7 +748,12 @@ class Md2Po:
                 else:
                     if self._current_aspan_text == details['href'][0][1]:
                         # autolink vs link clash (see implementation notes)
-                        self._current_msgid += f'<{self._current_aspan_text}>'
+                        self._current_msgid += f'<{self._current_aspan_text}'
+                        if details['title']:
+                            self._current_msgid += ' "{}"'.format(
+                                details['title'][0][1],
+                            )
+                        self._current_msgid += '>'
                     else:
                         self._current_msgid += '[{}]({}{})'.format(
                             self._current_aspan_text,
