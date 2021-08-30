@@ -8,9 +8,9 @@ msgstr "Los resultados trimestrales se ven muy bien"
 msgid "Revenue was `off` the chart"
 msgstr "Los ingresos estaban `fuera` del gráfico"
 
-msgid "Profits were higher than [https://ever.com] has been"
+msgid "Profits were higher than <https://ever.com> has been"
 msgstr ""
-"Los beneficios fueron superiores a los que [https://nunca.com] habían sido"
+"Los beneficios fueron superiores a los que <https://nunca.com> habían sido"
 
 msgid "The first item of an ordered list."
 msgstr "El primer elemento de una lista ordenada."

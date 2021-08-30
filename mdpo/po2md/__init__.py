@@ -15,7 +15,6 @@ from mdpo.io import save_file_checking_file_changed, to_file_content_if_is_file
 from mdpo.md import (
     MarkdownSpanWrapper,
     escape_links_titles,
-    inline_untexted_links,
     parse_link_references,
 )
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
@@ -82,16 +81,17 @@ class Po2Md:
         '_inside_pblock',
         '_inside_liblock',
         '_inside_liblock_first_p',
-        '_inside_codespan',
         '_inside_hblock',
+        '_inside_aspan',
+        '_inside_codespan',
         '_inside_table',
         '_codespan_start_index',
         '_codespan_backticks',
         '_codespan_inside_current_msgid',
-        '_aspan_inside_current_msgid',
         '_inside_quoteblock',
-        '_current_aspan_target',
+        '_current_aspan_ref_target',
         '_current_aspan_href',
+        '_current_aspan_text',
         '_current_imgspan',
         '_current_thead_aligns',
         '_aimg_title_inside_current_msgid',
@@ -187,21 +187,16 @@ class Po2Md:
             self.code_end_string,
         )
 
-        self.link_start_string = kwargs.get('link_start_string', '[')
-        self.link_end_string = kwargs.get('link_end_string', ']')
-
         self._enterspan_replacer = {
             md4c.SpanType.STRONG.value: self.bold_start_string,
             md4c.SpanType.EM.value: self.italic_start_string,
             md4c.SpanType.CODE.value: self.code_start_string,
-            md4c.SpanType.A.value: self.link_start_string,
         }
 
         self._leavespan_replacer = {
             md4c.SpanType.STRONG.value: self.bold_end_string,
             md4c.SpanType.EM.value: self.italic_end_string,
             md4c.SpanType.CODE.value: self.code_end_string,
-            md4c.SpanType.A.value: self.link_end_string,
         }
 
         self.wikilink_start_string = '[['
@@ -239,11 +234,13 @@ class Po2Md:
 
         self._inside_quoteblock = False
 
-        self._current_aspan_target = None
+        self._inside_aspan = False
+        self._current_aspan_ref_target = None
         self._current_aspan_href = None
+        self._current_aspan_text = ''
+
         self._link_references = None
         self._current_imgspan = {}
-        self._aspan_inside_current_msgid = False
 
         # current table head alignments
         self._current_thead_aligns = []
@@ -260,7 +257,7 @@ class Po2Md:
         self._ol_marks = []
 
         # current lists type (list nesting): ['ul' or 'ol', [True, False]]
-        #   (second parameter is tasklist item or not)
+        # (second parameter is tasklist item or not)
         self._current_list_type = []
 
         self._current_wikilink_target = None
@@ -305,18 +302,10 @@ class Po2Md:
         self.command(command, comment, original_command)
 
     def _escape_translation(self, text):
-        # escape '"' characters inside links and image titles
         if self._aimg_title_inside_current_msgid:
-            text = escape_links_titles(
-                text, link_start_string=self.link_start_string,
-                link_end_string=self.link_end_string,
-            )
-        # - `[self-referenced-link]` -> <self-referenced-link>
-        return inline_untexted_links(
-            text,
-            link_start_string=self.link_start_string,
-            link_end_string=self.link_end_string,
-        )
+            # escape '"' characters inside links and image titles
+            text = escape_links_titles(text)
+        return text
 
     def _translate_msgid(self, msgid, msgctxt, tcomment):
         try:
@@ -423,7 +412,6 @@ class Po2Md:
 
         self._codespan_inside_current_msgid = False
         self._aimg_title_inside_current_msgid = False
-        self._aspan_inside_current_msgid = False
 
     def _save_current_line(self):
         # strip all spaces according to unicodedata database ignoring newlines,
@@ -692,19 +680,27 @@ class Po2Md:
         ):
             return
 
-        try:
-            self._current_msgid += self._enterspan_replacer[span.value]
-        except KeyError:
-            pass
+        if self._inside_aspan:  # span inside link text
+            try:
+                self._current_aspan_text += self._enterspan_replacer[
+                    span.value
+                ]
+            except KeyError:
+                pass
+        else:
+            try:
+                self._current_msgid += self._enterspan_replacer[span.value]
+            except KeyError:
+                pass
 
         if span is md4c.SpanType.A:
-            self._aspan_inside_current_msgid = True
+            self._inside_aspan = True
 
             if self._link_references is None:
                 self._link_references = parse_link_references(self.content)
 
             self._current_aspan_href = details['href'][0][1]
-            self._current_aspan_target = None
+            self._current_aspan_ref_target = None
 
             if details['title']:
                 current_aspan_title = details['title'][0][1]
@@ -713,12 +709,12 @@ class Po2Md:
                         href == self._current_aspan_href and
                         title == current_aspan_title
                     ):
-                        self._current_aspan_target = target
+                        self._current_aspan_ref_target = target
                         break
             else:
                 for target, href, title in self._link_references:
                     if href == self._current_aspan_href:
-                        self._current_aspan_target = target
+                        self._current_aspan_ref_target = target
                         break
 
         elif span is md4c.SpanType.CODE:
@@ -748,18 +744,35 @@ class Po2Md:
             self._current_msgid += polib.escape(self._current_wikilink_target)
             self._current_wikilink_target = None
 
-        try:
-            self._current_msgid += self._leavespan_replacer[span.value]
-        except KeyError:
-            pass
+        if self._inside_aspan:  # span inside link text
+            try:
+                self._current_aspan_text += self._leavespan_replacer[
+                    span.value
+                ]
+            except KeyError:
+                pass
+        else:
+            try:
+                self._current_msgid += self._leavespan_replacer[span.value]
+            except KeyError:
+                pass
 
         if span is md4c.SpanType.A:
-            if self._current_aspan_target:
-                self._current_msgid += f'[{self._current_aspan_target}]'
-                self._current_aspan_target = None
+            if self._current_aspan_ref_target:  # referenced link
+                self._current_msgid += '[{}][{}]'.format(
+                    self._current_aspan_text,
+                    self._current_aspan_ref_target,
+                )
+                self._current_aspan_ref_target = None
             else:
-                if self._current_aspan_href:
-                    self._current_msgid += '({}'.format(details['href'][0][1])
+                if self._current_aspan_text == self._current_aspan_href:
+                    # autolink vs link clash (see implementation notes)
+                    self._current_msgid += f'<{self._current_aspan_text}>'
+                elif self._current_aspan_href:
+                    self._current_msgid += '[{}]({}'.format(
+                        self._current_aspan_text,
+                        self._current_aspan_href,
+                    )
                     if details['title']:
                         self._aimg_title_inside_current_msgid = True
                         self._current_msgid += ' "{}"'.format(
@@ -767,6 +780,8 @@ class Po2Md:
                         )
                     self._current_msgid += ')'
             self._current_aspan_href = None
+            self._inside_aspan = False
+            self._current_aspan_text = ''
         elif span is md4c.SpanType.CODE:
             self._inside_codespan = False
             self._current_msgid += (
@@ -813,6 +828,12 @@ class Po2Md:
                         self._codespan_backticks * self.code_start_string,
                         self._current_msgid[self._codespan_start_index:],
                     )
+                    if self._inside_aspan:
+                        self._current_aspan_text += text
+                        return
+                elif self._inside_aspan:
+                    self._current_aspan_text += text
+                    return
                 elif text == self.italic_start_string:
                     text = self.italic_start_string_escaped
                 elif text == self.code_start_string:

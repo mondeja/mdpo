@@ -27,6 +27,8 @@ Un [enlace](https://tan-tan-tan-tan-tan-tan-tan-tan-largo-que-no-debe-ser-envuel
 
 - [list item link name](https://example.com/a-big-link-with-a-very-very-long-and-big-url-name-on-it)
 
+Link automático hacia <http://127.0.0.1:8080/>.
+
 [1]: https://github.com/mondeja/mdpo
 [2]: https://github.com/mondeja/mdpo "Segunda referencia"
 [3]: https://github.com/mondeja/mdpo "Tercera referencia"

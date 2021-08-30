@@ -10,9 +10,7 @@ msgid ""
 "best search engine for privacy\")."
 msgstr ""
 
-msgid ""
-"Visit "
-"[https://www.github.com/mondeja/mdpo](https://www.github.com/mondeja/mdpo)"
+msgid "Visit <https://www.github.com/mondeja/mdpo>"
 msgstr ""
 
 msgid ""
@@ -42,6 +40,23 @@ msgid "[Reference G][7]"
 msgstr ""
 
 msgid "[Reference H][8]"
+msgstr ""
+
+msgid "Autolink to <https://foo.bar>."
+msgstr ""
+
+msgid "Autolink to <https://0.0.78.94:8000>."
+msgstr ""
+
+msgid "Uppercased autolink like <MAILTO:FOO@BAR.BAZ>."
+msgstr ""
+
+msgid "Autolink with title like <https://foo.bar \"hello\">."
+msgstr ""
+
+msgid ""
+"Intended to be autolink but has markup characters inside text "
+"[**http**://`example`.*org*](http://example.org)."
 msgstr ""
 
 #, fuzzy

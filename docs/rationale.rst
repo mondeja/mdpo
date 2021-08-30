@@ -56,7 +56,10 @@ the text that needs to be translated, including markdown characters:
 * ````Code text```` and ```Code text``` are unified to use the minimum possible
   backticks for start and end characters and dumped into msgids as
   ```Code text```.
-* ``[Link text](target)`` is not changed, is dumped into msgids as is.
+* ``[Link text](target)`` is not changed if the text is different than the
+  target, is dumped into msgids as is. In the case that link text and target
+  are equal, is converted to an `autolink`_ and dumped into msgids as
+  ``<link>``.
 * Images as ``![Image alternative text](/target.ext "Image title text")``,
   are not changed, but included as is.
 * ``~~Strikethrough text~~`` is not changed, is dumped into msgids as
@@ -66,7 +69,7 @@ the text that needs to be translated, including markdown characters:
 * ``__Underline text__`` and ``_Underline text_`` are unified to
   ``__Underline text__`` into msgids if ``underline`` mode is active,
   otherwise are treated like bold text (with two characters ``__``) and dumped
-  as ``**Underline text**`` or italic text (with one character ``_``) and
+  as ``**Underline text**`` or italic text (with one character, ``_``) and
   dumped as ``*Underline text*``.
 
 
@@ -86,3 +89,5 @@ Disadvantages
 * Message replacers needs to be written and depends on this specification.
 * Translation editors needs to be configured with this specification if they
   want to handle properly markup character templates.
+
+.. _autolink: https://spec.commonmark.org/0.30/#autolinks
