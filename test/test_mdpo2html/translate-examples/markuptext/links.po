@@ -1,0 +1,39 @@
+#
+
+msgid ""
+msgstr ""
+
+msgid "Some text followed by [a link](https://fake.fake)."
+msgstr "Algo de texto seguido de [un enlace](https://falso.falsa)."
+
+msgid "[When the link](some/place \"a title\") starts the text."
+msgstr "[Cuando el enlace](algun/lugar \"un título\") comienza el texto."
+
+msgid "[Link with class](https://fake.fake)."
+msgstr "[Link con clase](https://falso.falsa)."
+
+msgid "Some text followed by [a referenced link][referenced-link]."
+msgstr "Algo de texto seguido de [un enlace referenciado][referenced-link]."
+
+msgid ""
+"Some text followed by [multiple][referenced-link] "
+"[referenced][referenced-link] [links][another-referenced-link]."
+msgstr ""
+"Algo de texto seguido de [múltiples][referenced-link] "
+"[enlaces][another-referenced-link] [referenciados][referenced-link]."
+
+msgid ""
+"Some text followed by [a referenced link][translated-reference] whose "
+"reference is also translated."
+msgstr ""
+"Algo de texto seguido de [un enlace referenciado][referencia-traducida] "
+"cuya referencia también es traducida."
+
+msgid "[referenced-link]: https://example.tld"
+msgstr "[referenced-link]: https://ejemplo.tld"
+
+msgid "[another-referenced-link]: https://another-example.tld"
+msgstr "[another-referenced-link]: https://otro-ejemplo.tld"
+
+msgid "[translated-reference]: https://translated-reference.tld"
+msgstr "[referencia-traducida]: https://referencia-traducida.tld"

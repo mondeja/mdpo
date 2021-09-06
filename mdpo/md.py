@@ -11,6 +11,7 @@ from mdpo.text import min_not_max_chars_in_a_row
 LINK_REFERENCE_RE = re.compile(
     r'^\s{0,3}\[([^\]]+)\]:\s+<?([^\s>]+)>?\s*["\'\(]?([^"\'\)]+)?',
 )
+LINK_REFERENCED_LINK_RE = re.compile(r'\[([^\]]+)\]\[([^\]\s]+)\]')
 
 
 def escape_links_titles(text, link_start_string='[', link_end_string=']'):
@@ -313,3 +314,114 @@ class MarkdownSpanWrapper:
         if self.first_line_width == self.width:  # is not blockquote nor list
             self.output += '\n'
         return self.output
+
+
+def solve_link_reference_targets(translations):
+    """Solve link reference targets in markdown blocks.
+
+    Given a dictionary of msgid/msgstr translations, those link references
+    targets will be resolved and returned in a new dictionary.
+
+    Args:
+        translations (dictionary): Mapping of msgid-msgstr entries from which
+            the resolved translations will be extracted.
+
+    Returns:
+        dict: New created messages with solved link reference targets.
+    """
+    solutions = {}
+
+    # dictionary with defined link references and their targets
+    link_references_text_targets = []
+
+    # compound by dictionaries with `original_msgid`, `original_msgstr` and
+    # `link_reference_matchs`
+    msgid_msgstrs_with_links = []
+
+    # discover link reference definitions
+    for msgid, msgstr in translations.items():
+        if msgid[0] == '[':  # filter for performance improvement
+            msgid_match = re.search(LINK_REFERENCE_RE, msgid)
+            if msgid_match:
+                msgstr_match = re.search(LINK_REFERENCE_RE, msgstr)
+                if msgstr_match:
+                    link_references_text_targets.append((
+                        msgid_match.groups(),
+                        msgstr_match.groups(),
+                    ))
+        msgid_matchs = re.findall(LINK_REFERENCED_LINK_RE, msgid)
+        if msgid_matchs:
+            msgstr_matchs = re.findall(LINK_REFERENCED_LINK_RE, msgstr)
+            if msgstr_matchs:
+                msgid_msgstrs_with_links.append((
+                    msgid, msgstr, msgid_matchs, msgstr_matchs,
+                ))
+
+    # original msgid, original msgstr,
+    # msgid link reference matchs, msgstr link reference matchs
+    for (
+            orig_msgid, orig_msgstr, msgid_linkr_groups, msgstr_linkr_groups,
+    ) in msgid_msgstrs_with_links:
+        # search if msgid and link reference matchs are inside
+        # `link_references_text_targets`
+        #
+        # if so, replace in original messages link referenced targets with
+        # real targets and store them in solutions
+        new_msgid, new_msgstr = (None, None)
+
+        for msgid_linkr_group in msgid_linkr_groups:
+            for link_reference_text_targets in link_references_text_targets:
+
+                # link_reference_text_targets[msgid][link_reference]
+                if link_reference_text_targets[0][0] == msgid_linkr_group[1]:
+                    replacer = (
+                        f'[{msgid_linkr_group[0]}][{msgid_linkr_group[1]}]'
+                    )
+                    replacement = (
+                        # link_reference_text_targets[msgid][target]
+                        f'[{msgid_linkr_group[0]}]'
+                        f'({link_reference_text_targets[0][1]})'
+                    )
+
+                    if new_msgid is None:
+                        # first referenced link replacement in msgid
+                        new_msgid = orig_msgid.replace(replacer, replacement)
+                    else:
+                        # consecutive referenced link replacements in msgid
+                        new_msgid = new_msgid.replace(replacer, replacement)
+                    break
+
+        # the same game as above, but now for msgstrs
+
+        for msgstr_linkr_group in msgstr_linkr_groups:
+            for link_reference_text_targets in link_references_text_targets:
+
+                # link_reference_text_targets[msgstr][link_reference]
+                if link_reference_text_targets[1][0] == msgstr_linkr_group[1]:
+                    replacer = (
+                        f'[{msgstr_linkr_group[0]}][{msgstr_linkr_group[1]}]'
+                    )
+                    replacement = (
+                        # link_reference_text_targets[msgstr][target]
+                        f'[{msgstr_linkr_group[0]}]'
+                        f'({link_reference_text_targets[1][1]})'
+                    )
+
+                    if new_msgstr is None:
+                        # first referenced link replacement in msgid
+                        new_msgstr = orig_msgstr.replace(replacer, replacement)
+                    else:
+                        # consecutive referenced link replacements in msgid
+                        new_msgstr = new_msgstr.replace(replacer, replacement)
+                    break
+
+        # store in solutions
+        solutions[new_msgid] = new_msgstr
+
+        # print("----> new_msgid", new_msgid)
+        # print("----> new_msgstr", new_msgstr)
+
+    # print("----> link_references_text_targets", link_references_text_targets)
+    # print("----> msgid_msgstrs_with_links", msgid_msgstrs_with_links)
+    # print("----> solutions", solutions)
+    return solutions
