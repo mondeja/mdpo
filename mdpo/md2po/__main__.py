@@ -8,10 +8,16 @@ import sys
 from mdpo.cli import (
     add_common_cli_first_arguments,
     add_common_cli_latest_arguments,
+    add_debug_option,
+    add_encoding_arguments,
+    add_extensions_argument,
+    add_nolocation_option,
+    add_pre_commit_option,
     parse_command_aliases_cli_arguments,
     parse_metadata_cli_arguments,
 )
-from mdpo.md2po import markdown_to_pofile
+from mdpo.context import environ
+from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 
@@ -37,7 +43,7 @@ def build_parser():
         metavar='PATH',
     )
     parser.add_argument(
-        '-po', '--po-filepath', dest='po_filepath',
+        '-po', '--po-filepath', '--pofilepath', dest='po_filepath',
         default=None,
         help='Merge new msgids in the po file indicated at this parameter (if'
              ' \'--save\' argument is passed) or use the msgids of the file as'
@@ -48,10 +54,12 @@ def build_parser():
     parser.add_argument(
         '-s', '--save', dest='save', action='store_true',
         help='Save new found msgids to the po file'
-             ' indicated as parameter \'--po-filepath\'.',
+             ' indicated as parameter \'-po/--po-filepath\'.'
+             ' Passing this option without defining the argument'
+             ' \'-po/--po-filepath\' will raise an error.',
     )
     parser.add_argument(
-        '-mo', '--mo-filepath', dest='mo_filepath',
+        '-mo', '--mo-filepath', '--mofilepath', dest='mo_filepath',
         default=None,
         help='The resulting PO file will be compiled to a mofile and saved in'
              ' the path specified at this parameter.',
@@ -65,17 +73,19 @@ def build_parser():
              ' [link](target).',
     )
     parser.add_argument(
-        '-w', '--wrapwidth', dest='wrapwidth',
-        help='Wrap width for po file indicated at \'--po-filepath\' parameter.'
-             ' Only useful when the \'-w\' option was passed to xgettext.',
-        metavar='N', type=int,
+        '-w', '--wrapwidth', dest='wrapwidth', metavar='N/inf', type=str,
+        default='78',
+        help='Wrap width for po file indicated at \'-po/--po-filepath\''
+             ' parameter. Only useful when the \'-w\' option was passed to'
+             ' xgettext. You can use the values \'0\' and \'inf\' for infinite'
+             ' width.',
     )
     parser.add_argument(
-        '-m', '--merge-pofiles',
+        '-m', '--merge-po-files', '--merge-pofiles',
         dest='mark_not_found_as_obsolete',
         action='store_false',
         help='Messages not found which are already stored in the PO file'
-             ' passed as \'--po-filepath\' argument will not be marked as'
+             ' passed as \'-po/--po-filepath\' argument will not be marked as'
              ' obsolete.',
     )
     parser.add_argument(
@@ -83,36 +93,14 @@ def build_parser():
         dest='preserve_not_found',
         action='store_false',
         help='Messages not found which are already stored in the PO file'
-             ' passed as \'--po-filepath\' parameter will be removed.'
+             ' passed as \'-po/--po-filepath\' parameter will be removed.'
              ' Only has effect used in combination with \'--merge-pofiles\'.',
     )
-    parser.add_argument(
-        '--no-location',
-        dest='location',
-        action='store_false',
-        help="Do not write '#: filename:line' lines. Note that using this"
-             ' option makes it harder for technically skilled translators to'
-             " understand each message's context. Same as 'xgettext "
-             "--no-location'.",
-    )
-    parser.add_argument(
-        '-x', '--extension', dest='extensions', action='append',
-        default=None,
-        help='md4c extension used to parse markdown content formatted as'
-             ' pymd4c extension keyword arguments. This argument can be passed'
-             ' multiple times. If is not passed, next extensions are used:'
-             f' {", ".join(DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS)}.'
-             ' You can see all available at'
-             ' https://github.com/dominickpastore/pymd4c#parser-option-flags',
-        metavar='<EXTENSION>',
-    )
-    parser.add_argument(
-        '--po-encoding', dest='po_encoding', default=None,
-        help='Resulting PO file encoding.', metavar='<ENCODING>',
-    )
-    parser.add_argument(
-        '--md-encoding', dest='md_encoding', default='utf-8',
-        help='Markdown content encoding.', metavar='<ENCODING>',
+    add_nolocation_option(parser)
+    add_extensions_argument(parser)
+    add_encoding_arguments(
+        parser,
+        po_encoding_help='Resulting PO file encoding.',
     )
     parser.add_argument(
         '-a', '--xheaders', dest='xheaders',
@@ -145,6 +133,8 @@ def build_parser():
              ' -d "Language: es"\'.',
     )
     add_common_cli_latest_arguments(parser)
+    add_debug_option(parser)
+    add_pre_commit_option(parser)
     return parser
 
 
@@ -152,13 +142,15 @@ def parse_options(args=[]):
     parser = build_parser()
     if '-h' in args or '--help' in args:
         parser.print_help()
-        sys.exit(0)
+        sys.exit(1)
     opts, unknown = parser.parse_known_args(args)
 
+    glob_or_content = ''
     if not sys.stdin.isatty():
-        opts.glob_or_content = sys.stdin.read().strip('\n')
-    elif isinstance(opts.glob_or_content, list):
-        opts.glob_or_content = opts.glob_or_content[0]
+        glob_or_content += sys.stdin.read().strip('\n')
+    if isinstance(opts.glob_or_content, list) and opts.glob_or_content:
+        glob_or_content += opts.glob_or_content[0]
+    opts.glob_or_content = glob_or_content
 
     if opts.extensions is None:
         opts.extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
@@ -180,33 +172,45 @@ def parse_options(args=[]):
 
 
 def run(args=[]):
-    opts = parse_options(args)
+    with environ(_MDPO_RUNNING='true'):
+        opts = parse_options(args)
 
-    kwargs = dict(
-        po_filepath=opts.po_filepath,
-        ignore=opts.ignore,
-        save=opts.save,
-        mo_filepath=opts.mo_filepath,
-        plaintext=opts.plaintext,
-        mark_not_found_as_obsolete=opts.mark_not_found_as_obsolete,
-        preserve_not_found=opts.preserve_not_found,
-        location=opts.location,
-        extensions=opts.extensions,
-        po_encoding=opts.po_encoding,
-        md_encoding=opts.md_encoding,
-        xheaders=opts.xheaders,
-        include_codeblocks=opts.include_codeblocks,
-        ignore_msgids=opts.ignore_msgids,
-        command_aliases=opts.command_aliases,
-        metadata=opts.metadata,
-    )
-    if isinstance(opts.wrapwidth, int):
-        kwargs['wrapwidth'] = opts.wrapwidth
+        init_kwargs = dict(
+            ignore=opts.ignore,
+            plaintext=opts.plaintext,
+            mark_not_found_as_obsolete=opts.mark_not_found_as_obsolete,
+            preserve_not_found=opts.preserve_not_found,
+            location=opts.location,
+            extensions=opts.extensions,
+            xheaders=opts.xheaders,
+            include_codeblocks=opts.include_codeblocks,
+            ignore_msgids=opts.ignore_msgids,
+            command_aliases=opts.command_aliases,
+            metadata=opts.metadata,
+            debug=opts.debug,
+            _check_saved_files_changed=opts.check_saved_files_changed,
+        )
 
-    pofile = markdown_to_pofile(opts.glob_or_content, **kwargs)
+        extract_kwargs = dict(
+            po_filepath=opts.po_filepath,
+            save=opts.save,
+            mo_filepath=opts.mo_filepath,
+            po_encoding=opts.po_encoding,
+            md_encoding=opts.md_encoding,
+            wrapwidth=opts.wrapwidth,
+        )
 
-    if not opts.quiet:
-        sys.stdout.write(pofile.__unicode__() + '\n')
+        md2po = Md2Po(opts.glob_or_content, **init_kwargs)
+        pofile = md2po.extract(**extract_kwargs)
+
+        if not opts.quiet:
+            sys.stdout.write(pofile.__unicode__() + '\n')
+
+        # pre-commit mode
+        if (  # pragma: no cover
+            opts.check_saved_files_changed and md2po._saved_files_changed
+        ):
+            return (pofile, 1)
 
     return (pofile, 0)
 

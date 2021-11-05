@@ -14,6 +14,7 @@ from mdpo.command import (
 )
 from mdpo.html import get_html_attrs_tuple_attr, html_attrs_tuple_to_string
 from mdpo.io import to_file_content_if_is_file
+from mdpo.md import solve_link_reference_targets
 from mdpo.po import (
     paths_or_globs_to_unique_pofiles,
     pofiles_to_unique_translations_dicts,
@@ -66,6 +67,11 @@ class MdPo2HTML(HTMLParser):
 
         # lazy translators mode
         self.merge_adjacent_markups = merge_adjacent_markups
+
+        # references of msgids and their msgstrs changing referenced link
+        # targets by their real target, needed to support link references
+        # (this variable is redefined when the first link tag `a` is found)
+        self.real_link_reference_targets = None
 
         # code markup
         self.code_tags = code_tags
@@ -333,6 +339,14 @@ class MdPo2HTML(HTMLParser):
                 tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '',
             )
         else:
+            if tag == 'a' and self.real_link_reference_targets is None:
+                # extend translations to populate link reference msgid-msgstrs
+                # with real targets
+                self.real_link_reference_targets = (
+                    solve_link_reference_targets(self.translations)
+                )
+                self.translations.update(self.real_link_reference_targets)
+
             self.replacer.append(('start', tag, attrs))
             self.context.append(tag)
 

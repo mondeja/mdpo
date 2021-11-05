@@ -2,7 +2,7 @@
   <a href="https://github.com/mondeja/mdpo"><img src="https://raw.githubusercontent.com/mondeja/mdpo/master/mdpo.png" alt="mdpo" width="400"></a>
 </h1>
 
-<h4 align="center">Markdown file translation utilities using PO files</h4>
+<h4 align="center">Markdown files translation using PO files</h4>
 
 <p align="center">
   <a href="https://pypi.org/project/mdpo/">
@@ -22,8 +22,10 @@
 </h2>
 
 <p align="center">
-Fully complies with <a href="https://spec.commonmark.org/0.29">CommonMark Specification v0.29</a>,
-supporting some additional features.
+Complies with <a href="https://spec.commonmark.org/">CommonMark Specification</a>
+<a href="https://spec.commonmark.org/0.29">v0.29</a> and
+<a href="https://spec.commonmark.org/0.30">v0.30</a>, supporting some
+additional features.
 </p>
 
 ## Status

@@ -7,6 +7,7 @@ mdpo installation includes three command line interfaces:
 * **md2po** is used to dump strings from Markdown files into PO files as msgids.
 * **po2md** is used to produce a translated Markdown file from a source Markdown
   file and a pofile with extracted msgids and translated msgstrs.
+* **md2po2md** is a convenient wrapper for **md2po** and **po2md**.
 * **mdpo2html** is used to produce a translated HTML file from a source HTML
   file produced from Markdown file using a Markdown-to-HTML converter, and a
   pofile of reference for strings.
@@ -51,10 +52,26 @@ The output produced by :ref:`po2md-cli` is compatible with the following
 
    {
      "no-blanks-blockquote": false,
+     "no-bare-urls": false,
      "ul-indent": {
        "indent": 3
      }
    }
+
+.. raw:: html
+
+   <hr>
+
+.. _md2po2md-cli:
+
+md2po2md
+========
+
+.. sphinx_argparse_cli::
+   :module: mdpo.md2po2md.__main__
+   :func: build_parser
+   :prog: md2po2md
+   :title:
 
 .. raw:: html
 

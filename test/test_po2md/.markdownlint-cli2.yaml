@@ -29,3 +29,7 @@ config:
   # configuration defining the indentation spaces for unordered lists to 3.
   ul-indent:
     indent: 3
+
+  # Bare URLs in markdownlint doesn't support link titles, but MD4C yes
+  # See https://github.com/DavidAnson/markdownlint/issues/424
+  no-bare-urls: false

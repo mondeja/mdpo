@@ -23,7 +23,8 @@
    > Bloque de cita después de párrafo dentro de elemento de lista desordenada
 
    - Elemento de lista desordenada anidado
-      > Otro bloque de cita más anidado dentro de elemento de lista desordenada anidado
+      > Otro bloque de cita más anidado dentro de elemento de lista desordenada
+      anidado
 
       | Sintaxis | Descripción | Estilo | A |
       | --- | :-- | --: | :-: |

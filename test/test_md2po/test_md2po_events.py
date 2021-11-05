@@ -13,7 +13,7 @@ from mdpo.md2po import Md2Po, markdown_to_pofile
 @pytest.mark.parametrize(('abort_event'), (True, False))
 def test_enter_leave_block_event(abort_event):
     def print_is_task_list_item(self, block, details):
-        if block.value == md4c.BlockType.LI:
+        if block is md4c.BlockType.LI:
             sys.stdout.write(str(details['is_task']))
 
     content = 'Hello\n\n- List item\n- [ ] Another list item\n'

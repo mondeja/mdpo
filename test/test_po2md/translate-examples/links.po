@@ -15,8 +15,8 @@ msgstr ""
 "Mi motor de búsqueda favorito es [Duck Duck Go](https://duckduckgo.com"
 " \"El mejor motor de búsqueda para privacidad\")."
 
-msgid "Visit [https://www.github.com/mondeja/mdpo]"
-msgstr "Visita [https://www.github.com/mondeja/mdpo]"
+msgid "Visit <https://www.github.com/mondeja/mdpo>"
+msgstr "Visita <https://www.github.com/mondeja/mdpo>"
 
 msgid ""
 "Write an email to [fake@example.com](mailto:fake@example.com) if you want "
@@ -24,6 +24,13 @@ msgid ""
 msgstr ""
 "Escribe un correo electrónico a [fake@example.com](mailto:fake@example.com) "
 "si quieres ayuda."
+
+msgid ""
+"A [link](https://so-long-long-long-long-long-long-long-long-that-should-not-"
+"be-wrapped-in-multiple.lines)."
+msgstr ""
+"Un [enlace](https://tan-tan-tan-tan-tan-tan-tan-tan-largo-que-no-debe-ser-"
+"envuelto-en-multiples.lineas)."
 
 msgid "[Reference A][1]"
 msgstr "[Referencia A][1]"
@@ -72,3 +79,17 @@ msgstr "[7]: https://github.com/mondeja/mdpo \"Séptima referencia\""
 
 msgid "[8]: https://github.com/mondeja/mdpo \"Eighth reference\""
 msgstr "[8]: https://github.com/mondeja/mdpo \"Octava referencia\""
+
+msgid ""
+"[paragraph link name](https://example.com/a-big-link-with-a-very-very-long-"
+"and-big-url-name-on-it)"
+msgstr ""
+
+msgid "Autolink to <http://127.0.0.1:8080/>."
+msgstr "Link automático hacia <http://127.0.0.1:8080/>."
+
+msgid "Autolink with title like <https://foo.bar \"hello\">."
+msgstr "Link automático con título como <https://foo.bar \"hola\">."
+
+msgid "Another autolink with title like <https://foo.bar \"hello\">."
+msgstr "Otro link automático con título como <https://foo.bar \"hola\">."

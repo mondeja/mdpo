@@ -12,10 +12,10 @@ EXAMPLES_DIR = os.path.join('test', 'test_mdpo2html', 'translate-examples')
 def _build_examples(dirname):
     examples_dir = os.path.join(EXAMPLES_DIR, dirname)
     examples_glob = glob.glob(examples_dir + os.sep + '*.html')
-    examples_filenames = sorted([
+    examples_filenames = sorted(
         os.path.basename(fp) for fp in examples_glob
         if not fp.endswith('.expect.html')
-    ])
+    )
     return (examples_dir, examples_filenames)
 
 

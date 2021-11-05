@@ -1,31 +1,9 @@
 """Text utilities for mdpo."""
 
+import math
+import os
 import re
-import textwrap
-
-
-def max_char_in_a_row(char, text):
-    """Returns the maximum numbers of characters in a row found inside a string.
-
-    Args:
-        char (str): Character to search.
-        text (str): Text inside which find the character repeated in a row.
-
-    Returns:
-        int: Maximum repeats in a row of the character inside the text.
-    """
-    response, partial_response = (0, 0)
-    _in_the_row = False
-
-    for ch in text:
-        if ch == char:
-            partial_response += 1
-            _in_the_row = True
-        elif _in_the_row:
-            _in_the_row = False
-            response = max(response, partial_response)
-            partial_response = 0
-    return max(response, partial_response)
+import sys
 
 
 def min_not_max_chars_in_a_row(char, text, default=1):
@@ -125,65 +103,42 @@ def parse_escaped_pairs(pairs, separator=':'):
     return response
 
 
-def wrap_different_first_line_width(
-    text,
-    width=80,
-    first_line_width_diff=0,
-    **kwargs,
-):
-    """Wraps lines using a different width for first line.
+def parse_strint_0_inf(value):
+    """Parse a string to a integer accepting infinte values.
 
-    Uses :py:func:`wrap.textwrap`, but the first line is wrapped with a
-    different width.
+    Converts an integer passed as string in an integer or ``math.inf`` if
+    the passed value is ``"0"`` or ``math.inf``.
 
     Args:
-        text (str): Text to wrap in lines.
-        width (int): Lines maximum width.
-        first_line_width_diff (int): Difference in width against the ``width``
-            parameter used for the first line.
-        **kwargs: Additional optional arguments passed to
-            :py:func:`wrap.textwrap` function.
-
-    Returns:
-        list: Wrapped lines.
+        value (str): Value to parse.
     """
-    if len(text) > width - first_line_width_diff:
-        # correct wrapping for list items
-        li_first_line = textwrap.wrap(
-            text,
-            width=width + first_line_width_diff,
-            max_lines=4,
-            placeholder='?',
-            **kwargs,
-        )[0]
-        li_subsequent_lines = textwrap.wrap(
-            text[len(li_first_line):],
-            width=width,
-            **kwargs,
+    try:
+        num = int(value)
+    except ValueError:
+        if value.lower() == 'inf':
+            return math.inf
+        raise ValueError(value)
+    return num if num else math.inf
+
+
+def parse_wrapwidth_argument(value):
+    """Parse the argument ``-w/--wrapwidth`` passed to CLIs.
+
+    Args:
+        value (str): Wrapwidth value.
+    """
+    try:
+        value = parse_strint_0_inf(value)
+    except ValueError as err:
+        if os.environ.get('_MDPO_RUNNING'):
+            sys.stderr.write(
+                f"Invalid value '{err.value}' for -w/--wrapwidth argument.\n",
+            )
+            sys.exit(1)
+        raise ValueError(
+            f"Invalid value '{err.value}' for wrapwidth argument.\n",
         )
-        li_subsequent_lines[0] = li_subsequent_lines[0].lstrip()
-        return [
-            li_first_line,
-            *li_subsequent_lines,
-        ]
-
-    return textwrap.wrap(
-        text,
-        width=width,
-        **kwargs,
-    )
-
-
-def striplastline(text):
-    """Returns a text, ignoring the last line.
-
-    Args:
-        text (str): Text that will be returned ignoring its last line.
-
-    Returns:
-        str: Text wihout their last line.
-    """
-    return '\n'.join(text.split('\n')[:-1])
+    return value
 
 
 def removeprefix(text, prefix):
@@ -205,7 +160,7 @@ def removeprefix(text, prefix):
         return text.removeprefix(prefix)
     if text.startswith(prefix):
         return text[len(prefix):]
-    return text
+    return text  # pragma: no cover
 
 
 def removesuffix(text, suffix):
@@ -228,4 +183,4 @@ def removesuffix(text, suffix):
         return text.removesuffix(suffix)
     if suffix and text.endswith(suffix):
         return text[:-len(suffix)]
-    return text
+    return text  # pragma: no cover

@@ -2,8 +2,8 @@
 Tutorial
 ********
 
-mdpo provides flexible ways for doing Markdown markup translations. In this
-tutorial are covered the two most common workflows.
+**mdpo** provides flexible ways for doing Markdown markup translations. In this
+tutorial are covered the most common workflows.
 
 .. raw:: html
 
@@ -56,6 +56,50 @@ This will be the output after previous two commands:
 .. seealso::
    * :ref:`md2po CLI<md2po-cli>`
    * :ref:`po2md CLI<po2md-cli>`
+
+.. raw:: html
+
+   <hr>
+
+Simple README file translation
+==============================
+
+Just use :ref:`md2po2md CLI<md2po2md-cli>`:
+
+.. code-block:: bash
+
+  md2po2md README.md -l es -l fr -o "locale/{lang}"
+
+Define the languages to translate into using the ``-l`` option.
+
+You also can use the next snippet to include links for the translations:
+
+.. code-block:: html
+
+  <!-- mdpo-disable -->
+  <!-- mdpo-enable-next-line -->
+  > Read this document in other languages:
+  >
+  > - [Español][readme-es]
+  > - [Français][readme-fr]
+  <!-- mdpo-enable -->
+
+  [readme-es]: https://github.com/user/repo/blob/master/locale/es/README.md
+  [readme-fr]: https://github.com/user/repo/blob/master/locale/fr/README.md
+
+This will be the output after the previous command:
+
+.. code-block:: bash
+
+   .
+   ├── locale
+   │   └── es
+   │       ├── README.md
+   │       └── readme.po 
+   └── README.md
+
+.. seealso::
+   * :ref:`md2po2md CLI<md2po2md-cli>`
 
 .. raw:: html
 

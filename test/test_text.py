@@ -2,25 +2,7 @@
 
 import pytest
 
-from mdpo.text import (
-    max_char_in_a_row,
-    min_not_max_chars_in_a_row,
-    parse_escaped_pair,
-)
-
-
-@pytest.mark.parametrize(
-    ('char', 'text', 'expected_result'), (
-        ('`', 'hello `` ``` a `` `', 3),
-        ('`', 'hello `` ``` a ```` `', 4),
-        ('`', 'hello `` ``` a `` `````', 5),
-
-        # does not work for multiple characters
-        ('``', 'hello `` ``` a `` `````', 0),
-    ),
-)
-def test_max_char_in_a_row(char, text, expected_result):
-    assert max_char_in_a_row(char, text) == expected_result
+from mdpo.text import min_not_max_chars_in_a_row, parse_escaped_pair
 
 
 @pytest.mark.parametrize(

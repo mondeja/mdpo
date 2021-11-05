@@ -2,7 +2,7 @@
 
 import re
 
-from mdpo import pofile_to_markdown
+from mdpo.po2md import Po2Md, pofile_to_markdown
 
 
 def test_link_reference_footnotes(tmp_file):
@@ -66,3 +66,53 @@ Esto es una nota al pie[^1]. Esto es otra[^2].
 '''
 
     assert output == expected_output
+
+
+def test_command_event(tmp_file):
+    def _abort_command(self, *args):
+        assert not self._disable
+        return False
+
+    input_content = '''<!-- mdpo-disable -->
+hello
+
+<!-- mdpo-disable -->
+hello
+'''
+
+    pofile_content = '''#
+msgid ""
+msgstr ""
+
+msgid "hello"
+msgstr "hola"
+'''
+    with tmp_file(pofile_content, '.po') as po_filepath:
+        po2md = Po2Md(po_filepath, events={'command': _abort_command})
+        output = po2md.translate(input_content)
+        assert output == ('''hola
+
+hola
+''')
+
+
+def test_msgid_event(tmp_file):
+    def _abort_command(self, *args):
+        return False
+
+    input_content = '''hello
+
+hello
+'''
+
+    pofile_content = '''#
+msgid ""
+msgstr ""
+
+msgid "hello"
+msgstr "hola"
+'''
+    with tmp_file(pofile_content, '.po') as po_filepath:
+        po2md = Po2Md(po_filepath, events={'msgid': _abort_command})
+        output = po2md.translate(input_content)
+        assert output == '\n'

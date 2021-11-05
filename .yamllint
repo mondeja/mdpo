@@ -29,13 +29,15 @@ rules:
   key-ordering:
     ignore: |
       .pre-commit-config.yaml
+      .pre-commit-hooks.yaml
       .github
       .readthedocs.yml
       test/test_po2md/.markdownlint-cli2.yaml
   line-length:
     allow-non-breakable-words: true
-    ignore:
+    ignore: |
       .pre-commit-config.yaml
+      .pre-commit-hooks.yaml
     max: 96
   new-lines:
     type: unix

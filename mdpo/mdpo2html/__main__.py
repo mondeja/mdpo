@@ -11,6 +11,7 @@ from mdpo.cli import (
     add_common_cli_latest_arguments,
     parse_command_aliases_cli_arguments,
 )
+from mdpo.context import environ
 from mdpo.mdpo2html import markdown_pofile_to_html
 
 
@@ -30,7 +31,8 @@ def build_parser():
              ' read from STDIN.',
     )
     parser.add_argument(
-        '-p', '--pofiles', metavar='POFILES', action='append', nargs='*',
+        '-p', '--po-files', '--pofiles', metavar='POFILES', action='append',
+        nargs='*', dest='pofiles',
         help='Glob matching a set of PO files from where to extract references'
              ' to make the replacements translating strings. This argument'
              ' can be passed multiple times.',
@@ -66,13 +68,18 @@ def parse_options(args):
     parser = build_parser()
     if '-h' in args or '--help' in args:
         parser.print_help()
-        sys.exit(0)
+        sys.exit(1)
     opts = parser.parse_args(args)
 
+    filepath_or_content = ''
     if not sys.stdin.isatty():
-        opts.filepath_or_content = sys.stdin.read().strip('\n')
-    elif isinstance(opts.filepath_or_content, list):
-        opts.filepath_or_content = opts.filepath_or_content[0]
+        filepath_or_content += sys.stdin.read().strip('\n')
+    if (
+        isinstance(opts.filepath_or_content, list)
+        and opts.filepath_or_content
+    ):
+        filepath_or_content += opts.filepath_or_content[0]
+    opts.filepath_or_content = filepath_or_content
 
     opts.command_aliases = parse_command_aliases_cli_arguments(
         opts.command_aliases,
@@ -84,18 +91,19 @@ def parse_options(args):
 
 
 def run(args=[]):
-    opts = parse_options(args)
+    with environ(_MDPO_RUNNING='true'):
+        opts = parse_options(args)
 
-    output = markdown_pofile_to_html(
-        opts.filepath_or_content, opts.pofiles,
-        ignore=opts.ignore, save=opts.save,
-        po_encoding=opts.po_encoding,
-        html_encoding=opts.html_encoding,
-        command_aliases=opts.command_aliases,
-    )
+        output = markdown_pofile_to_html(
+            opts.filepath_or_content, opts.pofiles,
+            ignore=opts.ignore, save=opts.save,
+            po_encoding=opts.po_encoding,
+            html_encoding=opts.html_encoding,
+            command_aliases=opts.command_aliases,
+        )
 
-    if not opts.quiet and not opts.save:
-        sys.stdout.write(output + '\n')
+        if not opts.quiet and not opts.save:
+            sys.stdout.write(output + '\n')
 
     return (output, 0)
 

@@ -1,12 +1,14 @@
+"""Tests for po2md command line interface."""
+
 import io
 import os
+import re
 import tempfile
 from uuid import uuid4
 
 import pytest
 
 from mdpo.po2md.__main__ import run
-from mdpo.text import striplastline
 
 
 EXAMPLE = {
@@ -25,7 +27,7 @@ msgstr "Algo de texto aquí"
 }
 
 
-def test_stdin(capsys, monkeypatch, tmp_file):
+def test_stdin(striplastline, capsys, monkeypatch, tmp_file):
     monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['markdown-input']))
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
 
@@ -52,6 +54,39 @@ def test_quiet(capsys, arg, tmp_file):
         assert out == ''
 
 
+@pytest.mark.parametrize('arg', ['-D', '--debug'])
+def test_debug(capsys, arg, tmp_file):
+    with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath, \
+            tmp_file(EXAMPLE['markdown-input'], '.md') as input_md_filepath:
+
+        output, exitcode = run([input_md_filepath, '-p', po_filepath, arg])
+        out, err = capsys.readouterr()
+
+        assert exitcode == 0
+        assert output == EXAMPLE['markdown-output']
+
+        md_output_checked = False
+
+        outlines = out.splitlines()
+        for i, line in enumerate(outlines):
+            assert re.match(
+                (
+                    r'^po2md\[DEBUG\]::\d{4,}-\d\d-\d\d\s\d\d:\d\d:\d\d\.\d+::'
+                    r'(text|link_reference|msgid|enter_block|command|'
+                    r'leave_block|enter_span|leave_span)::'
+                ),
+                line,
+            )
+            if line.endswith('leave_block:: DOC'):
+                assert (
+                    '\n'.join(outlines[i + 1:]) == EXAMPLE['markdown-output']
+                )
+                md_output_checked = True
+                break
+
+        assert md_output_checked
+
+
 @pytest.mark.parametrize('arg', ['-s', '--save'])
 def test_save(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath, \
@@ -75,7 +110,7 @@ def test_save(capsys, arg, tmp_file):
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
-def test_ignore_files_by_filepath(capsys, arg):
+def test_ignore_files_by_filepath(striplastline, capsys, arg):
     pofiles = [
         (
             uuid4().hex + '.po',
