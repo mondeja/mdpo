@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.19.4
+    rev: v2.29.0
     hooks:
       - id: pyupgrade
         args:
@@ -22,7 +22,7 @@ repos:
         args:
           - --py36-plus
   - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.17.0
+    rev: v1.19.0
     hooks:
       - id: setup-cfg-fmt
   - repo: https://github.com/PyCQA/flake8

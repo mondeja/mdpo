@@ -52,7 +52,5 @@ rules:
       - \d\d:\d\d
     quote-type: single
     required: only-when-needed
-    ignore:
-      .github/workflows/ci.yml
   trailing-spaces: enable
   truthy: disable
