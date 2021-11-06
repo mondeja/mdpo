@@ -31,5 +31,8 @@ def striplastline():
         str: Text wihout their last line.
     """
     def _striplastline(text):
-        return '\n'.join(text.split('\n')[:-1])
+        stripped_text = '\n'.join(text.split('\n')[:-1])
+        if len(stripped_text) == len(text):
+            raise Exception('Unnecessary use of \'striplastline\' fixture')
+        return stripped_text
     return _striplastline

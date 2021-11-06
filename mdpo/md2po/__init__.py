@@ -139,6 +139,8 @@ class Md2Po:
         self.preserve_not_found = kwargs.get('preserve_not_found', True)
 
         self.location = kwargs.get('location', True)
+        # "top level" here because blocks inside blocks are not taken into
+        # account for locations
         self._current_top_level_block_number = 0
         self._current_top_level_block_type = None
         self._current_markdown_filepath = None
@@ -940,10 +942,15 @@ class Md2Po:
                 self._current_markdown_filepath = filepath
                 _parse(self.content)
 
+                # reset state
                 self._disable_next_line = False
                 self._disable = False
                 self._enable_next_line = False
+                self._include_next_codeblock = False
+                self._disable_next_codeblock = False
                 self._link_references = None
+                self._current_top_level_block_number = 0
+                self._current_top_level_block_type = None
 
         if self.mark_not_found_as_obsolete:
             mark_not_found_entries_as_obsoletes(
