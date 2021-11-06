@@ -73,7 +73,7 @@ def test_save(capsys, arg, tmp_file):
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
-def test_ignore_files_by_filepath(striplastline, capsys, arg, tmp_file):
+def test_ignore_files_by_filepath(capsys, arg, tmp_file):
     pofiles_contents = [
         (
             '#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
@@ -91,7 +91,7 @@ def test_ignore_files_by_filepath(striplastline, capsys, arg, tmp_file):
 
     html_input = '<p>Included</p>\n\n<p>Excluded</p>\n\n<p>Excluded 2</p>\n\n'
     expected_output = (
-        '<p>Incluida</p>\n\n<p>Excluded</p>\n\n<p>Excluded 2</p>\n\n'
+        '<p>Incluida</p>\n\n<p>Excluded</p>\n\n<p>Excluded 2</p>\n\n\n'
     )
 
     with tempfile.TemporaryDirectory() as filesdir:
@@ -116,5 +116,5 @@ def test_ignore_files_by_filepath(striplastline, capsys, arg, tmp_file):
             out, err = capsys.readouterr()
 
     assert exitcode == 0
-    assert output == expected_output
-    assert striplastline(out) == expected_output
+    assert f'{output}\n' == expected_output
+    assert out == expected_output
