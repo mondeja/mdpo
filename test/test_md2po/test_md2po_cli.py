@@ -33,7 +33,7 @@ def test_stdin(striplastline, capsys, monkeypatch):
     pofile, exitcode = run()
     out, err = capsys.readouterr()
     assert exitcode == 0
-    assert pofile.__unicode__() == EXAMPLE['output']
+    assert str(pofile) == EXAMPLE['output']
     assert striplastline(out) == EXAMPLE['output']
 
 
@@ -81,7 +81,7 @@ def test_quiet(capsys, arg):
     out, err = capsys.readouterr()
 
     assert exitcode == 0
-    assert pofile.__unicode__() == EXAMPLE['output']
+    assert str(pofile) == EXAMPLE['output']
     assert out == ''
 
 
@@ -91,7 +91,7 @@ def test_debug(capsys, arg):
     out, err = capsys.readouterr()
 
     assert exitcode == 0
-    assert pofile.__unicode__() == EXAMPLE['output']
+    assert str(pofile) == EXAMPLE['output']
 
     po_output_checked = False
 
@@ -144,7 +144,7 @@ msgstr ""
         out, err = capsys.readouterr()
 
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
     assert striplastline(out) == expected_output
 
 
@@ -183,7 +183,7 @@ msgstr ""
             assert f.read() == expected_output
 
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
     assert striplastline(out) == expected_output
 
     # new PO file creation
@@ -209,7 +209,7 @@ msgstr ""
         assert f.read() == expected_output
 
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
     assert striplastline(out) == expected_output
 
 
@@ -222,7 +222,7 @@ def test_mo_filepath(striplastline, capsys, arg):
     pofile, exitcode = run([EXAMPLE['input'], arg, mo_filepath])
     out, err = capsys.readouterr()
     assert exitcode == 0
-    assert pofile.__unicode__() == EXAMPLE['output']
+    assert str(pofile) == EXAMPLE['output']
     assert striplastline(out) == EXAMPLE['output']
     assert os.path.exists(mo_filepath)
 
@@ -239,7 +239,7 @@ def test_ignore_files_by_filepath(striplastline, capsys, arg):
 
     with tempfile.TemporaryDirectory() as filesdir:
         for filename, content in filesdata.items():
-            filepath = os.path.join(filesdir, filename + '.md')
+            filepath = os.path.join(filesdir, f'{filename}.md')
             with open(filepath, 'w') as f:
                 f.write(content)
 
@@ -265,7 +265,7 @@ msgid "Foo 2"
 msgstr ""
 '''
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
     assert striplastline(out) == expected_output
 
 
@@ -293,7 +293,7 @@ msgstr ""
 '''
 
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
     assert striplastline(out) == expected_output
 
 
@@ -316,7 +316,7 @@ msgid "Some long header with bold characters, italic characters and a link."
 msgstr ""
 '''
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
     assert striplastline(out) == expected_output
 
 
@@ -350,7 +350,7 @@ msgstr ""
 '''
 
     assert exitcode == 0
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
     assert striplastline(out) == expected_output
 
 
@@ -384,7 +384,7 @@ msgstr ""
 
     assert exitcode == 0
     assert striplastline(out) == expected_output
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
 
 
 @pytest.mark.parametrize('arg', ['--ignore-msgids'])
@@ -403,7 +403,7 @@ msgstr ""
 
     assert exitcode == 0
     assert striplastline(out) == expected_output
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
 
 
 @pytest.mark.parametrize('arg', ['--command-alias'])
@@ -437,7 +437,7 @@ msgstr ""
 
     assert exitcode == 0
     assert striplastline(out) == expected_output
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
 
 
 @pytest.mark.parametrize('arg', ['-d', '--metadata'])
@@ -461,7 +461,7 @@ msgstr ""
 
     assert exitcode == 0
     assert striplastline(out) == expected_output
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
 
 
 @pytest.mark.parametrize('arg', ('-m', '--merge-pofiles', '--merge-po-files'))
@@ -499,7 +499,7 @@ msgstr ""
 
     assert exitcode == 0
     assert striplastline(out) == expected_output
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
 
 
 @pytest.mark.parametrize('arg', ('-r', '--remove-not-found'))
@@ -536,7 +536,7 @@ msgstr ""
 
     assert exitcode == 0
     assert striplastline(out) == expected_output
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
 
 
 @pytest.mark.parametrize('arg', ('-x', '--extension', '--ext'))
@@ -602,7 +602,7 @@ def test_extensions(
 
     assert exitcode == 0
     assert striplastline(out) == expected_output
-    assert pofile.__unicode__() == expected_output
+    assert str(pofile) == expected_output
 
 
 @pytest.mark.parametrize(
@@ -617,7 +617,7 @@ def test_md2po_cli_running_osenv(striplastline, value, capsys):
     out, err = capsys.readouterr()
 
     assert exitcode == 0
-    assert pofile.__unicode__() == EXAMPLE['output']
+    assert str(pofile) == EXAMPLE['output']
     assert striplastline(out) == EXAMPLE['output']
     assert os.environ.get('_MDPO_RUNNING') == value
 

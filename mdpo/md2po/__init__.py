@@ -785,10 +785,9 @@ class Md2Po:
                     self._current_imgspan['text'],
                     self._current_imgspan['src'],
                 )
-                if self._current_imgspan['title']:
-                    self._current_msgid += ' "%s"' % (
-                        self._current_imgspan['title']
-                    )
+                title = self._current_imgspan['title']
+                if title:
+                    self._current_msgid += f' "{title}"'
                 self._current_msgid += ')'
                 self._current_imgspan = {}
             elif span is md4c.SpanType.U:

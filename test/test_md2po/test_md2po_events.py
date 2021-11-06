@@ -64,7 +64,7 @@ def test_enter_leave_span_event(abort_event, expected_msgid):
 
     content = 'Hello `with` codespan'
 
-    po = markdown_to_pofile(
+    pofile = markdown_to_pofile(
         content,
         events={
             'enter_span': lambda *_: not abort_event,
@@ -72,7 +72,7 @@ def test_enter_leave_span_event(abort_event, expected_msgid):
         },
     )
 
-    assert str(po).splitlines()[4].split('"')[1] == expected_msgid
+    assert str(pofile).splitlines()[4].split('"')[1] == expected_msgid
 
 
 @pytest.mark.parametrize(('abort_event'), (True, False))

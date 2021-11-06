@@ -16,7 +16,7 @@ Some text that needs to be clarified
 Some text without comment
 '''
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 
@@ -53,7 +53,7 @@ Some text that needs to be clarified
 Some text without comment
 '''
     pofile = markdown_to_pofile(content)
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 
@@ -78,7 +78,7 @@ Some text that needs to be clarified
 Some text without comment
 '''
     pofile = markdown_to_pofile(content)
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 

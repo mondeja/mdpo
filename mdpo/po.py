@@ -21,7 +21,7 @@ def po_escaped_string(chars):
     Returns:
         str: First character of passed string with ``\`` character prepended.
     """
-    return '\\' + chars[0]
+    return f'\\{chars[0]}'
 
 
 def find_entry_in_entries(entry, entries, **kwargs):

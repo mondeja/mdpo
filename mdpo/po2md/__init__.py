@@ -459,7 +459,8 @@ class Po2Md:
                 self._save_current_line()
         elif block is md4c.BlockType.H:
             self._inside_hblock = True
-            self._current_line += '%s ' % ('#' * details['level'])
+            hash_signs = '#' * details['level']
+            self._current_line += f'{hash_signs} '
         elif block is md4c.BlockType.LI:
             if self._current_list_type[-1][0] == 'ol':
                 # inside OL
@@ -480,7 +481,8 @@ class Po2Md:
                     self._ul_marks[-1],
                 )
                 if details['is_task']:
-                    self._current_line += '[%s] ' % details['task_mark']
+                    mark = details['task_mark']
+                    self._current_line += f'[{mark}] '
                 self._current_list_type[-1][-1].append(details['is_task'])
             self._inside_liblock = True
             self._inside_liblock_first_p = True
@@ -799,9 +801,8 @@ class Po2Md:
                 self._current_imgspan['src'],
             )
             if self._current_imgspan['title']:
-                self._current_msgid += ' "%s"' % polib.escape(
-                    self._current_imgspan['title'],
-                )
+                title = self._current_imgspan['title']
+                self._current_msgid += f' "{title}"'
             self._current_msgid += ')'
             self._current_imgspan = {}
 

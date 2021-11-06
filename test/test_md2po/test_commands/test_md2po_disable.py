@@ -28,7 +28,7 @@ This must be ignored
 This must be included also.
 '''
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 
@@ -53,7 +53,7 @@ def test_disable_enable_raw_inline():
 This must be included also.
 '''
     pofile = markdown_to_pofile(content)
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 
@@ -94,7 +94,7 @@ The last line also must be included.
 '''
 
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 
@@ -131,7 +131,7 @@ This must be ignored also.
 This must be included also.
 '''
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 

@@ -6,13 +6,13 @@ def test_x_headers_included():
     markdown_content = '# Foo\n'
 
     extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS + ['underline']
-    po = markdown_to_pofile(
+    pofile = markdown_to_pofile(
         markdown_content,
         xheaders=True,
         plaintext=False,
         extensions=extensions,
     )
-    assert po.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 "x-mdpo-bold-end: **\\n"

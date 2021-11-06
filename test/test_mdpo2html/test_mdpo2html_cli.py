@@ -74,27 +74,18 @@ def test_save(capsys, arg, tmp_file):
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
 def test_ignore_files_by_filepath(striplastline, capsys, arg, tmp_file):
-    pofiles = [
+    pofiles_contents = [
         (
-            uuid4().hex + '.po',
-            (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
-                'msgstr "Incluida"\n\n'
-            ),
+            '#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
+            'msgstr "Incluida"\n\n'
         ),
         (
-            uuid4().hex + '.po',
-            (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
-                'msgstr "Excluida"\n\n'
-            ),
+            '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
+            'msgstr "Excluida"\n\n'
         ),
         (
-            uuid4().hex + '.po',
-            (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded 2"\n'
-                'msgstr "Excluida 2"\n\n'
-            ),
+            '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded 2"\n'
+            'msgstr "Excluida 2"\n\n'
         ),
     ]
 
@@ -104,18 +95,23 @@ def test_ignore_files_by_filepath(striplastline, capsys, arg, tmp_file):
     )
 
     with tempfile.TemporaryDirectory() as filesdir:
-        for pofile in pofiles:
-            with open(os.path.join(filesdir, pofile[0]), 'w') as f:
-                f.write(pofile[1])
+        pofiles_paths = [
+            os.path.join(filesdir, f'{uuid4().hex}.po')
+            for _ in range(len(pofiles_contents))
+        ]
+        pofiles_paths_contents = zip(pofiles_paths, pofiles_contents)
+        for pofile_path, pofile_content in pofiles_paths_contents:
+            with open(pofile_path, 'w') as f:
+                f.write(pofile_content)
         with tmp_file(html_input, '.html') as html_input_filepath:
             output, exitcode = run([
                 html_input_filepath,
                 '-p',
                 os.path.join(filesdir, '*.po'),
                 arg,
-                pofiles[1][0],
+                pofiles_paths[1],
                 arg,
-                pofiles[2][0],
+                pofiles_paths[2],
             ])
             out, err = capsys.readouterr()
 

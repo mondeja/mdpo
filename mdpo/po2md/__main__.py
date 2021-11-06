@@ -117,7 +117,7 @@ def run(args=[]):
         )
 
         if not opts.quiet and not opts.save:
-            sys.stdout.write(output + '\n')
+            sys.stdout.write(f'{output}\n')
 
         # pre-commit mode
         if (  # pragma: no cover

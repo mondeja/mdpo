@@ -47,12 +47,14 @@ def test_obsolete_not_equal_found(
     pofile_content = '#\nmsgid ""\nmsgstr ""\n\nmsgid "Bar"\nmsgstr ""\n'
 
     with tmp_file(pofile_content, '.po') as po_filepath:
-        output = markdown_to_pofile(
-            markdown_content,
-            po_filepath=po_filepath,
-            mark_not_found_as_obsolete=mark_not_found_as_obsolete,
-            location=False,
-        ).__unicode__()
+        output = str(
+            markdown_to_pofile(
+                markdown_content,
+                po_filepath=po_filepath,
+                mark_not_found_as_obsolete=mark_not_found_as_obsolete,
+                location=False,
+            ),
+        )
     assert output == expected_output
 
 
@@ -75,11 +77,13 @@ msgstr ""
 msgid "Hello"
 msgstr "Hola"
 '''
-        output = markdown_to_pofile(
-            markdown_content,
-            po_filepath=po_filepath,
-            msgstr=default_msgstr,
-        ).__unicode__()
+        output = str(
+            markdown_to_pofile(
+                markdown_content,
+                po_filepath=po_filepath,
+                msgstr=default_msgstr,
+            ),
+        )
     assert output == expected_output
 
 
@@ -106,11 +110,13 @@ msgid "Hello"
 msgstr "Hola"
 '''
 
-        output = markdown_to_pofile(
-            markdown_content,
-            po_filepath=po_filepath,
-            msgstr=default_msgstr,
-        ).__unicode__()
+        output = str(
+            markdown_to_pofile(
+                markdown_content,
+                po_filepath=po_filepath,
+                msgstr=default_msgstr,
+            ),
+        )
     assert output == expected_output
 
 
@@ -140,9 +146,13 @@ msgid "Hello"
 msgstr "Hola"
 '''
 
-        output = markdown_to_pofile(
-            markdown_content, po_filepath=po_filepath, msgstr=default_msgstr,
-        ).__unicode__()
+        output = str(
+            markdown_to_pofile(
+                markdown_content,
+                po_filepath=po_filepath,
+                msgstr=default_msgstr,
+            ),
+        )
     assert output == expected_output
 
 
@@ -175,9 +185,13 @@ msgid "Hello"
 msgstr "Hola"
 '''
 
-        output = markdown_to_pofile(
-            markdown_content, po_filepath=po_filepath, msgstr=default_msgstr,
-        ).__unicode__()
+        output = str(
+            markdown_to_pofile(
+                markdown_content,
+                po_filepath=po_filepath,
+                msgstr=default_msgstr,
+            ),
+        )
     assert output == expected_output
 
 
@@ -202,10 +216,12 @@ msgid "Hello"
 msgstr "Hola"
 '''
 
-        output = markdown_to_pofile(
-            markdown_content,
-            po_filepath=po_filepath,
-        ).__unicode__()
+        output = str(
+            markdown_to_pofile(
+                markdown_content,
+                po_filepath=po_filepath,
+            ),
+        )
     assert output == expected_output
 
 
@@ -235,7 +251,10 @@ msgstr ""
 #~ msgstr "Hola"
 '''
 
-        output = markdown_to_pofile(
-            markdown_content, po_filepath=po_filepath,
-        ).__unicode__()
+        output = str(
+            markdown_to_pofile(
+                markdown_content,
+                po_filepath=po_filepath,
+            ),
+        )
     assert output == expected_output

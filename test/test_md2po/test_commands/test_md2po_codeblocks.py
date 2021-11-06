@@ -21,7 +21,7 @@ This must be included also.
     var thisCodeMustNotBeIncluded = undefined;
 '''
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 
@@ -50,7 +50,7 @@ var thisCodeMustNotBeIncluded = undefined;
 ```
 '''
     pofile = markdown_to_pofile(content)
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 
@@ -88,7 +88,7 @@ var thisCodeMustBeIncluded = undefined;
         command_aliases=command_aliases,
         include_codeblocks=True,
     )
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 
@@ -125,7 +125,7 @@ var thisCodeMustBeIncluded = undefined;
         command_aliases=command_aliases,
         include_codeblocks=True,
     )
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 
@@ -164,7 +164,7 @@ var thisCodeMustBeIncluded = undefined;
         command_aliases=command_aliases,
         include_codeblocks=False,
     )
-    assert pofile.__unicode__() == '''#
+    assert str(pofile) == '''#
 msgid ""
 msgstr ""
 

@@ -143,7 +143,7 @@ class MdPo2HTML(HTMLParser):
                     raw_html_template += '<{}{}>'.format(
                         handled,
                         (
-                            ' ' + html_attrs_tuple_to_string(attrs)
+                            f' {html_attrs_tuple_to_string(attrs)}'
                             if attrs else ''
                         ),
                     )
@@ -152,7 +152,7 @@ class MdPo2HTML(HTMLParser):
                     raw_html_template += '<{}{}>'.format(
                         handled,
                         (
-                            ' ' + html_attrs_tuple_to_string(attrs)
+                            f' {html_attrs_tuple_to_string(attrs)}'
                             if attrs else ''
                         ),
                     )
@@ -161,25 +161,24 @@ class MdPo2HTML(HTMLParser):
                     raw_html_template += '<{}{}>'.format(
                         handled,
                         (
-                            ' ' + html_attrs_tuple_to_string(attrs)
+                            f' {html_attrs_tuple_to_string(attrs)}'
                             if attrs else ''
                         ),
                     )
                 elif handled in self.link_tags:
                     title = get_html_attrs_tuple_attr(attrs, 'title')
-                    _current_link_target += '(%s' % get_html_attrs_tuple_attr(
-                        attrs, 'href',
-                    )
+                    href = get_html_attrs_tuple_attr(attrs, 'href')
+                    _current_link_target += f'({href}'
                     if title:
-                        _current_link_target += ' "%s"' % title
+                        _current_link_target += f' "{title}"'
                     _current_link_target += ')'
 
-                    raw_html_template += '<%s' % handled
+                    raw_html_template += f'<{handled}'
 
                     # attrs_except_href_title = []
                     for attr, value in attrs:
                         if attr in ['title', 'href']:
-                            raw_html_template += ' %s="{}"' % attr
+                            raw_html_template += f' {attr}="{{}}"'
                         # else:
                         #     These attributes are not included in output
                         #    attrs_except_href_title.append((attr, value))
@@ -191,7 +190,7 @@ class MdPo2HTML(HTMLParser):
                 else:
                     raw_html_template += '<{}{}>'.format(
                         handled,
-                        ' ' + html_attrs_tuple_to_string(attrs)
+                        f' {html_attrs_tuple_to_string(attrs)}'
                         if attrs else '',
                     )
                 _last_start_tag = handled
@@ -215,7 +214,7 @@ class MdPo2HTML(HTMLParser):
                     else:
                         _current_replacement += handled
             elif handle == 'end':
-                raw_html_template += '</%s>' % handled
+                raw_html_template += f'</{handled}>'
                 if handled in self.code_tags:
                     _current_replacement += '`'
                 elif handled in self.bold_tags:
@@ -226,7 +225,7 @@ class MdPo2HTML(HTMLParser):
                 if _last_end_tag == 'code':
                     _inside_code = False
             elif handle == 'comment':
-                raw_html_template += '<!--%s-->' % handled
+                raw_html_template += f'<!--{handled}-->'
             elif handle == 'startend':
                 if handled in self.image_tags:
                     _current_replacement += '![{}]({}'.format(
@@ -235,7 +234,7 @@ class MdPo2HTML(HTMLParser):
                     )
                     title = get_html_attrs_tuple_attr(attrs, 'title')
                     if title:
-                        _current_replacement += ' "%s"' % title
+                        _current_replacement += f' "{title}"'
                     _current_replacement += ')'
 
                     raw_html_template += '{}'
@@ -243,7 +242,7 @@ class MdPo2HTML(HTMLParser):
                     raw_html_template += '<{}{}/>'.format(
                         handled,
                         (
-                            (' %s' % html_attrs_tuple_to_string(attrs))
+                            f' {html_attrs_tuple_to_string(attrs)}'
                             if attrs else ''
                         ),
                     )
@@ -280,7 +279,7 @@ class MdPo2HTML(HTMLParser):
 
         # print("RAW TEMPLATE:", raw_html_template)
         # print("TEMPLATE TAGS:", template_tags)
-        # print('CURRENT MSGID: \'%s\'' % _current_replacement)
+        # print(f'CURRENT MSGID: \'{_current_replacement}\'')
         # print('MSGSTR:', replacement)
 
         html_before_first_replacement = raw_html_template.split('{')[0]
@@ -288,9 +287,9 @@ class MdPo2HTML(HTMLParser):
         for tags_group in [self.bold_tags, self.italic_tags, self.code_tags]:
             for tag in tags_group:
                 html_before_first_replacement = \
-                    html_before_first_replacement.split('<%s>' % tag)[0]
+                    html_before_first_replacement.split(f'<{tag}>')[0]
                 html_after_last_replacement = \
-                    html_after_last_replacement.split('</%s>' % tag)[-1]
+                    html_after_last_replacement.split(f'</{tag}>')[-1]
             html_before_first_replacement = \
                 html_before_first_replacement.split('<a href="')[0]
 
@@ -319,24 +318,24 @@ class MdPo2HTML(HTMLParser):
         # print("________________________________________________")
 
     def handle_starttag(self, tag, attrs):
-        # print("START TAG: %s | POS: %d:%d" % (tag, *self.getpos()))
+        # print('START TAG: %s | POS: %d:%d' % (tag, *self.getpos()))
 
         if tag in self.ignore_grouper_tags:
             self.context.append(tag)
             self.output += '<{}{}>'.format(
-                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '',
+                tag, f' {html_attrs_tuple_to_string(attrs)}' if attrs else '',
             )
         elif self.context and self.context[0] in self.ignore_grouper_tags:
             self.output += '<{}{}>'.format(
-                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '',
+                tag, f' {html_attrs_tuple_to_string(attrs)}' if attrs else '',
             )
         elif tag == 'ul' and not self.context:
             self.output += '<{}{}>'.format(
-                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '',
+                tag, f' {html_attrs_tuple_to_string(attrs)}' if attrs else '',
             )
         elif tag in ['blockquote', 'table', 'thead', 'tbody', 'tr']:
             self.output += '<{}{}>'.format(
-                tag, ' ' + html_attrs_tuple_to_string(attrs) if attrs else '',
+                tag, f' {html_attrs_tuple_to_string(attrs)}' if attrs else '',
             )
         else:
             if tag == 'a' and self.real_link_reference_targets is None:
@@ -354,16 +353,16 @@ class MdPo2HTML(HTMLParser):
         # print("END TAG: %s | POS: %d:%d" % (tag, *self.getpos()))
 
         if tag in self.ignore_grouper_tags:
-            self.output += '</%s>' % tag
+            self.output += f'</{tag}>'
             if self.context:
                 self.context.pop()
         elif self.context and self.context[0] in self.ignore_grouper_tags:
-            self.output += '</%s>' % tag
+            self.output += f'</{tag}>'
         elif tag in PROCESS_REPLACER_TAGS:
             self.replacer.append(('end', tag, None))
             self._process_replacer()
         elif tag in ['ul', 'blockquote', 'tr', 'table', 'thead', 'tbody']:
-            self.output += '</%s>' % tag
+            self.output += f'</{tag}>'
         else:
             self.replacer.append(('end', tag, None))
             if self.context:
@@ -378,7 +377,7 @@ class MdPo2HTML(HTMLParser):
             self.replacer.append(('startend', tag, attrs))
 
     def handle_data(self, data):
-        # print("     DATA: '%s'" % (data))
+        # print(f'     DATA: \'{data}\'')
 
         if data:
             if not self.replacer or (
@@ -394,7 +393,7 @@ class MdPo2HTML(HTMLParser):
                 self.replacer.append(('data', data, None))
 
     def handle_comment(self, data):
-        # print("     COMMENT: '%s'" % (data))
+        # print(f'     COMMENT: \'{data}\'')
 
         if self.replacer:
             self.replacer.append(('comment', data, None))

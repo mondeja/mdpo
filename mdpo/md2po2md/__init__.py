@@ -108,9 +108,9 @@ def markdown_to_pofile_to_markdown(
 
             os.makedirs(os.path.abspath(po_dirpath), exist_ok=True)
             if os.path.isdir(po_filepath):
-                po_filepath = (
-                    po_filepath.rstrip(os.sep) + os.sep +
-                    os.path.basename(filepath) + '.po'
+                po_filepath = os.path.join(
+                    po_filepath.rstrip(os.sep),
+                    f'{os.path.basename(filepath)}.po',
                 )
             if not po_filepath.endswith('.po'):
                 po_filepath += '.po'
