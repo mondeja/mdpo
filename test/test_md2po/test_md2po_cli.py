@@ -34,7 +34,7 @@ def test_stdin(capsys, monkeypatch):
     pofile, exitcode = run()
     out, err = capsys.readouterr()
     assert exitcode == 0
-    assert str(f'{pofile}\n') == EXAMPLE['output']
+    assert f'{pofile}\n' == EXAMPLE['output']
     assert out == EXAMPLE['output']
 
 
@@ -82,7 +82,7 @@ def test_quiet(capsys, arg):
     out, err = capsys.readouterr()
 
     assert exitcode == 0
-    assert str(f'{pofile}\n') == EXAMPLE['output']
+    assert f'{pofile}\n' == EXAMPLE['output']
     assert out == ''
 
 
@@ -92,7 +92,7 @@ def test_debug(capsys, arg):
     out, err = capsys.readouterr()
 
     assert exitcode == 0
-    assert str(f'{pofile}\n') == EXAMPLE['output']
+    assert f'{pofile}\n' == EXAMPLE['output']
 
     po_output_checked = False
 
@@ -223,7 +223,7 @@ def test_mo_filepath(capsys, arg):
         pofile, exitcode = run([EXAMPLE['input'], arg, mo_file.name])
         out, err = capsys.readouterr()
         assert exitcode == 0
-        assert str(f'{pofile}\n') == EXAMPLE['output']
+        assert f'{pofile}\n' == EXAMPLE['output']
         assert out == EXAMPLE['output']
         assert os.path.exists(mo_file.name)
 
