@@ -1,3 +1,6 @@
+import os
+import tempfile
+
 from mdpo import markdown_to_pofile
 
 
@@ -19,8 +22,7 @@ def test_location_paragraphs(tmp_file):
 > 1. Foo 9
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
-            tmp_file(markdown_content, '.md') as md_filepath:
+    with tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
@@ -62,7 +64,7 @@ msgid "Foo 9"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath)
     assert str(output) == expected_output
 
 
@@ -82,8 +84,7 @@ def test_location_headers(tmp_file):
 > 1. # Foo 8
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
-            tmp_file(markdown_content, '.md') as md_filepath:
+    with tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
@@ -121,7 +122,7 @@ msgid "Foo 8"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath)
     assert str(output) == expected_output
 
 
@@ -139,8 +140,7 @@ def test_location_quotes(tmp_file):
 > > Foo 7
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
-            tmp_file(markdown_content, '.md') as md_filepath:
+    with tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
@@ -174,7 +174,7 @@ msgid "Foo 7"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath)
 
     assert str(output) == expected_output
 
@@ -198,8 +198,7 @@ def test_location_unordered_lists(tmp_file):
 >    - Foo 13
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
-            tmp_file(markdown_content, '.md') as md_filepath:
+    with tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
@@ -256,7 +255,7 @@ msgstr ""
 msgid "Foo 13"
 msgstr ""
 '''
-        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath)
 
     assert str(output) == expected_output
 
@@ -280,8 +279,7 @@ def test_location_ordered_lists(tmp_file):
 >    1. Foo 13
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
-            tmp_file(markdown_content, '.md') as md_filepath:
+    with tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
@@ -339,7 +337,7 @@ msgid "Foo 13"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath)
     assert str(output) == expected_output
 
 
@@ -371,8 +369,7 @@ var foo = "bar";
 > ```
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
-            tmp_file(markdown_content, '.md') as md_filepath:
+    with tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
@@ -402,7 +399,7 @@ msgid "var codeWhichMustBeIncluded = true;\\n"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath)
     assert str(output) == expected_output
 
 
@@ -414,8 +411,7 @@ def test_location_html(tmp_file):
 paragraph
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
-            tmp_file(markdown_content, '.md') as md_filepath:
+    with tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
@@ -425,7 +421,7 @@ msgid "paragraph"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath)
     assert str(output) == expected_output
 
 
@@ -443,8 +439,7 @@ def test_location_tables(tmp_file):
 > | Bar 9      | Bar 10 | Bar 11 | Bar 12 |
 '''
 
-    with tmp_file('#\nmsgid ""\nmsgstr ""\n', '.po') as po_filepath, \
-            tmp_file(markdown_content, '.md') as md_filepath:
+    with tmp_file(markdown_content, '.md') as md_filepath:
         expected_output = f'''#
 msgid ""
 msgstr ""
@@ -550,6 +545,35 @@ msgid "Bar 12"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(md_filepath, po_filepath=po_filepath)
+        output = markdown_to_pofile(md_filepath)
 
     assert str(output) == expected_output
+
+
+def test_location_file_independent():
+    """Location block counters should be reset for each file."""
+
+    with tempfile.TemporaryDirectory() as filesdir:
+        foo_md_filepath = os.path.join(filesdir, 'foo.md')
+        bar_md_filepath = os.path.join(filesdir, 'bar.md')
+        with open(foo_md_filepath, 'w') as f:
+            f.write('# Foo\n')
+        with open(bar_md_filepath, 'w') as f:
+            f.write('# Bar\n')
+
+        expected_output = f'''#
+msgid ""
+msgstr ""
+
+#: {bar_md_filepath}:block 1 (header)
+msgid "Bar"
+msgstr ""
+
+#: {foo_md_filepath}:block 1 (header)
+msgid "Foo"
+msgstr ""
+'''
+
+        output = markdown_to_pofile(f'{filesdir}{os.sep}*.md')
+
+    assert output == expected_output

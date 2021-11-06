@@ -40,12 +40,12 @@ How is it that you think beautiful nerd? Gaaaaaay
 ¿Cómo es que te parece nerd lo bello? Gaaaaaay
 """
 
-    with tempfile.TemporaryDirectory() as pofiles_dirpath:
+    with tempfile.TemporaryDirectory() as filesdir:
         for pofile in pofiles:
-            with open(os.path.join(pofiles_dirpath, pofile[0]), 'w') as f:
+            with open(os.path.join(filesdir, pofile[0]), 'w') as f:
                 f.write(pofile[1])
 
-        pofiles_glob = os.path.join(pofiles_dirpath, '*.po')
+        pofiles_glob = os.path.join(filesdir, '*.po')
 
         output = pofile_to_markdown(markdown_content, pofiles_glob)
     assert output == expected_output
