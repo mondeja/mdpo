@@ -6,13 +6,10 @@ import pytest
 
 @contextmanager
 def _tmp_file(content, suffix):
-    f = tempfile.NamedTemporaryFile(suffix=suffix)
-    f.write(content.encode('utf-8'))
-    f.seek(0)
-    try:
+    with tempfile.NamedTemporaryFile(suffix=suffix) as f:
+        f.write(content.encode('utf-8'))
+        f.seek(0)
         yield f.name
-    finally:
-        f.close()
 
 
 @pytest.fixture()

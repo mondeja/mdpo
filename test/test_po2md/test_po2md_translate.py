@@ -42,11 +42,9 @@ def test_translate_save(filename):
         os.path.splitext(os.path.basename(filepath_in))[0] + '.po',
     )
 
-    save_file = tempfile.NamedTemporaryFile(suffix='.po')
+    with tempfile.NamedTemporaryFile(suffix='.po') as save_file:
 
-    pofile_to_markdown(filepath_in, po_filepath, save=save_file.name)
-    save_file.seek(0)
+        pofile_to_markdown(filepath_in, po_filepath, save=save_file.name)
 
-    with open(filepath_out) as expect_file:
-        assert save_file.read().decode('utf-8') == expect_file.read()
-    save_file.close()
+        with open(filepath_out) as expect_file:
+            assert save_file.read().decode('utf-8') == expect_file.read()

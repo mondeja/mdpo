@@ -66,17 +66,15 @@ def test_extract_underline(filename):
 def test_extract_save(filename):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
 
-    save_file = tempfile.NamedTemporaryFile(suffix='.po')
+    with tempfile.NamedTemporaryFile(suffix='.po') as save_file:
 
-    markdown_to_pofile(
-        filepath,
-        plaintext=True,
-        save=True,
-        po_filepath=save_file.name,
-        location=False,
-    )
-    save_file.seek(0)
+        markdown_to_pofile(
+            filepath,
+            plaintext=True,
+            save=True,
+            po_filepath=save_file.name,
+            location=False,
+        )
 
-    with open(f'{filepath}.expect.po') as expect_file:
-        assert save_file.read().decode('utf-8') == expect_file.read()
-    save_file.close()
+        with open(f'{filepath}.expect.po') as expect_file:
+            assert save_file.read().decode('utf-8') == expect_file.read()

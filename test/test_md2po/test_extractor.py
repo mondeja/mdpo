@@ -34,12 +34,12 @@ def test_mark_not_found_as_obsolete(tmp_file):
         'Another string\n\n'
     )
     new_md_file_content = 'A new string\n'
-    po_file = tempfile.NamedTemporaryFile(suffix='.po')
 
-    with tmp_file(original_md_file_content, '.md') as original_md_filepath:
-        md2po = Md2Po(original_md_filepath)
-        pofile = md2po.extract(po_filepath=po_file.name, save=True)
-    assert str(pofile) == f'''#
+    with tempfile.NamedTemporaryFile(suffix='.po') as po_file:
+        with tmp_file(original_md_file_content, '.md') as original_md_filepath:
+            md2po = Md2Po(original_md_filepath)
+            pofile = md2po.extract(po_filepath=po_file.name, save=True)
+        assert str(pofile) == f'''#
 msgid ""
 msgstr ""
 
@@ -52,13 +52,13 @@ msgid "Another string"
 msgstr ""
 '''
 
-    with tmp_file(new_md_file_content, '.md') as new_md_filepath:
-        md2po = Md2Po(
-            new_md_filepath,
-            mark_not_found_as_obsolete=True,
-        )
-        pofile = md2po.extract(po_filepath=po_file.name)
-    assert str(pofile) == f'''#
+        with tmp_file(new_md_file_content, '.md') as new_md_filepath:
+            md2po = Md2Po(
+                new_md_filepath,
+                mark_not_found_as_obsolete=True,
+            )
+            pofile = md2po.extract(po_filepath=po_file.name)
+        assert str(pofile) == f'''#
 msgid ""
 msgstr ""
 
@@ -72,8 +72,6 @@ msgstr ""
 #~ msgid "Another string"
 #~ msgstr ""
 '''
-
-    po_file.close()
 
 
 def test_msgstr():
