@@ -360,8 +360,6 @@ class Po2Md:
         if self._inside_indented_codeblock:
             new_translation = ''
             for line in translation.splitlines():
-                if not line:
-                    continue
                 new_translation += f'    {line}\n'
             translation = new_translation
         else:
