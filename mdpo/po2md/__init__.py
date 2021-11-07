@@ -794,14 +794,28 @@ class Po2Md:
             )
             self._codespan_backticks = None
         elif span is md4c.SpanType.IMG:
-            self._current_msgid += '![{}]({}'.format(
-                self._current_imgspan['text'],
-                self._current_imgspan['src'],
-            )
-            if self._current_imgspan['title']:
-                title = self._current_imgspan['title']
-                self._current_msgid += f' "{title}"'
-            self._current_msgid += ')'
+            # TODO: refactor with getattr? Currently getting next error
+            # getattr(self, target_varname) += '![{}]({}'.format(
+            # SyntaxError: cannot assign to function call
+
+            if not self._inside_aspan:
+                self._current_msgid += '![{}]({}'.format(
+                    self._current_imgspan['text'],
+                    self._current_imgspan['src'],
+                )
+                if self._current_imgspan['title']:
+                    title = self._current_imgspan['title']
+                    self._current_msgid += f' "{title}"'
+                self._current_msgid += ')'
+            else:
+                self._current_aspan_text += '![{}]({}'.format(
+                    self._current_imgspan['text'],
+                    self._current_imgspan['src'],
+                )
+                if self._current_imgspan['title']:
+                    title = self._current_imgspan['title']
+                    self._current_aspan_text += f' "{title}"'
+                self._current_aspan_text += ')'
             self._current_imgspan = {}
 
     def text(self, block, text):
