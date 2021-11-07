@@ -76,6 +76,62 @@ def test_pipe_redirect_file_stdin(tmp_file):
     assert proc.returncode == 0
 
 
+def test_mutliple_files(tmp_file, capsys):
+    with tmp_file('foo\n', '.md') as foo_path, \
+            tmp_file('bar\n', '.md') as bar_path:
+        pofile, exitcode = run([foo_path, bar_path])
+        stdout, stderr = capsys.readouterr()
+
+        assert exitcode == 0
+        assert len(f'{pofile}\n'.splitlines()) == 12
+        assert len(stdout.splitlines()) == 12
+        assert 'msgid "bar"' in str(pofile)
+        assert 'msgid "bar"' in stdout
+        assert 'msgid "foo"' in str(pofile)
+        assert 'msgid "foo"' in stdout
+        assert stderr == ''
+
+
+def test_multiple_globs(capsys):
+    filesdata = {
+        'baba': 'baba',
+        'bar': 'bar',
+        'baz': 'baz',
+    }
+
+    with tempfile.TemporaryDirectory() as filesdir:
+        for filename, content in filesdata.items():
+            with open(os.path.join(filesdir, f'{filename}.md'), 'w') as f:
+                f.write(content)
+
+        pofile, exitcode = run([
+            os.path.join(filesdir, 'ba*.md'),
+            os.path.join(filesdir, 'bab*.md'),
+            '--no-location',
+        ])
+        stdout, stderr = capsys.readouterr()
+
+        expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "baba"
+msgstr ""
+
+msgid "bar"
+msgstr ""
+
+msgid "baz"
+msgstr ""
+
+'''
+
+        assert exitcode == 0
+        assert f'{pofile}\n' == expected_output
+        assert stdout == expected_output
+        assert stderr == ''
+
+
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
 def test_quiet(capsys, arg):
     pofile, exitcode = run([EXAMPLE['input'], arg])

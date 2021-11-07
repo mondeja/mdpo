@@ -5,10 +5,12 @@ import html
 import os
 import tempfile
 
+import pytest
+
 from mdpo.io import (
     filter_paths,
     to_file_content_if_is_file,
-    to_glob_or_content,
+    to_files_or_content,
 )
 
 
@@ -78,18 +80,27 @@ class TestFilterPaths:
 
 class TestToGlobOrContent:
     def test_glob(self):
-        is_glob, parsed = to_glob_or_content(EMPTY_FILES_GLOBSTR)
+        is_glob, parsed = to_files_or_content(EMPTY_FILES_GLOBSTR)
         assert is_glob
         assert parsed == EMPTY_FILES_GLOB
 
     def test_content(self):
-        is_glob, parsed = to_glob_or_content(MD_CONTENT_EXAMPLE)
+        is_glob, parsed = to_files_or_content(MD_CONTENT_EXAMPLE)
         assert not is_glob
         assert parsed == MD_CONTENT_EXAMPLE
 
+    @pytest.mark.parametrize('argtype', (tuple, list, set, iter))
+    def test_list(self, tmp_file, argtype):
+        with tmp_file('foo\n', '.md') as foo_path, \
+                tmp_file('bar\n', '.md') as bar_path:
+            value = argtype({foo_path, bar_path})
+            is_glob, parsed = to_files_or_content(value)
+            assert is_glob
+            assert parsed == value
+
     def test_bad_glob_characters_range(self):
         content = html.escape('[s-m]')
-        is_glob, parsed = to_glob_or_content(content)
+        is_glob, parsed = to_files_or_content(content)
         assert not is_glob
         assert parsed == content
 
