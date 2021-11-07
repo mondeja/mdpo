@@ -204,7 +204,7 @@ def run(args=[]):
         pofile = md2po.extract(**extract_kwargs)
 
         if not opts.quiet:
-            sys.stdout.write(f'{str(pofile)}\n')
+            sys.stdout.write(f'{pofile}\n')
 
         # pre-commit mode
         if (  # pragma: no cover
