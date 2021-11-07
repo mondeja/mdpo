@@ -722,6 +722,9 @@ class Po2Md:
             self._codespan_start_index = len(self._current_msgid)-1
             self._codespan_inside_current_msgid = True
         elif span is md4c.SpanType.IMG:
+            if self._link_references is None:
+                self._link_references = parse_link_references(self.content)
+
             self._current_imgspan['title'] = '' if not details['title'] \
                 else details['title'][0][1]
             self._current_imgspan['src'] = details['src'][0][1]
@@ -794,29 +797,36 @@ class Po2Md:
             )
             self._codespan_backticks = None
         elif span is md4c.SpanType.IMG:
-            # TODO: refactor with getattr? Currently getting next error
-            # getattr(self, target_varname) += '![{}]({}'.format(
-            # SyntaxError: cannot assign to function call
-
-            if not self._inside_aspan:
-                self._current_msgid += '![{}]({}'.format(
-                    self._current_imgspan['text'],
-                    self._current_imgspan['src'],
-                )
-                if self._current_imgspan['title']:
-                    title = self._current_imgspan['title']
-                    self._current_msgid += f' "{title}"'
-                self._current_msgid += ')'
+            referenced_target, imgspan_title = (None, None)
+            imgspan_src = details['src'][0][1]
+            if details['title']:
+                imgspan_title = details['title'][0][1]
+                for target, href, title in self._link_references:
+                    if href == imgspan_src and title == imgspan_title:
+                        referenced_target = target
+                        break
             else:
-                self._current_aspan_text += '![{}]({}'.format(
-                    self._current_imgspan['text'],
-                    self._current_imgspan['src'],
-                )
-                if self._current_imgspan['title']:
-                    title = self._current_imgspan['title']
-                    self._current_aspan_text += f' "{title}"'
-                self._current_aspan_text += ')'
+                for target, href, _ in self._link_references:
+                    if href == imgspan_src:
+                        referenced_target = target
+                        break
+
+            alt_text = self._current_imgspan['text']
+            img_markup = f'![{alt_text}]'
+            if referenced_target:
+                img_markup += f'[{referenced_target}]'
+            else:
+                img_markup += f'({imgspan_src}'
+                if imgspan_title:
+                    img_markup += f' "{imgspan_title}"'
+                img_markup += ')'
+
             self._current_imgspan = {}
+
+            if self._inside_aspan:
+                self._current_aspan_text += img_markup
+            else:
+                self._current_msgid += img_markup
 
     def text(self, block, text):
         # raise 'text' event
@@ -891,7 +901,7 @@ class Po2Md:
             # 'link_reference' event
             pre_events = self.events.get('link_reference')
 
-            _references_added = []  # don't repeat references
+            added_references = []  # don't repeat references
             for target, href, title in self._link_references:
                 if pre_events:
                     skip = False
@@ -901,18 +911,18 @@ class Po2Md:
                     if skip:
                         continue
 
-                href_part = '{}{}'.format(
+                href_title = '{}{}'.format(
                     f' {href}' if href else '',
                     f' "{title}"' if title else '',
                 )
-                if href_part in _references_added:
+                if href_title in added_references:
                     continue
 
-                msgid = '{}{}'.format(f'[{target}]:', href_part)
+                msgid = '{}{}'.format(f'[{target}]:', href_title)
                 self._outputlines.append(
                     self._translate_msgid(msgid, None, None),
                 )
-                _references_added.append(href_part)
+                added_references.append(href_title)
             self._outputlines.append('')
 
     def translate(

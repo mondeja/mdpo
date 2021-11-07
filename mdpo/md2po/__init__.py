@@ -705,6 +705,9 @@ class Md2Po:
                 # save the index char of the opening backtick
                 self._codespan_start_index = len(self._current_msgid) - 1
             elif span is md4c.SpanType.IMG:
+                if self._link_references is None:
+                    self._link_references = parse_link_references(self.content)
+
                 self._current_imgspan['src'] = details['src'][0][1]
                 self._current_imgspan['title'] = '' if not details['title'] \
                     else details['title'][0][1]
@@ -784,30 +787,36 @@ class Md2Po:
                     )
                 self._codespan_backticks = None
             elif span is md4c.SpanType.IMG:
-                # TODO: refactor with getattr? Currently getting next error
-                # getattr(self, target_varname) += '![{}]({}'.format(
-                # SyntaxError: cannot assign to function call
-
-                if not self._inside_aspan:
-                    self._current_msgid += '![{}]({}'.format(
-                        self._current_imgspan['text'],
-                        self._current_imgspan['src'],
-                    )
-                    title = self._current_imgspan['title']
-                    if title:
-                        self._current_msgid += f' "{title}"'
-                    self._current_msgid += ')'
-                    self._current_imgspan = {}
+                referenced_target, imgspan_title = (None, None)
+                imgspan_src = details['src'][0][1]
+                if details['title']:
+                    imgspan_title = details['title'][0][1]
+                    for target, href, title in self._link_references:
+                        if href == imgspan_src and title == imgspan_title:
+                            referenced_target = target
+                            break
                 else:
-                    self._current_aspan_text += '![{}]({}'.format(
-                        self._current_imgspan['text'],
-                        self._current_imgspan['src'],
-                    )
-                    title = self._current_imgspan['title']
-                    if title:
-                        self._current_aspan_text += f' "{title}"'
-                    self._current_aspan_text += ')'
-                    self._current_imgspan = {}
+                    for target, href, _ in self._link_references:
+                        if href == imgspan_src:
+                            referenced_target = target
+                            break
+
+                alt_text = self._current_imgspan['text']
+                img_markup = f'![{alt_text}]'
+                if referenced_target:
+                    img_markup += f'[{referenced_target}]'
+                else:
+                    img_markup += f'({imgspan_src}'
+                    if imgspan_title:
+                        img_markup += f' "{imgspan_title}"'
+                    img_markup += ')'
+
+                self._current_imgspan = {}
+
+                if self._inside_aspan:
+                    self._current_aspan_text += img_markup
+                else:
+                    self._current_msgid += img_markup
             elif span is md4c.SpanType.U:
                 self._inside_uspan = False
 

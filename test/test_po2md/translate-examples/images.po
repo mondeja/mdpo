@@ -11,8 +11,8 @@ msgstr "![](/assets/favicon.ico)"
 msgid "![Hail Tux!](/assets/images/tux.png \"Use linux, don't be crazy\")"
 msgstr "![Hail Tux!](/assets/images/tux.png \"Usa linux, no seas loco\")"
 
-msgid "![Alt text](url/to/image \"Optional title attribute\")"
-msgstr "![Texto alternativo](url/to/imagen \"Atributo título opcional\")"
+msgid "![Alt text][1]"
+msgstr "![Texto alternativo][1]"
 
 msgid "My ![foo bar](/path/to/train.jpg \"title\")"
 msgstr "Mi ![foo bar](/path/to/tren.jpg \"título\")"
@@ -20,11 +20,20 @@ msgstr "Mi ![foo bar](/path/to/tren.jpg \"título\")"
 msgid "[![Image inside inline link](https://image.ext)](https://link.ext)"
 msgstr "[![Imagen dentro de link en línea](https://image.ext)](https://enlace.ext)"
 
-msgid "[![Image inside referenced link](https://image.ext)][1]"
-msgstr "[![Imagen dentro de link referenciado](https://imagen.ext)][1]"
+msgid "[![Image inside referenced link](https://image.ext)][2]"
+msgstr "[![Imagen dentro de link referenciado](https://imagen.ext)][2]"
 
-msgid "[id]: url/to/image \"Optional title attribute\""
-msgstr "[id]: url/a/imagen \"Título de atributo opcional\""
+msgid "[![Referenced link image inside referenced link][3]][4]"
+msgstr "[![Imagen con link referenciado dentro de link referenciado][3]][4]"
 
-msgid "[1]: https://link-1.ext"
-msgstr "[1]: https://enlace-1.ext"
+msgid "[1]: url/to/image \"Optional title attribute\""
+msgstr "[1]: url/a/imagen \"Título de atributo opcional\""
+
+msgid "[2]: https://link-2.ext"
+msgstr "[2]: https://enlace-2.ext"
+
+msgid "[3]: https://image-3.ext"
+msgstr "[3]: https://imagen-3.ext"
+
+msgid "[4]: https://link-4.ext \"Referenced link image with title\""
+msgstr "[4]: https://enlace-4.ext \"Link de imagen referenciado con título\""
