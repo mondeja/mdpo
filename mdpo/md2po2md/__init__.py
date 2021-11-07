@@ -108,9 +108,9 @@ def markdown_to_pofile_to_markdown(
 
             os.makedirs(os.path.abspath(po_dirpath), exist_ok=True)
             if os.path.isdir(po_filepath):
-                po_filepath = (
-                    po_filepath.rstrip(os.sep) + os.sep +
-                    os.path.basename(filepath) + '.po'
+                po_filepath = os.path.join(
+                    po_filepath.rstrip(os.sep),
+                    f'{os.path.basename(filepath)}.po',
                 )
             if not po_filepath.endswith('.po'):
                 po_filepath += '.po'
@@ -139,9 +139,7 @@ def markdown_to_pofile_to_markdown(
                 po_encoding=po_encoding,
                 md_encoding=md_encoding,
             )
-            if (  # pragma: no cover
-                _check_saved_files_changed and _saved_files_changed is False
-            ):
+            if _check_saved_files_changed and _saved_files_changed is False:
                 _saved_files_changed = md2po._saved_files_changed
 
             # po2md
@@ -158,9 +156,7 @@ def markdown_to_pofile_to_markdown(
                 save=md_filepath,
                 md_encoding=md_encoding,
             )
-            if (  # pragma: no cover
-                _check_saved_files_changed and _saved_files_changed is False
-            ):
+            if _check_saved_files_changed and _saved_files_changed is False:
                 _saved_files_changed = po2md._saved_files_changed
 
     return _saved_files_changed

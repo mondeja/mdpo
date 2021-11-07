@@ -153,7 +153,7 @@ class Po2Md:
             ) if 'wrapwidth' in kwargs else 80
         )
 
-        self._saved_files_changed = (  # pragma: no cover
+        self._saved_files_changed = (
             False if kwargs.get('_check_saved_files_changed') else None
         )
 
@@ -360,8 +360,6 @@ class Po2Md:
         if self._inside_indented_codeblock:
             new_translation = ''
             for line in translation.splitlines():
-                if not line:
-                    continue
                 new_translation += f'    {line}\n'
             translation = new_translation
         else:
@@ -421,7 +419,7 @@ class Po2Md:
 
     def enter_block(self, block, details):
         # raise 'enter_block' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'enter_block',
             self, block,
@@ -459,7 +457,8 @@ class Po2Md:
                 self._save_current_line()
         elif block is md4c.BlockType.H:
             self._inside_hblock = True
-            self._current_line += '%s ' % ('#' * details['level'])
+            hash_signs = '#' * details['level']
+            self._current_line += f'{hash_signs} '
         elif block is md4c.BlockType.LI:
             if self._current_list_type[-1][0] == 'ol':
                 # inside OL
@@ -480,7 +479,8 @@ class Po2Md:
                     self._ul_marks[-1],
                 )
                 if details['is_task']:
-                    self._current_line += '[%s] ' % details['task_mark']
+                    mark = details['task_mark']
+                    self._current_line += f'[{mark}] '
                 self._current_list_type[-1][-1].append(details['is_task'])
             self._inside_liblock = True
             self._inside_liblock_first_p = True
@@ -528,7 +528,7 @@ class Po2Md:
 
     def leave_block(self, block, details):
         # raise 'leave_block' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'leave_block',
             self,
@@ -671,7 +671,7 @@ class Po2Md:
 
     def enter_span(self, span, details):
         # raise 'enter_span' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'enter_span',
             self,
@@ -731,7 +731,7 @@ class Po2Md:
 
     def leave_span(self, span, details):
         # raise 'leave_span' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'leave_span',
             self,
@@ -794,20 +794,33 @@ class Po2Md:
             )
             self._codespan_backticks = None
         elif span is md4c.SpanType.IMG:
-            self._current_msgid += '![{}]({}'.format(
-                self._current_imgspan['text'],
-                self._current_imgspan['src'],
-            )
-            if self._current_imgspan['title']:
-                self._current_msgid += ' "%s"' % polib.escape(
-                    self._current_imgspan['title'],
+            # TODO: refactor with getattr? Currently getting next error
+            # getattr(self, target_varname) += '![{}]({}'.format(
+            # SyntaxError: cannot assign to function call
+
+            if not self._inside_aspan:
+                self._current_msgid += '![{}]({}'.format(
+                    self._current_imgspan['text'],
+                    self._current_imgspan['src'],
                 )
-            self._current_msgid += ')'
+                if self._current_imgspan['title']:
+                    title = self._current_imgspan['title']
+                    self._current_msgid += f' "{title}"'
+                self._current_msgid += ')'
+            else:
+                self._current_aspan_text += '![{}]({}'.format(
+                    self._current_imgspan['text'],
+                    self._current_imgspan['src'],
+                )
+                if self._current_imgspan['title']:
+                    title = self._current_imgspan['title']
+                    self._current_aspan_text += f' "{title}"'
+                self._current_aspan_text += ')'
             self._current_imgspan = {}
 
     def text(self, block, text):
         # raise 'text' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'text',
             self,
@@ -939,7 +952,7 @@ class Po2Md:
         self.output = '\n'.join(self._outputlines)
 
         if save:
-            if self._saved_files_changed is False:  # pragma: no cover
+            if self._saved_files_changed is False:
                 self._saved_files_changed = save_file_checking_file_changed(
                     save,
                     self.output,

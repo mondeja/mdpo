@@ -16,3 +16,15 @@ msgstr "![Texto alternativo](url/to/imagen \"Atributo título opcional\")"
 
 msgid "My ![foo bar](/path/to/train.jpg \"title\")"
 msgstr "Mi ![foo bar](/path/to/tren.jpg \"título\")"
+
+msgid "[![Image inside inline link](https://image.ext)](https://link.ext)"
+msgstr "[![Imagen dentro de link en línea](https://image.ext)](https://enlace.ext)"
+
+msgid "[![Image inside referenced link](https://image.ext)][1]"
+msgstr "[![Imagen dentro de link referenciado](https://imagen.ext)][1]"
+
+msgid "[id]: url/to/image \"Optional title attribute\""
+msgstr "[id]: url/a/imagen \"Título de atributo opcional\""
+
+msgid "[1]: https://link-1.ext"
+msgstr "[1]: https://enlace-1.ext"

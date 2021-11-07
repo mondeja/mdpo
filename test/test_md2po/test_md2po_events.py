@@ -61,10 +61,9 @@ def test_enter_block_event(abort_event):
     ),
 )
 def test_enter_leave_span_event(abort_event, expected_msgid):
-
     content = 'Hello `with` codespan'
 
-    po = markdown_to_pofile(
+    pofile = markdown_to_pofile(
         content,
         events={
             'enter_span': lambda *_: not abort_event,
@@ -72,7 +71,7 @@ def test_enter_leave_span_event(abort_event, expected_msgid):
         },
     )
 
-    assert str(po).splitlines()[4].split('"')[1] == expected_msgid
+    assert str(pofile).splitlines()[4].split('"')[1] == expected_msgid
 
 
 @pytest.mark.parametrize(('abort_event'), (True, False))
@@ -101,6 +100,8 @@ def test_command_event(abort_event):
         comment,
         original_command,
     ):
+        # here 'normalize_mdpo_command' is added to simulate a real behaviour,
+        # is not related with the test itself
         if normalize_mdpo_command(command) is None and abort_event:
             raise ValueError('unhandled command for testing')
 
@@ -119,6 +120,62 @@ def test_command_event(abort_event):
         assert str(exc.value) == 'unhandled command for testing'
     else:
         md2po.extract()
+
+
+def test_command_event_return_false():
+    def skip_counter_command_event(
+        self,
+        command,
+        comment,
+        original_command,
+    ):
+        if command == 'mdpo-skip':
+            self.skip_counter += 1
+            return False
+        elif command == 'mdpo-disable-next-line':
+            return False
+
+    content = '''<!-- mdpo-skip -->
+
+some text
+
+mdpo-skip
+
+<!-- mdpo-othercommand -->
+<!-- mdpo-skip -->
+
+<!-- mdpo-disable-next-line -->
+This must be included in output
+'''
+
+    # Md2Po must be subclassed because is defined with fixed slots
+    class CustomMd2Po(Md2Po):
+        def __init__(self, *args, **kwargs):
+            self.skip_counter = 0
+            super().__init__(*args, **kwargs)
+
+    md2po = CustomMd2Po(
+        content,
+        events={
+            'command': skip_counter_command_event,
+        },
+    )
+    output = md2po.extract()
+
+    assert md2po.skip_counter == content.count('<!-- mdpo-skip -->')
+    assert output == '''#
+msgid ""
+msgstr ""
+
+msgid "some text"
+msgstr ""
+
+msgid "mdpo-skip"
+msgstr ""
+
+msgid "This must be included in output"
+msgstr ""
+'''
 
 
 def test_msgid_event():

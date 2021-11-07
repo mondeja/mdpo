@@ -15,6 +15,8 @@ Fenced code block with tildes
 ~~~
 
     Indented code block
+    
+    After empty line
 
 !!! note
 

@@ -13,7 +13,7 @@ from mdpo.po2md.__main__ import run
 
 EXAMPLE = {
     'markdown-input': '# Header 1\n\nSome text here\n',
-    'markdown-output': '# Encabezado 1\n\nAlgo de texto aquí\n',
+    'markdown-output': '# Encabezado 1\n\nAlgo de texto aquí\n\n',
     'pofile': '''#
 msgid ""
 msgstr ""
@@ -27,16 +27,15 @@ msgstr "Algo de texto aquí"
 }
 
 
-def test_stdin(striplastline, capsys, monkeypatch, tmp_file):
+def test_stdin(capsys, monkeypatch, tmp_file):
     monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['markdown-input']))
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
-
         output, exitcode = run(['-p', po_filepath])
-        out, err = capsys.readouterr()
+        stdout, _ = capsys.readouterr()
 
         assert exitcode == 0
-        assert output == EXAMPLE['markdown-output']
-        assert striplastline(out) == EXAMPLE['markdown-output']
+        assert f'{output}\n' == EXAMPLE['markdown-output']
+        assert stdout == EXAMPLE['markdown-output']
 
 
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
@@ -47,11 +46,12 @@ def test_quiet(capsys, arg, tmp_file):
             EXAMPLE['markdown-input'],
             '-p', po_filepath, arg,
         ])
-        out, err = capsys.readouterr()
+        stdout, stderr = capsys.readouterr()
 
         assert exitcode == 0
-        assert output == EXAMPLE['markdown-output']
-        assert out == ''
+        assert f'{output}\n' == EXAMPLE['markdown-output']
+        assert stdout == ''
+        assert stderr == ''
 
 
 @pytest.mark.parametrize('arg', ['-D', '--debug'])
@@ -60,14 +60,13 @@ def test_debug(capsys, arg, tmp_file):
             tmp_file(EXAMPLE['markdown-input'], '.md') as input_md_filepath:
 
         output, exitcode = run([input_md_filepath, '-p', po_filepath, arg])
-        out, err = capsys.readouterr()
 
         assert exitcode == 0
-        assert output == EXAMPLE['markdown-output']
+        assert f'{output}\n' == EXAMPLE['markdown-output']
 
         md_output_checked = False
-
-        outlines = out.splitlines()
+        stdout, _ = capsys.readouterr()
+        outlines = stdout.splitlines()
         for i, line in enumerate(outlines):
             assert re.match(
                 (
@@ -78,9 +77,9 @@ def test_debug(capsys, arg, tmp_file):
                 line,
             )
             if line.endswith('leave_block:: DOC'):
-                assert (
-                    '\n'.join(outlines[i + 1:]) == EXAMPLE['markdown-output']
-                )
+                non_debug_lines = '\n'.join([*outlines[i + 1:], ''])
+                assert non_debug_lines == EXAMPLE['markdown-output']
+
                 md_output_checked = True
                 break
 
@@ -97,20 +96,18 @@ def test_save(capsys, arg, tmp_file):
             input_md_filepath, '-p', po_filepath,
             arg, output_md_filepath,
         ])
-        out, err = capsys.readouterr()
+        stdout, _ = capsys.readouterr()
 
         assert exitcode == 0
-        assert output == EXAMPLE['markdown-output']
-        assert out == ''
+        assert f'{output}\n' == EXAMPLE['markdown-output']
+        assert stdout == ''
 
         with open(output_md_filepath) as f:
-            output_markdown_content = f.read()
-
-        assert output_markdown_content == EXAMPLE['markdown-output']
+            assert f'{f.read()}\n' == EXAMPLE['markdown-output']
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
-def test_ignore_files_by_filepath(striplastline, capsys, arg):
+def test_ignore_files_by_filepath(capsys, arg):
     pofiles = [
         (
             uuid4().hex + '.po',
@@ -135,7 +132,7 @@ def test_ignore_files_by_filepath(striplastline, capsys, arg):
         ),
     ]
 
-    expected_output = 'Incluida\n\nExcluded\n\nExcluded 2\n'
+    expected_output = 'Incluida\n\nExcluded\n\nExcluded 2\n\n'
 
     with tempfile.TemporaryDirectory() as filesdir:
         for pofile in pofiles:
@@ -147,15 +144,17 @@ def test_ignore_files_by_filepath(striplastline, capsys, arg):
             f.write('Included\n\nExcluded\n\nExcluded 2\n')
 
         output, exitcode = run([
-            input_md_filepath, '-p',
+            input_md_filepath,
+            '-p',
             os.path.join(filesdir, '*.po'),
             arg,
             os.path.join(filesdir, pofiles[1][0]),
             arg,
             os.path.join(filesdir, pofiles[2][0]),
         ])
-        out, err = capsys.readouterr()
+
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
-    assert output == expected_output
-    assert striplastline(out) == expected_output
+    assert f'{output}\n' == expected_output
+    assert stdout == expected_output

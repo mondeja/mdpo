@@ -10,7 +10,11 @@ from mdpo.command import (
     parse_mdpo_html_command,
 )
 from mdpo.event import debug_events, raise_skip_event
-from mdpo.io import filter_paths, to_glob_or_content
+from mdpo.io import (
+    filter_paths,
+    save_file_checking_file_changed,
+    to_glob_or_content,
+)
 from mdpo.md import parse_link_references
 from mdpo.md4c import (
     DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
@@ -21,7 +25,6 @@ from mdpo.po import (
     mark_not_found_entries_as_obsoletes,
     po_escaped_string,
     remove_not_found_entries,
-    save_pofile_checking_file_changed,
 )
 from mdpo.text import min_not_max_chars_in_a_row, parse_wrapwidth_argument
 
@@ -172,7 +175,7 @@ class Md2Po:
         self._include_next_codeblock = False
         self._disable_next_codeblock = False
 
-        self._saved_files_changed = (  # pragma: no cover
+        self._saved_files_changed = (
             False if kwargs.get('_check_saved_files_changed') else None
         )
 
@@ -781,16 +784,30 @@ class Md2Po:
                     )
                 self._codespan_backticks = None
             elif span is md4c.SpanType.IMG:
-                self._current_msgid += '![{}]({}'.format(
-                    self._current_imgspan['text'],
-                    self._current_imgspan['src'],
-                )
-                if self._current_imgspan['title']:
-                    self._current_msgid += ' "%s"' % (
-                        self._current_imgspan['title']
+                # TODO: refactor with getattr? Currently getting next error
+                # getattr(self, target_varname) += '![{}]({}'.format(
+                # SyntaxError: cannot assign to function call
+
+                if not self._inside_aspan:
+                    self._current_msgid += '![{}]({}'.format(
+                        self._current_imgspan['text'],
+                        self._current_imgspan['src'],
                     )
-                self._current_msgid += ')'
-                self._current_imgspan = {}
+                    title = self._current_imgspan['title']
+                    if title:
+                        self._current_msgid += f' "{title}"'
+                    self._current_msgid += ')'
+                    self._current_imgspan = {}
+                else:
+                    self._current_aspan_text += '![{}]({}'.format(
+                        self._current_imgspan['text'],
+                        self._current_imgspan['src'],
+                    )
+                    title = self._current_imgspan['title']
+                    if title:
+                        self._current_aspan_text += f' "{title}"'
+                    self._current_aspan_text += ')'
+                    self._current_imgspan = {}
             elif span is md4c.SpanType.U:
                 self._inside_uspan = False
 
@@ -968,9 +985,10 @@ class Md2Po:
 
         if save and po_filepath:
             if self._saved_files_changed is False:  # pragma: no cover
-                self._saved_files_changed = save_pofile_checking_file_changed(
-                    self.pofile,
+                self._saved_files_changed = save_file_checking_file_changed(
                     po_filepath,
+                    str(self.pofile),
+                    encoding=self.pofile.encoding,
                 )
             else:
                 self.pofile.save(fpath=po_filepath)
@@ -1034,8 +1052,8 @@ def markdown_to_pofile(
                 for you. It depends on the use you are going to give to
                 this library activate this mode (``plaintext=False``) or not.
         wrapwidth (int): Wrap width for po file indicated at ``po_filepath``
-            parameter. Only useful when the ``-w`` option was passed
-            to xgettext.
+            parameter. If negative, 0, 'inf' or 'math.inf' the content won't
+            be wrapped.
         mark_not_found_as_obsolete (bool): The strings extracted from markdown
             that will not be found inside the provided pofile will be marked
             as obsolete.

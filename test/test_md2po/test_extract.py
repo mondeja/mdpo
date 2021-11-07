@@ -14,7 +14,7 @@ EXAMPLES_DIR = os.path.join('test', 'test_md2po', 'extract-examples')
 
 def _build_examples(dirname):
     examples_dir = os.path.join(EXAMPLES_DIR, dirname)
-    examples_glob = glob.glob(examples_dir + os.sep + '*.md')
+    examples_glob = glob.glob(os.path.join(examples_dir, '*.md'))
     examples_filenames = sorted(os.path.basename(fp) for fp in examples_glob)
     return (examples_dir, examples_filenames)
 
@@ -33,8 +33,8 @@ def test_extract_plaintext(filename):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
     pofile = markdown_to_pofile(filepath, plaintext=True, location=False)
 
-    with open(filepath + '.expect.po') as expect_file:
-        assert pofile.__unicode__() == expect_file.read()
+    with open(f'{filepath}.expect.po') as expect_file:
+        assert str(pofile) == expect_file.read()
 
 
 @pytest.mark.parametrize('filename', EXAMPLES['markuptext']['filenames'])
@@ -42,8 +42,8 @@ def test_extract_markuptext(filename):
     filepath = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
     pofile = markdown_to_pofile(filepath, plaintext=False, location=False)
 
-    with open(filepath + '.expect.po') as expect_file:
-        assert pofile.__unicode__() == expect_file.read()
+    with open(f'{filepath}.expect.po') as expect_file:
+        assert str(pofile) == expect_file.read()
 
 
 @pytest.mark.parametrize('filename', EXAMPLES['underline']['filenames'])
@@ -56,8 +56,8 @@ def test_extract_underline(filename):
         location=False,
     )
 
-    with open(filepath + '.expect.po') as expect_file:
-        assert pofile.__unicode__() == expect_file.read()
+    with open(f'{filepath}.expect.po') as expect_file:
+        assert str(pofile) == expect_file.read()
 
 
 @pytest.mark.parametrize(
@@ -66,17 +66,15 @@ def test_extract_underline(filename):
 def test_extract_save(filename):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
 
-    save_file = tempfile.NamedTemporaryFile(suffix='.po')
+    with tempfile.NamedTemporaryFile(suffix='.po') as save_file:
 
-    markdown_to_pofile(
-        filepath,
-        plaintext=True,
-        save=True,
-        po_filepath=save_file.name,
-        location=False,
-    )
-    save_file.seek(0)
+        markdown_to_pofile(
+            filepath,
+            plaintext=True,
+            save=True,
+            po_filepath=save_file.name,
+            location=False,
+        )
 
-    with open(filepath + '.expect.po') as expect_file:
-        assert save_file.read().decode('utf-8') == expect_file.read()
-    save_file.close()
+        with open(f'{filepath}.expect.po') as expect_file:
+            assert save_file.read().decode('utf-8') == expect_file.read()

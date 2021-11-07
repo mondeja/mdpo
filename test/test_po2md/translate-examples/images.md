@@ -6,6 +6,12 @@
 
 ![Alt text][id]
 
-[id]: url/to/image  "Optional title attribute"
+[id]: url/to/image "Optional title attribute"
 
 My ![foo bar](/path/to/train.jpg "title")
+
+[![Image inside inline link](https://image.ext)](https://link.ext)
+
+[![Image inside referenced link](https://image.ext)][1]
+
+[1]: https://link-1.ext

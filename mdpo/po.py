@@ -1,11 +1,10 @@
 """``.po`` files related stuff."""
 
 import glob
-import os
 
 import polib
 
-from mdpo.io import filehash, filter_paths
+from mdpo.io import filter_paths
 from mdpo.polib import poentry__cmp__
 
 
@@ -21,7 +20,7 @@ def po_escaped_string(chars):
     Returns:
         str: First character of passed string with ``\`` character prepended.
     """
-    return '\\' + chars[0]
+    return f'\\{chars[0]}'
 
 
 def find_entry_in_entries(entry, entries, **kwargs):
@@ -162,24 +161,3 @@ def paths_or_globs_to_unique_pofiles(pofiles_globs, ignore, po_encoding=None):
                 _po_filepaths.append(po_filepath)
 
     return pofiles
-
-
-def save_pofile_checking_file_changed(pofile, po_filepath):
-    """Save a :py:class:`polib.POFile` checking if the content has changed.
-
-    Args:
-        pofile (:py:class:`polib.POFile`): POFile to save.
-        po_filepath (str): Path to the new file to save in.
-
-    Returns:
-        bool: If the PO file content has been changed.
-    """
-    if not os.path.isfile(po_filepath):
-        pofile.save(fpath=po_filepath)
-        return True
-
-    pre_hash = filehash(po_filepath)
-    pofile.save(fpath=po_filepath)
-    post_hash = filehash(po_filepath)
-
-    return pre_hash != post_hash

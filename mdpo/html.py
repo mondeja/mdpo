@@ -18,9 +18,9 @@ def html_attrs_tuple_to_string(attrs):
     """
     response = ''
     for i, (name, value) in enumerate(attrs):
-        response += '%s' % name
+        response += name
         if value is not None:
-            response += '="%s"' % value
+            response += f'="{value}"'
         if i < len(attrs) - 1:
             response += ' '
     return response

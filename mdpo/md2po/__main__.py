@@ -76,9 +76,8 @@ def build_parser():
         '-w', '--wrapwidth', dest='wrapwidth', metavar='N/inf', type=str,
         default='78',
         help='Wrap width for po file indicated at \'-po/--po-filepath\''
-             ' parameter. Only useful when the \'-w\' option was passed to'
-             ' xgettext. You can use the values \'0\' and \'inf\' for infinite'
-             ' width.',
+             ' parameter. If negative, \'0\' or \'inf\', the PO file content'
+             ' will not be wrapped.',
     )
     parser.add_argument(
         '-m', '--merge-po-files', '--merge-pofiles',
@@ -204,12 +203,10 @@ def run(args=[]):
         pofile = md2po.extract(**extract_kwargs)
 
         if not opts.quiet:
-            sys.stdout.write(pofile.__unicode__() + '\n')
+            sys.stdout.write(f'{pofile}\n')
 
         # pre-commit mode
-        if (  # pragma: no cover
-            opts.check_saved_files_changed and md2po._saved_files_changed
-        ):
+        if opts.check_saved_files_changed and md2po._saved_files_changed:
             return (pofile, 1)
 
     return (pofile, 0)

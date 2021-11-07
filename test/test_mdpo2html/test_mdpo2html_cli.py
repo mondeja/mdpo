@@ -26,28 +26,30 @@ msgstr "Algo de texto aquí"
 
 def test_stdin(capsys, monkeypatch, tmp_file):
     monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['html-input']))
-    with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
 
+    with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
         output, exitcode = run(['-p', po_filepath])
-        out, err = capsys.readouterr()
+        stdout, stderr = capsys.readouterr()
 
         assert exitcode == 0
         assert output == EXAMPLE['html-output'][:-1]  # rstrip("\n")
-        assert out == EXAMPLE['html-output']
+        assert stdout == EXAMPLE['html-output']
+        assert stderr == ''
 
 
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
 def test_quiet(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
-
         output, exitcode = run([
             EXAMPLE['html-input'],
             '-p', po_filepath, arg,
         ])
-        out, err = capsys.readouterr()
+        stdout, stderr = capsys.readouterr()
 
         assert exitcode == 0
         assert output == EXAMPLE['html-output']
+        assert stdout == ''
+        assert stderr == ''
 
 
 @pytest.mark.parametrize('arg', ['-s', '--save'])
@@ -60,11 +62,11 @@ def test_save(capsys, arg, tmp_file):
             html_input_filepath, '-p', po_filepath,
             arg, html_output_filepath,
         ])
-        out, err = capsys.readouterr()
+        stdout, _ = capsys.readouterr()
 
         assert exitcode == 0
         assert output == EXAMPLE['html-output']
-        assert out == ''
+        assert stdout == ''
 
         with open(html_output_filepath) as f:
             output_html_content = f.read()
@@ -73,52 +75,48 @@ def test_save(capsys, arg, tmp_file):
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
-def test_ignore_files_by_filepath(striplastline, capsys, arg, tmp_file):
-    pofiles = [
+def test_ignore_files_by_filepath(capsys, arg, tmp_file):
+    pofiles_contents = [
         (
-            uuid4().hex + '.po',
-            (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
-                'msgstr "Incluida"\n\n'
-            ),
+            '#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
+            'msgstr "Incluida"\n\n'
         ),
         (
-            uuid4().hex + '.po',
-            (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
-                'msgstr "Excluida"\n\n'
-            ),
+            '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded"\n'
+            'msgstr "Excluida"\n\n'
         ),
         (
-            uuid4().hex + '.po',
-            (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded 2"\n'
-                'msgstr "Excluida 2"\n\n'
-            ),
+            '#\nmsgid ""\nmsgstr ""\n\nmsgid "Exluded 2"\n'
+            'msgstr "Excluida 2"\n\n'
         ),
     ]
 
     html_input = '<p>Included</p>\n\n<p>Excluded</p>\n\n<p>Excluded 2</p>\n\n'
     expected_output = (
-        '<p>Incluida</p>\n\n<p>Excluded</p>\n\n<p>Excluded 2</p>\n\n'
+        '<p>Incluida</p>\n\n<p>Excluded</p>\n\n<p>Excluded 2</p>\n\n\n'
     )
 
     with tempfile.TemporaryDirectory() as filesdir:
-        for pofile in pofiles:
-            with open(os.path.join(filesdir, pofile[0]), 'w') as f:
-                f.write(pofile[1])
+        pofiles_paths = [
+            os.path.join(filesdir, f'{uuid4().hex}.po')
+            for _ in range(len(pofiles_contents))
+        ]
+        pofiles_paths_contents = zip(pofiles_paths, pofiles_contents)
+        for pofile_path, pofile_content in pofiles_paths_contents:
+            with open(pofile_path, 'w') as f:
+                f.write(pofile_content)
         with tmp_file(html_input, '.html') as html_input_filepath:
             output, exitcode = run([
                 html_input_filepath,
                 '-p',
                 os.path.join(filesdir, '*.po'),
                 arg,
-                pofiles[1][0],
+                pofiles_paths[1],
                 arg,
-                pofiles[2][0],
+                pofiles_paths[2],
             ])
-            out, err = capsys.readouterr()
+            stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
-    assert output == expected_output
-    assert striplastline(out) == expected_output
+    assert f'{output}\n' == expected_output
+    assert stdout == expected_output

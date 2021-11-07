@@ -59,8 +59,8 @@ def build_parser():
     )
     parser.add_argument(
         '-w', '--wrapwidth', dest='wrapwidth', default='80', type=str,
-        help='Maximum width rendering the Markdown output, when possible. You'
-             ' can use the values \'0\' and \'inf\' for infinite width.',
+        help='Maximum width rendering the Markdown output, when possible. If'
+             ' negative, \'0\' or \'inf\', the content will not be wrapped.',
         metavar='N/inf',
     )
     add_encoding_arguments(parser)
@@ -117,12 +117,10 @@ def run(args=[]):
         )
 
         if not opts.quiet and not opts.save:
-            sys.stdout.write(output + '\n')
+            sys.stdout.write(f'{output}\n')
 
         # pre-commit mode
-        if (  # pragma: no cover
-            opts.check_saved_files_changed and po2md._saved_files_changed
-        ):
+        if opts.check_saved_files_changed and po2md._saved_files_changed:
             return (output, 1)
 
     return (output, 0)

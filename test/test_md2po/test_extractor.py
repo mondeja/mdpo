@@ -16,7 +16,7 @@ code block
 '''
 
     md2po = Md2Po(markdown_content)
-    assert md2po.extract().__unicode__() == '''#
+    assert str(md2po.extract()) == '''#
 msgid ""
 msgstr ""
 
@@ -34,12 +34,12 @@ def test_mark_not_found_as_obsolete(tmp_file):
         'Another string\n\n'
     )
     new_md_file_content = 'A new string\n'
-    po_file = tempfile.NamedTemporaryFile(suffix='.po')
 
-    with tmp_file(original_md_file_content, '.md') as original_md_filepath:
-        md2po = Md2Po(original_md_filepath)
-        po = md2po.extract(po_filepath=po_file.name, save=True)
-    assert po.__unicode__() == f'''#
+    with tempfile.NamedTemporaryFile(suffix='.po') as po_file:
+        with tmp_file(original_md_file_content, '.md') as original_md_filepath:
+            md2po = Md2Po(original_md_filepath)
+            pofile = md2po.extract(po_filepath=po_file.name, save=True)
+        assert pofile == f'''#
 msgid ""
 msgstr ""
 
@@ -52,13 +52,13 @@ msgid "Another string"
 msgstr ""
 '''
 
-    with tmp_file(new_md_file_content, '.md') as new_md_filepath:
-        md2po = Md2Po(
-            new_md_filepath,
-            mark_not_found_as_obsolete=True,
-        )
-        po = md2po.extract(po_filepath=po_file.name)
-    assert po.__unicode__() == f'''#
+        with tmp_file(new_md_file_content, '.md') as new_md_filepath:
+            md2po = Md2Po(
+                new_md_filepath,
+                mark_not_found_as_obsolete=True,
+            )
+            pofile = md2po.extract(po_filepath=po_file.name)
+        assert pofile == f'''#
 msgid ""
 msgstr ""
 
@@ -73,13 +73,11 @@ msgstr ""
 #~ msgstr ""
 '''
 
-    po_file.close()
-
 
 def test_msgstr():
     content = 'Mensaje por defecto'
     md2po = Md2Po(content, msgstr='Default message')
-    assert md2po.extract(content).__unicode__() == '''#
+    assert str(md2po.extract(content)) == '''#
 msgid ""
 msgstr ""
 
@@ -91,7 +89,7 @@ msgstr "Default message"
 def test_ignore_msgids():
     content = 'foo\n\nbar\n\nbaz\n'
     md2po = Md2Po(content, ignore_msgids=['foo', 'baz'])
-    assert md2po.extract(content).__unicode__() == '''#
+    assert str(md2po.extract(content)) == '''#
 msgid ""
 msgstr ""
 
