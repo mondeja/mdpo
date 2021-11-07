@@ -1,8 +1,16 @@
 """Tests for mdpo text utilities."""
 
+import math
+
 import pytest
 
-from mdpo.text import min_not_max_chars_in_a_row, parse_escaped_pair
+from mdpo.text import (
+    min_not_max_chars_in_a_row,
+    parse_escaped_pair,
+    parse_strint_0_inf,
+    removeprefix,
+    removesuffix,
+)
 
 
 @pytest.mark.parametrize(
@@ -54,3 +62,45 @@ def test_parse_escaped_pair(
         key, value = parse_escaped_pair(text)
         assert key == expected_key
         assert value == expected_value
+
+
+@pytest.mark.parametrize(
+    ('value', 'expected_value', 'expected_error'),
+    (
+        ('1', 1, None),
+        ('1.1', 1, None),
+        (0, math.inf, None),
+        (-0, math.inf, None),
+        ('a', None, ValueError),
+        ('inf', math.inf, None),
+        ('-inf', math.inf, None),
+    ),
+)
+def test_parse_strint_0_inf(value, expected_value, expected_error):
+    if expected_error:
+        with pytest.raises(expected_error):
+            parse_strint_0_inf(value)
+    else:
+        assert parse_strint_0_inf(value) == expected_value
+
+
+@pytest.mark.parametrize(
+    ('value', 'prefix', 'expected_value'),
+    (
+        ('foo', 'fo', 'o'),
+        ('bar', 'fo', 'bar'),
+    ),
+)
+def test_removeprefix(value, prefix, expected_value):
+    assert removeprefix(value, prefix) == expected_value
+
+
+@pytest.mark.parametrize(
+    ('value', 'suffix', 'expected_value'),
+    (
+        ('foo', 'oo', 'f'),
+        ('bar', 'fo', 'bar'),
+    ),
+)
+def test_removesuffix(value, suffix, expected_value):
+    assert removesuffix(value, suffix) == expected_value

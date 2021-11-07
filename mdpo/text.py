@@ -112,13 +112,11 @@ def parse_strint_0_inf(value):
     Args:
         value (str): Value to parse.
     """
+    num = float(value)
     try:
-        num = int(value)
-    except ValueError:
-        if value.lower() == 'inf':
-            return math.inf
-        raise ValueError(value)
-    return num if num else math.inf
+        return int(num) if num != 0 else math.inf
+    except OverflowError:  # cannot convert float infinity to integer
+        return math.inf
 
 
 def parse_wrapwidth_argument(value):
@@ -129,8 +127,8 @@ def parse_wrapwidth_argument(value):
     """
     try:
         value = parse_strint_0_inf(value)
-    except ValueError as err:
-        if os.environ.get('_MDPO_RUNNING'):
+    except ValueError as err:  # pragma: no cover
+        if os.environ.get('_MDPO_RUNNING'):  # executed as CLI
             sys.stderr.write(
                 f"Invalid value '{err.value}' for -w/--wrapwidth argument.\n",
             )
@@ -160,7 +158,7 @@ def removeprefix(text, prefix):
         return text.removeprefix(prefix)
     if text.startswith(prefix):
         return text[len(prefix):]
-    return text  # pragma: no cover
+    return text
 
 
 def removesuffix(text, suffix):
@@ -183,4 +181,4 @@ def removesuffix(text, suffix):
         return text.removesuffix(suffix)
     if suffix and text.endswith(suffix):
         return text[:-len(suffix)]
-    return text  # pragma: no cover
+    return text

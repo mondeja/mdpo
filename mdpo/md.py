@@ -46,9 +46,8 @@ def escape_links_titles(text, link_start_string='[', link_end_string=']'):
 
     for match in re.findall(regex, text):
         original_string = match[0] + match[1]
-        target_string = match[0] + '"%s"' % (
-            match[1][1:-1].replace('"', '\\"')
-        )
+        escaped_title = match[1][1:-1].replace('"', '\\"')
+        target_string = f'{match[0]}"{escaped_title}"'
         text = text.replace(original_string, target_string)
     return text
 
