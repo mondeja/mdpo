@@ -1033,8 +1033,7 @@ def markdown_to_pofile(
                 for you. It depends on the use you are going to give to
                 this library activate this mode (``plaintext=False``) or not.
         wrapwidth (int): Wrap width for po file indicated at ``po_filepath``
-            parameter. Only useful when the ``-w`` option was passed
-            to xgettext. If negative, 0, 'inf' or 'math.inf' the content won't
+            parameter. If negative, 0, 'inf' or 'math.inf' the content won't
             be wrapped.
         mark_not_found_as_obsolete (bool): The strings extracted from markdown
             that will not be found inside the provided pofile will be marked

@@ -76,8 +76,7 @@ def build_parser():
         '-w', '--wrapwidth', dest='wrapwidth', metavar='N/inf', type=str,
         default='78',
         help='Wrap width for po file indicated at \'-po/--po-filepath\''
-             ' parameter. Only useful when the \'-w\' option was passed to'
-             ' xgettext. If negative, \'0\' or \'inf\', the PO file content'
+             ' parameter. If negative, \'0\' or \'inf\', the PO file content'
              ' will not be wrapped.',
     )
     parser.add_argument(
