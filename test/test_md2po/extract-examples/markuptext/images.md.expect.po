@@ -11,7 +11,7 @@ msgstr ""
 msgid "![Hail Tux!](/assets/images/tux.png \"Use linux, don't be crazy\")"
 msgstr ""
 
-msgid "![Alt text](url/to/image \"Optional title attribute\")"
+msgid "![Alt text][1]"
 msgstr ""
 
 msgid "My ![foo bar](/path/to/train.jpg \"title\")"
@@ -20,13 +20,24 @@ msgstr ""
 msgid "[![Image inside inline link](https://image.ext)](https://link.ext)"
 msgstr ""
 
-msgid "[![Image inside referenced link](https://image.ext)][1]"
+msgid "[![Image inside referenced link](https://image.ext)][2]"
+msgstr ""
+
+msgid "[![Referenced link image inside referenced link][3]][4]"
 msgstr ""
 
 #, fuzzy
-msgid "[id]: url/to/image \"Optional title attribute\""
-msgstr "[id]: url/to/image \"Optional title attribute\""
+msgid "[1]: url/to/image \"Optional title attribute\""
+msgstr "[1]: url/to/image \"Optional title attribute\""
 
 #, fuzzy
-msgid "[1]: https://link-1.ext"
-msgstr "[1]: https://link-1.ext"
+msgid "[2]: https://link-2.ext"
+msgstr "[2]: https://link-2.ext"
+
+#, fuzzy
+msgid "[3]: https://image-3.ext"
+msgstr "[3]: https://image-3.ext"
+
+#, fuzzy
+msgid "[4]: https://link-4.ext \"Referenced link image with title\""
+msgstr "[4]: https://link-4.ext \"Referenced link image with title\""
