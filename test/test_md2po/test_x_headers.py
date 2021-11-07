@@ -12,7 +12,7 @@ def test_x_headers_included():
         plaintext=False,
         extensions=extensions,
     )
-    assert str(pofile) == '''#
+    assert pofile == '''#
 msgid ""
 msgstr ""
 "x-mdpo-bold-end: **\\n"

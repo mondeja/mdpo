@@ -39,7 +39,7 @@ def test_mark_not_found_as_obsolete(tmp_file):
         with tmp_file(original_md_file_content, '.md') as original_md_filepath:
             md2po = Md2Po(original_md_filepath)
             pofile = md2po.extract(po_filepath=po_file.name, save=True)
-        assert str(pofile) == f'''#
+        assert pofile == f'''#
 msgid ""
 msgstr ""
 
@@ -58,7 +58,7 @@ msgstr ""
                 mark_not_found_as_obsolete=True,
             )
             pofile = md2po.extract(po_filepath=po_file.name)
-        assert str(pofile) == f'''#
+        assert pofile == f'''#
 msgid ""
 msgstr ""
 

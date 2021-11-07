@@ -17,7 +17,7 @@ May
 May
 '''
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert str(pofile) == '''#
+    assert pofile == '''#
 msgid ""
 msgstr ""
 

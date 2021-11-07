@@ -34,7 +34,7 @@ def test_extract_plaintext(filename):
     pofile = markdown_to_pofile(filepath, plaintext=True, location=False)
 
     with open(f'{filepath}.expect.po') as expect_file:
-        assert str(pofile) == expect_file.read()
+        assert pofile == expect_file.read()
 
 
 @pytest.mark.parametrize('filename', EXAMPLES['markuptext']['filenames'])
@@ -43,7 +43,7 @@ def test_extract_markuptext(filename):
     pofile = markdown_to_pofile(filepath, plaintext=False, location=False)
 
     with open(f'{filepath}.expect.po') as expect_file:
-        assert str(pofile) == expect_file.read()
+        assert pofile == expect_file.read()
 
 
 @pytest.mark.parametrize('filename', EXAMPLES['underline']['filenames'])
@@ -57,7 +57,7 @@ def test_extract_underline(filename):
     )
 
     with open(f'{filepath}.expect.po') as expect_file:
-        assert str(pofile) == expect_file.read()
+        assert pofile == expect_file.read()
 
 
 @pytest.mark.parametrize(
