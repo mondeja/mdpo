@@ -23,7 +23,8 @@ from mdpo.cli import parse_command_aliases_cli_arguments
             None,
             (
                 "The value 'foobar' passed to argument --command-alias"
-                " can't be parsed."
+                " can't be parsed. Please, separate the pair"
+                " '<custom-command:mdpo-command>' with a ':' character.\n"
             ),
             id='foobar-error: unparsed alias resolution',
         ),
@@ -32,7 +33,7 @@ from mdpo.cli import parse_command_aliases_cli_arguments
             None,
             (
                 "Multiple resolutions for 'foo' alias passed to"
-                ' --command-alias arguments.'
+                ' --command-alias arguments.\n'
             ),
             id='foo:bar,foo:baz-error: multiple resolutions for alias',
         ),
@@ -47,8 +48,9 @@ def test_parse_command_aliases_cli_arguments(
     if expected_stderr:
         with pytest.raises(SystemExit):
             parse_command_aliases_cli_arguments(command_aliases)
-        _, stderr = capsys.readouterr()
-        assert expected_stderr in stderr
+        stdout, stderr = capsys.readouterr()
+        assert stderr == expected_stderr
+        assert stdout == ''
     else:
         assert parse_command_aliases_cli_arguments(
             command_aliases,
