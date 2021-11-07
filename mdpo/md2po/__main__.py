@@ -206,9 +206,7 @@ def run(args=[]):
             sys.stdout.write(f'{pofile}\n')
 
         # pre-commit mode
-        if (  # pragma: no cover
-            opts.check_saved_files_changed and md2po._saved_files_changed
-        ):
+        if opts.check_saved_files_changed and md2po._saved_files_changed:
             return (pofile, 1)
 
     return (pofile, 0)

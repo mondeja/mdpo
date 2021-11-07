@@ -120,9 +120,7 @@ def run(args=[]):
             sys.stdout.write(f'{output}\n')
 
         # pre-commit mode
-        if (  # pragma: no cover
-            opts.check_saved_files_changed and po2md._saved_files_changed
-        ):
+        if opts.check_saved_files_changed and po2md._saved_files_changed:
             return (output, 1)
 
     return (output, 0)

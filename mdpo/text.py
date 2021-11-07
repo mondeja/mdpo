@@ -127,7 +127,7 @@ def parse_wrapwidth_argument(value):
     """
     try:
         value = parse_strint_0_inf(value)
-    except ValueError as err:  # pragma: no cover
+    except ValueError as err:
         if os.environ.get('_MDPO_RUNNING'):  # executed as CLI
             sys.stderr.write(
                 f"Invalid value '{err.value}' for -w/--wrapwidth argument.\n",

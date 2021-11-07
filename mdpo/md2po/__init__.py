@@ -172,7 +172,7 @@ class Md2Po:
         self._include_next_codeblock = False
         self._disable_next_codeblock = False
 
-        self._saved_files_changed = (  # pragma: no cover
+        self._saved_files_changed = (
             False if kwargs.get('_check_saved_files_changed') else None
         )
 

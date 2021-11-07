@@ -153,7 +153,7 @@ class Po2Md:
             ) if 'wrapwidth' in kwargs else 80
         )
 
-        self._saved_files_changed = (  # pragma: no cover
+        self._saved_files_changed = (
             False if kwargs.get('_check_saved_files_changed') else None
         )
 
@@ -421,7 +421,7 @@ class Po2Md:
 
     def enter_block(self, block, details):
         # raise 'enter_block' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'enter_block',
             self, block,
@@ -530,7 +530,7 @@ class Po2Md:
 
     def leave_block(self, block, details):
         # raise 'leave_block' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'leave_block',
             self,
@@ -673,7 +673,7 @@ class Po2Md:
 
     def enter_span(self, span, details):
         # raise 'enter_span' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'enter_span',
             self,
@@ -733,7 +733,7 @@ class Po2Md:
 
     def leave_span(self, span, details):
         # raise 'leave_span' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'leave_span',
             self,
@@ -808,7 +808,7 @@ class Po2Md:
 
     def text(self, block, text):
         # raise 'text' event
-        if raise_skip_event(  # pragma: no cover
+        if raise_skip_event(
             self.events,
             'text',
             self,
@@ -940,7 +940,7 @@ class Po2Md:
         self.output = '\n'.join(self._outputlines)
 
         if save:
-            if self._saved_files_changed is False:  # pragma: no cover
+            if self._saved_files_changed is False:
                 self._saved_files_changed = save_file_checking_file_changed(
                     save,
                     self.output,
