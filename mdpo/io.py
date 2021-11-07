@@ -1,9 +1,13 @@
 """mdpo I/O utilities."""
 
+import filecmp
 import glob
-import hashlib
 import os
 import re
+import tempfile
+
+
+MDPO_FILECMP_TEMPFILE = os.path.join(tempfile.gettempdir(), '__mpdo-filecmp')
 
 
 def filter_paths(filepaths, ignore_paths=[]):
@@ -85,18 +89,6 @@ def to_glob_or_content(value):
     return (True, parsed)
 
 
-def filehash(filepath):
-    """Compute the hash of a file.
-
-    Args:
-        filepath (str): Path to the file.
-    """
-    hasher = hashlib.md5()
-    with open(filepath, 'rb') as f:
-        hasher.update(f.read())
-    return hasher.hexdigest()
-
-
 def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
     """Save a file checking if the content has changed.
 
@@ -112,9 +104,9 @@ def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
             f.write(content)
         return True
 
-    pre_hash = filehash(filepath)
+    with open(MDPO_FILECMP_TEMPFILE, 'w') as temp_f, open(filepath) as f:
+        temp_f.write(f.read())
     with open(filepath, 'w', encoding=encoding) as f:
         f.write(content)
-    post_hash = filehash(filepath)
 
-    return pre_hash != post_hash
+    return filecmp.cmp(MDPO_FILECMP_TEMPFILE, filepath)
