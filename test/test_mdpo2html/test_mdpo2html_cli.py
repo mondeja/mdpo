@@ -26,28 +26,30 @@ msgstr "Algo de texto aquí"
 
 def test_stdin(capsys, monkeypatch, tmp_file):
     monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['html-input']))
-    with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
 
+    with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
         output, exitcode = run(['-p', po_filepath])
-        out, err = capsys.readouterr()
+        stdout, stderr = capsys.readouterr()
 
         assert exitcode == 0
         assert output == EXAMPLE['html-output'][:-1]  # rstrip("\n")
-        assert out == EXAMPLE['html-output']
+        assert stdout == EXAMPLE['html-output']
+        assert stderr == ''
 
 
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
 def test_quiet(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
-
         output, exitcode = run([
             EXAMPLE['html-input'],
             '-p', po_filepath, arg,
         ])
-        out, err = capsys.readouterr()
+        stdout, stderr = capsys.readouterr()
 
         assert exitcode == 0
         assert output == EXAMPLE['html-output']
+        assert stdout == ''
+        assert stderr == ''
 
 
 @pytest.mark.parametrize('arg', ['-s', '--save'])
@@ -60,11 +62,11 @@ def test_save(capsys, arg, tmp_file):
             html_input_filepath, '-p', po_filepath,
             arg, html_output_filepath,
         ])
-        out, err = capsys.readouterr()
+        stdout, _ = capsys.readouterr()
 
         assert exitcode == 0
         assert output == EXAMPLE['html-output']
-        assert out == ''
+        assert stdout == ''
 
         with open(html_output_filepath) as f:
             output_html_content = f.read()
@@ -113,8 +115,8 @@ def test_ignore_files_by_filepath(capsys, arg, tmp_file):
                 arg,
                 pofiles_paths[2],
             ])
-            out, err = capsys.readouterr()
+            stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{output}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output

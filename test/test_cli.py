@@ -47,8 +47,8 @@ def test_parse_command_aliases_cli_arguments(
     if expected_stderr:
         with pytest.raises(SystemExit):
             parse_command_aliases_cli_arguments(command_aliases)
-        out, err = capsys.readouterr()
-        assert expected_stderr in err
+        _, stderr = capsys.readouterr()
+        assert expected_stderr in stderr
     else:
         assert parse_command_aliases_cli_arguments(
             command_aliases,

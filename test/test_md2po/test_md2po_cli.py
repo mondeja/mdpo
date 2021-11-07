@@ -32,10 +32,10 @@ msgstr ""
 def test_stdin(capsys, monkeypatch):
     monkeypatch.setattr('sys.stdin', io.StringIO(EXAMPLE['input']))
     pofile, exitcode = run()
-    out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
     assert exitcode == 0
     assert f'{pofile}\n' == EXAMPLE['output']
-    assert out == EXAMPLE['output']
+    assert stdout == EXAMPLE['output']
 
 
 def test_stdin_subprocess_input(tmp_file):
@@ -79,25 +79,26 @@ def test_pipe_redirect_file_stdin(tmp_file):
 @pytest.mark.parametrize('arg', ['-q', '--quiet'])
 def test_quiet(capsys, arg):
     pofile, exitcode = run([EXAMPLE['input'], arg])
-    out, err = capsys.readouterr()
+    stdout, stderr = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == EXAMPLE['output']
-    assert out == ''
+    assert stdout == ''
+    assert stderr == ''
 
 
 @pytest.mark.parametrize('arg', ['-D', '--debug'])
 def test_debug(capsys, arg):
     pofile, exitcode = run([EXAMPLE['input'], arg])
-    out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == EXAMPLE['output']
 
     po_output_checked = False
 
-    outlines = out.splitlines()
-    for i, line in enumerate(outlines):
+    stdout_lines = stdout.splitlines()
+    for i, line in enumerate(stdout_lines):
         assert re.match(
             (
                 r'^md2po\[DEBUG\]::\d{4,}-\d\d-\d\d\s\d\d:\d\d:\d\d\.\d+::'
@@ -107,7 +108,7 @@ def test_debug(capsys, arg):
             line,
         )
         if line.endswith('msgid=\'\''):
-            assert '\n'.join([*outlines[i + 1:], '']) == EXAMPLE['output']
+            assert '\n'.join([*stdout_lines[i + 1:], '']) == EXAMPLE['output']
             po_output_checked = True
             break
 
@@ -143,11 +144,11 @@ msgstr ""
             '-m',
             '--no-location',
         ])
-        out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ['-s', '--save'])
@@ -180,14 +181,14 @@ msgstr ""
             '-m',
             '--no-location',
         ])
-        out, err = capsys.readouterr()
 
         with open(pofile_path) as f:
             assert f'{f.read()}\n' == expected_output
 
+    stdout, _ = capsys.readouterr()
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
     # new PO file creation
     pofile_path = os.path.join(tempfile.gettempdir(), uuid4().hex[:8])
@@ -199,7 +200,6 @@ msgstr ""
         '-m',
         '--no-location',
     ])
-    out, err = capsys.readouterr()
 
     expected_output = '''#
 msgid ""
@@ -212,19 +212,20 @@ msgstr ""
     with open(pofile_path) as f:
         assert f'{f.read()}\n' == expected_output
 
+    stdout, _ = capsys.readouterr()
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ['-mo', '--mo-filepath', '--mofilepath'])
 def test_mo_filepath(capsys, arg):
     with tempfile.NamedTemporaryFile(suffix='.mo') as mo_file:
         pofile, exitcode = run([EXAMPLE['input'], arg, mo_file.name])
-        out, err = capsys.readouterr()
+        stdout, _ = capsys.readouterr()
         assert exitcode == 0
         assert f'{pofile}\n' == EXAMPLE['output']
-        assert out == EXAMPLE['output']
+        assert stdout == EXAMPLE['output']
         assert os.path.exists(mo_file.name)
 
 
@@ -238,8 +239,7 @@ def test_ignore_files_by_filepath(capsys, arg):
 
     with tempfile.TemporaryDirectory() as filesdir:
         for filename, content in filesdata.items():
-            filepath = os.path.join(filesdir, f'{filename}.md')
-            with open(filepath, 'w') as f:
+            with open(os.path.join(filesdir, f'{filename}.md'), 'w') as f:
                 f.write(content)
 
         _glob = os.path.join(filesdir, '*.md')
@@ -251,7 +251,6 @@ def test_ignore_files_by_filepath(capsys, arg):
             os.path.join(filesdir, 'baz.md'),
             '--no-location',
         ])
-        out, err = capsys.readouterr()
 
     expected_output = '''#
 msgid ""
@@ -264,9 +263,11 @@ msgid "Foo 2"
 msgstr ""
 
 '''
+
+    stdout, _ = capsys.readouterr()
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 def test_markuptext(capsys):
@@ -275,9 +276,6 @@ def test_markuptext(capsys):
         'Some text with **bold characters**, *italic characters*'
         ' and a [link](https://nowhere.nothing).\n'
     )
-
-    pofile, exitcode = run([content])
-    out, err = capsys.readouterr()
 
     expected_output = '''#
 msgid ""
@@ -293,9 +291,11 @@ msgstr ""
 
 '''
 
+    pofile, exitcode = run([content])
+    stdout, _ = capsys.readouterr()
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ['-w', '--wrapwidth'])
@@ -305,10 +305,6 @@ def test_wrapwidth(capsys, arg, value):
         '# Some long header with **bold characters**, '
         '*italic characters* and a [link](https://nowhere.nothing).\n'
     )
-
-    pofile, exitcode = run([content, arg, value, '-p'])
-    out, err = capsys.readouterr()
-
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -317,18 +313,18 @@ msgid "Some long header with bold characters, italic characters and a link."
 msgstr ""
 
 '''
+
+    pofile, exitcode = run([content, arg, value, '-p'])
+    stdout, _ = capsys.readouterr()
+
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ['-a', '--xheaders'])
 def test_xheaders(capsys, arg):
     markdown_content = '# Foo'
-
-    pofile, exitcode = run([markdown_content, arg])
-    out, err = capsys.readouterr()
-
     expected_output = '''#
 msgid ""
 msgstr ""
@@ -352,9 +348,12 @@ msgstr ""
 
 '''
 
+    pofile, exitcode = run([markdown_content, arg])
+    stdout, _ = capsys.readouterr()
+
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ['-c', '--include-codeblocks'])
@@ -368,8 +367,6 @@ var this;
 
 This must be included also.
 '''
-    pofile, exitcode = run([markdown_content, arg])
-    out, err = capsys.readouterr()
 
     expected_output = '''#
 msgid ""
@@ -386,9 +383,12 @@ msgstr ""
 
 '''
 
+    pofile, exitcode = run([markdown_content, arg])
+    stdout, _ = capsys.readouterr()
+
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ['--ignore-msgids'])
@@ -404,11 +404,11 @@ msgstr ""
 
     with tmp_file('foo\nbaz', '.txt') as filename:
         pofile, exitcode = run(['foo\n\nbar\n\nbaz\n', arg, filename])
-    out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ['--command-alias'])
@@ -439,11 +439,11 @@ msgstr ""
         arg, 'mdpo-on:mdpo-enable',
         arg, '\\:off:mdpo-disable',
     ])
-    out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ['-d', '--metadata'])
@@ -464,11 +464,11 @@ msgstr ""
         arg, 'Language: es',
         arg, 'Content-Type: text/plain; charset=utf-8',
     ])
-    out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ('-m', '--merge-pofiles', '--merge-po-files'))
@@ -503,11 +503,11 @@ msgstr ""
             '--po-filepath', po_filepath,
             arg,
         ])
-    out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ('-r', '--remove-not-found'))
@@ -541,11 +541,11 @@ msgstr ""
             arg,
             '--merge-pofiles',
         ])
-    out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize('arg', ('-x', '--extension', '--ext'))
@@ -608,11 +608,11 @@ def test_extensions(
             extensions_arguments.extend([arg, extension])
 
     pofile, exitcode = run([md_content, *extensions_arguments])
-    out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
-    assert out == expected_output
+    assert stdout == expected_output
 
 
 @pytest.mark.parametrize(
@@ -624,11 +624,11 @@ def test_md2po_cli_running_osenv(value, capsys):
     if value is not None:
         os.environ['_MDPO_RUNNING'] = value
     pofile, exitcode = run([EXAMPLE['input']])
-    out, err = capsys.readouterr()
+    stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
     assert f'{pofile}\n' == EXAMPLE['output']
-    assert out == EXAMPLE['output']
+    assert stdout == EXAMPLE['output']
     assert os.environ.get('_MDPO_RUNNING') == value
 
 
