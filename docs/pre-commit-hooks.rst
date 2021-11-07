@@ -15,7 +15,7 @@ so you don't need to specify them.
 .. code-block:: yaml
 
    - repo: https://github.com/mondeja/mdpo
-     rev: v0.3.72
+     rev: v0.3.73
      hooks:
        - id: md2po
          args:
@@ -43,7 +43,7 @@ po2md
 .. code-block:: yaml
 
    - repo: https://github.com/mondeja/mdpo
-     rev: v0.3.72
+     rev: v0.3.73
      hooks:
        - id: po2md
          args:
@@ -56,7 +56,7 @@ po2md
 .. code-block:: yaml
 
    - repo: https://github.com/mondeja/mdpo
-     rev: v0.3.72
+     rev: v0.3.73
      hooks:
        - id: po2md
          files: README\.md
@@ -75,7 +75,7 @@ md2po2md
 .. code-block:: yaml
 
    - repo: https://github.com/mondeja/mdpo
-     rev: v0.3.72
+     rev: v0.3.73
      hooks:
        - id: md2po2md
          args:
@@ -88,7 +88,7 @@ md2po2md
 .. code-block:: yaml
 
    - repo: https://github.com/mondeja/mdpo
-     rev: v0.3.72
+     rev: v0.3.73
      hooks:
        - id: md2po2md
          files: README\.md
