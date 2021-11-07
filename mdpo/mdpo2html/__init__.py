@@ -123,7 +123,7 @@ class MdPo2HTML(HTMLParser):
             self.output = '\n'.join(split_output)[:-1]
 
     def _process_replacer(self):
-        # print("REPLACER:", self.replacer)
+        # print('REPLACER:', self.replacer)
 
         template_tags = []
         raw_html_template, _current_replacement = ('', '')
@@ -277,8 +277,8 @@ class MdPo2HTML(HTMLParser):
                         if tag not in template_tags:
                             template_tags.append(tag)
 
-        # print("RAW TEMPLATE:", raw_html_template)
-        # print("TEMPLATE TAGS:", template_tags)
+        # print('RAW TEMPLATE:', raw_html_template)
+        # print('TEMPLATE TAGS:', template_tags)
         # print(f'CURRENT MSGID: \'{_current_replacement}\'')
         # print('MSGSTR:', replacement)
 
@@ -315,7 +315,7 @@ class MdPo2HTML(HTMLParser):
         self._enable_next_line = False
         self._current_msgctxt = None
 
-        # print("________________________________________________")
+        # print('________________________________________________')
 
     def handle_starttag(self, tag, attrs):
         # print('START TAG: %s | POS: %d:%d' % (tag, *self.getpos()))
@@ -350,7 +350,7 @@ class MdPo2HTML(HTMLParser):
             self.context.append(tag)
 
     def handle_endtag(self, tag):
-        # print("END TAG: %s | POS: %d:%d" % (tag, *self.getpos()))
+        # print('END TAG: %s | POS: %d:%d' % (tag, *self.getpos()))
 
         if tag in self.ignore_grouper_tags:
             self.output += f'</{tag}>'
@@ -369,7 +369,7 @@ class MdPo2HTML(HTMLParser):
                 self.context.pop()
 
     def handle_startendtag(self, tag, attrs):
-        # print("STARTEND TAG: %s | POS: %d:%d" % (tag, *self.getpos()))
+        # print('STARTEND TAG: %s | POS: %d:%d' % (tag, *self.getpos()))
 
         if not self.replacer:
             self.output += self.get_starttag_text()

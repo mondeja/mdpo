@@ -418,10 +418,10 @@ def solve_link_reference_targets(translations):
         # store in solutions
         solutions[new_msgid] = new_msgstr
 
-        # print("----> new_msgid", new_msgid)
-        # print("----> new_msgstr", new_msgstr)
+        # print('----> new_msgid', new_msgid)
+        # print('----> new_msgstr', new_msgstr)
 
-    # print("----> link_references_text_targets", link_references_text_targets)
-    # print("----> msgid_msgstrs_with_links", msgid_msgstrs_with_links)
-    # print("----> solutions", solutions)
+    # print('----> link_references_text_targets', link_references_text_targets)
+    # print('----> msgid_msgstrs_with_links', msgid_msgstrs_with_links)
+    # print('----> solutions', solutions)
     return solutions
