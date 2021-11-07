@@ -69,6 +69,10 @@ def test_parse_escaped_pair(
     (
         ('1', 1, None),
         ('1.1', 1, None),
+        (-1, math.inf, None),
+        (-1.1, math.inf, None),
+        ('-1', math.inf, None),
+        ('-1.1', math.inf, None),
         (0, math.inf, None),
         (-0, math.inf, None),
         ('a', None, ValueError),

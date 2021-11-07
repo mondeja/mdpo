@@ -59,8 +59,8 @@ def build_parser():
     )
     parser.add_argument(
         '-w', '--wrapwidth', dest='wrapwidth', default='80', type=str,
-        help='Maximum width rendering the Markdown output, when possible. You'
-             ' can use the values \'0\' and \'inf\' for infinite width.',
+        help='Maximum width rendering the Markdown output, when possible. If'
+             ' negative, \'0\' or \'inf\', the content will not be wrapped.',
         metavar='N/inf',
     )
     add_encoding_arguments(parser)
