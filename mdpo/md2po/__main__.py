@@ -22,7 +22,7 @@ from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 
 DESCRIPTION = (
-    'Utility like xgettext to extract Markdown content dumping it'
+    'Utility like xgettext to extract Markdown contents dumping them'
     ' inside PO files.'
 )
 
@@ -31,15 +31,15 @@ def build_parser():
     parser = argparse.ArgumentParser(description=DESCRIPTION, add_help=False)
     add_common_cli_first_arguments(parser)
     parser.add_argument(
-        'glob_or_content', metavar='GLOB_OR_CONTENT',
+        'files_or_content', metavar='GLOBS_FILES_OR_CONTENT',
         nargs='*',
-        help='Glob to markdown input files or markdown content as string.'
-             ' If not provided, will be read from STDIN.',
+        help='Globs to markdown input files, paths to files or Markdown'
+             ' content. If not provided, will be read from STDIN.',
     )
     parser.add_argument(
         '-i', '--ignore', dest='ignore', default=[], action='append',
-        help='Filepath to ignore when \'GLOB_OR_CONTENT\' argument'
-             ' is a glob. This argument can be passed multiple times.',
+        help='Path to a file to ignore. This argument can be passed multiple'
+             ' times.',
         metavar='PATH',
     )
     parser.add_argument(
@@ -144,12 +144,14 @@ def parse_options(args=[]):
         sys.exit(1)
     opts, unknown = parser.parse_known_args(args)
 
-    glob_or_content = ''
     if not sys.stdin.isatty():
-        glob_or_content += sys.stdin.read().strip('\n')
-    if isinstance(opts.glob_or_content, list) and opts.glob_or_content:
-        glob_or_content += opts.glob_or_content[0]
-    opts.glob_or_content = glob_or_content
+        files_or_content = sys.stdin.read().strip('\n')
+    if isinstance(opts.files_or_content, list) and opts.files_or_content:
+        if len(opts.files_or_content) == 1:
+            files_or_content = opts.files_or_content[0]
+        else:
+            files_or_content = opts.files_or_content
+    opts.files_or_content = files_or_content
 
     if opts.extensions is None:
         opts.extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
@@ -199,7 +201,7 @@ def run(args=[]):
             wrapwidth=opts.wrapwidth,
         )
 
-        md2po = Md2Po(opts.glob_or_content, **init_kwargs)
+        md2po = Md2Po(opts.files_or_content, **init_kwargs)
         pofile = md2po.extract(**extract_kwargs)
 
         if not opts.quiet:

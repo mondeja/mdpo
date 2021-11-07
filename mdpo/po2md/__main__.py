@@ -19,10 +19,10 @@ from mdpo.po2md import Po2Md
 
 
 DESCRIPTION = (
-    'Markdown files translator using pofiles as reference.\n\n'
+    'Markdown file translator using pofiles as reference.\n\n'
     'This implementation reproduces the same valid Markdown output, given the'
-    " provided AST, with replaced translations, but doesn't rebuilds the same"
-    ' input format as Markdown is just a subset of HTML.'
+    ' provided content, with translations replaced, but doesn\'t produces the'
+    ' same input format.'
 )
 
 
@@ -32,6 +32,7 @@ def build_parser():
         add_help=False,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
+    parser._positionals.title = 'positional argument'
     add_common_cli_first_arguments(parser)
     parser.add_argument(
         'filepath_or_content', metavar='FILEPATH_OR_CONTENT',

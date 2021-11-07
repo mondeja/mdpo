@@ -61,19 +61,26 @@ def to_file_content_if_is_file(value, encoding='utf-8'):
     return value
 
 
-def to_glob_or_content(value):
-    """Check if the value passed is a glob or is string content.
+def to_files_or_content(value):
+    """File path/glob/content disambiguator.
+
+    Check if the value passed is a glob, a set of files in a list or is string
+    content.
 
     Args:
-        value (str): Value to check if is a glob or content.
+        value (str): Value to check.
 
     Returns:
-        list: Two values being the first a boolean that indicates if ``value``
-        is a glob (``True``) or content (``False``) and the second value
-        is the content (parsed as glob is first value is ``True``).
+        tuple: Two values being the first a boolean that indicates if ``value``
+        is a list of files (``True``) or string content (``False``) and the
+        second value is the content, which could be an iterator (if a glob or
+        a list of files is passed or a string).
     """
     try:
         parsed = glob.glob(value)
+    except TypeError:
+        # inferes list
+        return (True, value)
     except re.error:
         # some strings like '[s-m]' will produce
         # 're.error: bad character range ... at position'

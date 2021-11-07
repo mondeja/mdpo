@@ -1,5 +1,6 @@
 """Markdown to PO files extractor according to mdpo specification."""
 
+import glob
 import os
 
 import md4c
@@ -13,7 +14,7 @@ from mdpo.event import debug_events, raise_skip_event
 from mdpo.io import (
     filter_paths,
     save_file_checking_file_changed,
-    to_glob_or_content,
+    to_files_or_content,
 )
 from mdpo.md import parse_link_references
 from mdpo.md4c import (
@@ -112,15 +113,18 @@ class Md2Po:
         '_link_references',
     }
 
-    def __init__(self, glob_or_content, **kwargs):
-        is_glob, glob_or_content = to_glob_or_content(glob_or_content)
+    def __init__(self, files_or_content, **kwargs):
+        is_glob, files_or_content = to_files_or_content(files_or_content)
         if is_glob:
+            filepaths = []
+            for globpath in files_or_content:
+                filepaths.extend(glob.glob(globpath))
             self.filepaths = filter_paths(
-                glob_or_content,
+                filepaths,
                 ignore_paths=kwargs.get('ignore', []),
             )
         else:
-            self.content = glob_or_content
+            self.content = files_or_content
 
         self.pofile = None
         self.po_filepath = None
@@ -1007,7 +1011,7 @@ class Md2Po:
 
 
 def markdown_to_pofile(
-    glob_or_content,
+    files_or_content,
     ignore=[],
     msgstr='',
     po_filepath=None,
@@ -1034,8 +1038,8 @@ def markdown_to_pofile(
     files.
 
     Args:
-        glob_or_content (str): Glob path to Markdown files or a string
-            with valid Markdown content.
+        files_or_content (str, list): Glob path to Markdown files, a list of
+            files or a string with Markdown content.
         ignore (list): Paths of files to ignore. Useful when a glob does not
             fit your requirements indicating the files to extract content.
             Also, filename or a dirname can be defined without indicate the
@@ -1149,7 +1153,7 @@ def markdown_to_pofile(
         ValueError: when ``po_filepath`` is ``None`` and ``save`` is ``True``.
     """
     return Md2Po(
-        glob_or_content,
+        files_or_content,
         ignore=ignore,
         msgstr=msgstr,
         plaintext=plaintext,

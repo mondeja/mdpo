@@ -200,7 +200,7 @@ def add_encoding_arguments(parser, po_encoding_help=None):
         'PO files encoding. If you need different encodings for each'
         ' file, you must define them in the Content-Type" field of each'
         ' PO file metadata, in the form \'Content-Type: text/plain;'
-        ' charset=<ENCODING>\\n\'.'
+        ' charset=<ENCODING>\'.'
     ) if po_encoding_help is None else po_encoding_help
     parser.add_argument(
         '--po-encoding', dest='po_encoding', default=None, metavar='ENCODING',
