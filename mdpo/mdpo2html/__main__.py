@@ -15,10 +15,7 @@ from mdpo.context import environ
 from mdpo.mdpo2html import markdown_pofile_to_html
 
 
-DESCRIPTION = (
-    'HTML-produced-from-Markdown files translator using PO files'
-    ' as reference.'
-)
+DESCRIPTION = 'HTML-produced-from-Markdown files translator using PO files.'
 
 
 def build_parser():
