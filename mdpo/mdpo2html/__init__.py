@@ -3,6 +3,7 @@
 import html
 import re
 import warnings
+from collections import OrderedDict
 from html.parser import HTMLParser
 
 import md4c
@@ -12,8 +13,7 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
-from mdpo.html import get_html_attrs_tuple_attr, html_attrs_tuple_to_string
-from mdpo.io import to_file_content_if_is_file
+from mdpo.io import save_file_checking_file_changed, to_file_content_if_is_file
 from mdpo.md import solve_link_reference_targets
 from mdpo.po import (
     paths_or_globs_to_unique_pofiles,
@@ -26,6 +26,24 @@ PROCESS_REPLACER_TAGS = [
     'h4', 'h5', 'h6', 'td', 'th',
 ]
 ALIGNMENT_CHARS = ['\n', ' ', '\t', '\r']
+
+
+def _html_attrs_to_str(attrs):
+    """Converts a dictionary of HTML attributes to its HTML representation.
+
+    Args:
+        attrs (dict): Attributes with values
+
+    Returns:
+        str: HTML attributes string ready to be used inside a HTML tag.
+    """
+    response = ''
+    for name, value in attrs.items():
+        response += name
+        if value is not None:
+            response += f'="{value}"'
+        response += ' '
+    return response.rstrip(' ')
 
 
 class MdPo2HTML(HTMLParser):
@@ -42,6 +60,7 @@ class MdPo2HTML(HTMLParser):
         ignore_grouper_tags=['div', 'hr'],
         po_encoding=None,
         command_aliases={},
+        _check_saved_files_changed=None,
     ):
         self.pofiles = paths_or_globs_to_unique_pofiles(
             pofiles,
@@ -67,6 +86,11 @@ class MdPo2HTML(HTMLParser):
 
         # lazy translators mode
         self.merge_adjacent_markups = merge_adjacent_markups
+
+        # pre-commit mode
+        self._saved_files_changed = (
+            False if _check_saved_files_changed is not None else None
+        )
 
         # references of msgids and their msgstrs changing referenced link
         # targets by their real target, needed to support link references
@@ -138,36 +162,21 @@ class MdPo2HTML(HTMLParser):
             if handle == 'start':
                 template_tags.append(handled)
 
+                attrs_repr = (
+                    f' {_html_attrs_to_str(attrs)}' if attrs else ''
+                )
+
                 if handled in self.code_tags:
                     _current_replacement += '`'
-                    raw_html_template += '<{}{}>'.format(
-                        handled,
-                        (
-                            f' {html_attrs_tuple_to_string(attrs)}'
-                            if attrs else ''
-                        ),
-                    )
+                    raw_html_template += f'<{handled}{attrs_repr}>'
                 elif handled in self.bold_tags:
                     _current_replacement += '**'
-                    raw_html_template += '<{}{}>'.format(
-                        handled,
-                        (
-                            f' {html_attrs_tuple_to_string(attrs)}'
-                            if attrs else ''
-                        ),
-                    )
+                    raw_html_template += f'<{handled}{attrs_repr}>'
                 elif handled in self.italic_tags:
                     _current_replacement += '*'
-                    raw_html_template += '<{}{}>'.format(
-                        handled,
-                        (
-                            f' {html_attrs_tuple_to_string(attrs)}'
-                            if attrs else ''
-                        ),
-                    )
+                    raw_html_template += f'<{handled}{attrs_repr}>'
                 elif handled in self.link_tags:
-                    title = get_html_attrs_tuple_attr(attrs, 'title')
-                    href = get_html_attrs_tuple_attr(attrs, 'href')
+                    title, href = attrs.get('title'), attrs['href']
                     _current_link_target += f'({href}'
                     if title:
                         _current_link_target += f' "{title}"'
@@ -176,7 +185,7 @@ class MdPo2HTML(HTMLParser):
                     raw_html_template += f'<{handled}'
 
                     # attrs_except_href_title = []
-                    for attr, value in attrs:
+                    for attr, value in attrs.items():
                         if attr in ['title', 'href']:
                             raw_html_template += f' {attr}="{{}}"'
                         # else:
@@ -184,15 +193,11 @@ class MdPo2HTML(HTMLParser):
                         #    attrs_except_href_title.append((attr, value))
                     # if attrs_except_href_title:
                     #     raw_html_template += ' '
-                    # raw_html_template += html_attrs_tuple_to_string(
+                    # raw_html_template += _html_attrs_to_str(
                     #     attrs_except_href_title) + '>'
                     raw_html_template += '>'
                 else:
-                    raw_html_template += '<{}{}>'.format(
-                        handled,
-                        f' {html_attrs_tuple_to_string(attrs)}'
-                        if attrs else '',
-                    )
+                    raw_html_template += f'<{handled}{attrs_repr}>'
                 _last_start_tag = handled
                 if _last_start_tag == 'code':
                     _inside_code = True
@@ -207,8 +212,8 @@ class MdPo2HTML(HTMLParser):
                 else:
                     raw_html_template += '{}'
                     if _current_link_target:
-                        _current_replacement += '[{}]{}'.format(
-                            handled, _current_link_target,
+                        _current_replacement += (
+                            f'[{handled}]{_current_link_target}'
                         )
                         _current_link_target = ''
                     else:
@@ -228,24 +233,19 @@ class MdPo2HTML(HTMLParser):
                 raw_html_template += f'<!--{handled}-->'
             elif handle == 'startend':
                 if handled in self.image_tags:
-                    _current_replacement += '![{}]({}'.format(
-                        get_html_attrs_tuple_attr(attrs, 'alt'),
-                        get_html_attrs_tuple_attr(attrs, 'src'),
-                    )
-                    title = get_html_attrs_tuple_attr(attrs, 'title')
+                    alt, src = attrs.get('alt', ''), attrs['src']
+                    _current_replacement += f'![{alt}]({src}'
+                    title = attrs.get('title')
                     if title:
                         _current_replacement += f' "{title}"'
                     _current_replacement += ')'
 
                     raw_html_template += '{}'
                 else:
-                    raw_html_template += '<{}{}/>'.format(
-                        handled,
-                        (
-                            f' {html_attrs_tuple_to_string(attrs)}'
-                            if attrs else ''
-                        ),
+                    attrs_repr = (
+                        f' {_html_attrs_to_str(attrs)}' if attrs else ''
                     )
+                    raw_html_template += f'<{handled}{attrs_repr}/>'
 
         _current_replacement = html.unescape(_current_replacement)
 
@@ -322,21 +322,19 @@ class MdPo2HTML(HTMLParser):
 
         if tag in self.ignore_grouper_tags:
             self.context.append(tag)
-            self.output += '<{}{}>'.format(
-                tag, f' {html_attrs_tuple_to_string(attrs)}' if attrs else '',
+            attrs_repr = (
+                f' {_html_attrs_to_str(OrderedDict(attrs))}' if attrs else ''
             )
-        elif self.context and self.context[0] in self.ignore_grouper_tags:
-            self.output += '<{}{}>'.format(
-                tag, f' {html_attrs_tuple_to_string(attrs)}' if attrs else '',
+            self.output += f'<{tag}{attrs_repr}>'
+        elif (
+            (self.context and self.context[0] in self.ignore_grouper_tags) or
+            (tag == 'ul' and not self.context) or
+            (tag in {'blockquote', 'table', 'thead', 'tbody', 'tr'})
+        ):
+            attrs_repr = (
+                f' {_html_attrs_to_str(OrderedDict(attrs))}' if attrs else ''
             )
-        elif tag == 'ul' and not self.context:
-            self.output += '<{}{}>'.format(
-                tag, f' {html_attrs_tuple_to_string(attrs)}' if attrs else '',
-            )
-        elif tag in ['blockquote', 'table', 'thead', 'tbody', 'tr']:
-            self.output += '<{}{}>'.format(
-                tag, f' {html_attrs_tuple_to_string(attrs)}' if attrs else '',
-            )
+            self.output += f'<{tag}{attrs_repr}>'
         else:
             if tag == 'a' and self.real_link_reference_targets is None:
                 # extend translations to populate link reference msgid-msgstrs
@@ -346,7 +344,7 @@ class MdPo2HTML(HTMLParser):
                 )
                 self.translations.update(self.real_link_reference_targets)
 
-            self.replacer.append(('start', tag, attrs))
+            self.replacer.append(('start', tag, OrderedDict(attrs)))
             self.context.append(tag)
 
     def handle_endtag(self, tag):
@@ -374,7 +372,7 @@ class MdPo2HTML(HTMLParser):
         if not self.replacer:
             self.output += self.get_starttag_text()
         else:
-            self.replacer.append(('startend', tag, attrs))
+            self.replacer.append(('startend', tag, OrderedDict(attrs)))
 
     def handle_data(self, data):
         # print(f'     DATA: \'{data}\'')
@@ -386,7 +384,6 @@ class MdPo2HTML(HTMLParser):
             ) or \
                     not self.context:
                 self.output += data
-                return
             else:
                 if self.context:
                     data = data.replace('\n', ' ')
@@ -444,8 +441,15 @@ class MdPo2HTML(HTMLParser):
         self.feed(content)
 
         if save:
-            with open(save, 'w', encoding=html_encoding) as f:
-                f.write(self.output)
+            if self._saved_files_changed is False:
+                self._saved_files_changed = save_file_checking_file_changed(
+                    save,
+                    self.output,
+                    encoding=html_encoding,
+                )
+            else:
+                with open(save, 'w', encoding=html_encoding) as f:
+                    f.write(self.output)
 
         self.reset()
 

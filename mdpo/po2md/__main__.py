@@ -7,8 +7,8 @@ import itertools
 import sys
 
 from mdpo.cli import (
+    add_command_alias_argument,
     add_common_cli_first_arguments,
-    add_common_cli_latest_arguments,
     add_debug_option,
     add_encoding_arguments,
     add_pre_commit_option,
@@ -19,7 +19,7 @@ from mdpo.po2md import Po2Md
 
 
 DESCRIPTION = (
-    'Markdown file translator using pofiles as reference.\n\n'
+    'Markdown file translator using PO files as reference.\n\n'
     'This implementation reproduces the same valid Markdown output, given the'
     ' provided content, with translations replaced, but doesn\'t produces the'
     ' same input format.'
@@ -65,7 +65,7 @@ def build_parser():
         metavar='N/inf',
     )
     add_encoding_arguments(parser)
-    add_common_cli_latest_arguments(parser)
+    add_command_alias_argument(parser)
     add_debug_option(parser)
     add_pre_commit_option(parser)
     return parser

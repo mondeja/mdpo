@@ -113,8 +113,8 @@ def add_common_cli_first_arguments(parser, quiet=True):
         )
 
 
-def add_common_cli_latest_arguments(parser):
-    """Add common mdpo arguments to an argument parser at the end.
+def add_command_alias_argument(parser):
+    """Add the ``--command-alias`` argument to an argument parser.
 
     Args:
         parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
