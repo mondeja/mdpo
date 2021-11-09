@@ -444,10 +444,8 @@ class Po2Md:
                 indent += '   ' * len(self._current_list_type)
 
             if details['fence_char'] is not None:
-                self._current_line += '{}{}'.format(
-                    indent,
-                    details['fence_char']*3,
-                )
+                fence_chars = details['fence_char']*3
+                self._current_line += f'{indent}{fence_chars}'
                 if details['lang']:
                     self._current_line += details['lang'][0][1]
             else:
@@ -467,17 +465,13 @@ class Po2Md:
                     if not self._ol_marks[-1][0]:
                         self._save_current_line()
                 self._ol_marks[-1][0] += 1
-                self._current_line += '{}1{} '.format(
-                    '   ' * (len(self._current_list_type) - 1),
-                    self._ol_marks[-1][1],
-                )
+                indent = '   ' * (len(self._current_list_type) - 1)
+                self._current_line += f'{indent}1{self._ol_marks[-1][1]} '
                 self._current_list_type[-1][-1].append(False)
             else:
                 # inside UL
-                self._current_line += '{}{} '.format(
-                    '   ' * (len(self._current_list_type) - 1),
-                    self._ul_marks[-1],
-                )
+                indent = '   ' * (len(self._current_list_type) - 1)
+                self._current_line += f'{indent}{self._ul_marks[-1]} '
                 if details['is_task']:
                     mark = details['task_mark']
                     self._current_line += f'[{mark}] '
@@ -542,19 +536,15 @@ class Po2Md:
 
             if self._inside_liblock:
                 if self._inside_quoteblock:
-                    self._current_line = '{}{}'.format(
-                        '   ' * len(self._current_list_type),
-                        self._current_line,
-                    )
+                    indent = '   ' * len(self._current_list_type)
+                    self._current_line = f'{indent}{self._current_line}'
                     self._save_current_line()
                 else:
                     if self._inside_liblock_first_p:
                         self._inside_liblock_first_p = False
                     else:
-                        self._current_line = '\n{}{}'.format(
-                            '   ' * len(self._current_list_type),
-                            self._current_line,
-                        )
+                        indent = '   ' * len(self._current_list_type)
+                        self._current_line = f'\n{indent}{self._current_line}'
                         self._save_current_line()
             else:
                 self._save_current_line()
@@ -574,10 +564,8 @@ class Po2Md:
             self._current_line = self._current_line.rstrip('\n')
             self._save_current_line()
             if not self._inside_indented_codeblock:
-                self._current_line += '{}{}'.format(
-                    indent,
-                    details['fence_char']*3,
-                )
+                fence_chars = details['fence_char']*3
+                self._current_line += f'{indent}{fence_chars}'
 
             self._save_current_line()
             if not self._inside_liblock:
@@ -642,19 +630,15 @@ class Po2Md:
                 if (i % 2) != 0 or i > _antepenultimate_thead_i:
                     continue
                 align = self._current_thead_aligns.pop(0)
-                thead_separator += '{}-{}'.format(
-                    '-' if align in [0, 3] else ':',
-                    '-' if align in [0, 1] else ':',
-                )
-
+                sep_left = '-' if align in [0, 3] else ':'
+                sep_right = '-' if align in [0, 1] else ':'
+                thead_separator += f'{sep_left}-{sep_right}'
                 thead_separator += ' |'
                 if i < len(_thead_split) - 3:
                     thead_separator += ' '
 
-            self._current_line += '\n{}{}'.format(
-                '   ' * len(self._current_list_type),
-                thead_separator,
-            )
+            indent = '   ' * len(self._current_list_type)
+            self._current_line += f'\n{indent}{thead_separator}'
             self._save_current_line()
         elif block is md4c.BlockType.QUOTE:
             if self._outputlines[-1] == '>':
@@ -762,9 +746,9 @@ class Po2Md:
 
         if span is md4c.SpanType.A:
             if self._current_aspan_ref_target:  # referenced link
-                self._current_msgid += '[{}][{}]'.format(
-                    self._current_aspan_text,
-                    self._current_aspan_ref_target,
+                self._current_msgid += (
+                    f'[{self._current_aspan_text}]'
+                    f'[{self._current_aspan_ref_target}]'
                 )
                 self._current_aspan_ref_target = None
             else:
@@ -772,20 +756,18 @@ class Po2Md:
                     # autolink vs link clash (see implementation notes)
                     self._current_msgid += f'<{self._current_aspan_text}'
                     if details['title']:
-                        self._current_msgid += ' "{}"'.format(
-                            polib.escape(details['title'][0][1]),
-                        )
+                        escaped_title = polib.escape(details['title'][0][1])
+                        self._current_msgid += f' "{escaped_title}"'
                     self._current_msgid += '>'
                 elif self._current_aspan_href:
-                    self._current_msgid += '[{}]({}'.format(
-                        self._current_aspan_text,
-                        self._current_aspan_href,
+                    self._current_msgid += (
+                        f'[{self._current_aspan_text}]'
+                        f'({self._current_aspan_href}'
                     )
                     if details['title']:
                         self._aimg_title_inside_current_msgid = True
-                        self._current_msgid += ' "{}"'.format(
-                            polib.escape(details['title'][0][1]),
-                        )
+                        escaped_title = polib.escape(details['title'][0][1])
+                        self._current_msgid += f' "{escaped_title}"'
                     self._current_msgid += ')'
             self._current_aspan_href = None
             self._inside_aspan = False
@@ -851,10 +833,10 @@ class Po2Md:
                         self.code_start_string,
                         text,
                     ) - 1
-                    self._current_msgid = '{}{}{}'.format(
-                        self._current_msgid[:self._codespan_start_index],
-                        self._codespan_backticks * self.code_start_string,
-                        self._current_msgid[self._codespan_start_index:],
+                    self._current_msgid = (
+                        f'{self._current_msgid[:self._codespan_start_index]}'
+                        f'{self._codespan_backticks * self.code_start_string}'
+                        f'{self._current_msgid[self._codespan_start_index:]}'
                     )
                     if self._inside_aspan:
                         self._current_aspan_text += text
@@ -879,8 +861,8 @@ class Po2Md:
 
                 elif self._current_wikilink_target:
                     if text != self._current_wikilink_target:
-                        self._current_wikilink_target = '{}|{}'.format(
-                            self._current_wikilink_target, text,
+                        self._current_wikilink_target = (
+                            f'{self._current_wikilink_target}|{text}'
                         )
                     return
                 self._current_msgid += text
@@ -910,15 +892,12 @@ class Po2Md:
                             skip = True
                     if skip:
                         continue
-
-                href_title = '{}{}'.format(
-                    f' {href}' if href else '',
-                    f' "{title}"' if title else '',
-                )
+                title_part = f' "{title}"' if title else ''
+                href_title = f' {href}{title_part}'
                 if href_title in added_references:
                     continue
 
-                msgid = '{}{}'.format(f'[{target}]:', href_title)
+                msgid = f'[{target}]:{href_title}'
                 self._outputlines.append(
                     self._translate_msgid(msgid, None, None),
                 )

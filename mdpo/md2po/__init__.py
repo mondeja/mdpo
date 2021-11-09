@@ -758,21 +758,18 @@ class Md2Po:
                     )
                     self._current_aspan_ref_target = None
                 else:
+                    title = details['title'][0][1] if details['title'] else ''
                     if self._current_aspan_text == details['href'][0][1]:
                         # autolink vs link clash (see implementation notes)
                         self._current_msgid += f'<{self._current_aspan_text}'
-                        if details['title']:
-                            self._current_msgid += ' "{}"'.format(
-                                details['title'][0][1],
-                            )
+                        if title:
+                            self._current_msgid += f' "{title}"'
                         self._current_msgid += '>'
                     else:
-                        self._current_msgid += '[{}]({}{})'.format(
-                            self._current_aspan_text,
-                            details['href'][0][1],
-                            '' if not details['title'] else ' "{}"'.format(
-                                details['title'][0][1],
-                            ),
+                        title_part = f' "{title}"' if title else ''
+                        href = details['href'][0][1]
+                        self._current_msgid += (
+                            f'[{self._current_aspan_text}]({href}{title_part})'
                         )
                 self._inside_aspan = False
                 self._current_aspan_text = ''
@@ -870,9 +867,8 @@ class Md2Po:
                 if self._current_wikilink_target:
                     if text != self._current_wikilink_target:
                         # not self-referenced wikilink
-                        self._current_wikilink_target = '{}|{}'.format(
-                            self._current_wikilink_target,
-                            text,
+                        self._current_wikilink_target = (
+                            f'{self._current_wikilink_target}|{text}'
                         )
                     return
                 self._current_msgid += text
