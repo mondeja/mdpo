@@ -52,7 +52,6 @@ msgstr ""
             stderr=subprocess.PIPE,
         )
         assert proc.returncode == 0
-        assert proc.stderr == b''
 
         git_add_commit('First commit', cwd=filesdir)
 
@@ -132,7 +131,6 @@ msgstr "Foo es"
             stderr=subprocess.PIPE,
         )
         assert proc.returncode == 0
-        assert proc.stderr == b''
 
         git_add_commit('First commit', cwd=filesdir)
 
@@ -206,7 +204,6 @@ msgstr "Foo es"
             stderr=subprocess.PIPE,
         )
         assert proc.returncode == 0
-        assert proc.stderr == b''
 
         git_add_commit('First commit', cwd=filesdir)
 
@@ -271,7 +268,6 @@ def test_md2po2md_pre_commit_hook(git_add_commit):
             stderr=subprocess.PIPE,
         )
         assert proc.returncode == 0
-        assert proc.stderr == b''
 
         git_add_commit('First commit', cwd=filesdir)
 
