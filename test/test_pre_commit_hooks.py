@@ -2,8 +2,6 @@ import os
 import subprocess
 import tempfile
 
-import pytest
-
 
 def pre_commit_run_all_files(cwd=os.getcwd()):
     return subprocess.run(
@@ -163,35 +161,34 @@ bar es
 '''
 
 
-@pytest.mark.skip(reason='pre-commit mdpo2html hook is not in repository')
 def test_mdpo2html_pre_commit_hook(git_add_commit):
     with tempfile.TemporaryDirectory() as filesdir:
         pre_commit_config_path = os.path.join(
             filesdir,
             '.pre-commit-config.yaml',
         )
-        readme_md_path = os.path.join(filesdir, 'README.md')
         readme_html_path = os.path.join(filesdir, 'README.html')
+        readme_html_es_path = os.path.join(filesdir, 'README.es.html')
         readme_po_path = os.path.join(filesdir, 'README.po')
 
         with open(pre_commit_config_path, 'w') as f:
             f.write('''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: master
+    rev: drop-html-module
     hooks:
       - id: mdpo2html
-        files: ^README\\.md
+        files: ^README\\.html
         args:
           - -p
           - README.po
           - -s
-          - README.es.md
+          - README.es.html
 ''')
 
-        with open(readme_md_path, 'w') as f:
-            f.write('# Foo\n')
         with open(readme_html_path, 'w') as f:
             f.write('<h1>Foo</h1>\n')
+        with open(readme_html_es_path, 'w') as f:
+            f.write('<h1>Foo es</h1>\n')
         with open(readme_po_path, 'w') as f:
             f.write('''#
 msgid ""
@@ -200,6 +197,42 @@ msgstr ""
 msgid "Foo"
 msgstr "Foo es"
 ''')
+
+        # first execution, is updated
+        proc = subprocess.run(
+            ['git', 'init'],
+            cwd=filesdir,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        assert proc.returncode == 0
+        assert proc.stderr == b''
+
+        git_add_commit('First commit', cwd=filesdir)
+
+        proc = pre_commit_run_all_files(cwd=filesdir)
+        assert proc.returncode == 0
+        assert proc.stdout.decode('utf-8').splitlines()[-1].endswith('Passed')
+
+        with open(readme_html_es_path) as f:
+            assert f.read() == '<h1>Foo es</h1>\n'
+
+        # second execution, is outdated
+        with open(readme_html_path, 'a') as f:
+            f.write('\n<p>bar</p>\n')
+        with open(readme_po_path, 'a') as f:
+            f.write('\nmsgid "bar"\nmsgstr "bar es"\n')
+
+        git_add_commit('Second commit', cwd=filesdir)
+
+        proc = pre_commit_run_all_files(cwd=filesdir)
+        assert proc.returncode != 0
+
+        assert proc.stdout.decode('utf-8').splitlines()[-1] == (
+            '- files were modified by this hook'
+        )
+        with open(readme_html_es_path) as f:
+            assert f.read() == '<h1>Foo es</h1>\n\n<p>bar es</p>\n'
 
 
 def test_md2po2md_pre_commit_hook(git_add_commit):

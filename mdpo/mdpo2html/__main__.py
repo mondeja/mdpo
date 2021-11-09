@@ -106,7 +106,7 @@ def run(args=[]):
             html_encoding=opts.html_encoding,
         )
 
-        if not opts.quiet:
+        if not opts.quiet and not opts.save:
             sys.stdout.write(f'{output}\n')
 
         if opts.check_saved_files_changed and mdpo2html._saved_files_changed:
