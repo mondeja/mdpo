@@ -172,7 +172,7 @@ def test_mdpo2html_pre_commit_hook(git_add_commit):
         with open(pre_commit_config_path, 'w') as f:
             f.write('''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: drop-html-module
+    rev: master
     hooks:
       - id: mdpo2html
         files: ^README\\.html
@@ -244,7 +244,7 @@ def test_md2po2md_pre_commit_hook(git_add_commit):
             f.write(
                 '''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: v0.3.72
+    rev: master
     hooks:
       - id: md2po2md
         files: ^README\\.md
