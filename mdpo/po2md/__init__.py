@@ -974,10 +974,10 @@ def pofile_to_markdown(
 
     Args:
         filepath_or_content (str): Markdown filepath or content to translate.
-        pofiles (str, list) Glob or list of globs matching a set of pofiles
+        pofiles (str, list) Glob or list of globs matching a set of PO files
             from where to extract messages to make the replacements translating
             strings.
-        ignore (list): Paths of pofiles to ignore. Useful when a glob does not
+        ignore (list): Paths of PO files to ignore. Useful when a glob does not
             fit your requirements indicating the files to extract content.
             Also, filename or a dirname can be defined without indicate the
             full path.

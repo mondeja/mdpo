@@ -467,7 +467,7 @@ def markdown_pofile_to_html(
     **kwargs,
 ):
     r"""Produces a translated HTML file given a previous HTML file (created by a
-    Markdown-to-HTML processor) and a set of pofiles as reference for msgstrs.
+    Markdown-to-HTML processor) and a set of PO files as reference for msgstrs.
 
     Args:
         filepath_or_content (str): HTML whose content wants to be translated.

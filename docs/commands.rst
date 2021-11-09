@@ -205,7 +205,8 @@ the next commands:
 Extracting comments itself
 ==========================
 
-You can extract comments inside the pofile, but don't ask me why you need this:
+You can extract comments inside the PO file, but don't ask me why you need
+this:
 
 * ``<!-- mdpo-include Message that you want to include -->``
 

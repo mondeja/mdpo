@@ -106,7 +106,7 @@ def remove_not_found_entries(pofile, entries):
 
 
 def pofiles_to_unique_translations_dicts(pofiles):
-    """Extracts unique translations from a set of pofiles.
+    """Extracts unique translations from a set of PO files.
 
     Given multiple pofiles, extracts translations (those messages with non
     empty msgstrs) into two dictionaries, a dictionary for translations

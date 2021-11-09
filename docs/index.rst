@@ -2,7 +2,7 @@
 mdpo's documentation
 ####################
 
-Markdown files translation using pofiles. Complies with
+Markdown files translation using PO files. Complies with
 `CommonMark Specification`_ `v0.29`_ and `v0.30`_.
 
 .. toctree::

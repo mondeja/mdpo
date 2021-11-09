@@ -26,8 +26,7 @@ Given next directory tree:
    └── README.md
 
 
-Use the next command to create and update the translation pofile for
-``README.md``:
+Use the next command to create or update the PO file for ``README.md``:
 
 .. code-block:: bash
 

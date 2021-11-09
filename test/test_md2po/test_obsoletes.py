@@ -1,4 +1,4 @@
-"""Test if messages of a pofile are updated when this messages were previously
+"""Test if messages of a PO file are updated when this messages were previously
 marked as obsolete."""
 
 import pytest

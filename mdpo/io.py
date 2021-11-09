@@ -95,7 +95,7 @@ def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
     """Save a file checking if the content has changed.
 
     Args:
-        pofile (:py:class:`polib.POFile`): POFile to save.
+        pofile (:py:class:`polib.POFile`): PO file to save.
         po_filepath (str): Path to the new file to save in.
 
     Returns:

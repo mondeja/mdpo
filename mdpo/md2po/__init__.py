@@ -1046,10 +1046,10 @@ def markdown_to_pofile(
             as source checking not found strings that will be marked as
             obsolete if is the case (see ``save`` and
             ``mark_not_found_as_obsolete`` optional parameters).
-        save (bool): Save the new content to the pofile indicated in the
+        save (bool): Save the new content to the PO file indicated in the
             parameter ``po_filepath``. If is enabled and ``po_filepath`` is
             ``None`` a ``ValueError`` will be raised.
-        mo_filepath (str): The resulting pofile will be compiled to a mofile
+        mo_filepath (str): The resulting PO file will be compiled to a MO file
             and saved in the path specified at this parameter.
         plaintext (bool): If you pass ``True`` to this parameter (as default)
                 the content will be extracted as is, without markup characters
@@ -1064,10 +1064,10 @@ def markdown_to_pofile(
             parameter. If negative, 0, 'inf' or 'math.inf' the content won't
             be wrapped.
         mark_not_found_as_obsolete (bool): The strings extracted from markdown
-            that will not be found inside the provided pofile will be marked
+            that will not be found inside the provided PO file will be marked
             as obsolete.
         preserve_not_found (bool): The strings extracted from markdown that
-            will not be found inside the provided pofile wouldn't be removed.
+            will not be found inside the provided PO file wouldn't be removed.
             Only has effect if ``mark_not_found_as_obsolete`` is ``False``.
         location (bool): Store references of top-level blocks in which are
             found the messages in PO file `#: reference` comments.
@@ -1075,12 +1075,12 @@ def markdown_to_pofile(
             formatted as a list of 'pymd4c' keyword arguments. You can see all
             available at `pymd4c repository <https://github.com/dominickpastore
             /pymd4c#parser-option-flags>`_.
-        po_encoding (str): Resulting pofile encoding.
+        po_encoding (str): Resulting PO file encoding.
         md_encoding (str): Markdown content encoding.
-        xheaders (bool): Indicates if the resulting pofile will have mdpo
+        xheaders (bool): Indicates if the resulting PO file will have mdpo
             x-headers included. These only can be included if the parameter
             ``plaintext`` is ``False``.
-        include_codeblocks (bool): Include all code blocks found inside pofile
+        include_codeblocks (bool): Include all code blocks found inside PO file
             result. This is useful if you want to translate all your blocks
             of code. Equivalent to append ``<!-- mdpo-include-codeblock -->``
             command before each code block.
