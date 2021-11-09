@@ -100,3 +100,35 @@ md2po2md
 
 .. seealso::
    * :ref:`md2po2md CLI<md2po2md-cli>`
+
+mdpo2html
+=========
+
+.. code-block:: yaml
+
+   - repo: https://github.com/mondeja/mdpo
+     rev: v0.3.74
+     hooks:
+       - id: mdpo2html
+         files: ^README\.html
+         args:
+           - -p
+           - README.po
+           - -s
+           - README.es.html
+
+.. code-block:: yaml
+
+   - repo: https://github.com/mondeja/mdpo
+     rev: v0.3.74
+     hooks:
+       - id: mdpo2html
+         args:
+           - README.html
+           - -p
+           - README.po
+           - -s
+           - README.es.html
+
+.. seealso::
+   * :ref:`mdpo2html CLI<mdpo2html-cli>`
