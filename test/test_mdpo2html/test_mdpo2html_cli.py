@@ -10,7 +10,7 @@ from mdpo.mdpo2html.__main__ import run
 
 EXAMPLE = {
     'html-input': '<h1>Header 1</h1>\n\n<p>Some text here</p>\n',
-    'html-output': '<h1>Encabezado 1</h1>\n\n<p>Algo de texto aquí</p>\n\n',
+    'html-output': '<h1>Encabezado 1</h1>\n\n<p>Algo de texto aquí</p>\n',
     'pofile': '''#
 msgid ""
 msgstr ""
@@ -32,8 +32,8 @@ def test_stdin(capsys, monkeypatch, tmp_file):
         stdout, stderr = capsys.readouterr()
 
         assert exitcode == 0
-        assert f'{output}\n\n' == EXAMPLE['html-output']
-        assert f'{stdout}\n' == EXAMPLE['html-output']
+        assert output == EXAMPLE['html-output'][:-1]  # rstrip("\n")
+        assert stdout == EXAMPLE['html-output']
         assert stderr == ''
 
 
@@ -47,7 +47,7 @@ def test_quiet(capsys, arg, tmp_file):
         stdout, stderr = capsys.readouterr()
 
         assert exitcode == 0
-        assert f'{output}\n' == EXAMPLE['html-output']
+        assert output == EXAMPLE['html-output']
         assert stdout == ''
         assert stderr == ''
 
@@ -65,13 +65,13 @@ def test_save(capsys, arg, tmp_file):
         stdout, _ = capsys.readouterr()
 
         assert exitcode == 0
-        assert f'{output}\n' == EXAMPLE['html-output']
-        assert stdout == EXAMPLE['html-output']
+        assert output == EXAMPLE['html-output']
+        assert stdout == ''
 
         with open(html_output_filepath) as f:
             output_html_content = f.read()
 
-        assert f'{output_html_content}\n' == EXAMPLE['html-output']
+        assert output_html_content == EXAMPLE['html-output']
 
 
 @pytest.mark.parametrize('arg', ['-i', '--ignore'])
