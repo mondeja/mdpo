@@ -6,8 +6,8 @@ import argparse
 import sys
 
 from mdpo.cli import (
+    add_command_alias_argument,
     add_common_cli_first_arguments,
-    add_common_cli_latest_arguments,
     add_debug_option,
     add_encoding_arguments,
     add_extensions_argument,
@@ -131,7 +131,7 @@ def build_parser():
              ' \'-d "Content-Type: text/plain; charset=utf-8"'
              ' -d "Language: es"\'.',
     )
-    add_common_cli_latest_arguments(parser)
+    add_command_alias_argument(parser)
     add_debug_option(parser)
     add_pre_commit_option(parser)
     return parser

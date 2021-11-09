@@ -13,7 +13,7 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
-from mdpo.io import to_file_content_if_is_file
+from mdpo.io import save_file_checking_file_changed, to_file_content_if_is_file
 from mdpo.md import solve_link_reference_targets
 from mdpo.po import (
     paths_or_globs_to_unique_pofiles,
@@ -60,6 +60,7 @@ class MdPo2HTML(HTMLParser):
         ignore_grouper_tags=['div', 'hr'],
         po_encoding=None,
         command_aliases={},
+        _check_saved_files_changed=None,
     ):
         self.pofiles = paths_or_globs_to_unique_pofiles(
             pofiles,
@@ -85,6 +86,11 @@ class MdPo2HTML(HTMLParser):
 
         # lazy translators mode
         self.merge_adjacent_markups = merge_adjacent_markups
+
+        # pre-commit mode
+        self._saved_files_changed = (
+            False if _check_saved_files_changed is not None else None
+        )
 
         # references of msgids and their msgstrs changing referenced link
         # targets by their real target, needed to support link references
@@ -435,8 +441,15 @@ class MdPo2HTML(HTMLParser):
         self.feed(content)
 
         if save:
-            with open(save, 'w', encoding=html_encoding) as f:
-                f.write(self.output)
+            if self._saved_files_changed is False:
+                self._saved_files_changed = save_file_checking_file_changed(
+                    save,
+                    self.output,
+                    encoding=html_encoding,
+                )
+            else:
+                with open(save, 'w', encoding=html_encoding) as f:
+                    f.write(self.output)
 
         self.reset()
 

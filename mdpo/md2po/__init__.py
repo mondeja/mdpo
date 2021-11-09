@@ -993,7 +993,7 @@ class Md2Po:
             self.pofile.metadata.update(self.metadata)
 
         if save and po_filepath:
-            if self._saved_files_changed is False:  # pragma: no cover
+            if self._saved_files_changed is False:
                 self._saved_files_changed = save_file_checking_file_changed(
                     po_filepath,
                     str(self.pofile),

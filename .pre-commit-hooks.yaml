@@ -8,7 +8,14 @@
 - id: po2md
   name: po2md
   entry: po2md --pre-commit
-  description: Markdown files translator using pofiles as reference
+  description: Markdown file translator using PO files as reference
+  language: python
+  types:
+    - text
+- id: mdpo2html
+  name: mdpo2html
+  entry: mdpo2html --pre-commit
+  description: HTML-produced-from-Markdown file translator using PO files
   language: python
   types:
     - text

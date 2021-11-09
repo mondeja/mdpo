@@ -7,15 +7,16 @@ import itertools
 import sys
 
 from mdpo.cli import (
+    add_command_alias_argument,
     add_common_cli_first_arguments,
-    add_common_cli_latest_arguments,
+    add_pre_commit_option,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.context import environ
-from mdpo.mdpo2html import markdown_pofile_to_html
+from mdpo.mdpo2html import MdPo2HTML
 
 
-DESCRIPTION = 'HTML-produced-from-Markdown files translator using PO files.'
+DESCRIPTION = 'HTML-produced-from-Markdown file translator using PO files.'
 
 
 def build_parser():
@@ -24,7 +25,7 @@ def build_parser():
     parser.add_argument(
         'filepath_or_content', metavar='FILEPATH_OR_CONTENT',
         nargs='*',
-        help='HTML filepath or content to translate. If not provided, will be'
+        help='HTML file path or content to translate. If not provided, will be'
              ' read from STDIN.',
     )
     parser.add_argument(
@@ -57,7 +58,8 @@ def build_parser():
              ' charset=<ENCODING>\\n".',
         metavar='<ENCODING>',
     )
-    add_common_cli_latest_arguments(parser)
+    add_command_alias_argument(parser)
+    add_pre_commit_option(parser)
     return parser
 
 
@@ -91,16 +93,24 @@ def run(args=[]):
     with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
-        output = markdown_pofile_to_html(
-            opts.filepath_or_content, opts.pofiles,
-            ignore=opts.ignore, save=opts.save,
+        mdpo2html = MdPo2HTML(
+            opts.pofiles,
+            ignore=opts.ignore,
             po_encoding=opts.po_encoding,
-            html_encoding=opts.html_encoding,
             command_aliases=opts.command_aliases,
+            _check_saved_files_changed=opts.check_saved_files_changed,
+        )
+        output = mdpo2html.translate(
+            opts.filepath_or_content,
+            save=opts.save,
+            html_encoding=opts.html_encoding,
         )
 
-        if not opts.quiet and not opts.save:
+        if not opts.quiet:
             sys.stdout.write(f'{output}\n')
+
+        if opts.check_saved_files_changed and mdpo2html._saved_files_changed:
+            return (output, 1)
 
     return (output, 0)
 
