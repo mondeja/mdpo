@@ -39,6 +39,7 @@ Markdown files translation using PO files. Complies with
    :maxdepth: 3
    :caption: Developer reference
 
+   contributing
    devref/index
 
 .. _CommonMark Specification: https://spec.commonmark.org/

@@ -8,7 +8,7 @@ def raise_skip_event(events, event_name, *event_args):
     """Execute all functions defined for an event of a parser.
 
     If a function returns ``False``, this function will return ``True`` meaning
-    that an event is trying to skip the parsing for an element.
+    that an event is trying to skip the associated function.
 
     Args:
         events (dict): Dictionary with all events defined.
@@ -17,7 +17,7 @@ def raise_skip_event(events, event_name, *event_args):
 
     Returns:
         bool: ``True`` if an event function returns ``False``, ``False``
-            otherwise.
+        otherwise.
     """
     try:
         pre_events = events[event_name]
