@@ -42,6 +42,14 @@
   margin-bottom: 0 !important;
 }
 
+/* Admonition tips */
+.admonition.tip {
+  background: #eff9f5;
+}
+.admonition.tip > .admonition-title {
+  background: #00AB66;
+}
+
 /* Hide changelog entries in toctree: https://stackoverflow.com/a/64368882/9167585 */
 #mdpo-s-documentation .toctree-wrapper:nth-child(even) > ul > .toctree-l1:last-child > ul {
   display: none;
