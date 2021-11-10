@@ -9,6 +9,7 @@ import argparse
 import sys
 
 from mdpo.cli import (
+    SPHINX_IS_RUNNING,
     add_command_alias_argument,
     add_common_cli_first_arguments,
     add_debug_option,
@@ -72,7 +73,7 @@ def build_parser():
         '-p', '--plaintext', dest='plaintext',
         action='store_true',
         help='Do not include markdown markup characters in extracted msgids'
-             ' for **bold text**, *italic text*, `inline code` and'
+             ' for **bold text**, *italic text*, ``inline code`` and'
              ' [link](target).',
     )
     parser.add_argument(
@@ -87,7 +88,7 @@ def build_parser():
         dest='mark_not_found_as_obsolete',
         action='store_false',
         help='Messages not found which are already stored in the PO file'
-             ' passed as \'-po/--po-filepath\' argument will not be marked as'
+             ' passed as \'--po-filepath\' argument will not be marked as'
              ' obsolete.',
     )
     parser.add_argument(
@@ -123,6 +124,11 @@ def build_parser():
         help='Path to a plain text file where all msgids to ignore from being'
              ' extracted are located, separated by newlines.',
     )
+    metadata_help_example = '' if SPHINX_IS_RUNNING else (
+        ' For example, to define utf-8 encoding and Spanish language use'
+        ' \'-d "Content-Type: text/plain; charset=utf-8"'
+        ' -d "Language: es"\'.'
+    )
     parser.add_argument(
         '-d', '--metadata', dest='metadata', default=[], action='append',
         metavar='Key:Value',
@@ -130,9 +136,7 @@ def build_parser():
              ' PO file. This argument can be passed multiple times.'
              ' If the file contains previous metadata fields, these will'
              ' be updated preserving the values of the already defined.'
-             ' For example, to define utf-8 encoding and Spanish language use'
-             ' \'-d "Content-Type: text/plain; charset=utf-8"'
-             ' -d "Language: es"\'.',
+             f'{metadata_help_example}',
     )
     add_command_alias_argument(parser)
     add_debug_option(parser)

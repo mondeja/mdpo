@@ -4,13 +4,15 @@ Command line interfaces
 
 mdpo installation includes four command line interfaces:
 
-* **md2po** is used to dump strings from Markdown files into PO files as msgids.
-* **po2md** is used to produce a translated Markdown file from a source Markdown
-  file and a PO file with extracted msgids and translated msgstrs.
-* **md2po2md** is a convenient wrapper for **md2po** and **po2md**.
-* **mdpo2html** is used to produce a translated HTML file from a source HTML
-  file produced from Markdown file using a Markdown-to-HTML converter, and a
-  PO file of reference for strings.
+* :ref:`cli:md2po` is used to dump strings from Markdown files into PO files as
+  msgids.
+* :ref:`cli:po2md` is used to produce a translated Markdown file from a source
+  Markdown file and a PO file with extracted msgids and translated msgstrs.
+* :ref:`cli:md2po2md` is a convenient wrapper for :ref:`cli:md2po` and
+  :ref:`cli:po2md`.
+* :ref:`cli:mdpo2html` is used to produce a translated HTML file from a source
+  HTML file produced from Markdown file using a Markdown-to-HTML converter, and
+  a PO file of reference for strings.
 
 .. raw:: html
 

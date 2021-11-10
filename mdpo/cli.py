@@ -8,6 +8,9 @@ from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.text import parse_escaped_pairs
 
 
+SPHINX_IS_RUNNING = 'sphinx' in sys.modules
+
+
 def parse_escaped_pairs_cli_argument(
     pairs,
     value_error_message,
@@ -120,16 +123,20 @@ def add_command_alias_argument(parser):
         parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
             extend.
     """
+    command_alias_help_example = '' if SPHINX_IS_RUNNING else (
+        ' For example, if you want'
+        ' to use \'<!-- mdpo-on -->\' instead of \'<!-- mdpo-enable -->\','
+        ' you can pass either \'--command-alias "mdpo-on:mdpo-enable"\''
+        ' or \'--command-alias "mdpo-on:enable"\' arguments.'
+    )
     parser.add_argument(
         '--command-alias', dest='command_aliases', default=[], action='append',
         metavar='CUSTOM-COMMAND:MDPO-COMMAND',
         help='Aliases to use custom mdpo command names in comments. This'
              ' argument can be passed multiple times in the form'
              " '<custom-command>:<mdpo-command>'. The 'mdpo-' prefix in"
-             ' command names resolution is optional. For example, if you want'
-             " to use '<!-- mdpo-on -->' instead of '<!-- mdpo-enable -->',"
-             ' you can pass either \'--command-alias "mdpo-on:mdpo-enable"\''
-             ' or \'--command-alias "mdpo-on:enable"\' arguments.',
+             ' command names resolution is optional.'
+             f'{command_alias_help_example}',
     )
 
 
@@ -178,7 +185,7 @@ def add_nolocation_option(parser):
         '--no-location', '--nolocation', dest='location', action='store_false',
         help="Do not write '#: filename:line' lines. Note that using this"
              ' option makes it harder for technically skilled translators to'
-             " understand each message's context. Same as 'xgettext "
+             " understand the context of each message. Same as 'xgettext "
              "--no-location'.",
     )
 
