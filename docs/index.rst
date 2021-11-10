@@ -10,7 +10,8 @@ Markdown files translation using PO files. Complies with
    :caption: Manual
 
    install
-   before-using
+   traditional-approach
+   rationale
    tutorial
    commands
    related-utilities
@@ -24,13 +25,6 @@ Markdown files translation using PO files. Complies with
    pre-commit-hooks
    changelog
 
-.. toctree::
-   :maxdepth: 2
-   :caption: In depth
-
-   rationale
-   implementation-notes
-
 .. raw:: html
 
    <hr>
@@ -40,6 +34,7 @@ Markdown files translation using PO files. Complies with
    :caption: Developer reference
 
    contributing
+   implementation-notes
    devref/index
 
 .. _CommonMark Specification: https://spec.commonmark.org/

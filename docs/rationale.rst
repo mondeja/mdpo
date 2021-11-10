@@ -1,6 +1,6 @@
-*********
-Rationale
-*********
+****************
+mdpo's Rationale
+****************
 
 Are markup characters part of a translation?
 ============================================
@@ -41,7 +41,7 @@ way in other language. So I declare that a good translation process is one that
 allows markup characters without the need to force the translator to do mental
 juggling working with them.
 
-This implies a ``.po`` files translator capable of work with markup characters
+This implies a PO files translator capable of work with markup characters
 templates using an editor which allows to create markups like editors do. But,
 this thing doesn't exists currently.
 
@@ -81,16 +81,10 @@ Advantages
 
 * Updates into source files are synchronized. A change in one string declares
   the old one obsolete and the translation can be updated quickly.
-* Translators work with ``.po`` files directly, a standard in translations.
+* Translators work with PO files directly, an open source standard for
+  translations.
 * Parts of the Markdown files that do not need to be translated as code blocks
   or are not included in the translation (by default), reducing possibility of
   markup failures in translations.
-
-Disadvantages
--------------
-
-* Message replacers needs to be written and depends on this specification.
-* Translation editors needs to be configured with this specification if they
-  want to handle properly markup character templates.
 
 .. _autolink: https://spec.commonmark.org/0.30/#autolinks
