@@ -6,6 +6,15 @@ import re
 import sys
 
 
+def and_join(values):
+    """List ", " join using "and" between the last and penultimate items.
+
+    Args:
+        values (list): Values to join.
+    """
+    return ', '.join(values[:-1]) + f' and {values[-1]}'
+
+
 def min_not_max_chars_in_a_row(char, text, default=1):
     r"""Returns the minimum possible of characters not found in a row for a string.
 
