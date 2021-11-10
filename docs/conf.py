@@ -23,6 +23,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
+    'sphinx.ext.autosectionlabel',
     'sphinx_argparse_cli',
     'sphinx_github_changelog',
 ]
@@ -63,3 +64,7 @@ intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
     'polib': ('https://polib.readthedocs.io/en/latest', None),
 }
+
+# -- Options for `sphinx.ext.autosectionlabel` -------------------------------
+
+autosectionlabel_prefix_document = True

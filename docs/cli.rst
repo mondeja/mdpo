@@ -16,8 +16,6 @@ mdpo installation includes four command line interfaces:
 
    <hr>
 
-.. _md2po-cli:
-
 md2po
 =====
 
@@ -31,8 +29,6 @@ md2po
 
    <hr>
 
-.. _po2md-cli:
-
 po2md
 =====
 
@@ -45,8 +41,8 @@ po2md
 markdownlint compatible configuration
 *************************************
 
-The output produced by :ref:`po2md-cli` is compatible with the following
-`Markdownlint configuration`_:
+The output produced by :ref:`cli:po2md` is compatible with the
+ following `Markdownlint configuration`_:
 
 .. code-block:: json
 
@@ -62,8 +58,6 @@ The output produced by :ref:`po2md-cli` is compatible with the following
 
    <hr>
 
-.. _md2po2md-cli:
-
 md2po2md
 ========
 
@@ -76,8 +70,6 @@ md2po2md
 .. raw:: html
 
    <hr>
-
-.. _mdpo2html-cli:
 
 mdpo2html
 =========

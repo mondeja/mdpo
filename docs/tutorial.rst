@@ -53,8 +53,8 @@ This will be the output after previous two commands:
    └── README.md
 
 .. seealso::
-   * :ref:`md2po CLI<md2po-cli>`
-   * :ref:`po2md CLI<po2md-cli>`
+   * :ref:`md2po CLI<cli:md2po>`
+   * :ref:`po2md CLI<cli:po2md>`
 
 .. raw:: html
 
@@ -63,7 +63,7 @@ This will be the output after previous two commands:
 Simple README file translation
 ==============================
 
-Just use :ref:`md2po2md CLI<md2po2md-cli>`:
+Just use :ref:`md2po2md CLI<cli:md2po2md>`:
 
 .. code-block:: bash
 
@@ -101,7 +101,7 @@ This will be the output after the previous command:
    └── README.md
 
 .. seealso::
-   * :ref:`md2po2md CLI<md2po2md-cli>`
+   * :ref:`md2po2md CLI<cli:md2po2md>`
 
 .. raw:: html
 
@@ -161,7 +161,7 @@ And this will produce your translated file in
    └── README.md
 
 .. seealso::
-   * :ref:`mdpo2html CLI<mdpo2html-cli>`
+   * :ref:`mdpo2html CLI<cli:mdpo2html>`
 
 .. markdown_py: https://github.com/Python-Markdown/markdown
 .. bug_tracker: https://github.com/mondeja/mdpo/issues

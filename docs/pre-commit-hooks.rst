@@ -35,7 +35,7 @@ so you don't need to specify them.
            - README.es.po
 
 .. seealso::
-   * :ref:`md2po CLI<md2po-cli>`
+   * :ref:`md2po CLI<cli:md2po>`
 
 po2md
 =====
@@ -67,7 +67,7 @@ po2md
            - README.es.md
 
 .. seealso::
-   * :ref:`po2md CLI<po2md-cli>`
+   * :ref:`po2md CLI<cli:po2md>`
 
 md2po2md
 ========
@@ -101,7 +101,7 @@ md2po2md
            - locale/{lang}
 
 .. seealso::
-   * :ref:`md2po2md CLI<md2po2md-cli>`
+   * :ref:`md2po2md CLI<cli:md2po2md>`
 
 mdpo2html
 =========
@@ -133,4 +133,4 @@ mdpo2html
            - README.es.html
 
 .. seealso::
-   * :ref:`mdpo2html CLI<mdpo2html-cli>`
+   * :ref:`mdpo2html CLI<cli:mdpo2html>`
