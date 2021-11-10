@@ -144,8 +144,8 @@ def removeprefix(text, prefix):
 
     If the string starts with the prefix string, return string[len(prefix):].
     Otherwise, returns the original string. This function has been added in
-    Python3.9 as the builtin `str.removeprefix`, but is defined here to support
-    previous versions of the language.
+    Python3.9 as the builtin ``str.removeprefix``, but is defined here to
+    support previous versions of the language.
 
     Args:
         text (str): Value whose prefix will be removed.
@@ -167,7 +167,7 @@ def removesuffix(text, suffix):
     If the string ends with the suffix string and the suffix is not empty,
     returns string[:-len(suffix)]. Otherwise, returns the original string.
     This function has been added in Python3.9 as the builtin
-    `str.removesuffix`, but is defined here to support previous versions of
+    ``str.removesuffix``, but is defined here to support previous versions of
     the language.
 
     Args:

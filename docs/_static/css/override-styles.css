@@ -1,8 +1,11 @@
 /* mdpo documentation's own style */
+
+/* side nav section titles */
 .wy-menu > .caption > span {
   color: #d66671;
 }
 
+/* links */
 .rst-content a,
 .rst-content a:visited,
 .rst-other-versions span > a,
@@ -18,6 +21,12 @@
   color: #f70019;
 }
 
+/* Show version under logo */
+.version {
+  color: #bc0013 !important;
+}
+
+/* search bar */
 #rtd-search-form > input[type="text"] {
   border-color: rgba(100,100,100,.4);
 }

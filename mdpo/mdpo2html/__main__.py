@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-"""mdpo2html command line interface."""
+"""mdpo2html command line interface.
+
+See :ref:`mdpo2html CLI<cli:mdpo2html>`.
+"""
 
 import argparse
 import itertools

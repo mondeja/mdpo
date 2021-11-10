@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-"""md2po command line interface."""
+"""md2po command line interface.
+
+See :ref:`md2po CLI<cli:md2po>`.
+"""
 
 import argparse
 import sys

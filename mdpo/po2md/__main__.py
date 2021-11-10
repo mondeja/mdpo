@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-"""po2md command line interface."""
+"""po2md command line interface.
+
+See :ref:`po2md CLI<cli:po2md>`.
+"""
 
 import argparse
 import itertools
