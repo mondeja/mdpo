@@ -29,10 +29,10 @@ so you don't need to specify them.
      rev: pc-hooks
      hooks:
        - id: md2po
+         files: ^README\.md
          args:
            - -po
            - README.es.po
-         files: README\.md
 
 .. seealso::
    * :ref:`md2po CLI<md2po-cli>`
@@ -59,7 +59,7 @@ po2md
      rev: v0.3.74
      hooks:
        - id: po2md
-         files: README\.md
+         files: ^README\.md
          args:
            - -po
            - README.es.po
@@ -91,10 +91,12 @@ md2po2md
      rev: v0.3.74
      hooks:
        - id: md2po2md
-         files: README\.md
+         files: ^README\.md
          args:
            - -l
            - es
+           - -l
+           - fr
            - -o
            - locale/{lang}
 
@@ -110,8 +112,8 @@ mdpo2html
      rev: v0.3.74
      hooks:
        - id: mdpo2html
-         files: ^README\.html
          args:
+           - README.html
            - -p
            - README.po
            - -s
@@ -123,8 +125,8 @@ mdpo2html
      rev: v0.3.74
      hooks:
        - id: mdpo2html
+         files: ^README\.html
          args:
-           - README.html
            - -p
            - README.po
            - -s
