@@ -1,5 +1,5 @@
-The traditional approach
-========================
+Traditional approach
+====================
 
 One Markdown file for each language. This is the most commonly used approach to
 Markdown translations. For example, site generator plugins like

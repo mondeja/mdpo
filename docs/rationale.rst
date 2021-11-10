@@ -1,5 +1,5 @@
 ****************
-mdpo's Rationale
+mdpo's rationale
 ****************
 
 Are markup characters part of a translation?
