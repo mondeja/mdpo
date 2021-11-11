@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 
-"""md2po command line interface."""
+"""md2po command line interface.
+
+See :ref:`md2po CLI<cli:md2po>`.
+"""
 
 import argparse
 import sys
 
 from mdpo.cli import (
+    CLOSE_QUOTE_CHAR,
+    OPEN_QUOTE_CHAR,
     add_command_alias_argument,
     add_common_cli_first_arguments,
     add_debug_option,
@@ -13,6 +18,7 @@ from mdpo.cli import (
     add_extensions_argument,
     add_nolocation_option,
     add_pre_commit_option,
+    cli_codespan,
     parse_command_aliases_cli_arguments,
     parse_metadata_cli_arguments,
 )
@@ -46,17 +52,17 @@ def build_parser():
         '-po', '--po-filepath', '--pofilepath', dest='po_filepath',
         default=None,
         help='Merge new msgids in the po file indicated at this parameter (if'
-             ' \'--save\' argument is passed) or use the msgids of the file as'
-             ' reference for mark not found as obsoletes if'
-             ' \'--merge-pofiles\' parameter is not passed.',
+             f' {cli_codespan("--save")} argument is passed) or use the msgids'
+             ' of the file as reference for mark not found as obsoletes if'
+             f' {cli_codespan("--merge-pofiles")} parameter is not passed.',
         metavar='OUTPUT_PO_FILEPATH',
     )
     parser.add_argument(
         '-s', '--save', dest='save', action='store_true',
         help='Save new found msgids to the po file'
-             ' indicated as parameter \'-po/--po-filepath\'.'
+             f' indicated as parameter {cli_codespan("--po-filepath")}.'
              ' Passing this option without defining the argument'
-             ' \'-po/--po-filepath\' will raise an error.',
+             f' {cli_codespan("--po-filepath")} will raise an error.',
     )
     parser.add_argument(
         '-mo', '--mo-filepath', '--mofilepath', dest='mo_filepath',
@@ -69,31 +75,34 @@ def build_parser():
         '-p', '--plaintext', dest='plaintext',
         action='store_true',
         help='Do not include markdown markup characters in extracted msgids'
-             ' for **bold text**, *italic text*, `inline code` and'
-             ' [link](target).',
+             f' for {cli_codespan("**bold text**", cli=False)},'
+             f' {cli_codespan("*italic text*", cli=False)},'
+             f' {cli_codespan("``inline code``")} and'
+             f' {cli_codespan("[link](target)")}.',
     )
     parser.add_argument(
         '-w', '--wrapwidth', dest='wrapwidth', metavar='N/inf', type=str,
         default='78',
-        help='Wrap width for po file indicated at \'-po/--po-filepath\''
-             ' parameter. If negative, \'0\' or \'inf\', the PO file content'
-             ' will not be wrapped.',
+        help='Wrap width for po file indicated at'
+             f' {cli_codespan("--po-filepath")} parameter. If negative,'
+             ' \'0\' or \'inf\', the PO file content will not be wrapped.',
     )
     parser.add_argument(
         '-m', '--merge-po-files', '--merge-pofiles',
         dest='mark_not_found_as_obsolete',
         action='store_false',
         help='Messages not found which are already stored in the PO file'
-             ' passed as \'-po/--po-filepath\' argument will not be marked as'
-             ' obsolete.',
+             f' passed as {cli_codespan("--po-filepath")} argument will not be'
+             ' marked as obsolete.',
     )
     parser.add_argument(
         '-r', '--remove-not-found',
         dest='preserve_not_found',
         action='store_false',
         help='Messages not found which are already stored in the PO file'
-             ' passed as \'-po/--po-filepath\' parameter will be removed.'
-             ' Only has effect used in combination with \'--merge-pofiles\'.',
+             f' passed as {cli_codespan("--po-filepath")} parameter will be'
+             ' removed. Only has effect used in combination with'
+             f' {cli_codespan("--merge-pofiles")}.',
     )
     add_nolocation_option(parser)
     add_extensions_argument(parser)
@@ -105,20 +114,33 @@ def build_parser():
         '-a', '--xheaders', dest='xheaders',
         action='store_true',
         help='Include mdpo specification x-headers. These only will be'
-             ' included if you do not pass the parameter \'--plaintext\'.',
+             ' included if you do not pass the parameter'
+             f' {cli_codespan("--plaintext")}.',
     )
     parser.add_argument(
         '-c', '--include-codeblocks',
         dest='include_codeblocks', action='store_true',
         help='Include all code blocks found inside PO file result. This is'
              ' useful if you want to translate all your blocks of code.'
-             ' Equivalent to append \'<!-- mdpo-include-codeblock -->\''
-             ' command before each code block.',
+             ' Equivalent to append'
+             f' {cli_codespan("<!-- mdpo-include-codeblock -->")} command'
+             ' before each code block.',
     )
     parser.add_argument(
         '--ignore-msgids', dest='ignore_msgids', default=None,
         help='Path to a plain text file where all msgids to ignore from being'
              ' extracted are located, separated by newlines.',
+    )
+
+    # patch for sphinx-argparse-cli compatibility (use Unicode quotation marks)
+    example_codespan = (
+        f'-d {OPEN_QUOTE_CHAR}Content-Type: text/plain;'
+        f' charset=utf-8{CLOSE_QUOTE_CHAR}'
+        f' -d {OPEN_QUOTE_CHAR}Language: es{CLOSE_QUOTE_CHAR}'
+    )
+    metadata_help_example = (
+        ' For example, to define UTF-8 encoding and Spanish language use'
+        f' {cli_codespan(example_codespan)}.'
     )
     parser.add_argument(
         '-d', '--metadata', dest='metadata', default=[], action='append',
@@ -127,10 +149,9 @@ def build_parser():
              ' PO file. This argument can be passed multiple times.'
              ' If the file contains previous metadata fields, these will'
              ' be updated preserving the values of the already defined.'
-             ' For example, to define utf-8 encoding and Spanish language use'
-             ' \'-d "Content-Type: text/plain; charset=utf-8"'
-             ' -d "Language: es"\'.',
+             f'{metadata_help_example}',
     )
+
     add_command_alias_argument(parser)
     add_debug_option(parser)
     add_pre_commit_option(parser)

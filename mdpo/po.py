@@ -1,4 +1,4 @@
-"""``.po`` files related stuff."""
+"""PO files related stuff."""
 
 import glob
 

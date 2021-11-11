@@ -6,6 +6,15 @@ import re
 import sys
 
 
+def and_join(values):
+    """List ", " join using "and" between the last and penultimate items.
+
+    Args:
+        values (list): Values to join.
+    """
+    return ', '.join(values[:-1]) + f' and {values[-1]}'
+
+
 def min_not_max_chars_in_a_row(char, text, default=1):
     r"""Returns the minimum possible of characters not found in a row for a string.
 
@@ -144,8 +153,8 @@ def removeprefix(text, prefix):
 
     If the string starts with the prefix string, return string[len(prefix):].
     Otherwise, returns the original string. This function has been added in
-    Python3.9 as the builtin `str.removeprefix`, but is defined here to support
-    previous versions of the language.
+    Python3.9 as the builtin ``str.removeprefix``, but is defined here to
+    support previous versions of the language.
 
     Args:
         text (str): Value whose prefix will be removed.
@@ -167,7 +176,7 @@ def removesuffix(text, suffix):
     If the string ends with the suffix string and the suffix is not empty,
     returns string[:-len(suffix)]. Otherwise, returns the original string.
     This function has been added in Python3.9 as the builtin
-    `str.removesuffix`, but is defined here to support previous versions of
+    ``str.removesuffix``, but is defined here to support previous versions of
     the language.
 
     Args:

@@ -4,19 +4,19 @@ Command line interfaces
 
 mdpo installation includes four command line interfaces:
 
-* **md2po** is used to dump strings from Markdown files into PO files as msgids.
-* **po2md** is used to produce a translated Markdown file from a source Markdown
-  file and a PO file with extracted msgids and translated msgstrs.
-* **md2po2md** is a convenient wrapper for **md2po** and **po2md**.
-* **mdpo2html** is used to produce a translated HTML file from a source HTML
-  file produced from Markdown file using a Markdown-to-HTML converter, and a
-  PO file of reference for strings.
+* :ref:`cli:md2po` is used to dump strings from Markdown files into PO files as
+  msgids.
+* :ref:`cli:po2md` is used to produce a translated Markdown file from a source
+  Markdown file and a PO file with extracted msgids and translated msgstrs.
+* :ref:`cli:md2po2md` is a convenient wrapper for :ref:`cli:md2po` and
+  :ref:`cli:po2md`.
+* :ref:`cli:mdpo2html` is used to produce a translated HTML file from a source
+  HTML file produced from Markdown file using a Markdown-to-HTML converter, and
+  a PO file of reference for strings.
 
 .. raw:: html
 
    <hr>
-
-.. _md2po-cli:
 
 md2po
 =====
@@ -31,8 +31,6 @@ md2po
 
    <hr>
 
-.. _po2md-cli:
-
 po2md
 =====
 
@@ -45,8 +43,8 @@ po2md
 markdownlint compatible configuration
 *************************************
 
-The output produced by :ref:`po2md-cli` is compatible with the following
-`Markdownlint configuration`_:
+The output produced by :ref:`cli:po2md` is compatible with the
+ following `Markdownlint configuration`_:
 
 .. code-block:: json
 
@@ -62,8 +60,6 @@ The output produced by :ref:`po2md-cli` is compatible with the following
 
    <hr>
 
-.. _md2po2md-cli:
-
 md2po2md
 ========
 
@@ -76,8 +72,6 @@ md2po2md
 .. raw:: html
 
    <hr>
-
-.. _mdpo2html-cli:
 
 mdpo2html
 =========

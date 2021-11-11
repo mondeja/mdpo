@@ -8,7 +8,7 @@ your Markdown files.
 .. tip::
 
    If you want to specify next commands with other names, take a look at the
-   argument :ref:`md2po---command-alias` of :ref:`md2po CLI<md2po-cli>` or the
+   argument :ref:`md2po---command-alias` of :ref:`md2po CLI<cli:md2po>` or the
    optional parameter ``command_aliases`` of the :ref:`APIs<md2po-api>`.
 
 Disabling extraction

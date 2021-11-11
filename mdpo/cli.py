@@ -5,7 +5,31 @@ import sys
 
 from mdpo import __version__
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-from mdpo.text import parse_escaped_pairs
+from mdpo.text import and_join, parse_escaped_pairs
+
+
+SPHINX_IS_RUNNING = 'sphinx' in sys.modules
+OPEN_QUOTE_CHAR = '”' if SPHINX_IS_RUNNING else '"'
+CLOSE_QUOTE_CHAR = '”' if SPHINX_IS_RUNNING else '"'
+
+
+def cli_codespan(value, cli=True, sphinx=True):
+    """Command line codespan wrapper.
+
+    This is a compatibility function to make CLI codespans looks good in
+    sphinx-argparse-cli documentation and using ``--help`` option in CLI
+    itself. sphinx-argparse-cli expects the usage of double backticks for
+    codespans, but that format is ugly in CLI.
+
+    Args:
+        value (str): Value to wrap.
+        cli (bool): Wrap when used from command line.
+        sphinx (bool): Wrap when used from Sphinx.
+    """
+    if SPHINX_IS_RUNNING:
+        return f'``{value}``' if sphinx else value
+    else:
+        return f'\'{value}\'' if cli else value
 
 
 def parse_escaped_pairs_cli_argument(
@@ -120,16 +144,27 @@ def add_command_alias_argument(parser):
         parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
             extend.
     """
+    mdpo_on_mdpo_enable = cli_codespan(
+        f'--command-alias {OPEN_QUOTE_CHAR}mdpo-on:mdpo-enable'
+        f'{CLOSE_QUOTE_CHAR}',
+    )
+    mdpo_on_enable = cli_codespan(
+        f'--command-alias {OPEN_QUOTE_CHAR}mdpo-on:enable'
+        f'{CLOSE_QUOTE_CHAR}',
+    )
+    command_alias_help_example = (
+        ' For example, if you want to use "<!-- mdpo-on -->" instead of'
+        f' "<!-- mdpo-enable -->", you can pass either {mdpo_on_mdpo_enable}'
+        f' or {mdpo_on_enable} arguments.'
+    )
     parser.add_argument(
         '--command-alias', dest='command_aliases', default=[], action='append',
         metavar='CUSTOM-COMMAND:MDPO-COMMAND',
         help='Aliases to use custom mdpo command names in comments. This'
              ' argument can be passed multiple times in the form'
-             " '<custom-command>:<mdpo-command>'. The 'mdpo-' prefix in"
-             ' command names resolution is optional. For example, if you want'
-             " to use '<!-- mdpo-on -->' instead of '<!-- mdpo-enable -->',"
-             ' you can pass either \'--command-alias "mdpo-on:mdpo-enable"\''
-             ' or \'--command-alias "mdpo-on:enable"\' arguments.',
+             ' "<custom-command>:<mdpo-command>". The \'mdpo-\' prefix in'
+             ' command names resolution is optional.'
+             f'{command_alias_help_example}',
     )
 
 
@@ -145,10 +180,10 @@ def add_extensions_argument(parser):
         default=None,
         help='md4c extension used to parse markdown content formatted as'
              ' pymd4c extension keyword arguments. This argument can be passed'
-             ' multiple times. If is not passed, next extensions are used:'
-             f' {", ".join(DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS)}.'
+             ' multiple times. If it is not passed, next extensions are used:'
+             f' {and_join(DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS)}.'
              ' You can see all available at'
-             ' https://github.com/dominickpastore/pymd4c#parser-option-flags',
+             ' https://pymd4c.dcpx.org/api.html#parser-option-flags',
         metavar='EXTENSION',
     )
 
@@ -178,7 +213,7 @@ def add_nolocation_option(parser):
         '--no-location', '--nolocation', dest='location', action='store_false',
         help="Do not write '#: filename:line' lines. Note that using this"
              ' option makes it harder for technically skilled translators to'
-             " understand each message's context. Same as 'xgettext "
+             " understand the context of each message. Same as 'xgettext "
              "--no-location'.",
     )
 

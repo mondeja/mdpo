@@ -12,7 +12,7 @@ tutorial are covered the most common workflows.
 Markdown to markdown
 ====================
 
-If you want to translate a Markdown source using ``.po`` files and produce
+If you want to translate a Markdown source using PO files and produce
 translated Markdown output, use this method.
 
 Given next directory tree:
@@ -53,8 +53,8 @@ This will be the output after previous two commands:
    └── README.md
 
 .. seealso::
-   * :ref:`md2po CLI<md2po-cli>`
-   * :ref:`po2md CLI<po2md-cli>`
+   * :ref:`md2po CLI<cli:md2po>`
+   * :ref:`po2md CLI<cli:po2md>`
 
 .. raw:: html
 
@@ -63,7 +63,7 @@ This will be the output after previous two commands:
 Simple README file translation
 ==============================
 
-Just use :ref:`md2po2md CLI<md2po2md-cli>`:
+Just use :ref:`md2po2md CLI<cli:md2po2md>`:
 
 .. code-block:: bash
 
@@ -92,13 +92,16 @@ This will be the output after the previous command:
 
    .
    ├── locale
-   │   └── es
+   │   ├── es
+   │   |   ├── README.md
+   │   |   └── readme.po 
+   |   └── fr
    │       ├── README.md
    │       └── readme.po 
    └── README.md
 
 .. seealso::
-   * :ref:`md2po2md CLI<md2po2md-cli>`
+   * :ref:`md2po2md CLI<cli:md2po2md>`
 
 .. raw:: html
 
@@ -109,11 +112,11 @@ HTML-from-Markdown to HTML
 
 If you have a HTML file produced from Markdown using a Markdown processor like
 `Python-Markdown <markdown_py>`_ and you want to translate it in place using
-``.po`` files, use this method.
+PO files, use this method.
 
 .. warning::
-   This method is experimental. If you have issues consider open an issue
-   in the `bug tracker <https://github.com/mondeja/mdpo/issues>`_.
+   This method is experimental. If you have issues consider to open an issue
+   in the `bug tracker <bug_tracker>`_.
 
 
 Given next directory tree:
@@ -158,6 +161,7 @@ And this will produce your translated file in
    └── README.md
 
 .. seealso::
-   * :ref:`mdpo2html CLI<mdpo2html-cli>`
+   * :ref:`mdpo2html CLI<cli:mdpo2html>`
 
 .. markdown_py: https://github.com/Python-Markdown/markdown
+.. bug_tracker: https://github.com/mondeja/mdpo/issues
