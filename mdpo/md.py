@@ -7,7 +7,7 @@ from mdpo.text import min_not_max_chars_in_a_row
 
 
 LINK_REFERENCE_REGEX = (
-    r'^\s{0,3}\[([^\]]+)\]:\s+<?([^\s>]+)>?\s*["\'\(]?([^"\'\)]+)?'
+    r'^\[([^\]]+)\]:\s+<?([^\s>]+)>?\s*["\'\(]?([^"\'\)]+)?'
 )
 
 
@@ -68,7 +68,7 @@ def parse_link_references(content):
     response = []
     for line in content.splitlines():
         linestrip = line.strip()
-        if linestrip and linestrip[0] == '[':
+        if linestrip and linestrip.startswith('['):
             match = re.search(link_reference_re, linestrip)
             if match:
                 response.append(match.groups())
@@ -347,10 +347,10 @@ def solve_link_reference_targets(translations):
 
     # discover link reference definitions
     for msgid, msgstr in translations.items():
-        if msgid[0] == '[':  # filter for performance improvement
-            msgid_match = re.search(link_reference_re, msgid)
+        if msgid.startswith('['):  # filter for performance improvement
+            msgid_match = re.search(link_reference_re, msgid.lstrip(' '))
             if msgid_match:
-                msgstr_match = re.search(link_reference_re, msgstr)
+                msgstr_match = re.search(link_reference_re, msgstr.lstrip(' '))
                 if msgstr_match:
                     link_references_text_targets.append((
                         msgid_match.groups(),
