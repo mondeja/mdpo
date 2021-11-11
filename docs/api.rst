@@ -2,7 +2,18 @@
 Public mdpo APIs
 ****************
 
-.. _md2po-api:
+On versions next to Python3.6 you can import public functions from
+:doc:`mdpo<devref/index>` package:
+
+.. code-block:: python
+
+   from mdpo import markdown_to_pofile
+
+On Python3.6 you need to import them from the package of each implementation:
+
+.. code-block:: python
+
+   from mdpo.md2po import markdown_to_pofile
 
 md2po
 =====

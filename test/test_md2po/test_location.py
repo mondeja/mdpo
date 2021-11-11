@@ -1,7 +1,7 @@
 import os
 import tempfile
 
-from mdpo import markdown_to_pofile
+from mdpo.md2po import markdown_to_pofile
 
 
 def test_location_paragraphs(tmp_file):
