@@ -656,170 +656,178 @@ class Md2Po:
         if raise_skip_event(self.events, 'enter_span', self, span, details):
             return
 
-        if not self.plaintext:
-            # underline spans for double '_' character enters two times
-            if not self._inside_uspan:
-                if self._inside_aspan:  # span inside link text
-                    try:
-                        self._current_aspan_text += self._enterspan_replacer[
-                            span.value
-                        ]
-                    except KeyError:
-                        pass
-                else:
-                    try:
-                        self._current_msgid += (
-                            self._enterspan_replacer[span.value]
-                        )
-                    except KeyError:
-                        pass
+        if (span is md4c.SpanType.IMG or span is md4c.SpanType.A) and \
+                details['title']:
+            self._save_msgid(details['title'][0][1])
 
-            if span is md4c.SpanType.A:
-                # here resides the logic of discover if the current link
-                # is referenced
-                if self._link_references is None:
-                    self._link_references = parse_link_references(self.content)
+    def not_plaintext_enter_span(self, span, details):
+        # raise 'enter_span' event
+        if raise_skip_event(self.events, 'enter_span', self, span, details):
+            return
 
-                self._inside_aspan = True
+        # underline spans for double '_' character enters two times
+        if not self._inside_uspan:
+            if self._inside_aspan:  # span inside link text
+                try:
+                    self._current_aspan_text += self._enterspan_replacer[
+                        span.value
+                    ]
+                except KeyError:
+                    pass
+            else:
+                try:
+                    self._current_msgid += (
+                        self._enterspan_replacer[span.value]
+                    )
+                except KeyError:
+                    pass
 
-                current_aspan_href = details['href'][0][1]
-                self._current_aspan_ref_target = None
+        if span is md4c.SpanType.A:
+            # here resides the logic of discover if the current link
+            # is referenced
+            if self._link_references is None:
+                self._link_references = parse_link_references(self.content)
 
-                if details['title']:
-                    current_aspan_title = details['title'][0][1]
-                    for target, href, title in self._link_references:
-                        if (
-                            href == current_aspan_href and
-                            title == current_aspan_title
-                        ):
-                            self._current_aspan_ref_target = target
-                            break
-                else:
-                    for target, href, title in self._link_references:
-                        if href == current_aspan_href:
-                            self._current_aspan_ref_target = target
-                            break
+            self._inside_aspan = True
 
-            elif span is md4c.SpanType.CODE:
-                self._inside_codespan = True
+            current_aspan_href = details['href'][0][1]
+            self._current_aspan_ref_target = None
 
-                # entering a code span, literal backticks encountered inside
-                # will be escaped
-                #
-                # save the index char of the opening backtick
-                self._codespan_start_index = len(self._current_msgid) - 1
-            elif span is md4c.SpanType.IMG:
-                if self._link_references is None:
-                    self._link_references = parse_link_references(self.content)
+            if details['title']:
+                current_aspan_title = details['title'][0][1]
+                for target, href, title in self._link_references:
+                    if (
+                        href == current_aspan_href and
+                        title == current_aspan_title
+                    ):
+                        self._current_aspan_ref_target = target
+                        break
+            else:
+                for target, href, title in self._link_references:
+                    if href == current_aspan_href:
+                        self._current_aspan_ref_target = target
+                        break
 
-                self._current_imgspan['src'] = details['src'][0][1]
-                self._current_imgspan['title'] = '' if not details['title'] \
-                    else details['title'][0][1]
-                self._current_imgspan['text'] = ''
-            elif span is md4c.SpanType.U:
-                self._inside_uspan = True
-            elif span is md4c.SpanType.WIKILINK:
-                self._current_wikilink_target = details['target'][0][1]
-        else:
-            if (span is md4c.SpanType.IMG or span is md4c.SpanType.A) and \
-                    details['title']:
-                self._save_msgid(details['title'][0][1])
+        elif span is md4c.SpanType.CODE:
+            self._inside_codespan = True
+
+            # entering a code span, literal backticks encountered inside
+            # will be escaped
+            #
+            # save the index char of the opening backtick
+            self._codespan_start_index = len(self._current_msgid) - 1
+        elif span is md4c.SpanType.IMG:
+            if self._link_references is None:
+                self._link_references = parse_link_references(self.content)
+
+            self._current_imgspan['src'] = details['src'][0][1]
+            self._current_imgspan['title'] = '' if not details['title'] \
+                else details['title'][0][1]
+            self._current_imgspan['text'] = ''
+        elif span is md4c.SpanType.U:
+            self._inside_uspan = True
+        elif span is md4c.SpanType.WIKILINK:
+            self._current_wikilink_target = details['target'][0][1]
 
     def leave_span(self, span, details):
         # raise 'leave_span' event
         if raise_skip_event(self.events, 'leave_span', self, span, details):
             return
 
-        if not self.plaintext:
-            if not self._inside_uspan:
-                if span is md4c.SpanType.WIKILINK:
-                    self._current_msgid += self._current_wikilink_target
-                    self._current_wikilink_target = None
-                if self._inside_aspan:  # span inside link text
-                    try:
-                        self._current_aspan_text += self._leavespan_replacer[
-                            span.value
-                        ]
-                    except KeyError:
-                        pass
-                else:
-                    try:
-                        self._current_msgid += (
-                            self._leavespan_replacer[span.value]
-                        )
-                    except KeyError:
-                        pass
+    def not_plaintext_leave_span(self, span, details):
+        # raise 'leave_span' event
+        if raise_skip_event(self.events, 'leave_span', self, span, details):
+            return
 
-            if span is md4c.SpanType.A:
-                if self._current_aspan_ref_target:  # referenced link
+        if not self._inside_uspan:
+            if span is md4c.SpanType.WIKILINK:
+                self._current_msgid += self._current_wikilink_target
+                self._current_wikilink_target = None
+            if self._inside_aspan:  # span inside link text
+                try:
+                    self._current_aspan_text += self._leavespan_replacer[
+                        span.value
+                    ]
+                except KeyError:
+                    pass
+            else:
+                try:
                     self._current_msgid += (
-                        f'[{self._current_aspan_text}]'
-                        f'[{self._current_aspan_ref_target}]'
+                        self._leavespan_replacer[span.value]
                     )
-                    self._current_aspan_ref_target = None
-                else:
-                    title = details['title'][0][1] if details['title'] else ''
-                    if self._current_aspan_text == details['href'][0][1]:
-                        # autolink vs link clash (see implementation notes)
-                        self._current_msgid += f'<{self._current_aspan_text}'
-                        if title:
-                            self._current_msgid += f' "{title}"'
-                        self._current_msgid += '>'
-                    else:
-                        title_part = f' "{title}"' if title else ''
-                        href = details['href'][0][1]
-                        self._current_msgid += (
-                            f'[{self._current_aspan_text}]({href}{title_part})'
-                        )
-                self._inside_aspan = False
-                self._current_aspan_text = ''
-            elif span is md4c.SpanType.CODE:
-                self._inside_codespan = False
-                self._codespan_start_index = None
+                except KeyError:
+                    pass
 
-                # add backticks at the end for escape internal backticks
-                if self._inside_aspan:
-                    self._current_aspan_text += (
-                        self._codespan_backticks * self.code_end_string
-                    )
+        if span is md4c.SpanType.A:
+            if self._current_aspan_ref_target:  # referenced link
+                self._current_msgid += (
+                    f'[{self._current_aspan_text}]'
+                    f'[{self._current_aspan_ref_target}]'
+                )
+                self._current_aspan_ref_target = None
+            else:
+                title = details['title'][0][1] if details['title'] else ''
+                if self._current_aspan_text == details['href'][0][1]:
+                    # autolink vs link clash (see implementation notes)
+                    self._current_msgid += f'<{self._current_aspan_text}'
+                    if title:
+                        self._current_msgid += f' "{title}"'
+                    self._current_msgid += '>'
                 else:
+                    title_part = f' "{title}"' if title else ''
+                    href = details['href'][0][1]
                     self._current_msgid += (
-                        self._codespan_backticks * self.code_end_string
+                        f'[{self._current_aspan_text}]({href}{title_part})'
                     )
-                self._codespan_backticks = None
-            elif span is md4c.SpanType.IMG:
-                referenced_target, imgspan_title = (None, None)
-                imgspan_src = details['src'][0][1]
-                if details['title']:
-                    imgspan_title = details['title'][0][1]
-                    for target, href, title in self._link_references:
-                        if href == imgspan_src and title == imgspan_title:
-                            referenced_target = target
-                            break
-                else:
-                    for target, href, _ in self._link_references:
-                        if href == imgspan_src:
-                            referenced_target = target
-                            break
+            self._inside_aspan = False
+            self._current_aspan_text = ''
+        elif span is md4c.SpanType.CODE:
+            self._inside_codespan = False
+            self._codespan_start_index = None
 
-                alt_text = self._current_imgspan['text']
-                img_markup = f'![{alt_text}]'
-                if referenced_target:
-                    img_markup += f'[{referenced_target}]'
-                else:
-                    img_markup += f'({imgspan_src}'
-                    if imgspan_title:
-                        img_markup += f' "{imgspan_title}"'
-                    img_markup += ')'
+            # add backticks at the end for escape internal backticks
+            if self._inside_aspan:
+                self._current_aspan_text += (
+                    self._codespan_backticks * self.code_end_string
+                )
+            else:
+                self._current_msgid += (
+                    self._codespan_backticks * self.code_end_string
+                )
+            self._codespan_backticks = None
+        elif span is md4c.SpanType.IMG:
+            referenced_target, imgspan_title = (None, None)
+            imgspan_src = details['src'][0][1]
+            if details['title']:
+                imgspan_title = details['title'][0][1]
+                for target, href, title in self._link_references:
+                    if href == imgspan_src and title == imgspan_title:
+                        referenced_target = target
+                        break
+            else:
+                for target, href, _ in self._link_references:
+                    if href == imgspan_src:
+                        referenced_target = target
+                        break
 
-                self._current_imgspan = {}
+            alt_text = self._current_imgspan['text']
+            img_markup = f'![{alt_text}]'
+            if referenced_target:
+                img_markup += f'[{referenced_target}]'
+            else:
+                img_markup += f'({imgspan_src}'
+                if imgspan_title:
+                    img_markup += f' "{imgspan_title}"'
+                img_markup += ')'
 
-                if self._inside_aspan:
-                    self._current_aspan_text += img_markup
-                else:
-                    self._current_msgid += img_markup
-            elif span is md4c.SpanType.U:
-                self._inside_uspan = False
+            self._current_imgspan = {}
+
+            if self._inside_aspan:
+                self._current_aspan_text += img_markup
+            else:
+                self._current_msgid += img_markup
+        elif span is md4c.SpanType.U:
+            self._inside_uspan = False
 
     def text(self, block, text):
         # raise 'text' event
@@ -953,8 +961,14 @@ class Md2Po:
                 content,
                 self.enter_block,
                 self.leave_block,
-                self.enter_span,
-                self.leave_span,
+                (
+                    self.enter_span if self.plaintext
+                    else self.not_plaintext_enter_span
+                ),
+                (
+                    self.leave_span if self.plaintext
+                    else self.not_plaintext_leave_span
+                ),
                 self.text,
             )
             self._dump_link_references()
