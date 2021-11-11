@@ -1,6 +1,5 @@
 """Custom events executed during the parsing process of an implementation."""
 
-import datetime
 import sys
 
 
@@ -47,6 +46,8 @@ def debug_events(program):
         dict: Event target printing functions.
     """
     def debug(event, msg):
+        import datetime
+
         date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
         sys.stdout.write(f'{program}[DEBUG]::{date}::{event}:: {msg}\n')
 

@@ -1,17 +1,14 @@
 """Markdown related utilities for mdpo."""
 
-import re
-
 import md4c
 
 from mdpo.po import po_escaped_string
 from mdpo.text import min_not_max_chars_in_a_row
 
 
-LINK_REFERENCE_RE = re.compile(
-    r'^\s{0,3}\[([^\]]+)\]:\s+<?([^\s>]+)>?\s*["\'\(]?([^"\'\)]+)?',
+LINK_REFERENCE_REGEX = (
+    r'^\s{0,3}\[([^\]]+)\]:\s+<?([^\s>]+)>?\s*["\'\(]?([^"\'\)]+)?'
 )
-LINK_REFERENCED_LINK_RE = re.compile(r'\[([^\]]+)\]\[([^\]\s]+)\]')
 
 
 def escape_links_titles(text, link_start_string='[', link_end_string=']'):
@@ -35,6 +32,8 @@ def escape_links_titles(text, link_start_string='[', link_end_string=']'):
         >>> escape_links_titles(title)
         '[a link](href "title with characters to escape \\"")'
     """
+    import re
+
     link_end_string_escaped_regex = re.escape(link_end_string)
     regex = re.compile(
         r'({}[^{}]+{}\([^\s]+\s)([^\)]+)'.format(
@@ -62,11 +61,15 @@ def parse_link_references(content):
         list: Tuples with 3 values, target, href and title for each link
             reference.
     """
+    import re
+
+    link_reference_re = re.compile(LINK_REFERENCE_REGEX)
+
     response = []
     for line in content.splitlines():
         linestrip = line.strip()
         if linestrip and linestrip[0] == '[':
-            match = re.search(LINK_REFERENCE_RE, linestrip)
+            match = re.search(link_reference_re, linestrip)
             if match:
                 response.append(match.groups())
     return response
@@ -328,6 +331,11 @@ def solve_link_reference_targets(translations):
     Returns:
         dict: New created messages with solved link reference targets.
     """
+    import re
+
+    link_refereced_link_re = re.compile(r'\[([^\]]+)\]\[([^\]\s]+)\]')
+    link_reference_re = re.compile(LINK_REFERENCE_REGEX)
+
     solutions = {}
 
     # dictionary with defined link references and their targets
@@ -340,17 +348,17 @@ def solve_link_reference_targets(translations):
     # discover link reference definitions
     for msgid, msgstr in translations.items():
         if msgid[0] == '[':  # filter for performance improvement
-            msgid_match = re.search(LINK_REFERENCE_RE, msgid)
+            msgid_match = re.search(link_reference_re, msgid)
             if msgid_match:
-                msgstr_match = re.search(LINK_REFERENCE_RE, msgstr)
+                msgstr_match = re.search(link_reference_re, msgstr)
                 if msgstr_match:
                     link_references_text_targets.append((
                         msgid_match.groups(),
                         msgstr_match.groups(),
                     ))
-        msgid_matchs = re.findall(LINK_REFERENCED_LINK_RE, msgid)
+        msgid_matchs = re.findall(link_refereced_link_re, msgid)
         if msgid_matchs:
-            msgstr_matchs = re.findall(LINK_REFERENCED_LINK_RE, msgstr)
+            msgstr_matchs = re.findall(link_refereced_link_re, msgstr)
             if msgstr_matchs:
                 msgid_msgstrs_with_links.append((
                     msgid, msgstr, msgid_matchs, msgstr_matchs,

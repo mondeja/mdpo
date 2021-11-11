@@ -204,7 +204,8 @@ class MdPo2HTML(HTMLParser):
 
             elif handle == 'data':
                 if not _inside_code:
-                    handled = re.sub(r'\s{2,}', ' ', handled)
+                    while '  ' in handled:
+                        handled = handled.replace('  ', ' ')
 
                 if all((ch in ALIGNMENT_CHARS) for ch in handled):
                     raw_html_template += handled

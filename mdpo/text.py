@@ -2,7 +2,6 @@
 
 import math
 import os
-import re
 import sys
 
 
@@ -73,9 +72,12 @@ def parse_escaped_pair(value, separator=':'):
     Returns:
         tuple: Parsed key-value pair.
     """
-    regex = re.compile(fr'([^\\]{separator})')
-
-    splits = re.split(regex, value.lstrip(r'\\'), maxsplit=1)
+    import re
+    splits = re.split(
+        re.compile(fr'([^\\]{separator})'),
+        value.lstrip(r'\\'),
+        maxsplit=1,
+    )
     if len(splits) == 1:
         raise ValueError()
     return (
