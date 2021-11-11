@@ -2,7 +2,7 @@
 
 __description__ = ('Markdown files translation using PO files.')
 __title__ = 'mdpo'
-__version__ = '0.3.75'
+__version__ = '0.4.0'
 __all__ = [
     '__description__',
     '__title__',
