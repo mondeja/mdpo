@@ -33,7 +33,7 @@ def __getattr__(name):
 
 
 def __dir__():
-    return sorted(__all__) + [
+    return __all__ + [
         'markdown_pofile_to_html',
         'markdown_to_pofile',
         'markdown_to_pofile_to_markdown',
