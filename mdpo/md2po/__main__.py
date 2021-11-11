@@ -59,10 +59,10 @@ def build_parser():
     )
     parser.add_argument(
         '-s', '--save', dest='save', action='store_true',
-        help='Save new found msgids to the po file'
-             f' indicated as parameter {cli_codespan("--po-filepath")}.'
-             ' Passing this option without defining the argument'
-             f' {cli_codespan("--po-filepath")} will raise an error.',
+        help='Save new found msgids to the po file indicated as parameter'
+             f' {cli_codespan("--po-filepath")}. Passing this option without'
+             f' defining the argument {cli_codespan("--po-filepath")} will'
+              ' raise an error.',
     )
     parser.add_argument(
         '-mo', '--mo-filepath', '--mofilepath', dest='mo_filepath',

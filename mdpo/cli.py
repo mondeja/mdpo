@@ -211,29 +211,39 @@ def add_nolocation_option(parser):
     """
     parser.add_argument(
         '--no-location', '--nolocation', dest='location', action='store_false',
-        help="Do not write '#: filename:line' lines. Note that using this"
+        help='Do not write \'#: filename:line\' lines. Note that using this'
              ' option makes it harder for technically skilled translators to'
-             " understand the context of each message. Same as 'xgettext "
-             "--no-location'.",
+             ' understand the context of each message. Same as'
+             f' {cli_codespan("gettext --no-location")}.',
     )
 
 
-def add_encoding_arguments(parser, po_encoding_help=None):
+def add_encoding_arguments(
+        parser,
+        po_encoding_help=None,
+        markup_encoding='md',
+):
     """Add ``--po-encoding`` ``--md_encoding`` arguments to an argument parser.
 
     Args:
         parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
             extend.
         po_encoding_help (str): Help text for the ``--po-encoding`` argument.
+        markup_encoding (str): Type of markup encoding, can be ``"md"`` or
+            ``"html"``.
     """
     parser.add_argument(
-        '--md-encoding', dest='md_encoding', default='utf-8',
-        help='Markdown content encoding.', metavar='ENCODING',
+        f'--{markup_encoding}-encoding',
+        dest=f'{markup_encoding}_encoding',
+        default='utf-8',
+        help=f'{"Markdown" if markup_encoding == "md" else "HTML"}'
+             ' content encoding.',
+        metavar='ENCODING',
     )
 
     po_encoding_help = (
         'PO files encoding. If you need different encodings for each'
-        ' file, you must define them in the Content-Type" field of each'
+        ' file, you must define them in the "Content-Type" field of each'
         ' PO file metadata, in the form \'Content-Type: text/plain;'
         ' charset=<ENCODING>\'.'
     ) if po_encoding_help is None else po_encoding_help
@@ -253,5 +263,5 @@ def add_pre_commit_option(parser):
     parser.add_argument(
         '--pre-commit', dest='check_saved_files_changed', action='store_true',
         help='Run in pre-commit mode, which returns code 1 at exit when a file'
-             ' has been changed or previously didn\'t exist.',
+             ' has been changed or previously did not exist.',
     )

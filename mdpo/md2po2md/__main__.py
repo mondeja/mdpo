@@ -40,7 +40,7 @@ def build_parser():
     parser.add_argument(
         '-l', '--lang', dest='langs', default=[], action='append',
         help='Language codes used to create the output directories.'
-             ' Can be passed multiple times.',
+             ' This argument can be passed multiple times.',
         metavar='LANG',
     )
     parser.add_argument(

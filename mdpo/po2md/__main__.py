@@ -15,6 +15,7 @@ from mdpo.cli import (
     add_debug_option,
     add_encoding_arguments,
     add_pre_commit_option,
+    cli_codespan,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.context import environ
@@ -24,7 +25,7 @@ from mdpo.po2md import Po2Md
 DESCRIPTION = (
     'Markdown file translator using PO files as reference.\n\n'
     'This implementation reproduces the same valid Markdown output, given the'
-    ' provided content, with translations replaced, but doesn\'t produces the'
+    ' provided content, with translations replaced, but does not produces the'
     ' same input format.'
 )
 
@@ -52,14 +53,14 @@ def build_parser():
     )
     parser.add_argument(
         '-i', '--ignore', dest='ignore', default=[], action='append',
-        help='Filepath to ignore when \'--pofiles\' argument value is a glob.'
-             ' This argument can be passed multiple times.',
+        help=f'Filepath to ignore when {cli_codespan("--pofiles")} argument'
+             ' value is a glob. This argument can be passed multiple times.',
         metavar='PATH',
     )
     parser.add_argument(
         '-s', '--save', dest='save', default=None,
-        help='Saves the output content in a file whose path is'
-             ' specified at this parameter.', metavar='PATH',
+        help='Saves the output content in a file whose path is specified at'
+             ' this parameter.', metavar='PATH',
     )
     parser.add_argument(
         '-w', '--wrapwidth', dest='wrapwidth', default='80', type=str,

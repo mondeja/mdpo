@@ -12,7 +12,9 @@ import sys
 from mdpo.cli import (
     add_command_alias_argument,
     add_common_cli_first_arguments,
+    add_encoding_arguments,
     add_pre_commit_option,
+    cli_codespan,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.context import environ
@@ -40,8 +42,8 @@ def build_parser():
     )
     parser.add_argument(
         '-i', '--ignore', dest='ignore', default=[], action='append',
-        help='Filepaths to ignore when \'--pofiles\' argument value is a glob.'
-             ' This argument can be passed multiple times.',
+        help=f'Filepaths to ignore when {cli_codespan("--pofiles")} argument'
+             ' value is a glob. This argument can be passed multiple times.',
         metavar='PATH',
     )
     parser.add_argument(
@@ -49,18 +51,7 @@ def build_parser():
         help='Saves the output content in file whose path is specified at this'
              ' parameter.', metavar='PATH',
     )
-    parser.add_argument(
-        '--html-encoding', dest='html_encoding', default='utf-8',
-        help='Markdown content encoding.', metavar='<ENCODING>',
-    )
-    parser.add_argument(
-        '--po-encoding', dest='po_encoding', default=None,
-        help='PO files encoding. If you need different encodings for each'
-             ' file, you must define it in the "Content-Type" field of each'
-             ' PO file metadata, in the form "Content-Type: text/plain;'
-             ' charset=<ENCODING>\\n".',
-        metavar='<ENCODING>',
-    )
+    add_encoding_arguments(parser, markup_encoding='html')
     add_command_alias_argument(parser)
     add_pre_commit_option(parser)
     return parser
