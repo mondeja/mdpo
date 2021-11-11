@@ -12,7 +12,7 @@ tutorial are covered the most common workflows.
 Markdown to markdown
 ====================
 
-If you want to translate a Markdown source using PO files and produce
+If you want to translate a Markdown source using PO file and produce
 translated Markdown output, use this method.
 
 Given next directory tree:
