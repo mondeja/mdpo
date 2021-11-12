@@ -4,11 +4,13 @@ import glob
 import html
 import os
 import tempfile
+import uuid
 
 import pytest
 
 from mdpo.io import (
     filter_paths,
+    save_file_checking_file_changed,
     to_file_content_if_is_file,
     to_files_or_content,
 )
@@ -116,3 +118,16 @@ class TestToFileContentIfIsFile:
     def test_content(self):
         md_content = to_file_content_if_is_file(MD_CONTENT_EXAMPLE)
         assert md_content == MD_CONTENT_EXAMPLE
+
+
+def test_save_file_checking_file_changed(tmp_file):
+    tempfile_path = os.path.join(
+        tempfile.gettempdir(),
+        f'mdpo--{uuid.uuid4().hex[:8]}',
+    )
+
+    changed = save_file_checking_file_changed(tempfile_path, 'foo\n')
+    assert changed
+
+    if os.path.isfile(tempfile_path):
+        os.remove(tempfile_path)
