@@ -1,6 +1,5 @@
 """Text utilities for mdpo."""
 
-import math
 import os
 import sys
 
@@ -125,9 +124,9 @@ def parse_strint_0_inf(value):
     """
     num = float(value)
     try:
-        return int(num) if num > 0 else math.inf
+        return int(num) if num > 0 else float('inf')
     except OverflowError:  # cannot convert float infinity to integer
-        return math.inf
+        return float('inf')
 
 
 def parse_wrapwidth_argument(value):
