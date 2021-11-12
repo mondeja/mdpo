@@ -78,6 +78,8 @@ def test_parse_escaped_pair(
         ('a', None, ValueError),
         ('inf', math.inf, None),
         ('-inf', math.inf, None),
+        (-1.1, float('inf'), None),
+        ('-1', float('inf'), None),
     ),
 )
 def test_parse_strint_0_inf(value, expected_value, expected_error):
