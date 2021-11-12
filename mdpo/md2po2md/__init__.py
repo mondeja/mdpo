@@ -2,7 +2,6 @@
 
 import glob
 import os
-import re
 
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
@@ -73,13 +72,18 @@ def markdown_to_pofile_to_markdown(
 
     try:
         input_paths_glob_ = glob.glob(input_paths_glob)
-    except re.error:
-        # some strings like '[s-m]' will produce
-        # 're.error: bad character range ... at position'
-        raise ValueError(
-            "The argument 'input_paths_glob' must be a valid glob or file"
-            ' path.',
-        )
+    except Exception as err:
+        if (
+            err.__module__ in ['re', 'sre_constants']
+            and err.__class__.__name__ == 'error'
+        ):
+            # some strings like '[s-m]' will produce
+            # 're.error: bad character range ... at position'
+            raise ValueError(
+                "The argument 'input_paths_glob' must be a valid glob or file"
+                ' path.',
+            )
+        raise err
     else:
         if not input_paths_glob_:
             raise FileNotFoundError(

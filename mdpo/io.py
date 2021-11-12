@@ -2,7 +2,6 @@
 
 import glob
 import os
-import re
 
 
 def filter_paths(filepaths, ignore_paths=[]):
@@ -81,10 +80,18 @@ def to_files_or_content(value):
     except TypeError:
         # inferes list
         return (True, value)
-    except re.error:
+    except Exception as err:
         # some strings like '[s-m]' will produce
         # 're.error: bad character range ... at position'
-        return (False, value)
+
+        # NOTE: in Python3.6, 're.error' is 'sre_constants' error,
+        # so 'sre_constants' must be removed when Python3.6 support is gone
+        if (
+            err.__module__ in ['re', 'sre_constants']
+            and err.__class__.__name__ == 'error'
+        ):
+            return (False, value)
+        raise err
     if not parsed:
         # assumes it is content
         return (False, value)

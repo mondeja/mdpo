@@ -1,8 +1,6 @@
 """Text utilities for mdpo."""
 
-import math
 import os
-import re
 import sys
 
 
@@ -73,9 +71,12 @@ def parse_escaped_pair(value, separator=':'):
     Returns:
         tuple: Parsed key-value pair.
     """
-    regex = re.compile(fr'([^\\]{separator})')
-
-    splits = re.split(regex, value.lstrip(r'\\'), maxsplit=1)
+    import re
+    splits = re.split(
+        re.compile(fr'([^\\]{separator})'),
+        value.lstrip(r'\\'),
+        maxsplit=1,
+    )
     if len(splits) == 1:
         raise ValueError()
     return (
@@ -123,27 +124,27 @@ def parse_strint_0_inf(value):
     """
     num = float(value)
     try:
-        return int(num) if num > 0 else math.inf
+        return int(num) if num > 0 else float('inf')
     except OverflowError:  # cannot convert float infinity to integer
-        return math.inf
+        return float('inf')
 
 
 def parse_wrapwidth_argument(value):
-    """Parse the argument ``-w/--wrapwidth`` passed to CLIs.
+    """Parse the argument ``-w/--wrapwidth``.
 
     Args:
         value (str): Wrapwidth value.
     """
     try:
         value = parse_strint_0_inf(value)
-    except ValueError as err:
+    except ValueError:
         if os.environ.get('_MDPO_RUNNING'):  # executed as CLI
             sys.stderr.write(
-                f"Invalid value '{err.value}' for -w/--wrapwidth argument.\n",
+                f"Invalid value '{value}' for -w/--wrapwidth argument.\n",
             )
             sys.exit(1)
         raise ValueError(
-            f"Invalid value '{err.value}' for wrapwidth argument.\n",
+            f"Invalid value '{value}' for wrapwidth argument.",
         )
     return value
 

@@ -1,11 +1,9 @@
 """mdpo HTML commands related utilities."""
 
-import re
-
 from mdpo.text import removeprefix
 
 
-COMMAND_SEARCH_RE = re.compile(r'<\!\-\-\s{0,}([^\s]+)\s{0,}([\w\s]+)?\-\->')
+COMMAND_SEARCH_REGEX = r'<\!\-\-\s{0,}([^\s]+)\s{0,}([\w\s]+)?\-\->'
 
 MDPO_COMMANDS = [
     'context',
@@ -35,7 +33,8 @@ def parse_mdpo_html_command(value):
         tuple: Namename of the command (not including the ``"mdpo"`` prefix)
         and its value.
     """
-    command_match = COMMAND_SEARCH_RE.search(value)
+    import re
+    command_match = re.compile(COMMAND_SEARCH_REGEX).search(value)
     return command_match.groups() if command_match else (None, None)
 
 

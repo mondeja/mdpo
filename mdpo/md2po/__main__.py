@@ -226,7 +226,7 @@ def run(args=[]):
         pofile = md2po.extract(**extract_kwargs)
 
         if not opts.quiet:
-            sys.stdout.write(f'{pofile}\n')
+            sys.stdout.write(f'{pofile.__unicode__()}\n')
 
         # pre-commit mode
         if opts.check_saved_files_changed and md2po._saved_files_changed:

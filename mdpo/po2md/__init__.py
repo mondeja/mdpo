@@ -1,8 +1,5 @@
 """Markdown files translator using PO files as reference."""
 
-import math
-import re
-
 import md4c
 import polib
 
@@ -148,7 +145,7 @@ class Po2Md:
         self.wrapwidth = (
             # infinte gives some undesired rendering
             (
-                2 ** 24 if kwargs['wrapwidth'] in [math.inf, 0]
+                2 ** 24 if kwargs['wrapwidth'] in [float('inf'), 0]
                 else parse_wrapwidth_argument(kwargs['wrapwidth'])
             ) if 'wrapwidth' in kwargs else 80
         )
@@ -610,10 +607,16 @@ class Po2Md:
                 self._current_line += '|'
                 self._save_current_line()
         elif block is md4c.BlockType.THEAD:
+            import re
+
             # build thead separator
             thead_separator = ''
             if self._inside_quoteblock:
                 _thead_split = re.split(r'[^\\](\|)', self._current_line)
+                _thead_split = []
+                for i, value in enumerate(self._current_line.split('|')):
+                    _thead_split.extend([value, '|'])
+                _thead_split.pop()
                 if self._current_list_type:
                     _thead_split = _thead_split[1:]
                 self._current_line += '|'
@@ -622,7 +625,8 @@ class Po2Md:
                 self._current_line += '|'
                 _thead_split = re.split(r'[^\\](\|)', self._current_line)
                 if self._current_list_type:
-                    _thead_split = _thead_split[1:-1]
+                    _thead_split.pop(0)
+                    _thead_split.pop()
             thead_separator += '| '
 
             _antepenultimate_thead_i = len(_thead_split) - 2

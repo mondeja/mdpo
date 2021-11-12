@@ -37,8 +37,11 @@ def poentry__cmp__(
             else:
                 return 1
     if compare_occurrences:
-        occ1 = sorted(self.occurrences[:])
-        occ2 = sorted(other.occurrences[:])
+        # `.copy` is an equivalent for full slice [:], but is faster
+        # `.copy` doesn't exists for lists in Python2 so for this reason,
+        # this change has not been introduced in polib
+        occ1 = sorted(self.occurrences.copy())
+        occ2 = sorted(other.occurrences.copy())
         if occ1 > occ2:
             return 1
         if occ1 < occ2:

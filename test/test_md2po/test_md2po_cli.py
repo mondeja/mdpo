@@ -6,7 +6,7 @@ import re
 import subprocess
 import sys
 import tempfile
-from uuid import uuid4
+import uuid
 
 import pytest
 
@@ -247,7 +247,7 @@ msgstr ""
     assert stdout == expected_output
 
     # new PO file creation
-    pofile_path = os.path.join(tempfile.gettempdir(), uuid4().hex[:8])
+    pofile_path = os.path.join(tempfile.gettempdir(), uuid.uuid4().hex[:8])
     pofile, exitcode = run([
         '# Bar\n',
         arg,
@@ -355,7 +355,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ['-w', '--wrapwidth'])
-@pytest.mark.parametrize('value', ['0', 'inf'])
+@pytest.mark.parametrize('value', ['0', 'inf', 'invalid'])
 def test_wrapwidth(capsys, arg, value):
     content = (
         '# Some long header with **bold characters**, '
@@ -369,6 +369,16 @@ msgid "Some long header with bold characters, italic characters and a link."
 msgstr ""
 
 '''
+
+    if value == 'invalid':
+        with pytest.raises(SystemExit):
+            pofile, exitcode = run([content, arg, value, '-p'])
+        stdout, stderr = capsys.readouterr()
+        assert stdout == ''
+        assert stderr == (
+            'Invalid value \'invalid\' for -w/--wrapwidth argument.\n'
+        )
+        return
 
     pofile, exitcode = run([content, arg, value, '-p'])
     stdout, _ = capsys.readouterr()
