@@ -942,7 +942,7 @@ class Md2Po:
                 self.po_filepath = ''
 
         pofile_kwargs = (
-            dict(autodetect_encoding=False, encoding=po_encoding)
+            {'autodetect_encoding': False, 'encoding': po_encoding}
             if po_encoding else {}
         )
         self.pofile = polib.pofile(

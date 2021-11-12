@@ -1,5 +1,6 @@
 """<!-- mdpo-include-codeblock --> command is not supported by mdpo2html
-implementation."""
+implementation.
+"""
 
 import pytest
 

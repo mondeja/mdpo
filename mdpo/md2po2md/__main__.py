@@ -99,14 +99,14 @@ def run(args=[]):
     with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
-        kwargs = dict(
-            extensions=opts.extensions,
-            command_aliases=opts.command_aliases,
-            debug=opts.debug,
-            location=opts.location,
-            po_encoding=opts.po_encoding,
-            md_encoding=opts.md_encoding,
-        )
+        kwargs = {
+            'extensions': opts.extensions,
+            'command_aliases': opts.command_aliases,
+            'debug': opts.debug,
+            'location': opts.location,
+            'po_encoding': opts.po_encoding,
+            'md_encoding': opts.md_encoding,
+        }
 
         _saved_files_changed = markdown_to_pofile_to_markdown(
             opts.langs,
