@@ -37,8 +37,8 @@ def poentry__cmp__(
             else:
                 return 1
     if compare_occurrences:
-        occ1 = sorted(self.occurrences[:])
-        occ2 = sorted(other.occurrences[:])
+        occ1 = sorted(self.occurrences.copy())
+        occ2 = sorted(other.occurrences.copy())
         if occ1 > occ2:
             return 1
         if occ1 < occ2:
