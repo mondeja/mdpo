@@ -101,10 +101,10 @@ msgstr ""
 def test_md2po_save_without_po_filepath():
     content = 'foo\n\nbar\n\nbaz\n'
     md2po = Md2Po(content)
-    with pytest.raises(ValueError) as exc:
-        md2po.extract(save=True)
 
-    assert str(exc.value) == (
+    expected_msg = (
         "The argument 'save' does not make sense without passing the"
         " argument 'po_filepath'."
     )
+    with pytest.raises(ValueError, match=expected_msg):
+        md2po.extract(save=True)
