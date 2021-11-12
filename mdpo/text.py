@@ -130,21 +130,21 @@ def parse_strint_0_inf(value):
 
 
 def parse_wrapwidth_argument(value):
-    """Parse the argument ``-w/--wrapwidth`` passed to CLIs.
+    """Parse the argument ``-w/--wrapwidth``.
 
     Args:
         value (str): Wrapwidth value.
     """
     try:
         value = parse_strint_0_inf(value)
-    except ValueError as err:
+    except ValueError:
         if os.environ.get('_MDPO_RUNNING'):  # executed as CLI
             sys.stderr.write(
-                f"Invalid value '{err.value}' for -w/--wrapwidth argument.\n",
+                f"Invalid value '{value}' for -w/--wrapwidth argument.\n",
             )
             sys.exit(1)
         raise ValueError(
-            f"Invalid value '{err.value}' for wrapwidth argument.\n",
+            f"Invalid value '{value}' for wrapwidth argument.",
         )
     return value
 

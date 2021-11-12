@@ -8,6 +8,7 @@ from mdpo.text import (
     min_not_max_chars_in_a_row,
     parse_escaped_pair,
     parse_strint_0_inf,
+    parse_wrapwidth_argument,
     removeprefix,
     removesuffix,
 )
@@ -110,3 +111,18 @@ def test_removeprefix(value, prefix, expected_value):
 )
 def test_removesuffix(value, suffix, expected_value):
     assert removesuffix(value, suffix) == expected_value
+
+
+@pytest.mark.parametrize('value', (0, 80, 'inf', 'invalid'))
+def test_parse_wrapwidth_argument(value):
+    if value == 'invalid':
+        with pytest.raises(ValueError) as exc:
+            parse_wrapwidth_argument(value)
+        assert str(exc.value) == (
+            f'Invalid value \'{value}\' for wrapwidth argument.'
+        )
+        return
+
+    assert parse_wrapwidth_argument(value) == (
+        float('inf') if value == 0 else float(value)
+    )
