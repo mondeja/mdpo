@@ -2,10 +2,14 @@ import ast
 import inspect
 import os
 import subprocess
+import sys
 import tempfile
 from contextlib import contextmanager
 
 import pytest
+
+
+AST_ELTS_VALUE_ATTR = 's' if sys.version_info < (3, 8) else 'value'
 
 
 @contextmanager
@@ -56,7 +60,8 @@ def class_slots():
                     and node.body[0].targets[0].id == '__slots__'
                 ):
                     self.slots.extend([
-                        elt.value for elt in node.body[0].value.elts
+                        getattr(elt, AST_ELTS_VALUE_ATTR)
+                        for elt in node.body[0].value.elts
                     ])
 
         modtree = ast.parse(inspect.getsource(code))
