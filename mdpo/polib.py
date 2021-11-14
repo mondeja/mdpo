@@ -13,12 +13,8 @@ def poentry__cmp__(
 ):
     """Custom comparation ``__cmp__`` function for :py:class:`polib.POEntry`.
 
-    This function acts like a workaround for
-    https://github.com/izimobil/polib/pulls/95 and add custom entries
-    comparison capabilities to :py:class:`polib.POEntry`, needed by mdpo to
-    prevent some errors. This function is compatible with the comparison
-    function defined by polib, the method :py:meth:`polib.POEntry.__cmp__`
-    can be replaced by this function without any downsides.
+    This function add custom entries comparison capabilities to
+    :py:class:`polib.POEntry`, needed by mdpo to prevent some errors.
 
     Args:
         self (:py:class:`polib.POEntry`): Entry to be compared.

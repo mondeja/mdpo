@@ -325,7 +325,7 @@ def solve_link_reference_targets(translations):
     targets will be resolved and returned in a new dictionary.
 
     Args:
-        translations (dictionary): Mapping of msgid-msgstr entries from which
+        translations (dict): Mapping of msgid-msgstr entries from which
             the resolved translations will be extracted.
 
     Returns:
