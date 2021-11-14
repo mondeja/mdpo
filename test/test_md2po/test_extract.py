@@ -61,7 +61,7 @@ def test_extract_underline(filename):
 
 
 @pytest.mark.parametrize(
-    'filename', [random.choice(EXAMPLES['plaintext']['filenames'])],
+    'filename', (random.choice(EXAMPLES['plaintext']['filenames']),),
 )
 def test_extract_save(filename):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)

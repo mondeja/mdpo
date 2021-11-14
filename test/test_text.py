@@ -116,11 +116,9 @@ def test_removesuffix(value, suffix, expected_value):
 @pytest.mark.parametrize('value', (0, 80, 'inf', 'invalid'))
 def test_parse_wrapwidth_argument(value):
     if value == 'invalid':
-        with pytest.raises(ValueError) as exc:
+        expected_msg = f'Invalid value \'{value}\' for wrapwidth argument.'
+        with pytest.raises(ValueError, match=expected_msg):
             parse_wrapwidth_argument(value)
-        assert str(exc.value) == (
-            f'Invalid value \'{value}\' for wrapwidth argument.'
-        )
         return
 
     assert parse_wrapwidth_argument(value) == (

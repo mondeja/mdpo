@@ -9,6 +9,7 @@ import argparse
 import sys
 
 from mdpo.cli import (
+    SPHINX_IS_RUNNING,
     add_command_alias_argument,
     add_common_cli_first_arguments,
     add_debug_option,
@@ -43,21 +44,24 @@ def build_parser():
              ' This argument can be passed multiple times.',
         metavar='LANG',
     )
+
+    output_paths_schema_help = '' if SPHINX_IS_RUNNING else (
+        ' For example, for the schema \'locale/{lang}\', the languages'
+        ' \'es\' and \'fr\' and a \'README.md\' as input, the next files'
+        ' will be written: \'locale/es/README.po\', \'locale/es/README.md\','
+        ' \'locale/fr/README.po\' and \'locale/fr/README.md\'.'
+        ' Note that you can omit \'{basename}\', specifying a'
+        ' directory for each language with \'locale/{lang}\' for this'
+        ' example.'
+    )
     parser.add_argument(
         '-o', '--output', dest='output_paths_schema',
         required=True, type=str,
         help='Path schema for outputs, built using placeholders. There is a'
-             ' mandatory placeholder for languages: \'{lang}\'; and one'
-             ' optional for output basename: \'{basename}\'. For example,'
-             ' for the schema \'locale/{lang}\', the languages \'es\' and'
-             ' \'fr\' and a \'README.md\' as input, the next files will be'
-             ' written: \'locale/es/README.po\', \'locale/es/README.md\','
-             ' \'locale/fr/README.po\' and \'locale/fr/README.md\'.'
-             ' Note that you can omit \'{basename}\', specifying a'
-             ' directory for each language with \'locale/{lang}\' for this'
-             ' example. Unexistent directories and files will be created, '
-             ' so you don\'t have to prepare the output directories before'
-             ' the execution.',
+             ' mandatory placeholder for languages: {lang};and one optional'
+             f' for output basename: {{basename}}.{output_paths_schema_help}'
+             ' Unexistent directories and files will be created, so you do not'
+             ' have to prepare the output directories before the execution.',
         metavar='PATH_SCHEMA',
     )
     add_nolocation_option(parser)
@@ -99,14 +103,14 @@ def run(args=[]):
     with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
-        kwargs = dict(
-            extensions=opts.extensions,
-            command_aliases=opts.command_aliases,
-            debug=opts.debug,
-            location=opts.location,
-            po_encoding=opts.po_encoding,
-            md_encoding=opts.md_encoding,
-        )
+        kwargs = {
+            'extensions': opts.extensions,
+            'command_aliases': opts.command_aliases,
+            'debug': opts.debug,
+            'location': opts.location,
+            'po_encoding': opts.po_encoding,
+            'md_encoding': opts.md_encoding,
+        }
 
         _saved_files_changed = markdown_to_pofile_to_markdown(
             opts.langs,

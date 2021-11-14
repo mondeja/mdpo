@@ -508,14 +508,14 @@ class Md2Po:
                     ' extracted comment with the command'
                     f' \'{original_command}\'.',
                 )
-            self._current_tcomment = comment.rstrip()
+            self._current_tcomment = comment
         elif mdpo_command == 'mdpo-context':
             if not comment:
                 raise ValueError(
                     'You need to specify a string for the'
                     f' context with the command \'{original_command}\'.',
                 )
-            self._current_msgctxt = comment.rstrip()
+            self._current_msgctxt = comment
         elif mdpo_command == 'mdpo-include':
             if not comment:
                 raise ValueError(
@@ -523,7 +523,7 @@ class Md2Po:
                     ' comment to include with the command'
                     f' \'{original_command}\'.',
                 )
-            self._current_msgid = comment.rstrip()
+            self._current_msgid = comment
             self._save_current_msgid()
 
     def _process_command(self, text):
@@ -942,7 +942,7 @@ class Md2Po:
                 self.po_filepath = ''
 
         pofile_kwargs = (
-            dict(autodetect_encoding=False, encoding=po_encoding)
+            {'autodetect_encoding': False, 'encoding': po_encoding}
             if po_encoding else {}
         )
         self.pofile = polib.pofile(

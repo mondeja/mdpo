@@ -33,7 +33,8 @@ def find_entry_in_entries(entry, entries, **kwargs):
     Args:
         entry (:py:class:`polib.POEntry`): Entry to search for.
         entries (list): Entries to search against.
-        **kwargs: Keyword arguments passed to :py:meth:`polib.POEntry.__cmp__`.
+        **kwargs: Keyword arguments passed to :py:class:`polib.POEntry`
+            ``__cmp__`` method.
 
     Returns:
         :py:class:`polib.POEntry`: Entry passed in ``entry`` argument if an

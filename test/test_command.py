@@ -17,8 +17,8 @@ from mdpo.text import removeprefix
         ('<!-- mdpo_include_codeblock -->', 'mdpo_include_codeblock', None),
         ('<!-- -->', None, None),
 
-        # comments include spaces at the end, implementations must rstrip them
-        ('<!-- mdpo-include Hello world -->', 'mdpo-include', 'Hello world '),
+        # comments should not end with whitespace
+        ('<!-- mdpo-include Hello world -->', 'mdpo-include', 'Hello world'),
         ('<!--mdpo-include Hello world-->', 'mdpo-include', 'Hello world'),
         ('<!-- mdpo-include Hello world-->', 'mdpo-include', 'Hello world'),
         (
@@ -29,7 +29,7 @@ from mdpo.text import removeprefix
         (
             '<!-- mdpo-include Hello world\n -->',
             'mdpo-include',
-            'Hello world\n ',
+            'Hello world\n',
         ),
         ('<!--mdpo-includeHello world-->', 'mdpo-includeHello', 'world'),
         ('<!--mdpo_include Hello world-->', 'mdpo_include', 'Hello world'),

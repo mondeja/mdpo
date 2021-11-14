@@ -197,30 +197,30 @@ def run(args=[]):
     with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
-        init_kwargs = dict(
-            ignore=opts.ignore,
-            plaintext=opts.plaintext,
-            mark_not_found_as_obsolete=opts.mark_not_found_as_obsolete,
-            preserve_not_found=opts.preserve_not_found,
-            location=opts.location,
-            extensions=opts.extensions,
-            xheaders=opts.xheaders,
-            include_codeblocks=opts.include_codeblocks,
-            ignore_msgids=opts.ignore_msgids,
-            command_aliases=opts.command_aliases,
-            metadata=opts.metadata,
-            debug=opts.debug,
-            _check_saved_files_changed=opts.check_saved_files_changed,
-        )
+        init_kwargs = {
+            'ignore': opts.ignore,
+            'plaintext': opts.plaintext,
+            'mark_not_found_as_obsolete': opts.mark_not_found_as_obsolete,
+            'preserve_not_found': opts.preserve_not_found,
+            'location': opts.location,
+            'extensions': opts.extensions,
+            'xheaders': opts.xheaders,
+            'include_codeblocks': opts.include_codeblocks,
+            'ignore_msgids': opts.ignore_msgids,
+            'command_aliases': opts.command_aliases,
+            'metadata': opts.metadata,
+            'debug': opts.debug,
+            '_check_saved_files_changed': opts.check_saved_files_changed,
+        }
 
-        extract_kwargs = dict(
-            po_filepath=opts.po_filepath,
-            save=opts.save,
-            mo_filepath=opts.mo_filepath,
-            po_encoding=opts.po_encoding,
-            md_encoding=opts.md_encoding,
-            wrapwidth=opts.wrapwidth,
-        )
+        extract_kwargs = {
+            'po_filepath': opts.po_filepath,
+            'save': opts.save,
+            'mo_filepath': opts.mo_filepath,
+            'po_encoding': opts.po_encoding,
+            'md_encoding': opts.md_encoding,
+            'wrapwidth': opts.wrapwidth,
+        }
 
         md2po = Md2Po(opts.files_or_content, **init_kwargs)
         pofile = md2po.extract(**extract_kwargs)

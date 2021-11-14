@@ -37,7 +37,7 @@ def test_stdin(capsys, monkeypatch, tmp_file):
         assert stderr == ''
 
 
-@pytest.mark.parametrize('arg', ['-q', '--quiet'])
+@pytest.mark.parametrize('arg', ('-q', '--quiet'))
 def test_quiet(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
         output, exitcode = run([
@@ -52,7 +52,7 @@ def test_quiet(capsys, arg, tmp_file):
         assert stderr == ''
 
 
-@pytest.mark.parametrize('arg', ['-s', '--save'])
+@pytest.mark.parametrize('arg', ('-s', '--save'))
 def test_save(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath, \
             tmp_file(EXAMPLE['html-input'], '.html') as html_input_filepath, \
@@ -74,7 +74,7 @@ def test_save(capsys, arg, tmp_file):
         assert output_html_content == EXAMPLE['html-output']
 
 
-@pytest.mark.parametrize('arg', ['-i', '--ignore'])
+@pytest.mark.parametrize('arg', ('-i', '--ignore'))
 def test_ignore_files_by_filepath(capsys, arg, tmp_file):
     pofiles_contents = [
         (

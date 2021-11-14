@@ -38,7 +38,7 @@ def test_stdin(capsys, monkeypatch, tmp_file):
         assert stdout == EXAMPLE['markdown-output']
 
 
-@pytest.mark.parametrize('arg', ['-q', '--quiet'])
+@pytest.mark.parametrize('arg', ('-q', '--quiet'))
 def test_quiet(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
 
@@ -54,7 +54,7 @@ def test_quiet(capsys, arg, tmp_file):
         assert stderr == ''
 
 
-@pytest.mark.parametrize('arg', ['-D', '--debug'])
+@pytest.mark.parametrize('arg', ('-D', '--debug'))
 def test_debug(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath, \
             tmp_file(EXAMPLE['markdown-input'], '.md') as input_md_filepath:
@@ -86,7 +86,7 @@ def test_debug(capsys, arg, tmp_file):
         assert md_output_checked
 
 
-@pytest.mark.parametrize('arg', ['-s', '--save'])
+@pytest.mark.parametrize('arg', ('-s', '--save'))
 def test_save(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath, \
             tmp_file(EXAMPLE['markdown-input'], '.md') as input_md_filepath, \
@@ -106,7 +106,7 @@ def test_save(capsys, arg, tmp_file):
             assert f'{f.read()}\n' == EXAMPLE['markdown-output']
 
 
-@pytest.mark.parametrize('arg', ['-i', '--ignore'])
+@pytest.mark.parametrize('arg', ('-i', '--ignore'))
 def test_ignore_files_by_filepath(capsys, arg):
     pofiles = [
         (

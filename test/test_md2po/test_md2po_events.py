@@ -115,9 +115,9 @@ def test_command_event(abort_event):
     )
 
     if abort_event:
-        with pytest.raises(ValueError) as exc:
+        expected_msg = 'unhandled command for testing'
+        with pytest.raises(ValueError, match=expected_msg):
             md2po.extract()
-        assert str(exc.value) == 'unhandled command for testing'
     else:
         md2po.extract()
 

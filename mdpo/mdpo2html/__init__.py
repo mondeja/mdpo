@@ -419,7 +419,7 @@ class MdPo2HTML(HTMLParser):
                 elif command == 'mdpo-enable-next-line':
                     self._enable_next_line = True
                 elif command == 'mdpo-context' and comment:
-                    self._current_msgctxt = comment.strip()
+                    self._current_msgctxt = comment
                 elif command == 'mdpo-include-codeblock':
                     warnings.warn(
                         'Code blocks translations are not supported'

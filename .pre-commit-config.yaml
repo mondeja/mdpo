@@ -10,7 +10,7 @@ repos:
     hooks:
       - id: trailing-whitespace
         name: trailing-whitespace
-        exclude: test/test_po2md/translate-examples/code-blocks.*
+        exclude: test/(test_po2md/translate-examples/code-blocks.*|test_event\.py)
       - id: end-of-file-fixer
         name: end-of-file-fixer
       - id: double-quote-string-fixer
@@ -27,33 +27,21 @@ repos:
     hooks:
       - id: setup-cfg-fmt
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
+    rev: 4.0.1
     hooks:
       - id: flake8
-        name: flake8-package
+        name: flake8
         additional_dependencies:
-          - flake8-print
-          - flake8-implicit-str-concat
-          - flake8-docstrings
-        files: ^mdpo/
-  - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
-    hooks:
-      - id: flake8
-        name: flake8-tests
-        additional_dependencies:
-          - flake8-print
-          - flake8-implicit-str-concat
-        files: ^test/
-  - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
-    hooks:
-      - id: flake8
-        name: flake8-docs
-        additional_dependencies:
-          - flake8-print
-          - flake8-implicit-str-concat
-        files: ^docs/
+          - flake8-builtins==1.5.3
+          - flake8-comprehensions==3.7.0
+          - flake8-docstrings==1.6.0
+          - flake8-executable==2.1.1
+          - flake8-implicit-str-concat==0.2.0
+          - flake8-no-pep420==1.2.0
+          - flake8-print==4.0.0
+          - flake8-printf-formatting==1.1.2
+          - flake8-pytest-style==1.5.1
+        files: ^(mdpo|test|docs)/
   - repo: https://github.com/PyCQA/isort
     rev: 5.9.1
     hooks:

@@ -132,7 +132,7 @@ msgstr ""
         assert stderr == ''
 
 
-@pytest.mark.parametrize('arg', ['-q', '--quiet'])
+@pytest.mark.parametrize('arg', ('-q', '--quiet'))
 def test_quiet(capsys, arg):
     pofile, exitcode = run([EXAMPLE['input'], arg])
     stdout, stderr = capsys.readouterr()
@@ -143,7 +143,7 @@ def test_quiet(capsys, arg):
     assert stderr == ''
 
 
-@pytest.mark.parametrize('arg', ['-D', '--debug'])
+@pytest.mark.parametrize('arg', ('-D', '--debug'))
 def test_debug(capsys, arg):
     pofile, exitcode = run([EXAMPLE['input'], arg])
     stdout, _ = capsys.readouterr()
@@ -171,7 +171,7 @@ def test_debug(capsys, arg):
     assert po_output_checked
 
 
-@pytest.mark.parametrize('arg', ['-po', '--po-filepath', '--pofilepath'])
+@pytest.mark.parametrize('arg', ('-po', '--po-filepath', '--pofilepath'))
 def test_po_filepath(capsys, arg, tmp_file):
     pofile_content = '''#
 msgid ""
@@ -207,7 +207,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ['-s', '--save'])
+@pytest.mark.parametrize('arg', ('-s', '--save'))
 def test_save(capsys, arg, tmp_file):
     pofile_content = '''#
 msgid ""
@@ -274,7 +274,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ['-mo', '--mo-filepath', '--mofilepath'])
+@pytest.mark.parametrize('arg', ('-mo', '--mo-filepath', '--mofilepath'))
 def test_mo_filepath(capsys, arg):
     with tempfile.NamedTemporaryFile(suffix='.mo') as mo_file:
         pofile, exitcode = run([EXAMPLE['input'], arg, mo_file.name])
@@ -285,7 +285,7 @@ def test_mo_filepath(capsys, arg):
         assert os.path.exists(mo_file.name)
 
 
-@pytest.mark.parametrize('arg', ['-i', '--ignore'])
+@pytest.mark.parametrize('arg', ('-i', '--ignore'))
 def test_ignore_files_by_filepath(capsys, arg):
     filesdata = {
         'foo': '### Foo\n\nFoo 2',
@@ -354,8 +354,8 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ['-w', '--wrapwidth'])
-@pytest.mark.parametrize('value', ['0', 'inf', 'invalid'])
+@pytest.mark.parametrize('arg', ('-w', '--wrapwidth'))
+@pytest.mark.parametrize('value', ('0', 'inf', 'invalid'))
 def test_wrapwidth(capsys, arg, value):
     content = (
         '# Some long header with **bold characters**, '
@@ -388,7 +388,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ['-a', '--xheaders'])
+@pytest.mark.parametrize('arg', ('-a', '--xheaders'))
 def test_xheaders(capsys, arg):
     markdown_content = '# Foo'
     expected_output = '''#
@@ -422,7 +422,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ['-c', '--include-codeblocks'])
+@pytest.mark.parametrize('arg', ('-c', '--include-codeblocks'))
 def test_include_codeblocks(capsys, arg):
     markdown_content = '''
     var hello = "world";
@@ -457,7 +457,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ['--ignore-msgids'])
+@pytest.mark.parametrize('arg', ('--ignore-msgids',))
 def test_ignore_msgids(capsys, arg, tmp_file):
     expected_output = '''#
 msgid ""
@@ -477,7 +477,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ['--command-alias'])
+@pytest.mark.parametrize('arg', ('--command-alias',))
 def test_command_aliases(capsys, arg, tmp_file):
     markdown_content = '''<!-- :off -->
 This should be ignored.
@@ -512,7 +512,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ['-d', '--metadata'])
+@pytest.mark.parametrize('arg', ('-d', '--metadata'))
 def test_metadata(capsys, arg, tmp_file):
     expected_output = '''#
 msgid ""
@@ -699,10 +699,10 @@ def test_md2po_cli_running_osenv(value, capsys):
 
 
 def test_md2po_save_without_po_filepath():
-    with pytest.raises(ValueError) as exc:
-        run([EXAMPLE['input'], '--save'])
-
-    assert str(exc.value) == (
+    expected_msg = (
         "The argument '-s/--save' does not make sense without passing the"
         " argument '-po/--po-filepath'."
     )
+
+    with pytest.raises(ValueError, match=expected_msg):
+        run([EXAMPLE['input'], '--save'])

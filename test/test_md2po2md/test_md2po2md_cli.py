@@ -36,7 +36,7 @@ from mdpo.md2po2md.__main__ import run
             id='es-locale/{lang}',
         ),
         pytest.param(
-            ['es', 'fr'],
+            ('es', 'fr'),
             'README.md',
             'locale/{lang}',
             {'README.md': 'Foo\n\nBar\n'},
@@ -55,7 +55,7 @@ from mdpo.md2po2md.__main__ import run
             id='README-es,fr-locale/{lang}',
         ),
         pytest.param(
-            ['es'],
+            ('es',),
             'README.md',
             'locale/',
             {},
@@ -63,7 +63,7 @@ from mdpo.md2po2md.__main__ import run
             id='es-locale/-ValueError',
         ),
         pytest.param(
-            ['es'],
+            ('es',),
             'README.md',
             'locale/{lang}/{basename}',
             {'README.md': 'Foo\n\nBar\n'},
