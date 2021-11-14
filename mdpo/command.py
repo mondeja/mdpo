@@ -35,7 +35,10 @@ def parse_mdpo_html_command(value):
     """
     import re
     command_match = re.compile(COMMAND_SEARCH_REGEX).search(value)
-    return command_match.groups() if command_match else (None, None)
+    if command_match:
+        command, comment = command_match.groups()
+        return (command, comment.rstrip(' ') if comment else None)
+    return (None, None)
 
 
 def normalize_mdpo_command(value):

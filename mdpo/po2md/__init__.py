@@ -281,9 +281,9 @@ class Po2Md:
             self._enable_next_line = True
         elif comment:
             if mdpo_command == 'mdpo-context':
-                self._current_msgctxt = comment.rstrip()
+                self._current_msgctxt = comment
             elif mdpo_command == 'mdpo-translator':
-                self._current_tcomment = comment.rstrip()
+                self._current_tcomment = comment
 
     def _process_command(self, text):
         original_command, comment = parse_mdpo_html_command(text)
