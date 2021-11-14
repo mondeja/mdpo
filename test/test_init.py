@@ -16,6 +16,10 @@ def test_pep562():
         'markdown_to_pofile',
     )
 
+    expected_msg = 'cannot import name \'foobarbaz\' from \'mdpo\''
+    with pytest.raises(ImportError, match=expected_msg):
+        getattr(mdpo, 'foobarbaz')
+
     # __dir__
     assert dir(mdpo) == [
         '__description__',
