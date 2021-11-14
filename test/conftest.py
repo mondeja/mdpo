@@ -1,9 +1,15 @@
+import ast
+import inspect
 import os
 import subprocess
+import sys
 import tempfile
 from contextlib import contextmanager
 
 import pytest
+
+
+AST_ELTS_VALUE_ATTR = 's' if sys.version_info < (3, 8) else 'value'
 
 
 @contextmanager
@@ -37,3 +43,29 @@ def git_add_commit():
         )
         return add_proc.returncode == 0 and commit_proc.returncode == 0
     return _git_add_commit
+
+
+@pytest.fixture()
+def class_slots():
+    def get_class_slots(code):
+        class ClassSlotsExtractor(ast.NodeVisitor):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+
+                self.slots = []
+
+            def visit_ClassDef(self, node):
+                if (
+                    isinstance(node.body[0], ast.Assign)
+                    and node.body[0].targets[0].id == '__slots__'
+                ):
+                    self.slots.extend([
+                        getattr(elt, AST_ELTS_VALUE_ATTR)
+                        for elt in node.body[0].value.elts
+                    ])
+
+        modtree = ast.parse(inspect.getsource(code))
+        visitor = ClassSlotsExtractor()
+        visitor.visit(modtree)
+        return visitor.slots
+    return get_class_slots

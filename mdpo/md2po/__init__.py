@@ -80,8 +80,6 @@ class Md2Po:
         'code_start_string_escaped',
         'code_end_string',
         'code_end_string_escaped',
-        'link_start_string',
-        'link_end_string',
         'strikethrough_start_string',
         'strikethrough_end_string',
         'latexmath_start_string',

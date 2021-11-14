@@ -43,8 +43,8 @@ po2md
 markdownlint compatible configuration
 *************************************
 
-The output produced by :ref:`cli:po2md` is compatible with the
- following `Markdownlint configuration`_:
+The output produced by :ref:`cli:po2md` is compatible with the following
+`Markdownlint configuration`_:
 
 .. code-block:: json
 
