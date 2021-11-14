@@ -53,8 +53,6 @@ class Po2Md:
         'code_start_string_escaped',
         'code_end_string',
         'code_end_string_escaped',
-        'link_start_string',
-        'link_end_string',
         'wikilink_start_string',
         'wikilink_end_string',
 

@@ -1,3 +1,4 @@
+import os
 import tempfile
 
 import pytest
@@ -108,3 +109,17 @@ def test_md2po_save_without_po_filepath():
     )
     with pytest.raises(ValueError, match=expected_msg):
         md2po.extract(save=True)
+
+
+def test___slots__(class_slots):
+    slots = class_slots(Md2Po)
+    assert slots
+
+    md2po_implementation_filepath = os.path.join(
+        'mdpo', 'md2po', '__init__.py',
+    )
+    with open(md2po_implementation_filepath) as f:
+        content = f.read()
+
+    for slot in slots:
+        assert f'self.{slot}' in content
