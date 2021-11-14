@@ -223,7 +223,7 @@ def add_encoding_arguments(
         po_encoding_help=None,
         markup_encoding='md',
 ):
-    """Add ``--po-encoding`` ``--md_encoding`` arguments to an argument parser.
+    """Add ``--po-encoding`` ``--md-encoding`` arguments to an argument parser.
 
     Args:
         parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
