@@ -815,7 +815,7 @@ class Md2Po:
             else:
                 img_markup += f'({imgspan_src}'
                 if imgspan_title:
-                    img_markup += f' "{imgspan_title}"'
+                    img_markup += f' "{polib.escape(imgspan_title)}"'
                 img_markup += ')'
 
             self._current_imgspan = {}

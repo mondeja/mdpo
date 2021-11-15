@@ -17,6 +17,9 @@ msgstr ""
 msgid "My ![foo bar](/path/to/train.jpg \"title\")"
 msgstr ""
 
+msgid "My ![image with escaped title](/some/url.ext \"escaped \\\" title\")"
+msgstr ""
+
 msgid "[![Image inside inline link](https://image.ext)](https://link.ext)"
 msgstr ""
 

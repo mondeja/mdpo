@@ -1,6 +1,7 @@
 """Markdown related utilities for mdpo."""
 
 import md4c
+import polib
 
 from mdpo.po import po_escaped_string
 from mdpo.text import min_not_max_chars_in_a_row
@@ -9,46 +10,6 @@ from mdpo.text import min_not_max_chars_in_a_row
 LINK_REFERENCE_REGEX = (
     r'^\[([^\]]+)\]:\s+<?([^\s>]+)>?\s*["\'\(]?([^"\'\)]+)?'
 )
-
-
-def escape_links_titles(text, link_start_string='[', link_end_string=']'):
-    r"""Escapes ``"`` characters found inside link titles.
-
-    This is used by mdpo extracting titles of links which contains Markdown
-    `link titles <https://spec.commonmark.org/0.29/#link-title>`_ delimiter
-    characters.
-
-    Args:
-        text (str): Text where the links titles to escape will be searched.
-        link_start_string (str): String that delimites the start of a link.
-        link_end_string (str): String that delimites the end of a link.
-
-    Returns:
-        str: Same text as input with escaped title delimiters characters found
-        inside titles.
-
-    Examples:
-        >>> title = '[a link](href "title with characters to escape "")'
-        >>> escape_links_titles(title)
-        '[a link](href "title with characters to escape \\"")'
-    """
-    import re
-
-    link_end_string_escaped_regex = re.escape(link_end_string)
-    regex = re.compile(
-        r'({}[^{}]+{}\([^\s]+\s)([^\)]+)'.format(
-            re.escape(link_start_string),
-            link_end_string_escaped_regex,
-            link_end_string_escaped_regex,
-        ),
-    )
-
-    for match in re.finditer(regex, text):
-        original_string = match.group(0)
-        escaped_title = match.group(2)[1:-1].replace('"', '\\"')
-        target_string = f'{match.group(1)}"{escaped_title}"'
-        text = text.replace(original_string, target_string)
-    return text
 
 
 def parse_link_references(content):
@@ -200,7 +161,7 @@ class MarkdownSpanWrapper:
                 self._current_line += f']({self._current_aspan_href}'
                 if self._current_aspan_title:
                     self._current_line += (
-                        f' "{escape_links_titles(self._current_aspan_title)}"'
+                        f' "{polib.escape(self._current_aspan_title)}"'
                     )
                 self._current_line += ')'
             self._current_aspan_href = False
@@ -218,7 +179,7 @@ class MarkdownSpanWrapper:
             self._current_line += f']({src}'
             if details['title']:
                 title = details['title'][0][1]
-                self._current_line += f' "{escape_links_titles(title)}"'
+                self._current_line += f' "{polib.escape(title)}"'
             self._current_line += ')'
 
     def text(self, block, text):
