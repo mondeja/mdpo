@@ -8,6 +8,8 @@
 
 My ![foo bar](/path/to/train.jpg "title")
 
+My ![image with escaped title](/some/url.ext "escaped \" title")
+
 [![Image inside inline link](https://image.ext)](https://link.ext)
 
 [![Image inside referenced link](https://image.ext)][2]

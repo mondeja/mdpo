@@ -72,6 +72,9 @@ def parse_options(args):
         and opts.filepath_or_content
     ):
         filepath_or_content += opts.filepath_or_content[0]
+    if not filepath_or_content:
+        sys.stderr.write('Files or content to translate not specified\n')
+        sys.exit(1)
     opts.filepath_or_content = filepath_or_content
 
     opts.command_aliases = parse_command_aliases_cli_arguments(

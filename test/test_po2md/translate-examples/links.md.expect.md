@@ -1,6 +1,6 @@
 Mi PEP favorito es [PEP 0](https://www.python.org/dev/peps/).
 
-Mi motor de búsqueda favorito es [Duck Duck Go](https://duckduckgo.com "El mejor motor de búsqueda para privacidad").
+Mi motor de búsqueda favorito es [Foo Bar Baz](https://foobarbaz.com "El mejor motor de búsqueda para privacidad").
 
 Visita <https://www.github.com/mondeja/mdpo>
 
@@ -25,7 +25,7 @@ Un [enlace](https://tan-tan-tan-tan-tan-tan-tan-tan-largo-que-no-debe-ser-envuel
 
 [Referencia H][8]
 
-- [list item link name](https://example.com/a-big-link-with-a-very-very-long-and-big-url-name-on-it)
+- [nombre de link en elemento de lista](https://ejemplo.es/un-gran-link-con-una-url-muy-muy-larga-y-grande-dentro)
 
 Link automático hacia <http://127.0.0.1:8080/>.
 

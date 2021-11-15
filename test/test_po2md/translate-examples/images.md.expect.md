@@ -8,6 +8,8 @@
 
 Mi ![foo bar](/path/to/tren.jpg "título")
 
+Mi ![imagen con título escapado](/alguna/url.ext "título \" escapado")
+
 [![Imagen dentro de link en línea](https://image.ext)](https://enlace.ext)
 
 [![Imagen dentro de link referenciado](https://imagen.ext)][2]

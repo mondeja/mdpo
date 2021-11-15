@@ -5,15 +5,12 @@ msgstr ""
 msgid "My favorite PEP is [PEP 0](https://www.python.org/dev/peps/)."
 msgstr "Mi PEP favorito es [PEP 0](https://www.python.org/dev/peps/)."
 
-msgid "The best search engine for privacy"
-msgstr "El mejor motor de búsqueda para privacidad"
-
 msgid ""
-"My favorite search engine is [Duck Duck Go](https://duckduckgo.com "
-"\"The best search engine for privacy\")."
+"My favorite search engine is [Foo Bar Baz](https://foobarbaz.com \"The best "
+"search engine for privacy\")."
 msgstr ""
-"Mi motor de búsqueda favorito es [Duck Duck Go](https://duckduckgo.com"
-" \"El mejor motor de búsqueda para privacidad\")."
+"Mi motor de búsqueda favorito es [Foo Bar Baz](https://foobarbaz.com \"El "
+"mejor motor de búsqueda para privacidad\")."
 
 msgid "Visit <https://www.github.com/mondeja/mdpo>"
 msgstr "Visita <https://www.github.com/mondeja/mdpo>"
@@ -80,11 +77,6 @@ msgstr "[7]: https://github.com/mondeja/mdpo \"Séptima referencia\""
 msgid "[8]: https://github.com/mondeja/mdpo \"Eighth reference\""
 msgstr "[8]: https://github.com/mondeja/mdpo \"Octava referencia\""
 
-msgid ""
-"[paragraph link name](https://example.com/a-big-link-with-a-very-very-long-"
-"and-big-url-name-on-it)"
-msgstr ""
-
 msgid "Autolink to <http://127.0.0.1:8080/>."
 msgstr "Link automático hacia <http://127.0.0.1:8080/>."
 
@@ -93,3 +85,10 @@ msgstr "Link automático con título como <https://foo.bar \"hola\">."
 
 msgid "Another autolink with title like <https://foo.bar \"hello\">."
 msgstr "Otro link automático con título como <https://foo.bar \"hola\">."
+
+msgid ""
+"[list item link name](https://example.com/a-big-link-with-a-very-very-long-"
+"and-big-url-name-on-it)"
+msgstr ""
+"[nombre de link en elemento de lista](https://ejemplo.es/un-gran-link-con-"
+"una-url-muy-muy-larga-y-grande-dentro)"

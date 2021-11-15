@@ -1,4 +1,4 @@
-| Sintaxis | Desripción | Estilo | A |
+| Sintaxis | Desripción | Estilo | A es |
 | --- | :-- | --: | :-: |
-| Encabezado | Título | Foo | B |
-| Párrafo | Texto | Bar | C |
+| Encabezado | Título | Foo es | B es |
+| Párrafo | Texto | Bar es | C es |

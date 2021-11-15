@@ -69,9 +69,7 @@ class Md2Po:
         '_leavespan_replacer',
 
         'bold_start_string',
-        'bold_start_string_escaped',
         'bold_end_string',
-        'bold_end_string_escaped',
         'italic_start_string',
         'italic_start_string_escaped',
         'italic_end_string',
@@ -185,14 +183,7 @@ class Md2Po:
 
         if not self.plaintext:
             self.bold_start_string = kwargs.get('bold_start_string', '**')
-            self.bold_start_string_escaped = po_escaped_string(
-                self.bold_start_string,
-            )
-
             self.bold_end_string = kwargs.get('bold_end_string', '**')
-            self.bold_end_string_escaped = po_escaped_string(
-                self.bold_end_string,
-            )
 
             self.italic_start_string = kwargs.get('italic_start_string', '*')
             self.italic_start_string_escaped = po_escaped_string(
@@ -769,10 +760,10 @@ class Md2Po:
                     # autolink vs link clash (see implementation notes)
                     self._current_msgid += f'<{self._current_aspan_text}'
                     if title:
-                        self._current_msgid += f' "{title}"'
+                        self._current_msgid += f' "{polib.escape(title)}"'
                     self._current_msgid += '>'
                 else:
-                    title_part = f' "{title}"' if title else ''
+                    title_part = f' "{polib.escape(title)}"' if title else ''
                     href = details['href'][0][1]
                     self._current_msgid += (
                         f'[{self._current_aspan_text}]({href}{title_part})'
@@ -815,7 +806,7 @@ class Md2Po:
             else:
                 img_markup += f'({imgspan_src}'
                 if imgspan_title:
-                    img_markup += f' "{imgspan_title}"'
+                    img_markup += f' "{polib.escape(imgspan_title)}"'
                 img_markup += ')'
 
             self._current_imgspan = {}

@@ -43,7 +43,7 @@ def build_parser():
         '-l', '--lang', dest='langs', default=[], action='append',
         help='Language codes used to create the output directories.'
              ' This argument can be passed multiple times.',
-        metavar='LANG',
+        metavar='LANG', required=True,
     )
 
     output_paths_schema_help = '' if SPHINX_IS_RUNNING else (
@@ -56,8 +56,7 @@ def build_parser():
         ' example.'
     )
     parser.add_argument(
-        '-o', '--output', dest='output_paths_schema',
-        required=True, type=str,
+        '-o', '--output', dest='output_paths_schema', required=True, type=str,
         help='Path schema for outputs, built using placeholders. There is a'
              ' mandatory placeholder for languages: {lang};and one optional'
              f' for output basename: {{basename}}.{output_paths_schema_help}'
@@ -96,6 +95,9 @@ def parse_options(args=[]):
         input_paths_glob += sys.stdin.read().strip('\n')
     if isinstance(opts.input_paths_glob, list) and opts.input_paths_glob:
         input_paths_glob += opts.input_paths_glob[0]
+    if not input_paths_glob:
+        sys.stderr.write('Files or content to translate not specified\n')
+        sys.exit(1)
     opts.input_paths_glob = input_paths_glob
 
     if opts.extensions is None:

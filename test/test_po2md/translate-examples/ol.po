@@ -17,21 +17,6 @@ msgstr "Elemento indentado 1"
 msgid "Indented item 2"
 msgstr "Elemento indentado 2"
 
-msgid "Fourth item"
-msgstr "Cuarto elemento"
-
-msgid "A"
-msgstr "A"
-
-msgid "B"
-msgstr "B"
-
-msgid "C"
-msgstr "C"
-
-msgid "D"
-msgstr "D"
-
 msgid "Ordered list item with"
 msgstr "Elemento de lista ordenada con"
 

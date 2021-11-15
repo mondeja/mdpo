@@ -9,8 +9,7 @@ msgstr ""
 
 msgid "Another text and **strong text with `inline code`, easy** peasy also"
 msgstr ""
-"Otro texto y **texto en negrita con `código en línea`, pan** comido "
-"también"
+"Otro texto y **texto en negrita con `código en línea`, pan** comido también"
 
 msgid "New text with **strong text that ends in `code`**"
 msgstr "Nuevo texto con **texto en negrita que termina en `código`**"

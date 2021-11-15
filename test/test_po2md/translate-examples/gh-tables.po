@@ -22,3 +22,18 @@ msgstr "Texto"
 
 msgid "Style"
 msgstr "Estilo"
+
+msgid "A"
+msgstr "A es"
+
+msgid "Foo"
+msgstr "Foo es"
+
+msgid "B"
+msgstr "B es"
+
+msgid "Bar"
+msgstr "Bar es"
+
+msgid "C"
+msgstr "C es"

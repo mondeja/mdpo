@@ -4,6 +4,7 @@ import tempfile
 
 import pytest
 
+from mdpo.md2po import markdown_to_pofile
 from mdpo.po2md import pofile_to_markdown
 
 
@@ -29,6 +30,14 @@ def test_translate_markuptext(filename):
         expected_output = f.read()
 
     assert output == expected_output
+
+    pofile = markdown_to_pofile(
+        filepath_in, location=False, po_filepath=po_filepath,
+    )
+
+    with open(po_filepath) as f:
+        pofile_content = f.read()
+    assert str(pofile) == pofile_content
 
 
 @pytest.mark.parametrize('filename', (EXAMPLES[0],))

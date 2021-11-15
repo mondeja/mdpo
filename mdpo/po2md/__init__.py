@@ -9,11 +9,7 @@ from mdpo.command import (
 )
 from mdpo.event import debug_events, raise_skip_event
 from mdpo.io import save_file_checking_file_changed, to_file_content_if_is_file
-from mdpo.md import (
-    MarkdownSpanWrapper,
-    escape_links_titles,
-    parse_link_references,
-)
+from mdpo.md import MarkdownSpanWrapper, parse_link_references
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import (
     paths_or_globs_to_unique_pofiles,
@@ -42,9 +38,7 @@ class Po2Md:
         'wrapwidth',
 
         'bold_start_string',
-        'bold_start_string_escaped',
         'bold_end_string',
-        'bold_end_string_escaped',
         'italic_start_string',
         'italic_start_string_escaped',
         'italic_end_string',
@@ -153,14 +147,7 @@ class Po2Md:
         )
 
         self.bold_start_string = kwargs.get('bold_start_string', '**')
-        self.bold_start_string_escaped = po_escaped_string(
-            self.bold_start_string,
-        )
-
         self.bold_end_string = kwargs.get('bold_end_string', '**')
-        self.bold_end_string_escaped = po_escaped_string(
-            self.bold_end_string,
-        )
 
         self.italic_start_string = kwargs.get('italic_start_string', '*')
         self.italic_start_string_escaped = po_escaped_string(
@@ -299,7 +286,7 @@ class Po2Md:
     def _escape_translation(self, text):
         if self._aimg_title_inside_current_msgid:
             # escape '"' characters inside links and image titles
-            text = escape_links_titles(text)
+            text = polib.escape(text)
         return text
 
     def _translate_msgid(self, msgid, msgctxt, tcomment):
@@ -352,6 +339,7 @@ class Po2Md:
                     tcomment=self._current_tcomment,
                 ),
             )
+
         if self._inside_indented_codeblock:
             new_translation = ''
             for line in translation.splitlines():
@@ -388,7 +376,7 @@ class Po2Md:
                     code_end_string_escaped=self.code_end_string_escaped,
                     wikilink_start_string=self.wikilink_start_string,
                     wikilink_end_string=self.wikilink_end_string,
-                ).wrap(self._escape_translation(translation))
+                ).wrap(translation)
 
                 if self._inside_hblock or self._inside_table:
                     translation = translation.rstrip('\n')
@@ -784,7 +772,7 @@ class Po2Md:
             referenced_target, imgspan_title = (None, None)
             imgspan_src = details['src'][0][1]
             if details['title']:
-                imgspan_title = details['title'][0][1]
+                imgspan_title = polib.escape(details['title'][0][1])
                 for target, href, title in self._link_references:
                     if href == imgspan_src and title == imgspan_title:
                         referenced_target = target
@@ -805,12 +793,12 @@ class Po2Md:
                     img_markup += f' "{imgspan_title}"'
                 img_markup += ')'
 
-            self._current_imgspan = {}
-
             if self._inside_aspan:
                 self._current_aspan_text += img_markup
             else:
                 self._current_msgid += img_markup
+
+            self._current_imgspan = {}
 
     def text(self, block, text):
         # raise 'text' event
