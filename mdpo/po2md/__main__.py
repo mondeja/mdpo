@@ -15,6 +15,7 @@ from mdpo.cli import (
     add_debug_option,
     add_encoding_arguments,
     add_pre_commit_option,
+    add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
 )
@@ -62,12 +63,7 @@ def build_parser():
         help='Saves the output content in a file whose path is specified at'
              ' this parameter.', metavar='PATH',
     )
-    parser.add_argument(
-        '-w', '--wrapwidth', dest='wrapwidth', default='80', type=str,
-        help='Maximum width rendering the Markdown output, when possible. If'
-             ' negative, \'0\' or \'inf\', the content will not be wrapped.',
-        metavar='N/inf',
-    )
+    add_wrapwidth_argument(parser, markup='md', default='80')
     add_encoding_arguments(parser)
     add_command_alias_argument(parser)
     add_debug_option(parser)

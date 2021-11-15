@@ -18,6 +18,7 @@ from mdpo.cli import (
     add_extensions_argument,
     add_nolocation_option,
     add_pre_commit_option,
+    add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
     parse_metadata_cli_arguments,
@@ -80,13 +81,7 @@ def build_parser():
              f' {cli_codespan("``inline code``")} and'
              f' {cli_codespan("[link](target)")}.',
     )
-    parser.add_argument(
-        '-w', '--wrapwidth', dest='wrapwidth', metavar='N/inf', type=str,
-        default='78',
-        help='Wrap width for po file indicated at'
-             f' {cli_codespan("--po-filepath")} parameter. If negative,'
-             ' \'0\' or \'inf\', the PO file content will not be wrapped.',
-    )
+    add_wrapwidth_argument(parser, markup='po')
     parser.add_argument(
         '-m', '--merge-po-files', '--merge-pofiles',
         dest='mark_not_found_as_obsolete',

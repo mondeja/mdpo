@@ -253,6 +253,53 @@ def add_encoding_arguments(
     )
 
 
+def add_wrapwidth_argument(
+        parser,
+        markup='po',
+        markup_prefix=False,
+        short=True,
+        default='78',
+        help_to_render=None,
+):
+    """Add a ``--wrapwidth`` argument to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
+            extend.
+        markup (str): For which type of files the argument will affect. Either
+            ``"md"`` for Markdown or ``"po"`` for PO files.
+        markup_prefix (bool): Add the ``markup`` prefix in the argument using
+            the format ``--<markup>-wrapwidth``.
+        short (bool): Add the short version of the argument (``-w``).
+        default (str): Default value.
+        help_to_render (str): String used to indicate the content that will be
+            wrapped according to the argument.
+    """
+    args = [f'--{markup}-wrapwidth' if markup_prefix else '--wrapwidth']
+    if short:
+        args.append('-w')
+
+    kwargs = {
+        'metavar': 'N/inf',
+        'type': str,
+        'default': default,
+    }
+    if help_to_render is not None:
+        to_render = help_to_render
+    elif markup == 'po':
+        to_render = (
+            'the PO file indicated at parameter'
+            f' {cli_codespan("--po-filepath")}'
+        )
+    else:
+        to_render = 'the Markdown output, when possible'
+    kwargs['help'] = (
+        f'Maximum width rendering {to_render}. If negative, \'0\' or \'inf\','
+        ' the content will not be wrapped.'
+    )
+    parser.add_argument(*args, **kwargs)
+
+
 def add_pre_commit_option(parser):
     """Add the ``--pre-commit`` option to an argument parser.
 

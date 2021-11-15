@@ -17,6 +17,7 @@ from mdpo.cli import (
     add_extensions_argument,
     add_nolocation_option,
     add_pre_commit_option,
+    add_wrapwidth_argument,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.context import environ
@@ -67,6 +68,16 @@ def build_parser():
     add_nolocation_option(parser)
     add_extensions_argument(parser)
     add_command_alias_argument(parser)
+    add_wrapwidth_argument(
+        parser,
+        markup='po',
+        markup_prefix=True,
+        short=False,
+        help_to_render='PO files',
+    )
+    add_wrapwidth_argument(
+        parser, markup='md', markup_prefix=True, short=False, default='80',
+    )
     add_encoding_arguments(parser)
     add_debug_option(parser)
     add_pre_commit_option(parser)
@@ -108,15 +119,17 @@ def run(args=[]):
             'command_aliases': opts.command_aliases,
             'debug': opts.debug,
             'location': opts.location,
+            'po_wrapwidth': opts.po_wrapwidth,
+            'md_wrapwidth': opts.md_wrapwidth,
             'po_encoding': opts.po_encoding,
             'md_encoding': opts.md_encoding,
+            '_check_saved_files_changed': opts.check_saved_files_changed,
         }
 
         _saved_files_changed = markdown_to_pofile_to_markdown(
             opts.langs,
             opts.input_paths_glob,
             opts.output_paths_schema,
-            _check_saved_files_changed=opts.check_saved_files_changed,
             **kwargs,
         )
         if opts.check_saved_files_changed and _saved_files_changed:
