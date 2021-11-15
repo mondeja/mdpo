@@ -169,26 +169,3 @@ def removeprefix(text, prefix):
     if text.startswith(prefix):
         return text[len(prefix):]
     return text
-
-
-def removesuffix(text, suffix):
-    """Removes a suffix from a string.
-
-    If the string ends with the suffix string and the suffix is not empty,
-    returns string[:-len(suffix)]. Otherwise, returns the original string.
-    This function has been added in Python3.9 as the builtin
-    ``str.removesuffix``, but is defined here to support previous versions of
-    the language.
-
-    Args:
-        text (str): Value whose suffix will be removed.
-        suffix (str): Suffix to remove.
-
-    Returns:
-        str: Text without the suffix, if that suffix exists in the text.
-    """
-    if hasattr(str, 'removesuffix'):
-        return text.removesuffix(suffix)
-    if suffix and text.endswith(suffix):
-        return text[:-len(suffix)]
-    return text
