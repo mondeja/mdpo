@@ -410,8 +410,9 @@ class Po2Md:
         ):
             return
 
-        if self._inside_quoteblock and (
-                not self._current_line or self._current_line[0] != '>'
+        if (
+            self._inside_quoteblock
+            and (not self._current_line or self._current_line[0] != '>')
         ):
             self._current_line += '> '
         if block is md4c.BlockType.P:
@@ -558,10 +559,10 @@ class Po2Md:
             self._inside_indented_codeblock = False
         elif block is md4c.BlockType.H:
             self._save_current_msgid()
-            if not self._inside_quoteblock:
-                self._current_line += '\n'
-            else:
+            if self._inside_quoteblock:
                 self._current_line += '\n> '
+            else:
+                self._current_line += '\n'
             self._save_current_line()
             if self._inside_quoteblock:
                 self._current_line += '> '
@@ -576,7 +577,7 @@ class Po2Md:
             self._current_list_type.pop()
             if self._inside_quoteblock:
                 self._current_line += '> '
-            if not self._ul_marks and self._outputlines[-1]:
+            if not self._ul_marks and self._outputlines[-1].split('\n')[-1]:
                 self._save_current_line()
         elif block is md4c.BlockType.OL:
             self._ol_marks.pop()
