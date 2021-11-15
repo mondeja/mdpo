@@ -16,6 +16,8 @@ def markdown_to_pofile_to_markdown(
     command_aliases={},
     location=True,
     debug=False,
+    po_wrapwidth=78,
+    md_wrapwidth=80,
     po_encoding=None,
     md_encoding=None,
     md2po_kwargs={},
@@ -57,6 +59,9 @@ def markdown_to_pofile_to_markdown(
             found the messages in PO file `#: reference` comments.
         debug (bool): Add events displaying all parsed elements in the
             extraction process.
+        po_wrapwidth (int): Maximum width for PO files.
+        md_wrapwidth (int): Maximum with for produced Markdown contents, when
+            possible.
         po_encoding (str): PO files encoding.
         md_encoding (str): Markdown files encoding.
         md2po_kwargs (dict): Additional optional arguments passed to
@@ -134,6 +139,7 @@ def markdown_to_pofile_to_markdown(
                 command_aliases=command_aliases,
                 debug=debug,
                 location=location,
+                wrapwidth=po_wrapwidth,
                 _check_saved_files_changed=_check_saved_files_changed,
                 **md2po_kwargs,
             )
@@ -152,6 +158,7 @@ def markdown_to_pofile_to_markdown(
                 command_aliases=command_aliases,
                 debug=debug,
                 po_encoding=po_encoding,
+                wrapwidth=md_wrapwidth,
                 _check_saved_files_changed=_check_saved_files_changed,
                 **po2md_kwargs,
             )
