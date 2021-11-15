@@ -8,7 +8,6 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
-from mdpo.text import removeprefix
 
 
 @pytest.mark.parametrize(
@@ -92,6 +91,8 @@ def test_get_valid_mdpo_command_names():
         assert isinstance(command_name, str)
 
         if command_name.startswith('mdpo-'):
-            assert removeprefix(command_name, 'mdpo-') in valid_command_names
+            assert (
+                command_name.split('-', maxsplit=1)[1] in valid_command_names
+            )
         else:
             assert f'mdpo-{command_name}' in valid_command_names

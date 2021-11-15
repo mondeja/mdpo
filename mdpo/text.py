@@ -147,25 +147,3 @@ def parse_wrapwidth_argument(value):
             f"Invalid value '{value}' for wrapwidth argument.",
         )
     return value
-
-
-def removeprefix(text, prefix):
-    """Removes a prefix from a string.
-
-    If the string starts with the prefix string, return string[len(prefix):].
-    Otherwise, returns the original string. This function has been added in
-    Python3.9 as the builtin ``str.removeprefix``, but is defined here to
-    support previous versions of the language.
-
-    Args:
-        text (str): Value whose prefix will be removed.
-        prefix (str): Prefix to remove.
-
-    Returns:
-        str: Text without the prefix, if that prefix exists in the text.
-    """
-    if hasattr(str, 'removeprefix'):
-        return text.removeprefix(prefix)
-    if text.startswith(prefix):
-        return text[len(prefix):]
-    return text
