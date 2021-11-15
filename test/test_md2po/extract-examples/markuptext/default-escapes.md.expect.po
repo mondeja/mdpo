@@ -57,7 +57,7 @@ msgid ""
 "\\`\\` and `code with double backtick` markup."
 msgstr ""
 
-msgid "[this is a link](href \"title with \" characters\")"
+msgid "[this is a link](href \"title with \\\" characters\")"
 msgstr ""
 
 msgid "`\"development\"` and for production"

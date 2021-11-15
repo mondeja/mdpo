@@ -21,5 +21,4 @@ msgstr ""
 
 msgid "This is a line with ``code that `contains ` backticks``, as you see"
 msgstr ""
-"Esto es una línea con ``código que `contiene` tildes invertidas``, como "
-"ves"
+"Esto es una línea con ``código que `contiene` tildes invertidas``, como ves"

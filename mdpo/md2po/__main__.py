@@ -160,13 +160,17 @@ def parse_options(args=[]):
         sys.exit(1)
     opts, unknown = parser.parse_known_args(args)
 
+    files_or_content = ''
     if not sys.stdin.isatty():
-        files_or_content = sys.stdin.read().strip('\n')
+        files_or_content += sys.stdin.read().strip('\n')
     if isinstance(opts.files_or_content, list) and opts.files_or_content:
         if len(opts.files_or_content) == 1:
-            files_or_content = opts.files_or_content[0]
+            files_or_content += opts.files_or_content[0]
         else:
             files_or_content = opts.files_or_content
+    if not files_or_content:
+        sys.stderr.write('Files or content to extract not specified\n')
+        sys.exit(1)
     opts.files_or_content = files_or_content
 
     if opts.extensions is None:

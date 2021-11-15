@@ -27,7 +27,8 @@ msgid "Other nested unordered list item"
 msgstr "Otro elemento de lista desordenada anidado"
 
 msgid "Another nested unordered list item after codeblock"
-msgstr "Otro elemento de lista desordenada anidado después de bloque de código"
+msgstr ""
+"Otro elemento de lista desordenada anidado después de bloque de código"
 
 msgid "Ordered list item"
 msgstr "Elemento de lista ordenada"
@@ -39,16 +40,19 @@ msgid "Another quote block inside ordered list item"
 msgstr "Otro bloque de cita dentro de elemento de lista ordenada"
 
 msgid "Paragraph inside ordered list item after quoteblock"
-msgstr "Párrafo dentro de elemento de lista ordenada después de bloque de cita"
+msgstr ""
+"Párrafo dentro de elemento de lista ordenada después de bloque de cita"
 
 msgid "Quoteblock after paragraph inside ordered list item"
-msgstr "Bloque de cita después de párrafo dentro de elemento de lista ordenada"
+msgstr ""
+"Bloque de cita después de párrafo dentro de elemento de lista ordenada"
 
 msgid "Nested ordered list item"
 msgstr "Elemento de lista ordenada anidado"
 
 msgid "Another more nested quoteblock inside nested ordered list item"
-msgstr "Otro bloque de cita anidado más dentro de elemento de lista ordenada anidado"
+msgstr ""
+"Otro bloque de cita anidado más dentro de elemento de lista ordenada anidado"
 
 msgid "Syntax"
 msgstr "Sintaxis"
@@ -60,7 +64,7 @@ msgid "Style"
 msgstr "Estilo"
 
 msgid "A"
-msgstr "A"
+msgstr "A es"
 
 msgid "Header"
 msgstr "Encabezado"
@@ -69,10 +73,10 @@ msgid "Title"
 msgstr "Título"
 
 msgid "Foo"
-msgstr "Foo"
+msgstr "Foo es"
 
 msgid "B"
-msgstr "B"
+msgstr "B es"
 
 msgid "Paragraph"
 msgstr "Párrafo"
@@ -81,10 +85,10 @@ msgid "Text"
 msgstr "Texto"
 
 msgid "Bar"
-msgstr "Bar"
+msgstr "Bar es"
 
 msgid "C"
-msgstr "C"
+msgstr "C es"
 
 msgid "Quoteblock after ordered list"
 msgstr "Bloque de cita tras lista ordenada"

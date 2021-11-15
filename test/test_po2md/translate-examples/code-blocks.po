@@ -2,5 +2,5 @@
 msgid ""
 msgstr ""
 
-msgid "Fenced code block with backticks"
-msgstr "Esto no debería haber sido traducido"
+msgid "!!! note"
+msgstr "??? nota"

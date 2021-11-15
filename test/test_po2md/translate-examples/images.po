@@ -18,7 +18,8 @@ msgid "My ![foo bar](/path/to/train.jpg \"title\")"
 msgstr "Mi ![foo bar](/path/to/tren.jpg \"título\")"
 
 msgid "[![Image inside inline link](https://image.ext)](https://link.ext)"
-msgstr "[![Imagen dentro de link en línea](https://image.ext)](https://enlace.ext)"
+msgstr ""
+"[![Imagen dentro de link en línea](https://image.ext)](https://enlace.ext)"
 
 msgid "[![Image inside referenced link](https://image.ext)][2]"
 msgstr "[![Imagen dentro de link referenciado](https://imagen.ext)][2]"

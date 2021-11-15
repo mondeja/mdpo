@@ -8,7 +8,7 @@ msgstr ""
 msgid "The best search engine for privacy"
 msgstr ""
 
-msgid "My favorite search engine is Duck Duck Go."
+msgid "My favorite search engine is Foo Bar Baz."
 msgstr ""
 
 msgid "Visit https://www.github.com/mondeja/md2po"

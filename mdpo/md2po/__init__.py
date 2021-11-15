@@ -769,10 +769,10 @@ class Md2Po:
                     # autolink vs link clash (see implementation notes)
                     self._current_msgid += f'<{self._current_aspan_text}'
                     if title:
-                        self._current_msgid += f' "{title}"'
+                        self._current_msgid += f' "{polib.escape(title)}"'
                     self._current_msgid += '>'
                 else:
-                    title_part = f' "{title}"' if title else ''
+                    title_part = f' "{polib.escape(title)}"' if title else ''
                     href = details['href'][0][1]
                     self._current_msgid += (
                         f'[{self._current_aspan_text}]({href}{title_part})'

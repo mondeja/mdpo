@@ -18,7 +18,7 @@ Fenced code block with tildes
     
     After empty line
 
-!!! note
+??? nota
 
     I'm coming from
     admonition Python-Markdown extension and I'm a note
