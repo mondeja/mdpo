@@ -24,13 +24,7 @@ def test_translate_markuptext(filename):
         os.path.splitext(os.path.basename(filepath_in))[0] + '.po',
     )
 
-    output = pofile_to_markdown(filepath_in, po_filepath)
-
-    with open(filepath_out) as f:
-        expected_output = f.read()
-
-    assert output == expected_output
-
+    # assert reference PO file content
     pofile = markdown_to_pofile(
         filepath_in, location=False, po_filepath=po_filepath,
     )
@@ -38,6 +32,12 @@ def test_translate_markuptext(filename):
     with open(po_filepath) as f:
         pofile_content = f.read()
     assert str(pofile) == pofile_content
+
+    # assert translation
+    output = pofile_to_markdown(filepath_in, po_filepath)
+    with open(filepath_out) as f:
+        expected_output = f.read()
+    assert output == expected_output
 
 
 @pytest.mark.parametrize('filename', (EXAMPLES[0],))

@@ -9,8 +9,6 @@ from mdpo.text import (
     parse_escaped_pair,
     parse_strint_0_inf,
     parse_wrapwidth_argument,
-    removeprefix,
-    removesuffix,
 )
 
 
@@ -89,28 +87,6 @@ def test_parse_strint_0_inf(value, expected_value, expected_error):
             parse_strint_0_inf(value)
     else:
         assert parse_strint_0_inf(value) == expected_value
-
-
-@pytest.mark.parametrize(
-    ('value', 'prefix', 'expected_value'),
-    (
-        ('foo', 'fo', 'o'),
-        ('bar', 'fo', 'bar'),
-    ),
-)
-def test_removeprefix(value, prefix, expected_value):
-    assert removeprefix(value, prefix) == expected_value
-
-
-@pytest.mark.parametrize(
-    ('value', 'suffix', 'expected_value'),
-    (
-        ('foo', 'oo', 'f'),
-        ('bar', 'fo', 'bar'),
-    ),
-)
-def test_removesuffix(value, suffix, expected_value):
-    assert removesuffix(value, suffix) == expected_value
 
 
 @pytest.mark.parametrize('value', (0, 80, 'inf', 'invalid'))

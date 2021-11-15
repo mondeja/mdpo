@@ -16,11 +16,7 @@ from mdpo.po import (
     po_escaped_string,
     pofiles_to_unique_translations_dicts,
 )
-from mdpo.text import (
-    min_not_max_chars_in_a_row,
-    parse_wrapwidth_argument,
-    removesuffix,
-)
+from mdpo.text import min_not_max_chars_in_a_row, parse_wrapwidth_argument
 
 
 class Po2Md:
@@ -73,7 +69,6 @@ class Po2Md:
         '_inside_hblock',
         '_inside_aspan',
         '_inside_codespan',
-        '_inside_table',
         '_codespan_start_index',
         '_codespan_backticks',
         '_codespan_inside_current_msgid',
@@ -207,7 +202,6 @@ class Po2Md:
         self._inside_liblock = False
         # first li block paragraph (li block "title")
         self._inside_liblock_first_p = False
-        self._inside_table = False
 
         self._inside_codespan = False
         self._codespan_start_index = None
@@ -378,7 +372,7 @@ class Po2Md:
                     wikilink_end_string=self.wikilink_end_string,
                 ).wrap(translation)
 
-                if self._inside_hblock or self._inside_table:
+                if self._inside_hblock or self._current_thead_aligns:
                     translation = translation.rstrip('\n')
 
         if translation.rstrip('\n'):
@@ -413,6 +407,10 @@ class Po2Md:
         if (
             self._inside_quoteblock
             and (not self._current_line or self._current_line[0] != '>')
+            and not self._current_thead_aligns
+            and block not in {
+                md4c.BlockType.TABLE, md4c.BlockType.THEAD, md4c.BlockType.TR,
+            }
         ):
             self._current_line += '> '
         if block is md4c.BlockType.P:
@@ -479,18 +477,12 @@ class Po2Md:
                 self._current_line += '***'
         elif block is md4c.BlockType.TR:
             self._current_line += '   ' * len(self._current_list_type)
-            if self._current_line.startswith('>    '):
-                self._current_line = self._current_line.replace('> ', '')
+            if self._inside_quoteblock and self._current_thead_aligns:
+                self._current_line += '> '
         elif block is md4c.BlockType.TH:
-            if self._inside_quoteblock:
-                if not self._current_line.replace(' ', '') == '>':
-                    self._current_line = removesuffix(self._current_line, '> ')
             self._current_line += '| '
             self._current_thead_aligns.append(details['align'].value)
         elif block is md4c.BlockType.TD:
-            if self._inside_quoteblock:
-                if not self._current_line.replace(' ', '') == '>':
-                    self._current_line = removesuffix(self._current_line, '> ')
             self._current_line += '| '
         elif block is md4c.BlockType.QUOTE:
             if self._inside_liblock:
@@ -498,7 +490,6 @@ class Po2Md:
                 self._save_current_line()
             self._inside_quoteblock = True
         elif block is md4c.BlockType.TABLE:
-            self._inside_table = True
             if self._current_list_type and not self._inside_quoteblock:
                 self._save_current_line()
         elif block is md4c.BlockType.HTML:
@@ -560,7 +551,8 @@ class Po2Md:
         elif block is md4c.BlockType.H:
             self._save_current_msgid()
             if self._inside_quoteblock:
-                self._current_line += '\n> '
+                self._save_current_line()
+                self._current_line += '> '
             else:
                 self._current_line += '\n'
             self._save_current_line()
@@ -586,50 +578,30 @@ class Po2Md:
                 self._current_line += '> '
             if not self._ol_marks and self._outputlines[-1]:
                 self._save_current_line()
-        elif block is md4c.BlockType.TH or block is md4c.BlockType.TD:
+        elif block in {md4c.BlockType.TH, md4c.BlockType.TD}:
             self._save_current_msgid()
             self._current_line += ' '
         elif block is md4c.BlockType.TR:
-            if not self._current_thead_aligns:
-                self._current_line += '|'
-                self._save_current_line()
+            self._current_line += '|'
+            self._save_current_line()
         elif block is md4c.BlockType.THEAD:
-            import re
-
             # build thead separator
             thead_separator = ''
             if self._inside_quoteblock:
-                _thead_split = re.split(r'[^\\](\|)', self._current_line)
-                _thead_split = []
-                for i, value in enumerate(self._current_line.split('|')):
-                    _thead_split.extend([value, '|'])
-                _thead_split.pop()
-                if self._current_list_type:
-                    _thead_split = _thead_split[1:]
-                self._current_line += '|'
                 thead_separator += '> '
-            else:
-                self._current_line += '|'
-                _thead_split = re.split(r'[^\\](\|)', self._current_line)
-                if self._current_list_type:
-                    _thead_split.pop(0)
-                    _thead_split.pop()
-            thead_separator += '| '
-
-            _antepenultimate_thead_i = len(_thead_split) - 2
-            for i, title in enumerate(_thead_split):
-                if (i % 2) != 0 or i > _antepenultimate_thead_i:
-                    continue
-                align = self._current_thead_aligns.pop(0)
-                sep_left = '-' if align in [0, 3] else ':'
-                sep_right = '-' if align in [0, 1] else ':'
-                thead_separator += f'{sep_left}-{sep_right}'
-                thead_separator += ' |'
-                if i < len(_thead_split) - 3:
-                    thead_separator += ' '
+            for align in self._current_thead_aligns:
+                if align == 0:
+                    thead_separator += '| --- '
+                elif align == 1:
+                    thead_separator += '| :-- '
+                elif align == 2:
+                    thead_separator += '| :-: '
+                else:
+                    thead_separator += '| --: '
+            thead_separator += '|'
 
             indent = '   ' * len(self._current_list_type)
-            self._current_line += f'\n{indent}{thead_separator}'
+            self._current_line += f'{indent}{thead_separator}'
             self._save_current_line()
         elif block is md4c.BlockType.QUOTE:
             if self._outputlines[-1] == '>':
@@ -640,7 +612,7 @@ class Po2Md:
         elif block is md4c.BlockType.TABLE:
             if not self._inside_quoteblock and not self._current_list_type:
                 self._save_current_line()
-            self._inside_table = False
+            self._current_thead_aligns = []
         elif block is md4c.BlockType.HTML:
             self._inside_htmlblock = False
 
