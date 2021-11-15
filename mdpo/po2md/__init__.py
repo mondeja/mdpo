@@ -38,9 +38,7 @@ class Po2Md:
         'wrapwidth',
 
         'bold_start_string',
-        'bold_start_string_escaped',
         'bold_end_string',
-        'bold_end_string_escaped',
         'italic_start_string',
         'italic_start_string_escaped',
         'italic_end_string',
@@ -149,14 +147,7 @@ class Po2Md:
         )
 
         self.bold_start_string = kwargs.get('bold_start_string', '**')
-        self.bold_start_string_escaped = po_escaped_string(
-            self.bold_start_string,
-        )
-
         self.bold_end_string = kwargs.get('bold_end_string', '**')
-        self.bold_end_string_escaped = po_escaped_string(
-            self.bold_end_string,
-        )
 
         self.italic_start_string = kwargs.get('italic_start_string', '*')
         self.italic_start_string_escaped = po_escaped_string(

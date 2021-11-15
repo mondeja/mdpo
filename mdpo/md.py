@@ -55,8 +55,6 @@ class MarkdownSpanWrapper:
         'code_start_string_escaped',
         'code_end_string',
         'code_end_string_escaped',
-        'link_start_string',
-        'link_end_string',
         'wikilink_start_string',
         'wikilink_end_string',
 
@@ -93,8 +91,6 @@ class MarkdownSpanWrapper:
         self.italic_end_string = kwargs.get('italic_end_string', '*')
         self.code_start_string = kwargs.get('code_start_string', '`')[0]
         self.code_end_string = kwargs.get('code_end_string', '`')[0]
-        self.link_start_string = kwargs.get('link_start_string', '[')
-        self.link_end_string = kwargs.get('link_end_string', ']')
         self.wikilink_start_string = kwargs.get('wikilink_start_string', '[[')
         self.wikilink_end_string = kwargs.get('wikilink_end_string', ']]')
 
@@ -137,7 +133,7 @@ class MarkdownSpanWrapper:
             self._inside_codespan = True
             self._current_line += self.code_start_string
         elif span is md4c.SpanType.A:
-            self._current_line += self.link_start_string
+            self._current_line += '['
             self._current_aspan_href = details['href'][0][1]
             self._current_aspan_title = (
                 details['title'][0][1] if details['title'] else None

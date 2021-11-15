@@ -122,4 +122,4 @@ def test___slots__(class_slots):
         content = f.read()
 
     for slot in slots:
-        assert f'self.{slot}' in content
+        assert content.count(f'self.{slot}') > 1
