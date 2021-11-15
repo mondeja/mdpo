@@ -32,3 +32,5 @@
       | Párrafo | Texto | Bar | C |
 
 > Bloque de cita después de lista desordenada
+
+- # Encabezado en elemento de lista

@@ -83,3 +83,6 @@ msgstr "C"
 
 msgid "Quoteblock after unordered list"
 msgstr "Bloque de cita después de lista desordenada"
+
+msgid "Header in list item"
+msgstr "Encabezado en elemento de lista"

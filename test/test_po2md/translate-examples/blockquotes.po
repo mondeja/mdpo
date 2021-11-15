@@ -59,3 +59,6 @@ msgstr "Bar"
 
 msgid "C"
 msgstr "C"
+
+msgid "Header inside list item inside blockquote"
+msgstr "Encabezado dentro de elemento de lista dentro de bloque de cita"

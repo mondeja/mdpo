@@ -14,3 +14,7 @@
 > | --- | :-- | --: | :-: |
 > | Encabezado | Título | Foo | B |
 > | Párrafo | Texto | Bar | C |
+
+> - ## Encabezado dentro de elemento de lista dentro de bloque de cita
+>
+>

@@ -14,3 +14,5 @@
 > | ----------- | :----------- | ----: | :--: |
 > | Header      | Title        | Foo   | B    |
 > | Paragraph   | Text         | Bar   | C    |
+
+> - ## Header inside list item inside blockquote
