@@ -16,3 +16,13 @@
 > | Paragraph   | Text         | Bar   | C    |
 
 > - ## Header inside list item inside blockquote
+
+> Before separator
+>
+> ***
+>
+> After separator
+>
+> Before separator
+>
+> ***

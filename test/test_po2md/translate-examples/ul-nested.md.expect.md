@@ -31,6 +31,10 @@
       | Encabezado | Título | Foo | B |
       | Párrafo | Texto | Bar | C |
 
+      ***
+
+      Después de un separador
+
 > Bloque de cita después de lista desordenada
 
 - # Encabezado en elemento de lista

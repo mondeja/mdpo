@@ -31,6 +31,10 @@
       | Header | Title | Foo | B |
       | Paragraph | Text | Bar | C |
 
+      ---
+
+      After a separator
+
 > Quoteblock after unordered list
 
 - # Header in list item

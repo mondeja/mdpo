@@ -32,9 +32,9 @@
    1. Elemento de lista ordenada anidado
       > Otro bloque de cita anidado más dentro de elemento de lista ordenada anidado
 
-      > | Sintaxis | Descripción | Estilo | A es |
+      > | Sintaxis | Descripción | Estilo | D es |
       > | --- | :-- | --: | :-: |
-      > | Encabezado | Título | Foo es | B es |
-      > | Párrafo | Texto | Bar es | C es |
+      > | Encabezado | Título | Foo es | E es |
+      > | Párrafo | Texto | Bar es | F es |
 
 > Bloque de cita tras lista ordenada

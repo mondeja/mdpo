@@ -33,9 +33,9 @@
    1. Nested ordered list item
       > Another more nested quoteblock inside nested ordered list item
 
-      > | Syntax | Description | Style | A |
+      > | Syntax | Description | Style | D |
       > | --- | :-- | --: | :-: |
-      > | Header | Title | Foo | B |
-      > | Paragraph | Text | Bar | C |
+      > | Header | Title | Foo | E |
+      > | Paragraph | Text | Bar | F |
 
 > Quoteblock after ordered list

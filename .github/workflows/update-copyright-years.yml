@@ -25,5 +25,5 @@ jobs:
       - uses: FantasticFiasco/action-update-license-year@v2
         with:
           path: docs/conf.py
-          transform: (?<=copyright = f')(?<from>\d{4})?-?(\d{4})?
+          transform: (?<=project_copyright = f')(?<from>\d{4})?-?(\d{4})?
           token: ${{ secrets.GITHUB_TOKEN }}

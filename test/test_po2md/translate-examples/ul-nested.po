@@ -86,3 +86,6 @@ msgstr "Bloque de cita después de lista desordenada"
 
 msgid "Header in list item"
 msgstr "Encabezado en elemento de lista"
+
+msgid "After a separator"
+msgstr "Después de un separador"

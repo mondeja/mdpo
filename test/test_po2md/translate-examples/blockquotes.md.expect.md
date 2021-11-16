@@ -18,3 +18,13 @@
 > - ## Encabezado dentro de elemento de lista dentro de bloque de cita
 >
 >
+
+> Antes de separador
+>
+> ***
+>
+> Después de separador
+>
+> Antes de separador
+>
+> ***
