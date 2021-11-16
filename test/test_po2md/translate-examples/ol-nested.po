@@ -92,3 +92,12 @@ msgstr "C es"
 
 msgid "Quoteblock after ordered list"
 msgstr "Bloque de cita tras lista ordenada"
+
+msgid "D"
+msgstr "D es"
+
+msgid "E"
+msgstr "E es"
+
+msgid "F"
+msgstr "F es"

@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 project = 'mdpo'
 author = 'Álvaro Mondéjar Rubio'
-copyright = f'2020-2021, {author}'
+project_copyright = f'2020-2021, {author}'
 
 
 # -- General configuration ---------------------------------------------------

@@ -62,3 +62,9 @@ msgstr "C"
 
 msgid "Header inside list item inside blockquote"
 msgstr "Encabezado dentro de elemento de lista dentro de bloque de cita"
+
+msgid "Before separator"
+msgstr "Antes de separador"
+
+msgid "After separator"
+msgstr "Después de separador"

@@ -426,7 +426,7 @@ class Po2Md:
                 indent += '   ' * len(self._current_list_type)
 
             if details['fence_char'] is not None:
-                fence_chars = details['fence_char']*3
+                fence_chars = details['fence_char'] * 3
                 self._current_line += f'{indent}{fence_chars}'
                 if details['lang']:
                     self._current_line += details['lang'][0][1]
@@ -470,11 +470,18 @@ class Po2Md:
             self._current_list_type.append(['ol', []])
             self._ol_marks.append([0, details['mark_delimiter']])
         elif block is md4c.BlockType.HR:
+            if self._current_list_type and not self._current_line:
+                self._save_current_line()
+            indent = (
+                '   ' * len(self._current_list_type)
+                if not self._current_line.startswith(('- ', '> - ')) else ''
+            )
+            self._current_line += f'{indent}***'
+            self._save_current_line()
             if not self._inside_liblock:
-                self._current_line += '---\n\n'
-            else:
-                # inside lists, the separator '---' can't be used
-                self._current_line += '***'
+                if self._inside_quoteblock:
+                    self._current_line += f'{indent}>'
+                self._save_current_line()
         elif block is md4c.BlockType.TR:
             self._current_line += '   ' * len(self._current_list_type)
             if self._inside_quoteblock and self._current_thead_aligns:
@@ -598,10 +605,9 @@ class Po2Md:
                     thead_separator += '| :-: '
                 else:
                     thead_separator += '| --: '
-            thead_separator += '|'
 
             indent = '   ' * len(self._current_list_type)
-            self._current_line += f'{indent}{thead_separator}'
+            self._current_line += f'{indent}{thead_separator}|'
             self._save_current_line()
         elif block is md4c.BlockType.QUOTE:
             if self._outputlines[-1] == '>':

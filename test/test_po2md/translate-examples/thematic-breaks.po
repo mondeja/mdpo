@@ -19,3 +19,9 @@ msgstr "Dentro de"
 
 msgid "a list"
 msgstr "una lista"
+
+msgid "Inside a list"
+msgstr "Dentro de una lista"
+
+msgid "in a quote block"
+msgstr "en un bloque de cita"
