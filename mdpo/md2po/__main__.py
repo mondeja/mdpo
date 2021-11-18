@@ -97,7 +97,8 @@ def build_parser():
         help='Messages not found which are already stored in the PO file'
              f' passed as {cli_codespan("--po-filepath")} parameter will be'
              ' removed. Only has effect used in combination with'
-             f' {cli_codespan("--merge-pofiles")}.',
+             f' {cli_codespan("--merge-pofiles")}. If you pass this option,'
+             f' {cli_codespan("--merge-po-files")} will be ignored.',
     )
     add_nolocation_option(parser)
     add_extensions_argument(parser)
