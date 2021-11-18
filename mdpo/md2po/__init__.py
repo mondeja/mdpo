@@ -982,13 +982,13 @@ class Md2Po:
                 self._current_top_level_block_number = 0
                 self._current_top_level_block_type = None
 
-        if self.mark_not_found_as_obsolete:
-            mark_not_found_entries_as_obsoletes(
+        if not self.preserve_not_found:
+            remove_not_found_entries(
                 self.pofile,
                 self.found_entries,
             )
-        elif not self.preserve_not_found:
-            remove_not_found_entries(
+        elif self.mark_not_found_as_obsolete:
+            mark_not_found_entries_as_obsoletes(
                 self.pofile,
                 self.found_entries,
             )
