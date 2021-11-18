@@ -92,3 +92,9 @@ msgid ""
 msgstr ""
 "[nombre de link en elemento de lista](https://ejemplo.es/un-gran-link-con-"
 "una-url-muy-muy-larga-y-grande-dentro)"
+
+msgid "This is a [`referenced link`]."
+msgstr "Esto es un [`link-referenciado`]"
+
+msgid "[`referenced link`]: https://foo.bar"
+msgstr "[`link-referenciado`]: https://foo.bar"

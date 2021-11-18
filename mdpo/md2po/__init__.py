@@ -692,7 +692,7 @@ class Md2Po:
                         self._current_aspan_ref_target = target
                         break
             else:
-                for target, href, title in self._link_references:
+                for target, href, _ in self._link_references:
                     if href == current_aspan_href:
                         self._current_aspan_ref_target = target
                         break
@@ -749,10 +749,11 @@ class Md2Po:
 
         if span is md4c.SpanType.A:
             if self._current_aspan_ref_target:  # referenced link
-                self._current_msgid += (
-                    f'[{self._current_aspan_text}]'
-                    f'[{self._current_aspan_ref_target}]'
-                )
+                self._current_msgid += f'[{self._current_aspan_text}]'
+                if self._current_aspan_ref_target != self._current_aspan_text:
+                    self._current_msgid += (
+                        f'[{self._current_aspan_ref_target}]'
+                    )
                 self._current_aspan_ref_target = None
             else:
                 title = details['title'][0][1] if details['title'] else ''

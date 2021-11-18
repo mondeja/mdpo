@@ -32,6 +32,8 @@ Autolink with title like <https://foo.bar "hello">.
 
 Another autolink with title like [https://foo.bar](https://foo.bar "hello").
 
+This is a [`referenced link`].
+
 [1]: https://github.com/mondeja/mdpo
 [2]: https://github.com/mondeja/mdpo "Second reference"
 [3]: https://github.com/mondeja/mdpo 'Third reference'
@@ -40,3 +42,4 @@ Another autolink with title like [https://foo.bar](https://foo.bar "hello").
 [6]: <https://github.com/mondeja/mdpo> "Sixth reference"
 [7]: <https://github.com/mondeja/mdpo> 'Seventh reference'
 [8]: <https://github.com/mondeja/mdpo> (Eighth reference)
+[`referenced link`]: https://foo.bar

@@ -665,11 +665,10 @@ class Po2Md:
                         self._current_aspan_ref_target = target
                         break
             else:
-                for target, href, title in self._link_references:
+                for target, href, _ in self._link_references:
                     if href == self._current_aspan_href:
                         self._current_aspan_ref_target = target
                         break
-
         elif span is md4c.SpanType.CODE:
             self._inside_codespan = True
             self._codespan_start_index = len(self._current_msgid)-1
@@ -715,10 +714,11 @@ class Po2Md:
 
         if span is md4c.SpanType.A:
             if self._current_aspan_ref_target:  # referenced link
-                self._current_msgid += (
-                    f'[{self._current_aspan_text}]'
-                    f'[{self._current_aspan_ref_target}]'
-                )
+                self._current_msgid += f'[{self._current_aspan_text}]'
+                if self._current_aspan_ref_target != self._current_aspan_text:
+                    self._current_msgid += (
+                        f'[{self._current_aspan_ref_target}]'
+                    )
                 self._current_aspan_ref_target = None
             else:
                 if self._current_aspan_text == self._current_aspan_href:

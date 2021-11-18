@@ -45,3 +45,7 @@ Autolink with title like <https://foo.bar "hello">.
 
 Intended to be autolink but has markup characters inside text
 [**http**://`example`.*org*](http://example.org).
+
+This is a [`referenced link`].
+
+[`referenced link`]: https://referenced.link
