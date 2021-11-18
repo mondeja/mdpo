@@ -62,6 +62,9 @@ msgid ""
 "[**http**://`example`.*org*](http://example.org)."
 msgstr ""
 
+msgid "This is a [`referenced link`]."
+msgstr ""
+
 #, fuzzy
 msgid "[1]: https://github.com/mondeja/mdpo"
 msgstr "[1]: https://github.com/mondeja/mdpo"
@@ -93,3 +96,7 @@ msgstr "[7]: https://github.com/mondeja/mdpo \"Seventh reference\""
 #, fuzzy
 msgid "[8]: https://github.com/mondeja/mdpo \"Eighth reference\""
 msgstr "[8]: https://github.com/mondeja/mdpo \"Eighth reference\""
+
+#, fuzzy
+msgid "[`referenced link`]: https://referenced.link"
+msgstr "[`referenced link`]: https://referenced.link"

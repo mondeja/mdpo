@@ -33,6 +33,8 @@ Link automático con título como <https://foo.bar "hola">.
 
 Otro link automático con título como <https://foo.bar "hola">.
 
+Esto es un [`link-referenciado`]
+
 [1]: https://github.com/mondeja/mdpo
 [2]: https://github.com/mondeja/mdpo "Segunda referencia"
 [3]: https://github.com/mondeja/mdpo "Tercera referencia"
@@ -40,3 +42,4 @@ Otro link automático con título como <https://foo.bar "hola">.
 [6]: https://github.com/mondeja/mdpo "Sexta referencia"
 [7]: https://github.com/mondeja/mdpo "Séptima referencia"
 [8]: https://github.com/mondeja/mdpo "Octava referencia"
+[`link-referenciado`]: https://foo.bar
