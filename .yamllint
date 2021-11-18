@@ -32,12 +32,13 @@ rules:
       .pre-commit-hooks.yaml
       .github
       .readthedocs.yml
-      test/test_po2md/.markdownlint-cli2.yaml
+      test/test_unit/test_po2md/.markdownlint-cli2.yaml
   line-length:
     allow-non-breakable-words: true
     ignore: |
       .pre-commit-config.yaml
       .pre-commit-hooks.yaml
+      .github
     max: 96
   new-lines:
     type: unix

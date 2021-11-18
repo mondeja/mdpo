@@ -9,7 +9,9 @@ from mdpo.md2po import markdown_to_pofile
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 
-EXAMPLES_DIR = os.path.join('test', 'test_md2po', 'extract-examples')
+EXAMPLES_DIR = os.path.join(
+    os.path.abspath(os.path.dirname(__file__)), 'extract-examples',
+)
 
 
 def _build_examples(dirname):

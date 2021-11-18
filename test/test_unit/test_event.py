@@ -27,13 +27,13 @@ This line will not be extracted.
             },
         )
     debug_output = stdout.getvalue()
-    
+
     comparable_debug_output = ''
     for line in debug_output.splitlines(keepends=True):
         if '::' not in line:
             comparable_debug_output += line
             continue
-            
+
         line_split = line.split('::')
         comparable_debug_output += (
             f'{line_split[0]}::<date>::{"::".join(line_split[2:])}'

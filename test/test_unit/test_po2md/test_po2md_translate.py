@@ -8,7 +8,9 @@ from mdpo.md2po import markdown_to_pofile
 from mdpo.po2md import pofile_to_markdown
 
 
-EXAMPLES_DIR = os.path.join('test', 'test_po2md', 'translate-examples')
+EXAMPLES_DIR = os.path.join(
+    os.path.abspath(os.path.dirname(__file__)), 'translate-examples',
+)
 EXAMPLES = sorted(
     os.path.basename(fp) for fp in glob.glob(EXAMPLES_DIR + os.sep + '*.md')
     if not fp.endswith('.expect.md')

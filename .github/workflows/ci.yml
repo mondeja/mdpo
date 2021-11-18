@@ -32,9 +32,12 @@ jobs:
           python -m pip install --upgrade pip wheel coveralls
           python -m pip install .[test]
           pip list
-      - name: Test with pytest
+      - name: Run unit tests
         # https://github.com/actions/runner/issues/241#issuecomment-577360161
-        run: script -e -c 'pytest -svv --cov=mdpo --cov-config=setup.cfg'
+        run: script -e -c 'pytest -svv test/test_unit --cov=mdpo --cov-config=setup.cfg'
+      - name: Run integration tests
+        # https://github.com/actions/runner/issues/241#issuecomment-577360161
+        run: script -e -c 'pytest -svv test/test_integration --cov=mdpo --cov-config=setup.cfg --cov-append'
       - name: Coveralls
         run: coveralls
         env:
