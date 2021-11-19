@@ -36,7 +36,7 @@ jobs:
         # https://github.com/actions/runner/issues/241#issuecomment-577360161
         run: script -e -c 'pytest -svv test/test_unit --cov=mdpo --cov-config=setup.cfg'
       - name: Run integration tests
-        run: pytest -svv test/test_integration --cov=mdpo --cov-config=setup.cfg
+        run: pytest -svv test/test_integration
       - name: Coveralls
         run: coveralls
         env:
