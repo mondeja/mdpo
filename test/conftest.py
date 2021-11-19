@@ -1,3 +1,5 @@
+"""mdpo tests configuration."""
+
 import ast
 import inspect
 import os
