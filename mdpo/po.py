@@ -90,6 +90,7 @@ def remove_not_found_entries(pofile, entries):
             entries will be removed.
         entries (list): Entries to search against.
     """
+    entries_to_remove = []
     for entry in pofile:
         if not find_entry_in_entries(
             entry,
@@ -103,7 +104,9 @@ def remove_not_found_entries(pofile, entries):
                 compare_occurrences=False,
             )
             if not _equal_not_obsolete_found:
-                pofile.remove(entry)
+                entries_to_remove.append(entry)
+    for entry in entries_to_remove:
+        pofile.remove(entry)
 
 
 def pofiles_to_unique_translations_dicts(pofiles):
