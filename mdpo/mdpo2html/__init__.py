@@ -77,8 +77,8 @@ class MdPo2HTML(HTMLParser):
         self.translations_with_msgctxt = None
 
         self._disable = False
-        self._disable_next_line = False
-        self._enable_next_line = False
+        self._disable_next_block = False
+        self._enable_next_block = False
         self.disabled_entries = []
 
         # custom mdpo command resolution
@@ -250,8 +250,8 @@ class MdPo2HTML(HTMLParser):
 
         _current_replacement = html.unescape(_current_replacement)
 
-        if (self._disable and not self._enable_next_line) \
-                or self._disable_next_line:
+        if (self._disable and not self._enable_next_block) \
+                or self._disable_next_block:
             replacement = _current_replacement
 
             self.disabled_entries.append(
@@ -312,8 +312,8 @@ class MdPo2HTML(HTMLParser):
         self.output += html_template
         self.context = []
 
-        self._disable_next_line = False
-        self._enable_next_line = False
+        self._disable_next_block = False
+        self._enable_next_block = False
         self._current_msgctxt = None
 
         # print('________________________________________________')
@@ -410,14 +410,20 @@ class MdPo2HTML(HTMLParser):
                 except KeyError:  # not custom command
                     pass
 
-                if command == 'mdpo-disable-next-line':
-                    self._disable_next_line = True
+                if command in (
+                    'mdpo-disable-next-block',
+                    'mdpo-disable-next-line',
+                ):
+                    self._disable_next_block = True
                 elif command == 'mdpo-disable':
                     self._disable = True
                 elif command == 'mdpo-enable':
                     self._disable = False
-                elif command == 'mdpo-enable-next-line':
-                    self._enable_next_line = True
+                elif command in (
+                    'mdpo-enable-next-block',
+                    'mdpo-enable-next-line',
+                ):
+                    self._enable_next_block = True
                 elif command == 'mdpo-context' and comment:
                     self._current_msgctxt = comment
                 elif command == 'mdpo-include-codeblock':

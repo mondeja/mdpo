@@ -6,8 +6,10 @@ COMMAND_SEARCH_REGEX = r'<\!\-\-\s{0,}([^\s]+)\s{0,}([\w\s]+)?\-\->'
 MDPO_COMMANDS = [
     'context',
     'disable',
+    'disable-next-block',
     'disable-next-line',
     'enable',
+    'enable-next-block',
     'enable-next-line',
     'include',
     'include-codeblock',

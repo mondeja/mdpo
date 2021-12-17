@@ -52,9 +52,9 @@ class Po2Md:
         '_current_tcomment',
         '_current_line',
         '_outputlines',
-        '_disable_next_line',
+        '_disable_next_block',
         '_disable',
-        '_enable_next_line',
+        '_enable_next_block',
         '_enterspan_replacer',
         '_leavespan_replacer',
         '_saved_files_changed',
@@ -116,9 +116,9 @@ class Po2Md:
         self._current_line = ''
         self._outputlines = []
 
-        self._disable_next_line = False
+        self._disable_next_block = False
         self._disable = False
-        self._enable_next_line = False
+        self._enable_next_block = False
         self.disabled_entries = []
         self.translated_entries = []
 
@@ -250,14 +250,20 @@ class Po2Md:
         ):
             return
 
-        if mdpo_command == 'mdpo-disable-next-line':
-            self._disable_next_line = True
+        if mdpo_command in (
+            'mdpo-disable-next-block',
+            'mdpo-disable-next-line',
+        ):
+            self._disable_next_block = True
         elif mdpo_command == 'mdpo-disable':
             self._disable = True
         elif mdpo_command == 'mdpo-enable':
             self._disable = False
-        elif mdpo_command == 'mdpo-enable-next-line':
-            self._enable_next_line = True
+        elif mdpo_command in (
+            'mdpo-enable-next-block',
+            'mdpo-enable-next-line',
+        ):
+            self._enable_next_block = True
         elif comment:
             if mdpo_command == 'mdpo-context':
                 self._current_msgctxt = comment
@@ -316,8 +322,8 @@ class Po2Md:
         ):
             return
 
-        if (not self._disable and not self._disable_next_line) or \
-                self._enable_next_line:
+        if (not self._disable and not self._disable_next_block) or \
+                self._enable_next_block:
             translation = self._translate_msgid(
                 self._current_msgid,
                 self._current_msgctxt,
@@ -382,8 +388,8 @@ class Po2Md:
         self._current_msgctxt = None
         self._current_tcomment = None
 
-        self._disable_next_line = False
-        self._enable_next_line = False
+        self._disable_next_block = False
+        self._enable_next_block = False
 
         self._codespan_inside_current_msgid = False
         self._aimg_title_inside_current_msgid = False
@@ -846,7 +852,7 @@ class Po2Md:
 
     def _append_link_references(self):
         if self._link_references:
-            self._disable_next_line = False
+            self._disable_next_block = False
             self._disable = False
 
             # 'link_reference' event
@@ -902,9 +908,9 @@ class Po2Md:
         )
         self._append_link_references()  # add link references to the end
 
-        self._disable_next_line = False
+        self._disable_next_block = False
         self._disable = False
-        self._enable_next_line = False
+        self._enable_next_block = False
         self._link_references = None
 
         self.output = '\n'.join(self._outputlines)
