@@ -59,8 +59,8 @@ class Md2Po:
         '_current_msgctxt',
 
         '_disable',
-        '_disable_next_line',
-        '_enable_next_line',
+        '_disable_next_block',
+        '_enable_next_block',
         '_include_next_codeblock',
         '_disable_next_codeblock',
         '_saved_files_changed',
@@ -169,8 +169,8 @@ class Md2Po:
         self.include_codeblocks = kwargs.get('include_codeblocks', False)
 
         self._disable = False
-        self._disable_next_line = False
-        self._enable_next_line = False
+        self._disable_next_block = False
+        self._enable_next_block = False
 
         self._include_next_codeblock = False
         self._disable_next_codeblock = False
@@ -437,8 +437,8 @@ class Md2Po:
             return
 
         if self._current_msgid:
-            if (not self._disable_next_line and not self._disable) or \
-                    self._enable_next_line:
+            if (not self._disable_next_block and not self._disable) or \
+                    self._enable_next_block:
                 self._save_msgid(
                     self._current_msgid,
                     msgstr=msgstr or self.msgstr,
@@ -456,8 +456,8 @@ class Md2Po:
                         flags=['fuzzy'] if fuzzy else [],
                     ),
                 )
-        self._disable_next_line = False
-        self._enable_next_line = False
+        self._disable_next_block = False
+        self._enable_next_block = False
         self._current_msgid = ''
         self._current_tcomment = None
         self._current_msgctxt = None
@@ -474,14 +474,20 @@ class Md2Po:
         ):
             return
 
-        if mdpo_command == 'mdpo-disable-next-line':
-            self._disable_next_line = True
+        if mdpo_command in (
+            'mdpo-disable-next-block',
+            'mdpo-disable-next-line',
+        ):
+            self._disable_next_block = True
         elif mdpo_command == 'mdpo-disable':
             self._disable = True
         elif mdpo_command == 'mdpo-enable':
             self._disable = False
-        elif mdpo_command == 'mdpo-enable-next-line':
-            self._enable_next_line = True
+        elif mdpo_command in (
+            'mdpo-enable-next-block',
+            'mdpo-enable-next-line',
+        ):
+            self._enable_next_block = True
         elif mdpo_command == 'mdpo-include-codeblock':
             self._include_next_codeblock = True
         elif mdpo_command == 'mdpo-disable-codeblock':
@@ -879,7 +885,7 @@ class Md2Po:
 
     def _dump_link_references(self):
         if self._link_references:
-            self._disable_next_line = False
+            self._disable_next_block = False
             self._disable = False
 
             # 'link_reference' event
@@ -973,9 +979,9 @@ class Md2Po:
                 _parse(self.content)
 
                 # reset state
-                self._disable_next_line = False
+                self._disable_next_block = False
                 self._disable = False
-                self._enable_next_line = False
+                self._enable_next_block = False
                 self._include_next_codeblock = False
                 self._disable_next_codeblock = False
                 self._link_references = None
@@ -1130,7 +1136,7 @@ def markdown_to_pofile(
 
                def msgid_event(self, msgid, *args):
                    if msgid == 'foo':
-                       self._disable_next_line = True
+                       self._disable_next_block = True
         debug (bool): Add events displaying all parsed elements in the
             extraction process.
 

@@ -9,18 +9,18 @@ your Markdown files.
 
    If you want to specify next commands with other names, take a look at the
    argument :ref:`md2po---command-alias` of :ref:`md2po CLI<cli:md2po>` or the
-   optional parameter ``command_aliases`` of the :doc:`APIs<api>`.
+   optional parameter ``command_aliases`` of the :doc:`programatic APIs<api>`.
 
 Disabling extraction
 ====================
 
 You can disable and enable the extraction of certain strings using
-next HTML commments:
+the next HTML commments:
 
-* ``<!-- mdpo-disable-next-line -->``
-* ``<!-- mdpo-disable -->``
-* ``<!-- mdpo-enable -->``
-* ``<!-- mdpo-enable-next-line -->``
+* ``<!-- mdpo-disable-next-block -->`` or ``<!-- mdpo-disable-next-line -->``: Do not extract the next Markdown block.
+* ``<!-- mdpo-disable -->``: Do not extract the content after it.
+* ``<!-- mdpo-enable -->``: Extract the content after it.
+* ``<!-- mdpo-enable-next-block -->`` or ``<!-- mdpo-enable-next-line -->`` Extract the next Markdown block.
 
 .. rubric:: Example:
 
@@ -100,7 +100,6 @@ line before the message:
    msgid "Some text without comment"
    msgstr ""
 
-
 Contextual markers
 ==================
 
@@ -178,7 +177,6 @@ the next commands:
    msgid "Another paragraph."
    msgstr ""
 
-
 .. rubric:: Fenced code block example:
 
 .. code-block:: python
@@ -200,7 +198,6 @@ the next commands:
    "var hello = \"world\";\n"
    "var hola = \"mundo\";\n"
    msgstr ""
-
 
 Extracting comments itself
 ==========================

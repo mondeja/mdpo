@@ -104,11 +104,13 @@ msgstr "Este mensaje debe ser traducido."
 
 @pytest.mark.parametrize(
     ('command', 'command_aliases'), (
+        ('mdpo-enable-next-block', {}),
         ('mdpo-enable-next-line', {}),
+        ('on-next-block', {'on-next-block': 'enable-next-block'}),
         ('on-next-line', {'on-next-line': 'enable-next-line'}),
     ),
 )
-def test_enable_next_line(command, command_aliases, tmp_file):
+def test_enable_next_block(command, command_aliases, tmp_file):
     html_input = f'''<h1>Header</h1>
 
 <!-- mdpo-disable -->
@@ -161,11 +163,13 @@ msgstr "Este mensaje también debe ser traducido."
 
 @pytest.mark.parametrize(
     ('command', 'command_aliases'), (
+        ('mdpo-disable-next-block', {}),
         ('mdpo-disable-next-line', {}),
+        ('off-next-block', {'off-next-block': 'disable-next-block'}),
         ('off-next-line', {'off-next-line': 'disable-next-line'}),
     ),
 )
-def test_disable_next_line(command, command_aliases, tmp_file):
+def test_disable_next_block(command, command_aliases, tmp_file):
     html_input = f'''<h1>Header</h1>
 
 <!-- {command} -->
@@ -218,7 +222,7 @@ def test_disabled_entries(tmp_file):
 
 <p>This message must be translated also.</p>
 
-<!-- mdpo-disable-next-line -->
+<!-- mdpo-disable-next-block -->
 <p>This message can not be translated either.</p>
 '''
 

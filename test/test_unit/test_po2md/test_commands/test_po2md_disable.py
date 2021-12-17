@@ -64,7 +64,7 @@ msgstr "Esto también debe ser traducido."
         ('on-next-line', {'on-next-line': 'enable-next-line'}),
     ),
 )
-def test_enable_next_line(command, command_aliases, tmp_file):
+def test_enable_next_block(command, command_aliases, tmp_file):
     markdown_input = f'''This must be translated.
 
 <!-- mdpo-disable -->
@@ -135,11 +135,13 @@ msgstr "La última línea también debe ser traducida."
 
 @pytest.mark.parametrize(
     ('command', 'command_aliases'), (
+        ('mdpo-disable-next-block', {}),
         ('mdpo-disable-next-line', {}),
+        ('off-next-block', {'off-next-block': 'disable-next-block'}),
         ('off-next-line', {'off-next-line': 'disable-next-line'}),
     ),
 )
-def test_disable_next_line(command, command_aliases, tmp_file):
+def test_disable_next_block(command, command_aliases, tmp_file):
     markdown_input = f'''This must be translated.
 
 <!-- {command} -->
@@ -185,7 +187,7 @@ def test_disabled_entries(tmp_file):
 
 This must be ignored.
 
-<!-- mdpo-enable-next-line -->
+<!-- mdpo-enable-next-block -->
 This must be translated also.
 
 This must be ignored also.
