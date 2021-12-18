@@ -10,7 +10,7 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
-from mdpo.event import debug_events, raise_skip_event
+from mdpo.event import debug_events, parse_events_kwarg, raise_skip_event
 from mdpo.io import (
     filter_paths,
     save_file_checking_file_changed,
@@ -152,12 +152,9 @@ class Md2Po:
             'extensions',
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
         )
-        self.events = {}
-        if 'events' in kwargs:
-            for event_name, functions in kwargs['events'].items():
-                self.events[event_name] = (
-                    [functions] if callable(functions) else functions
-                )
+        self.events = (
+            parse_events_kwarg(kwargs['events']) if 'events' in kwargs else {}
+        )
         if kwargs.get('debug'):
             for event_name, function in debug_events('md2po').items():
                 if event_name not in self.events:
@@ -1105,10 +1102,10 @@ def markdown_to_pofile(
             file contains previous metadata fields, these will be updated
             preserving the values of the already defined.
         events (dict): Preprocessing events executed during the parsing
-            process. You can use these to customize the extraction process.
+            process that can be used to customize the extraction process.
             Takes functions or list of functions as values. If one of these
             functions returns ``False``, that part of the parsing is skipped
-            by md2po (usually a MD4C event). The available events are:
+            by ``md2po``. Available events are the next:
 
             * ``enter_block(self, block, details)``: Executed when the parsing
               a Markdown block starts.
@@ -1126,6 +1123,9 @@ def markdown_to_pofile(
               Executed when a msgid is going to be stored.
             * ``link_reference(self, target, href, title)``: Executed when a
               link reference is going to be stored.
+
+            You can also define the location of these functions by strings
+            with the syntax ``path/to/file.py::function_name``.
 
             All ``self`` arguments are an instance of Md2Po parser. You can
             take advanced control of the parsing process manipulating the

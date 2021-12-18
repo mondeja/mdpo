@@ -7,7 +7,7 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
-from mdpo.event import debug_events, raise_skip_event
+from mdpo.event import debug_events, parse_events_kwarg, raise_skip_event
 from mdpo.io import save_file_checking_file_changed, to_file_content_if_is_file
 from mdpo.md import MarkdownSpanWrapper, parse_link_references
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
@@ -98,12 +98,9 @@ class Po2Md:
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
         )
 
-        self.events = {}
-        if 'events' in kwargs:
-            for event_name, functions in kwargs['events'].items():
-                self.events[event_name] = (
-                    [functions] if callable(functions) else functions
-                )
+        self.events = (
+            parse_events_kwarg(kwargs['events']) if 'events' in kwargs else {}
+        )
         if kwargs.get('debug'):
             for event_name, function in debug_events('po2md').items():
                 if event_name not in self.events:
@@ -971,15 +968,15 @@ def pofile_to_markdown(
             parameter.
         wrapwidth (int): Maximum width used rendering the Markdown output.
         events (dict): Preprocessing events executed during the translation
-            process. You can use these to customize the output. Takes functions
-            are values. If one of these functions returns ``False``, that part
-            of the translation process is skipped by po2md. The available
-            events are:
+            process that can be used to customize the output. Takes list of
+            functions as values. If one of these functions returns ``False``,
+            that part of the translation process is skipped by ``po2md``.
+            Available events are the next:
 
             * ``enter_block(self, block, details)``: Executed when the parsing
-              a Markdown block starts.
+              of a Markdown block starts.
             * ``leave_block(self, block, details)``: Executed when the parsing
-              a Markdown block ends.
+              of a Markdown block ends.
             * ``enter_span(self, span, details)``: Executed when the parsing of
               a Markdown span starts.
             * ``leave_span(self, span, details)``: Executed when the parsing of
@@ -993,6 +990,9 @@ def pofile_to_markdown(
             * ``link_reference(self, target, href, title)``: Executed when each
               reference link is being written in the output (at the end of the
               translation process).
+
+            You can also define the location of these functions by strings
+            with the syntax ``path/to/file.py::function_name``.
         debug (bool): Add events displaying all parsed elements in the
             translation process.
 

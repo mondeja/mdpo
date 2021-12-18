@@ -681,6 +681,40 @@ def test_extensions(
     assert stdout == expected_output
 
 
+@pytest.mark.parametrize('arg', ('-e', '--event'))
+def test_events(arg, tmp_file, capsys):
+    md_content = '# Foo\n\nBaz\n'
+    event_file = '''
+def transform_text(self, block, text):
+    if text == "Foo":
+        self._current_msgid = "Bar"
+        return False
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "Bar"
+msgstr ""
+
+msgid "Baz"
+msgstr ""
+
+'''
+    with tmp_file(event_file, '.py') as tmp_filename:
+        pofile, exitcode = run([
+            md_content,
+            arg,
+            f'text: {tmp_filename}::transform_text',
+        ])
+        stdout, _ = capsys.readouterr()
+
+        assert exitcode == 0
+        assert f'{pofile}\n' == expected_output
+        assert stdout == expected_output
+
+
 @pytest.mark.parametrize(
     'value',
     (None, 'foo'),

@@ -312,3 +312,36 @@ def add_pre_commit_option(parser):
         help='Run in pre-commit mode, which returns code 1 at exit when a file'
              ' has been changed or previously did not exist.',
     )
+
+
+def add_event_argument(parser):
+    """Add the ``--event`` optional argument to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
+            extend.
+    """
+    parser.add_argument(
+        '-e', '--event', dest='events', default=[], action='append',
+        metavar='event_name: path/to/file.py::function_name',
+        help='Custom events executed during the parser. They are used for'
+             ' customize the output. See the documentation for available'
+             ' event names. This argument can be passed multiple times.',
+    )
+
+
+def parse_event_argument(value):
+    """Parse ``--event`` CLI argument values.
+
+    Args:
+        value (list): Event names and function paths in the form
+            ``event_name: path/to/file.py::func``.
+
+    Returns:
+        dict: Mapping of event names and `file::function` paths.
+    """
+    events = {}
+    for event_name_filefunc in value:
+        event_name, filefunc = event_name_filefunc.split(':', maxsplit=1)
+        events[event_name.strip()] = filefunc.strip()
+    return events

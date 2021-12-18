@@ -14,10 +14,12 @@ from mdpo.cli import (
     add_common_cli_first_arguments,
     add_debug_option,
     add_encoding_arguments,
+    add_event_argument,
     add_pre_commit_option,
     add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
+    parse_event_argument,
 )
 from mdpo.context import environ
 from mdpo.po2md import Po2Md
@@ -66,6 +68,7 @@ def build_parser():
     add_wrapwidth_argument(parser, markup='md', default='80')
     add_encoding_arguments(parser)
     add_command_alias_argument(parser)
+    add_event_argument(parser)
     add_debug_option(parser)
     add_pre_commit_option(parser)
     return parser
@@ -94,6 +97,7 @@ def parse_options(args):
     opts.command_aliases = parse_command_aliases_cli_arguments(
         opts.command_aliases,
     )
+    opts.events = parse_event_argument(opts.events)
 
     opts.pofiles = set(itertools.chain(*opts.pofiles))  # flatten
 
@@ -110,6 +114,7 @@ def run(args=[]):
             po_encoding=opts.po_encoding,
             command_aliases=opts.command_aliases,
             wrapwidth=opts.wrapwidth,
+            events=opts.events,
             debug=opts.debug,
             _check_saved_files_changed=opts.check_saved_files_changed,
         )

@@ -158,3 +158,42 @@ def test_ignore_files_by_filepath(capsys, arg):
     assert exitcode == 0
     assert f'{output}\n' == expected_output
     assert stdout == expected_output
+
+
+@pytest.mark.parametrize('arg', ('-e', '--event'))
+def test_events(arg, tmp_file, capsys):
+    md_content = '# Foo\n\nBaz\n'
+    event_file = '''
+def transform_text(self, block, text):
+    if text == "Foo":
+        self._current_msgid = "Bar"
+        return False
+'''
+
+    pofile_content = '''#
+msgid ""
+msgstr ""
+
+msgid "Bar"
+msgstr "Bar es"
+
+msgid "Baz"
+msgstr "Baz es"
+
+'''
+
+    expected_output = '# Bar es\n\nBaz es\n\n'
+    with tmp_file(event_file, '.py') as py_tmp_filename, \
+            tmp_file(pofile_content, '.po') as po_tmp_filename:
+        pofile, exitcode = run([
+            md_content,
+            '-p',
+            po_tmp_filename,
+            arg,
+            f'text: {py_tmp_filename}::transform_text',
+        ])
+        stdout, _ = capsys.readouterr()
+
+        assert exitcode == 0
+        assert f'{pofile}\n' == expected_output
+        assert stdout == expected_output
