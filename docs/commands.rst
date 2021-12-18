@@ -143,7 +143,8 @@ the next commands:
 * ``<!-- mdpo-include-codeblocks -->``: Include all codeblocks placed after
   this command (same behaviour as passing the argument
   :ref:`md2po---include-codeblocks` or ``include_codeblocks=True`` if you are
-  using the :ref:`programmatic interface<md2po-init>`.).
+  using the
+  :doc:`programmatic interface </devref/mdpo/po2md/mdpo.po2md.__init__>`).
 * ``<!-- mdpo-disable-codeblocks -->``: Does not include codeblocks placed
   after this command.
 * ``<!-- mdpo-include-codeblock -->``: Include next codeblock placed after this

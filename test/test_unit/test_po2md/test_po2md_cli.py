@@ -166,7 +166,7 @@ def test_events(arg, tmp_file, capsys):
     event_file = '''
 def transform_text(self, block, text):
     if text == "Foo":
-        self._current_msgid = "Bar"
+        self.current_msgid = "Bar"
         return False
 '''
 

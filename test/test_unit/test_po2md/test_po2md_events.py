@@ -70,7 +70,7 @@ Esto es una nota al pie[^1]. Esto es otra[^2].
 
 def test_command_event(tmp_file):
     def _abort_command(self, *args):
-        assert not self._disable
+        assert not self.disable
         return False
 
     input_content = '''<!-- mdpo-disable -->
