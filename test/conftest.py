@@ -57,14 +57,16 @@ def class_slots():
                 self.slots = []
 
             def visit_ClassDef(self, node):
-                if (
-                    isinstance(node.body[0], ast.Assign)
-                    and node.body[0].targets[0].id == '__slots__'
-                ):
-                    self.slots.extend([
-                        getattr(elt, AST_ELTS_VALUE_ATTR)
-                        for elt in node.body[0].value.elts
-                    ])
+                for children in node.body:
+                    if (
+                        isinstance(children, ast.Assign)
+                        and children.targets[0].id == '__slots__'
+                    ):
+                        self.slots.extend([
+                            getattr(elt, AST_ELTS_VALUE_ATTR)
+                            for elt in children.value.elts
+                        ])
+                        break
 
         modtree = ast.parse(inspect.getsource(code))
         visitor = ClassSlotsExtractor()

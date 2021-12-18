@@ -60,7 +60,7 @@ class MarkdownSpanWrapper:
 
         # state
         'output',
-        '_current_line',
+        'current_line',
         '_current_aspan_href',
         '_current_aspan_title',
         '_inside_codespan',
@@ -83,7 +83,7 @@ class MarkdownSpanWrapper:
         self.md4c_extensions = md4c_extensions
 
         self.output = ''
-        self._current_line = ''
+        self.current_line = ''
 
         self.bold_start_string = kwargs.get('bold_start_string', '**')
         self.bold_end_string = kwargs.get('bold_end_string', '**')
@@ -131,78 +131,78 @@ class MarkdownSpanWrapper:
     def enter_span(self, span, details):
         if span is md4c.SpanType.CODE:
             self._inside_codespan = True
-            self._current_line += self.code_start_string
+            self.current_line += self.code_start_string
         elif span is md4c.SpanType.A:
-            self._current_line += '['
+            self.current_line += '['
             self._current_aspan_href = details['href'][0][1]
             self._current_aspan_title = (
                 details['title'][0][1] if details['title'] else None
             )
         elif span is md4c.SpanType.STRONG:
-            self._current_line += self.bold_start_string
+            self.current_line += self.bold_start_string
         elif span is md4c.SpanType.EM:
-            self._current_line += self.italic_start_string
+            self.current_line += self.italic_start_string
         elif span is md4c.SpanType.WIKILINK:
-            self._current_line += self.wikilink_start_string
+            self.current_line += self.wikilink_start_string
             self._current_wikilink_target = details['target'][0][1]
         elif span is md4c.SpanType.IMG:
-            self._current_line += '!['
+            self.current_line += '!['
 
     def leave_span(self, span, details):
         if span is md4c.SpanType.CODE:
             self._inside_codespan = False
-            self._current_line += self.code_end_string
+            self.current_line += self.code_end_string
         elif span is md4c.SpanType.A:
-            if self._current_line[-1] != '>':
-                self._current_line += f']({self._current_aspan_href}'
+            if self.current_line[-1] != '>':
+                self.current_line += f']({self._current_aspan_href}'
                 if self._current_aspan_title:
-                    self._current_line += (
+                    self.current_line += (
                         f' "{polib.escape(self._current_aspan_title)}"'
                     )
-                self._current_line += ')'
+                self.current_line += ')'
             self._current_aspan_href = False
             self._current_aspan_href = None
             self._current_aspan_title = None
         elif span is md4c.SpanType.STRONG:
-            self._current_line += self.bold_end_string
+            self.current_line += self.bold_end_string
         elif span is md4c.SpanType.EM:
-            self._current_line += self.italic_end_string
+            self.current_line += self.italic_end_string
         elif span is md4c.SpanType.WIKILINK:
-            self._current_line += self.wikilink_end_string
+            self.current_line += self.wikilink_end_string
             self._current_wikilink_target = None
         elif span is md4c.SpanType.IMG:
             src = details['src'][0][1]
-            self._current_line += f']({src}'
+            self.current_line += f']({src}'
             if details['title']:
                 title = details['title'][0][1]
-                self._current_line += f' "{polib.escape(title)}"'
-            self._current_line += ')'
+                self.current_line += f' "{polib.escape(title)}"'
+            self.current_line += ')'
 
     def text(self, block, text):
         if self._inside_codespan:
             width = self._get_currently_applied_width()
             indent = self._get_currently_applied_indent()
 
-            if len(self._current_line) + len(text) + 1 > width:
-                self._current_line = self._current_line.rstrip('`').rstrip(' ')
-                self.output += f'{indent}{self._current_line}\n'
-                self._current_line = '`'
+            if len(self.current_line) + len(text) + 1 > width:
+                self.current_line = self.current_line.rstrip('`').rstrip(' ')
+                self.output += f'{indent}{self.current_line}\n'
+                self.current_line = '`'
 
             n_backticks = min_not_max_chars_in_a_row(
                 self.code_start_string[0],
                 text,
             ) - 1
             if n_backticks:
-                self._current_line += n_backticks * '`'
+                self.current_line += n_backticks * '`'
 
-            self._current_line += f'{text}{n_backticks * "`"}'
+            self.current_line += f'{text}{n_backticks * "`"}'
         elif self._current_wikilink_target:
             if text != self._current_wikilink_target:
-                self._current_line += (
+                self.current_line += (
                     f'{self._current_wikilink_target}|{text}'
                 )
             else:
-                self._current_line += text
+                self.current_line += text
             return
         else:
             if self._current_aspan_href:
@@ -210,8 +210,8 @@ class MarkdownSpanWrapper:
                     self._current_aspan_href == text
                     and not self._current_aspan_title
                 ):
-                    self._current_line = (
-                        f"{self._current_line.rstrip(' [')} <{text}>"
+                    self.current_line = (
+                        f"{self.current_line.rstrip(' [')} <{text}>"
                     )
                     return
 
@@ -227,29 +227,29 @@ class MarkdownSpanWrapper:
             text_splits = text.split(' ')
             width = self._get_currently_applied_width()
             if self._current_aspan_href:  # links wrapping
-                if len(self._current_line) + len(text_splits[0]) + 1 > width:
+                if len(self.current_line) + len(text_splits[0]) + 1 > width:
                     indent = self._get_currently_applied_indent()
                     # new link text in newline
-                    self._current_line = self._current_line[:-1].rstrip(' ')
-                    self.output += f'{indent}{self._current_line}\n'
-                    self._current_line = '['
+                    self.current_line = self.current_line[:-1].rstrip(' ')
+                    self.output += f'{indent}{self.current_line}\n'
+                    self.current_line = '['
                 width *= .95        # latest word in newline
 
             for i, text_split in enumerate(text_splits):
                 # +1 is a space here
-                if len(self._current_line) + len(text_split) + 1 > width:
+                if len(self.current_line) + len(text_split) + 1 > width:
                     if i or (
-                        self._current_line and self._current_line[-1] == ' '
+                        self.current_line and self.current_line[-1] == ' '
                     ):
                         indent = self._get_currently_applied_indent()
-                        self.output += f'{indent}{self._current_line}\n'
-                        self._current_line = ''
+                        self.output += f'{indent}{self.current_line}\n'
+                        self.current_line = ''
                         width = self._get_currently_applied_width()
                         if self._current_aspan_href:
                             width *= .95
                 elif i:
-                    self._current_line += ' '
-                self._current_line += text_split
+                    self.current_line += ' '
+                self.current_line += text_split
 
     def wrap(self, text):
         """Wraps reasonably Markdown lines."""
@@ -266,9 +266,9 @@ class MarkdownSpanWrapper:
             self.text,
         )
 
-        if self._current_line:
+        if self.current_line:
             self.output += (
-                f'{self._get_currently_applied_indent()}{self._current_line}'
+                f'{self._get_currently_applied_indent()}{self.current_line}'
             )
         if self.first_line_width == self.width:  # is not blockquote nor list
             self.output += '\n'

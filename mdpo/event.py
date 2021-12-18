@@ -108,6 +108,20 @@ def debug_events(program):
     }
 
 
+def add_debug_events(implementation_name, events):
+    """Add debugging events to an events dict.
+
+    Args:
+        implementation_name (str): Implementation name, shown when
+            printing debugging events.
+        events (dict): Events dictionary.
+    """
+    for event_name, function in debug_events(implementation_name).items():
+        if event_name not in events:
+            events[event_name] = []
+        events[event_name].append(function)
+
+
 def parse_events_kwarg(events_kwarg):
     """Parse ``events`` kwarg passed to implementations.
 

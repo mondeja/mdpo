@@ -10,7 +10,7 @@ from mdpo.command import (
     normalize_mdpo_command_aliases,
     parse_mdpo_html_command,
 )
-from mdpo.event import debug_events, parse_events_kwarg, raise_skip_event
+from mdpo.event import add_debug_events, parse_events_kwarg, raise_skip_event
 from mdpo.io import (
     filter_paths,
     save_file_checking_file_changed,
@@ -31,6 +31,30 @@ from mdpo.text import min_not_max_chars_in_a_row, parse_wrapwidth_argument
 
 
 class Md2Po:
+    """Markdown to PO files extractor.
+
+    This class is where all the extraction process is carried out.
+    If you are executing custom extraction events, you may want to
+    read the documentation about the properties of this class to
+    properly control the internal state of the parser.
+
+    Example:
+        If you want to extract all "Foo" messages as "Bar",
+        regardless of the content of the Markdown input,
+        you could do something like:
+
+        .. code-block:: python
+
+           def transform_foo(self, block, text):
+               if text == 'Foo':
+                   self.current_msgid = 'Bar'  # self is Md2Po
+                   return False
+
+           markdown_to_pofile('Foo', events={'text': transform_foo})
+
+    The public internal properties of this class are documented
+    below:
+    """
     __slots__ = {
         'filepaths',
         'content',
@@ -54,15 +78,17 @@ class Md2Po:
         '_current_top_level_block_type',
         '_current_markdown_filepath',
 
-        '_current_msgid',
-        '_current_tcomment',
-        '_current_msgctxt',
+        # Public class properties
+        'current_msgid',
+        'current_tcomment',
+        'current_msgctxt',
+        'link_references',
+        'disable',
+        'disable_next_block',
+        'enable_next_block',
+        'include_next_codeblock',
+        'disable_next_codeblock',
 
-        '_disable',
-        '_disable_next_block',
-        '_enable_next_block',
-        '_include_next_codeblock',
-        '_disable_next_codeblock',
         '_saved_files_changed',
 
         '_enterspan_replacer',
@@ -106,7 +132,6 @@ class Md2Po:
         '_current_wikilink_target',
         '_current_imgspan',
         '_uls_deep',
-        '_link_references',
     }
 
     def __init__(self, files_or_content, **kwargs):
@@ -122,18 +147,84 @@ class Md2Po:
         else:
             self.content = files_or_content
 
+        #: :py:class:`polib.POFile` PO file object representing
+        #: the extracted content.
         self.pofile = None
-        self.po_filepath = None
-        self.msgstr = kwargs.get('msgstr', '')
-        self.found_entries = []
-        self.disabled_entries = []
-        self._current_msgid = ''
-        self._current_tcomment = None
-        self._current_msgctxt = None
 
+        #: str: PO file path to which the content will be extracted.
+        self.po_filepath = None
+
+        #: str: Default msgstr used if the current is not found
+        #: inside the previous content of the specified PO file.
+        self.msgstr = kwargs.get('msgstr', '')
+
+        #: list: Extracted entries.
+        self.found_entries = []
+
+        #: list: Not extracted entries because the extractor
+        #: has been disabled while processing them.
+        self.disabled_entries = []
+
+        #: list(str): MD4C extensions used to parse the content.
+        #: See all available in :doc:`/devref/mdpo/mdpo.md4c`.
+        self.extensions = kwargs.get(
+            'extensions',
+            DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
+        )
+
+        #: dict: Custom events excuted during the parsing while
+        #: extracting content.
+        self.events = (
+            parse_events_kwarg(kwargs['events']) if 'events' in kwargs else {}
+        )
+        if kwargs.get('debug'):
+            add_debug_events('md2po', self.events)
+
+        #: str: The msgid being currently built for the next
+        #: message entry. Keep in mind that, if you are executing
+        #: an event that will be followed by an span one
+        #: (``enter_span`` or ``exit_span``), the content of the
+        #: msgid will change before save it.
+        self.current_msgid = ''
+
+        #: str: Translator comment that will be saved in the next
+        #: message.
+        self.current_tcomment = None
+
+        #: str: Context message that will be saved in the next
+        #: message.
+        self.current_msgctxt = None
+
+        #: bool: Indicates if the extractor is currently disabled,
+        #: which happens after a ``<!-- mdpo-disable -->`` command
+        #: is found, before any subsecuents ``<!-- mdpo-enable -->``
+        #: commands.
+        self.disable = False
+
+        #: bool: Indicates if the next block will be extracted.
+        self.disable_next_block = False
+
+        #: bool: Indicates if the next block will be extracted
+        #: when the extractor is disabled (``disable is True``).
+        self.enable_next_block = False
+
+        #: bool: Indicates if the next codeblock will be extracted
+        #: when `include_codeblocks` is enabled.
+        self.include_next_codeblock = False
+
+        #: bool: Indicates if the next codeblock will be extracted
+        #: when `include_codeblocks` is disabled.
+        self.disable_next_codeblock = False
+
+        #: bool: Extract code blocks
+        self.include_codeblocks = kwargs.get('include_codeblocks', False)
+
+        #: The msgids to ignore for extraction
         self.ignore_msgids = kwargs.get('ignore_msgids', [])
-        self.command_aliases = normalize_mdpo_command_aliases(
-            kwargs.get('command_aliases', {}),
+
+        self.command_aliases = (
+            normalize_mdpo_command_aliases(kwargs['command_aliases'])
+            if 'command_aliases' in kwargs else {}
         )
 
         self.mark_not_found_as_obsolete = kwargs.get(
@@ -141,42 +232,20 @@ class Md2Po:
         )
         self.preserve_not_found = kwargs.get('preserve_not_found', True)
 
-        self.location = kwargs.get('location', True)
-        # "top level" here because blocks inside blocks are not taken into
-        # account for locations
-        self._current_top_level_block_number = 0
-        self._current_top_level_block_type = None
-        self._current_markdown_filepath = None
-
-        self.extensions = kwargs.get(
-            'extensions',
-            DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
-        )
-        self.events = (
-            parse_events_kwarg(kwargs['events']) if 'events' in kwargs else {}
-        )
-        if kwargs.get('debug'):
-            for event_name, function in debug_events('md2po').items():
-                if event_name not in self.events:
-                    self.events[event_name] = []
-                self.events[event_name].append(function)
-
         self.plaintext = kwargs.get('plaintext', False)
-
-        self.include_codeblocks = kwargs.get('include_codeblocks', False)
-
-        self._disable = False
-        self._disable_next_block = False
-        self._enable_next_block = False
-
-        self._include_next_codeblock = False
-        self._disable_next_codeblock = False
 
         self._saved_files_changed = (
             False if kwargs.get('_check_saved_files_changed') else None
         )
 
         self.metadata = {}
+
+        self.location = kwargs.get('location', True)
+        # "top level" here because blocks inside blocks are not taken into
+        # account for locations
+        self._current_top_level_block_number = 0
+        self._current_top_level_block_type = None
+        self._current_markdown_filepath = None
 
         if not self.plaintext:
             self.bold_start_string = kwargs.get('bold_start_string', '**')
@@ -350,7 +419,7 @@ class Md2Po:
         # extracted without using MD4C, so we can preserve it as referenced
         self._current_aspan_ref_target = None
 
-        self._link_references = None
+        self.link_references = None
         self._current_wikilink_target = None
         self._current_imgspan = {}
 
@@ -425,39 +494,39 @@ class Md2Po:
             self.events,
             'msgid',
             self,
-            self._current_msgid,
+            self.current_msgid,
             msgstr,
-            self._current_msgctxt,
-            self._current_tcomment,
+            self.current_msgctxt,
+            self.current_tcomment,
             ['fuzzy'] if fuzzy else [],
         ):
             return
 
-        if self._current_msgid:
-            if (not self._disable_next_block and not self._disable) or \
-                    self._enable_next_block:
+        if self.current_msgid:
+            if (not self.disable_next_block and not self.disable) or \
+                    self.enable_next_block:
                 self._save_msgid(
-                    self._current_msgid,
+                    self.current_msgid,
                     msgstr=msgstr or self.msgstr,
-                    msgctxt=self._current_msgctxt,
-                    tcomment=self._current_tcomment,
+                    msgctxt=self.current_msgctxt,
+                    tcomment=self.current_tcomment,
                     fuzzy=fuzzy,
                 )
             else:
                 self.disabled_entries.append(
                     polib.POEntry(
-                        msgid=self._current_msgid,
+                        msgid=self.current_msgid,
                         msgstr=msgstr or self.msgstr,
-                        msgctxt=self._current_msgctxt,
-                        tcomment=self._current_tcomment,
+                        msgctxt=self.current_msgctxt,
+                        tcomment=self.current_tcomment,
                         flags=['fuzzy'] if fuzzy else [],
                     ),
                 )
-        self._disable_next_block = False
-        self._enable_next_block = False
-        self._current_msgid = ''
-        self._current_tcomment = None
-        self._current_msgctxt = None
+        self.disable_next_block = False
+        self.enable_next_block = False
+        self.current_msgid = ''
+        self.current_tcomment = None
+        self.current_msgctxt = None
 
     def command(self, mdpo_command, comment, original_command):
         # raise 'command' event
@@ -475,20 +544,20 @@ class Md2Po:
             'mdpo-disable-next-block',
             'mdpo-disable-next-line',
         ):
-            self._disable_next_block = True
+            self.disable_next_block = True
         elif mdpo_command == 'mdpo-disable':
-            self._disable = True
+            self.disable = True
         elif mdpo_command == 'mdpo-enable':
-            self._disable = False
+            self.disable = False
         elif mdpo_command in (
             'mdpo-enable-next-block',
             'mdpo-enable-next-line',
         ):
-            self._enable_next_block = True
+            self.enable_next_block = True
         elif mdpo_command == 'mdpo-include-codeblock':
-            self._include_next_codeblock = True
+            self.include_next_codeblock = True
         elif mdpo_command == 'mdpo-disable-codeblock':
-            self._disable_next_codeblock = True
+            self.disable_next_codeblock = True
         elif mdpo_command == 'mdpo-disable-codeblocks':
             self.include_codeblocks = False
         elif mdpo_command == 'mdpo-include-codeblocks':
@@ -500,14 +569,14 @@ class Md2Po:
                     ' extracted comment with the command'
                     f' \'{original_command}\'.',
                 )
-            self._current_tcomment = comment
+            self.current_tcomment = comment
         elif mdpo_command == 'mdpo-context':
             if not comment:
                 raise ValueError(
                     'You need to specify a string for the'
                     f' context with the command \'{original_command}\'.',
                 )
-            self._current_msgctxt = comment
+            self.current_msgctxt = comment
         elif mdpo_command == 'mdpo-include':
             if not comment:
                 raise ValueError(
@@ -515,7 +584,7 @@ class Md2Po:
                     ' comment to include with the command'
                     f' \'{original_command}\'.',
                 )
-            self._current_msgid = comment
+            self.current_msgid = comment
             self._save_current_msgid()
 
     def _process_command(self, text):
@@ -621,11 +690,11 @@ class Md2Po:
 
         if block is md4c.BlockType.CODE:
             self._inside_codeblock = False
-            if not self._disable_next_codeblock:
-                if self.include_codeblocks or self._include_next_codeblock:
+            if not self.disable_next_codeblock:
+                if self.include_codeblocks or self.include_next_codeblock:
                     self._save_current_msgid()
-            self._include_next_codeblock = False
-            self._disable_next_codeblock = False
+            self.include_next_codeblock = False
+            self.disable_next_codeblock = False
         elif block is md4c.BlockType.HTML:
             self._inside_htmlblock = False
         else:
@@ -668,7 +737,7 @@ class Md2Po:
                     pass
             else:
                 try:
-                    self._current_msgid += (
+                    self.current_msgid += (
                         self._enterspan_replacer[span.value]
                     )
                 except KeyError:
@@ -677,8 +746,8 @@ class Md2Po:
         if span is md4c.SpanType.A:
             # here resides the logic of discover if the current link
             # is referenced
-            if self._link_references is None:
-                self._link_references = parse_link_references(self.content)
+            if self.link_references is None:
+                self.link_references = parse_link_references(self.content)
 
             self._inside_aspan = True
 
@@ -687,7 +756,7 @@ class Md2Po:
 
             if details['title']:
                 current_aspan_title = details['title'][0][1]
-                for target, href, title in self._link_references:
+                for target, href, title in self.link_references:
                     if (
                         href == current_aspan_href and
                         title == current_aspan_title
@@ -695,7 +764,7 @@ class Md2Po:
                         self._current_aspan_ref_target = target
                         break
             else:
-                for target, href, _ in self._link_references:
+                for target, href, _ in self.link_references:
                     if href == current_aspan_href:
                         self._current_aspan_ref_target = target
                         break
@@ -707,10 +776,10 @@ class Md2Po:
             # will be escaped
             #
             # save the index char of the opening backtick
-            self._codespan_start_index = len(self._current_msgid) - 1
+            self._codespan_start_index = len(self.current_msgid) - 1
         elif span is md4c.SpanType.IMG:
-            if self._link_references is None:
-                self._link_references = parse_link_references(self.content)
+            if self.link_references is None:
+                self.link_references = parse_link_references(self.content)
 
             self._current_imgspan['src'] = details['src'][0][1]
             self._current_imgspan['title'] = '' if not details['title'] \
@@ -733,7 +802,7 @@ class Md2Po:
 
         if not self._inside_uspan:
             if span is md4c.SpanType.WIKILINK:
-                self._current_msgid += self._current_wikilink_target
+                self.current_msgid += self._current_wikilink_target
                 self._current_wikilink_target = None
             if self._inside_aspan:  # span inside link text
                 try:
@@ -744,7 +813,7 @@ class Md2Po:
                     pass
             else:
                 try:
-                    self._current_msgid += (
+                    self.current_msgid += (
                         self._leavespan_replacer[span.value]
                     )
                 except KeyError:
@@ -752,9 +821,9 @@ class Md2Po:
 
         if span is md4c.SpanType.A:
             if self._current_aspan_ref_target:  # referenced link
-                self._current_msgid += f'[{self._current_aspan_text}]'
+                self.current_msgid += f'[{self._current_aspan_text}]'
                 if self._current_aspan_ref_target != self._current_aspan_text:
-                    self._current_msgid += (
+                    self.current_msgid += (
                         f'[{self._current_aspan_ref_target}]'
                     )
                 self._current_aspan_ref_target = None
@@ -762,14 +831,14 @@ class Md2Po:
                 title = details['title'][0][1] if details['title'] else ''
                 if self._current_aspan_text == details['href'][0][1]:
                     # autolink vs link clash (see implementation notes)
-                    self._current_msgid += f'<{self._current_aspan_text}'
+                    self.current_msgid += f'<{self._current_aspan_text}'
                     if title:
-                        self._current_msgid += f' "{polib.escape(title)}"'
-                    self._current_msgid += '>'
+                        self.current_msgid += f' "{polib.escape(title)}"'
+                    self.current_msgid += '>'
                 else:
                     title_part = f' "{polib.escape(title)}"' if title else ''
                     href = details['href'][0][1]
-                    self._current_msgid += (
+                    self.current_msgid += (
                         f'[{self._current_aspan_text}]({href}{title_part})'
                     )
             self._inside_aspan = False
@@ -784,7 +853,7 @@ class Md2Po:
                     self._codespan_backticks * self.code_end_string
                 )
             else:
-                self._current_msgid += (
+                self.current_msgid += (
                     self._codespan_backticks * self.code_end_string
                 )
             self._codespan_backticks = None
@@ -793,12 +862,12 @@ class Md2Po:
             imgspan_src = details['src'][0][1]
             if details['title']:
                 imgspan_title = details['title'][0][1]
-                for target, href, title in self._link_references:
+                for target, href, title in self.link_references:
                     if href == imgspan_src and title == imgspan_title:
                         referenced_target = target
                         break
             else:
-                for target, href, _ in self._link_references:
+                for target, href, _ in self.link_references:
                     if href == imgspan_src:
                         referenced_target = target
                         break
@@ -818,7 +887,7 @@ class Md2Po:
             if self._inside_aspan:
                 self._current_aspan_text += img_markup
             else:
-                self._current_msgid += img_markup
+                self.current_msgid += img_markup
         elif span is md4c.SpanType.U:
             self._inside_uspan = False
 
@@ -844,10 +913,10 @@ class Md2Po:
                             self.code_start_string,
                             text,
                         ) - 1
-                        self._current_msgid = '{}{}{}'.format(
-                            self._current_msgid[:self._codespan_start_index],
+                        self.current_msgid = '{}{}{}'.format(
+                            self.current_msgid[:self._codespan_start_index],
                             self._codespan_backticks * self.code_start_string,
-                            self._current_msgid[self._codespan_start_index:],
+                            self.current_msgid[self._codespan_start_index:],
                         )
                         if self._inside_aspan:
                             self._current_aspan_text += text
@@ -872,23 +941,23 @@ class Md2Po:
                             f'{self._current_wikilink_target}|{text}'
                         )
                     return
-                self._current_msgid += text
+                self.current_msgid += text
             else:
-                if not self._disable_next_codeblock:
-                    if self.include_codeblocks or self._include_next_codeblock:
-                        self._current_msgid += text
+                if not self.disable_next_codeblock:
+                    if self.include_codeblocks or self.include_next_codeblock:
+                        self.current_msgid += text
         else:
             self._process_command(text)
 
     def _dump_link_references(self):
-        if self._link_references:
-            self._disable_next_block = False
-            self._disable = False
+        if self.link_references:
+            self.disable_next_block = False
+            self.disable = False
 
             # 'link_reference' event
             pre_events = self.events.get('link_reference')
 
-            for target, href, title in self._link_references:
+            for target, href, title in self.link_references:
                 if pre_events:
                     skip = False
                     for event in pre_events:
@@ -897,13 +966,13 @@ class Md2Po:
                     if skip:
                         continue
 
-                self._current_msgid = '[{}]:{}{}'.format(
+                self.current_msgid = '[{}]:{}{}'.format(
                     target,
                     f' {href}' if href else '',
                     f' "{title}"' if title else '',
                 )
                 self._save_current_msgid(
-                    msgstr=self._current_msgid,
+                    msgstr=self.current_msgid,
                     fuzzy=True,
                 )
 
@@ -976,12 +1045,12 @@ class Md2Po:
                 _parse(self.content)
 
                 # reset state
-                self._disable_next_block = False
-                self._disable = False
-                self._enable_next_block = False
-                self._include_next_codeblock = False
-                self._disable_next_codeblock = False
-                self._link_references = None
+                self.disable_next_block = False
+                self.disable = False
+                self.enable_next_block = False
+                self.include_next_codeblock = False
+                self.disable_next_codeblock = False
+                self.link_references = None
                 self._current_top_level_block_number = 0
                 self._current_top_level_block_type = None
 
@@ -1136,7 +1205,7 @@ def markdown_to_pofile(
 
                def msgid_event(self, msgid, *args):
                    if msgid == 'foo':
-                       self._disable_next_block = True
+                       self.disable_next_block = True
         debug (bool): Add events displaying all parsed elements in the
             extraction process.
 
@@ -1154,9 +1223,6 @@ def markdown_to_pofile(
 
     Returns:
         :class:`polib.POFile` Pofile instance with new msgids included.
-
-    Raises
-        ValueError: when ``po_filepath`` is ``None`` and ``save`` is ``True``.
     """
     return Md2Po(
         files_or_content,
