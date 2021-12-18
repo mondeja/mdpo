@@ -12,7 +12,7 @@ Development install
    python3 -m pip install virtualenv
    python3 -m virtualenv venv
    . venv/bin/activate
-   python3 -m pip install .[dev]
+   python3 -m pip install -e .[dev]
    pre-commit install
 
 
