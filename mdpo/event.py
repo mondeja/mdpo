@@ -112,7 +112,7 @@ def parse_events_kwarg(events_kwarg):
     """Parse ``events`` kwarg passed to implementations.
 
     Each event can be a function or a path to a function inside a file
-    using the syntax ``path/to/file.py::function`.
+    using the syntax ``path/to/file.py::function``.
 
     Args:
         events_kwarg (dict): Dictionary of event names and their location.
