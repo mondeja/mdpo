@@ -15,12 +15,14 @@ from mdpo.cli import (
     add_common_cli_first_arguments,
     add_debug_option,
     add_encoding_arguments,
+    add_event_argument,
     add_extensions_argument,
     add_nolocation_option,
     add_pre_commit_option,
     add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
+    parse_event_argument,
     parse_metadata_cli_arguments,
 )
 from mdpo.context import environ
@@ -149,6 +151,7 @@ def build_parser():
     )
 
     add_command_alias_argument(parser)
+    add_event_argument(parser)
     add_debug_option(parser)
     add_pre_commit_option(parser)
     return parser
@@ -186,6 +189,7 @@ def parse_options(args=[]):
     opts.command_aliases = parse_command_aliases_cli_arguments(
         opts.command_aliases,
     )
+    opts.events = parse_event_argument(opts.events)
     opts.metadata = parse_metadata_cli_arguments(
         opts.metadata,
     )
@@ -209,6 +213,7 @@ def run(args=[]):
             'ignore_msgids': opts.ignore_msgids,
             'command_aliases': opts.command_aliases,
             'metadata': opts.metadata,
+            'events': opts.events,
             'debug': opts.debug,
             '_check_saved_files_changed': opts.check_saved_files_changed,
         }

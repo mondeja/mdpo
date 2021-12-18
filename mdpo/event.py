@@ -1,5 +1,7 @@
 """Custom events executed during the parsing process of an implementation."""
 
+import importlib
+import os
 import sys
 
 
@@ -104,3 +106,67 @@ def debug_events(program):
         'command': print_command,
         'link_reference': print_link_reference,
     }
+
+
+def parse_events_kwarg(events_kwarg):
+    """Parse ``events`` kwarg passed to implementations.
+
+    Each event can be a function or a path to a function inside a file
+    using the syntax ``path/to/file.py::function``.
+
+    Args:
+        events_kwarg (dict): Dictionary of event names and their location.
+
+    Returns:
+        dict: Event names mapping to a list of functions to execute.
+    """
+    events = {}
+    for event_name, funcs_func_or_filefuncs in events_kwarg.items():
+        funcs_or_filefuncs = (
+            [funcs_func_or_filefuncs]
+            if callable(funcs_func_or_filefuncs)
+            or isinstance(funcs_func_or_filefuncs, str)
+            else funcs_func_or_filefuncs
+        )
+
+        events[event_name] = []
+        for func_or_filefunc in funcs_or_filefuncs:
+            if isinstance(func_or_filefunc, str):
+                # is a string with the syntax 'path/to/file.py::func'
+                #
+                # import the file, execute as a module and get the function
+                if '::' not in func_or_filefunc:
+                    raise ValueError(
+                        'Function not specified for file'
+                        f" '{func_or_filefunc}' defined for event"
+                        f" '{event_name}'",
+                    )
+
+                fpath, funcname = func_or_filefunc.split('::')
+                if not os.path.isfile(fpath):
+                    raise FileNotFoundError(
+                        f"File '{fpath}' specified for event"
+                        f" '{event_name}' not found",
+                    )
+
+                modname = fpath.split('.')[0].replace(os.sep, '.')
+                if modname in sys.modules:
+                    mod = sys.modules[modname]
+                else:
+                    spec = importlib.util.spec_from_file_location(
+                        modname, fpath,
+                    )
+                    mod = importlib.util.module_from_spec(spec)
+                    sys.modules[modname] = mod
+                    spec.loader.exec_module(mod)
+
+                if not hasattr(mod, funcname):
+                    raise ValueError(
+                        f"Function '{funcname}' specified for event"
+                        f" '{event_name}' not found in file '{fpath}'",
+                    )
+                events[event_name].append(getattr(mod, funcname))
+            else:
+                # is a function
+                events[event_name].append(func_or_filefunc)
+    return events
