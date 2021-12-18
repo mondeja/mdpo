@@ -57,14 +57,14 @@ def class_slots():
                 self.slots = []
 
             def visit_ClassDef(self, node):
-                for children in node.body:
+                for child in node.body:
                     if (
-                        isinstance(children, ast.Assign)
-                        and children.targets[0].id == '__slots__'
+                        isinstance(child, ast.Assign)
+                        and child.targets[0].id == '__slots__'
                     ):
                         self.slots.extend([
                             getattr(elt, AST_ELTS_VALUE_ATTR)
-                            for elt in children.value.elts
+                            for elt in child.value.elts
                         ])
                         break
 
