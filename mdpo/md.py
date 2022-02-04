@@ -20,7 +20,7 @@ def parse_link_references(content):
 
     Returns:
         list: Tuples with 3 values, target, href and title for each link
-            reference.
+        reference.
     """
     import re
 
