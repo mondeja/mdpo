@@ -56,11 +56,11 @@ def markdown_to_pofile_to_markdown(
             ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
             parameter.
         location (bool): Store references of top-level blocks in which are
-            found the messages in PO file `#: reference` comments.
+            found the messages in PO file ``#: reference`` comments.
         debug (bool): Add events displaying all parsed elements in the
             extraction process.
         po_wrapwidth (int): Maximum width for PO files.
-        md_wrapwidth (int): Maximum with for produced Markdown contents, when
+        md_wrapwidth (int): Maximum width for produced Markdown contents, when
             possible.
         po_encoding (str): PO files encoding.
         md_encoding (str): Markdown files encoding.
