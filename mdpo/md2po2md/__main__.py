@@ -6,6 +6,7 @@ See :ref:`md2po2md CLI<cli:md2po2md>`.
 """
 
 import argparse
+import itertools
 import sys
 
 from mdpo.cli import (
@@ -18,6 +19,7 @@ from mdpo.cli import (
     add_nolocation_option,
     add_pre_commit_option,
     add_wrapwidth_argument,
+    cli_codespan,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.context import environ
@@ -40,9 +42,12 @@ def build_parser():
              ' If not provided, will be read from STDIN.',
     )
     parser.add_argument(
-        '-l', '--lang', dest='langs', default=[], action='append',
+        '-l', '--lang', dest='langs', default=[], nargs='*',
+        action='append',
         help='Language codes used to create the output directories.'
-             ' This argument can be passed multiple times.',
+             ' This argument can be passed multiple times. Also, all'
+             ' languages can be defined after this argument with'
+             f" {cli_codespan('-l es_ES fr_FR de_DE')}.",
         metavar='LANG', required=True,
     )
 
@@ -99,6 +104,8 @@ def parse_options(args=[]):
         sys.stderr.write('Files or content to translate not specified\n')
         sys.exit(1)
     opts.input_paths_glob = input_paths_glob
+
+    opts.langs = set(itertools.chain(*opts.langs))  # flatten
 
     if opts.extensions is None:
         opts.extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS

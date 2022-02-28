@@ -19,7 +19,7 @@ so you don't need to specify them.
       .. code-block:: yaml
 
          - repo: https://github.com/mondeja/mdpo
-           rev: v0.3.84
+           rev: v0.3.85
            hooks:
              - id: md2po
                args:
@@ -32,7 +32,7 @@ so you don't need to specify them.
       .. code-block:: yaml
 
          - repo: https://github.com/mondeja/mdpo
-           rev: v0.3.84
+           rev: v0.3.85
            hooks:
              - id: md2po
                files: ^README\.md
@@ -53,7 +53,7 @@ po2md
       .. code-block:: yaml
 
          - repo: https://github.com/mondeja/mdpo
-           rev: v0.3.84
+           rev: v0.3.85
            hooks:
              - id: po2md
                args:
@@ -68,7 +68,7 @@ po2md
       .. code-block:: yaml
 
          - repo: https://github.com/mondeja/mdpo
-           rev: v0.3.84
+           rev: v0.3.85
            hooks:
              - id: po2md
                files: ^README\.md
@@ -91,14 +91,13 @@ md2po2md
       .. code-block:: yaml
 
          - repo: https://github.com/mondeja/mdpo
-           rev: v0.3.84
+           rev: v0.3.85
            hooks:
              - id: md2po2md
                args:
                  - README.md
                  - -l
                  - es
-                 - -l
                  - fr
                  - -o
                  - locale/{lang}
@@ -108,17 +107,11 @@ md2po2md
       .. code-block:: yaml
 
          - repo: https://github.com/mondeja/mdpo
-           rev: v0.3.84
+           rev: v0.3.85
            hooks:
              - id: md2po2md
                files: ^README\.md
-               args:
-                 - -l
-                 - es
-                 - -l
-                 - fr
-                 - -o
-                 - locale/{lang}
+               args: ['-l', 'es', 'fr', '-o', 'locale/{lang}']
 
 .. seealso::
    * :ref:`md2po2md CLI<cli:md2po2md>`
@@ -133,7 +126,7 @@ mdpo2html
       .. code-block:: yaml
 
          - repo: https://github.com/mondeja/mdpo
-           rev: v0.3.84
+           rev: v0.3.85
            hooks:
              - id: mdpo2html
                args:
@@ -148,7 +141,7 @@ mdpo2html
       .. code-block:: yaml
 
          - repo: https://github.com/mondeja/mdpo
-           rev: v0.3.84
+           rev: v0.3.85
            hooks:
              - id: mdpo2html
                files: ^README\.html

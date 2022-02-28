@@ -67,9 +67,9 @@ Just use :ref:`md2po2md CLI<cli:md2po2md>`:
 
 .. code-block:: bash
 
-  md2po2md README.md -l es -l fr -o "locale/{lang}"
+  md2po2md README.md -l es fr -o "locale/{lang}"
 
-Define the languages to translate into using the ``-l`` option.
+Define the languages to translate into using the ``--lang``/``-l`` option.
 
 You also can use the next snippet to include links for the translations:
 
@@ -94,10 +94,10 @@ This will be the output after the previous command:
    ├── locale
    │   ├── es
    │   |   ├── README.md
-   │   |   └── readme.po 
+   │   |   └── readme.po
    |   └── fr
    │       ├── README.md
-   │       └── readme.po 
+   │       └── readme.po
    └── README.md
 
 .. seealso::
