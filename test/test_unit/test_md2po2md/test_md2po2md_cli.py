@@ -12,6 +12,7 @@ from mdpo.md2po2md.__main__ import run
 
 @pytest.mark.parametrize('output_arg', ('-o', '--output'))
 @pytest.mark.parametrize('langs_arg', ('-l', '--lang'))
+@pytest.mark.parametrize('all_langs_in_same_arg', (True, False))
 @pytest.mark.parametrize(
     (
         'langs',
@@ -120,11 +121,36 @@ from mdpo.md2po2md.__main__ import run
             FileNotFoundError,
             id='no-files-matching-input-glob',
         ),
+        pytest.param(
+            ('es', 'fr', 'de_DE'),
+            'README.md',
+            'locale/{lang}',
+            {'README.md': 'Foo\n\nBar\n'},
+            {
+                'locale/es/README.md.po': (
+                    '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n\n'
+                    'msgid "Bar"\nmsgstr ""\n'
+                ),
+                'locale/es/README.md': 'Foo\n\nBar\n',
+                'locale/fr/README.md.po': (
+                    '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n\n'
+                    'msgid "Bar"\nmsgstr ""\n'
+                ),
+                'locale/fr/README.md': 'Foo\n\nBar\n',
+                'locale/de_DE/README.md.po': (
+                    '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n\n'
+                    'msgid "Bar"\nmsgstr ""\n'
+                ),
+                'locale/de_DE/README.md': 'Foo\n\nBar\n',
+            },
+            id='README-es,fr-locale/{lang}',
+        ),
     ),
 )
 def test_md2po2md_arguments(
     output_arg,
     langs_arg,
+    all_langs_in_same_arg,
     langs,
     input_paths_glob,
     output,
@@ -151,8 +177,14 @@ def test_md2po2md_arguments(
         os.path.join(basedir, input_paths_glob),
         output_arg, os.path.join(basedir, output),
     ]
-    for lang in langs:
-        cmd.extend([langs_arg, lang])
+
+    # if all languages are passed in the same `--lang`/`-l` argument
+    if all_langs_in_same_arg:
+        cmd.extend([langs_arg, *langs])
+    else:
+        for lang in langs:
+            cmd.extend([langs_arg, lang])
+
     cmd.append('--no-location')
 
     if hasattr(expected_files_content, '__traceback__'):

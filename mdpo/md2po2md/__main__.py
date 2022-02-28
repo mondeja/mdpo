@@ -6,6 +6,7 @@ See :ref:`md2po2md CLI<cli:md2po2md>`.
 """
 
 import argparse
+import itertools
 import sys
 
 from mdpo.cli import (
@@ -40,7 +41,8 @@ def build_parser():
              ' If not provided, will be read from STDIN.',
     )
     parser.add_argument(
-        '-l', '--lang', dest='langs', default=[], action='append',
+        '-l', '--lang', dest='langs', default=[], nargs='*',
+        action='append',
         help='Language codes used to create the output directories.'
              ' This argument can be passed multiple times.',
         metavar='LANG', required=True,
@@ -90,6 +92,7 @@ def parse_options(args=[]):
         sys.exit(1)
     opts, unknown = parser.parse_known_args(args)
 
+
     input_paths_glob = ''
     if not sys.stdin.isatty():
         input_paths_glob += sys.stdin.read().strip('\n')
@@ -99,6 +102,8 @@ def parse_options(args=[]):
         sys.stderr.write('Files or content to translate not specified\n')
         sys.exit(1)
     opts.input_paths_glob = input_paths_glob
+
+    opts.langs = set(itertools.chain(*opts.langs))  # flatten
 
     if opts.extensions is None:
         opts.extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
