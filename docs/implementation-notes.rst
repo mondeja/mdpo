@@ -30,6 +30,6 @@ Link cloisterers
   like ``[foo][foo]`` are both normalized to ``[foo]`` due to MD4C parser
   limitations.
 * Although a link title can be wrapped between different characters, mdpo will
-  use ``"`` (double quotes) always.
+  use double quotes characters ``"`` always.
 
 .. _CommonMark Specification v0.30: https://spec.commonmark.org/0.30
