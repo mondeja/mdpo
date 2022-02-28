@@ -69,7 +69,7 @@ Just use :ref:`md2po2md CLI<cli:md2po2md>`:
 
   md2po2md README.md -l es fr -o "locale/{lang}"
 
-Define the languages to translate into using the ``-l``/``--lang`` option.
+Define the languages to translate into using the ``--lang``/``-l`` option.
 
 You also can use the next snippet to include links for the translations:
 
