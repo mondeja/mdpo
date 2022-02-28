@@ -95,7 +95,6 @@ def parse_options(args=[]):
         sys.exit(1)
     opts, unknown = parser.parse_known_args(args)
 
-
     input_paths_glob = ''
     if not sys.stdin.isatty():
         input_paths_glob += sys.stdin.read().strip('\n')
