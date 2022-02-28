@@ -19,6 +19,7 @@ from mdpo.cli import (
     add_nolocation_option,
     add_pre_commit_option,
     add_wrapwidth_argument,
+    cli_codespan,
     parse_command_aliases_cli_arguments,
 )
 from mdpo.context import environ
@@ -44,7 +45,9 @@ def build_parser():
         '-l', '--lang', dest='langs', default=[], nargs='*',
         action='append',
         help='Language codes used to create the output directories.'
-             ' This argument can be passed multiple times.',
+             ' This argument can be passed multiple times. Also, all'
+             ' languages can be defined after this argument with'
+             f" {cli_codespan('-l es_ES fr_FR de_DE')}.",
         metavar='LANG', required=True,
     )
 

@@ -98,7 +98,6 @@ md2po2md
                  - README.md
                  - -l
                  - es
-                 - -l
                  - fr
                  - -o
                  - locale/{lang}
@@ -112,13 +111,7 @@ md2po2md
            hooks:
              - id: md2po2md
                files: ^README\.md
-               args:
-                 - -l
-                 - es
-                 - -l
-                 - fr
-                 - -o
-                 - locale/{lang}
+               args: ['-l', 'es', 'fr', '-o', 'locale/{lang}']
 
 .. seealso::
    * :ref:`md2po2md CLI<cli:md2po2md>`
