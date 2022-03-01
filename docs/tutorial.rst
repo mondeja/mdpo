@@ -15,15 +15,15 @@ Markdown to markdown
 If you want to translate a Markdown source using a PO file and produce
 translated Markdown output, use this method.
 
-Given next directory tree:
+Given the next directories tree:
 
 .. code-block:: bash
 
-   .
-   ├── locale
-   │   └── es
-   │       └── LC_MESSAGES
-   └── README.md
+   📁 .
+   ├── 📁 locale
+   │   └── 📁 es
+   │       └── 📄 LC_MESSAGES
+   └── 📄 README.md
 
 
 Use the next command to create or update the PO file for ``README.md``:
@@ -44,13 +44,13 @@ This will be the output after previous two commands:
 
 .. code-block::
 
-   .
-   ├── locale
-   │   └── es
-   │       └── LC_MESSAGES
-   │           ├── README.md
-   │           └── readme.po
-   └── README.md
+   📁 .
+   ├── 📁 locale
+   │   └── 📁 es
+   │       └── 📁 LC_MESSAGES
+   │           ├── 📄 README.md
+   │           └── 📄 readme.po
+   └── 📄 README.md
 
 .. seealso::
    * :ref:`md2po CLI<cli:md2po>`
@@ -90,15 +90,15 @@ This will be the output after the previous command:
 
 .. code-block:: bash
 
-   .
-   ├── locale
-   │   ├── es
-   │   |   ├── README.md
-   │   |   └── readme.po
-   |   └── fr
-   │       ├── README.md
-   │       └── readme.po
-   └── README.md
+   📁 .
+   ├── 📁 locale
+   │   ├── 📁 es
+   │   |   ├── 📄 README.md
+   │   |   └── 📄 readme.po
+   |   └── 📁 fr
+   │       ├── 📄 README.md
+   │       └── 📄 readme.po
+   └── 📄 README.md
 
 .. seealso::
    * :ref:`md2po2md CLI<cli:md2po2md>`
@@ -123,12 +123,12 @@ Given next directory tree:
 
 .. code-block:: bash
 
-   .
-   ├── locale
-   │   └── es
-   │       └── LC_MESSAGES
-   ├── README.html
-   └── README.md
+   📁 .
+   ├── 📁 locale
+   │   └── 📁 es
+   │       └── 📁 LC_MESSAGES
+   ├── 📄 README.html
+   └── 📄 README.md
 
 Where the file ``README.html`` have been produced using an HTML processor, use
 next command to create and update the translation pofile for ``README.html``:
@@ -151,14 +151,14 @@ And this will produce your translated file in
 
 .. code-block::
 
-   .
-   ├── locale
-   │   └── es
-   │       └── LC_MESSAGES
-   │           ├── README.html
-   │           └── readme.po
-   ├── README.html
-   └── README.md
+   📁 .
+   ├── 📁 locale
+   │   └── 📁 es
+   │       └── 📁 LC_MESSAGES
+   │           ├── 📄 README.html
+   │           └── 📄 readme.po
+   ├── 📄 README.html
+   └── 📄 README.md
 
 .. seealso::
    * :ref:`mdpo2html CLI<cli:mdpo2html>`
