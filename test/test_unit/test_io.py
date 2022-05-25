@@ -125,3 +125,5 @@ def test_save_file_checking_file_changed(tmp_file):
     with tmp_file('') as temp_fpath:
         assert save_file_checking_file_changed(temp_fpath, 'foo\n')
         assert not save_file_checking_file_changed(temp_fpath, 'foo\n')
+        os.remove(temp_fpath)
+        assert save_file_checking_file_changed(temp_fpath, 'foo\n')
