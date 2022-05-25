@@ -3,8 +3,6 @@
 import glob
 import html
 import os
-import tempfile
-import uuid
 
 import pytest
 
@@ -112,26 +110,18 @@ class TestToGlobOrContent:
 
 
 class TestToFileContentIfIsFile:
-    def test_file(self):
-        with tempfile.NamedTemporaryFile('w+') as tmpfile:
-            tmpfile.write(MD_CONTENT_EXAMPLE)
-            tmpfile.seek(0)
-            md_content = to_file_content_if_is_file(tmpfile.name)
+    def test_file(self, tmp_file):
+        with tmp_file(MD_CONTENT_EXAMPLE, '.md') as fpath:
+            md_content = to_file_content_if_is_file(fpath)
         assert md_content == MD_CONTENT_EXAMPLE
 
     def test_content(self):
-        md_content = to_file_content_if_is_file(MD_CONTENT_EXAMPLE)
-        assert md_content == MD_CONTENT_EXAMPLE
+        assert to_file_content_if_is_file(
+            MD_CONTENT_EXAMPLE,
+        ) == MD_CONTENT_EXAMPLE
 
 
 def test_save_file_checking_file_changed(tmp_file):
-    tempfile_path = os.path.join(
-        tempfile.gettempdir(),
-        f'mdpo--{uuid.uuid4().hex[:8]}',
-    )
-
-    changed = save_file_checking_file_changed(tempfile_path, 'foo\n')
-    assert changed
-
-    if os.path.isfile(tempfile_path):
-        os.remove(tempfile_path)
+    with tmp_file('') as temp_fpath:
+        assert save_file_checking_file_changed(temp_fpath, 'foo\n')
+        assert not save_file_checking_file_changed(temp_fpath, 'foo\n')

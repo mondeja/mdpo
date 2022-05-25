@@ -1,5 +1,4 @@
 import os
-import tempfile
 
 from mdpo.md2po import markdown_to_pofile
 
@@ -550,17 +549,13 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_file_independent():
+def test_location_file_independent(tmp_dir):
     """Location block counters should be reset for each file."""
 
-    with tempfile.TemporaryDirectory() as filesdir:
-        foo_md_filepath = os.path.join(filesdir, 'foo.md')
-        bar_md_filepath = os.path.join(filesdir, 'bar.md')
-        with open(foo_md_filepath, 'w') as f:
-            f.write('# Foo\n')
-        with open(bar_md_filepath, 'w') as f:
-            f.write('# Bar\n')
-
+    with tmp_dir([
+        ('foo.md', '# Foo\n'),
+        ('bar.md', '# Bar\n'),
+    ]) as (filesdir, foo_md_filepath, bar_md_filepath):
         expected_output = f'''#
 msgid ""
 msgstr ""
@@ -574,6 +569,6 @@ msgid "Foo"
 msgstr ""
 '''
 
-        output = markdown_to_pofile(f'{filesdir}{os.sep}*.md')
+        output = markdown_to_pofile(os.path.join(filesdir, '*.md'))
 
     assert output == expected_output

@@ -1,6 +1,5 @@
 import os
 import subprocess
-import tempfile
 
 
 def pre_commit_run_all_files(cwd=os.getcwd()):
@@ -12,17 +11,10 @@ def pre_commit_run_all_files(cwd=os.getcwd()):
     )
 
 
-def test_md2po_pre_commit_hook(git_add_commit):
-    with tempfile.TemporaryDirectory() as filesdir:
-        pre_commit_config_path = os.path.join(
-            filesdir,
-            '.pre-commit-config.yaml',
-        )
-        readme_md_path = os.path.join(filesdir, 'README.md')
-        readme_po_path = os.path.join(filesdir, 'README.po')
-
-        with open(pre_commit_config_path, 'w') as f:
-            f.write('''repos:
+def test_md2po_pre_commit_hook(tmp_dir, git_init, git_add_commit):
+    with tmp_dir([
+        (
+            '.pre-commit-config.yaml', '''repos:
   - repo: https://github.com/mondeja/mdpo
     rev: master
     hooks:
@@ -31,26 +23,13 @@ def test_md2po_pre_commit_hook(git_add_commit):
         args:
           - --po-filepath
           - README.po
-''')
-
-        with open(readme_md_path, 'w') as f:
-            f.write('# Foo\n')
-        with open(readme_po_path, 'w') as f:
-            f.write('''#
-msgid ""
-msgstr ""
-
-msgid "Foo"
-msgstr ""
-''')
-
+''',
+        ),
+        ('README.md', '# Foo\n'),
+        ('README.po', '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n'),
+    ]) as (filesdir, _, readme_md_path, readme_po_path):
         # first execution, is updated
-        proc = subprocess.run(
-            ['git', 'init'],
-            cwd=filesdir,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
+        proc = git_init(cwd=filesdir)
         assert proc.returncode == 0
 
         git_add_commit('First commit', cwd=filesdir)
@@ -86,18 +65,10 @@ msgstr ""
 '''
 
 
-def test_po2md_pre_commit_hook(git_add_commit):
-    with tempfile.TemporaryDirectory() as filesdir:
-        pre_commit_config_path = os.path.join(
-            filesdir,
-            '.pre-commit-config.yaml',
-        )
-        readme_src_md_path = os.path.join(filesdir, 'README.md')
-        readme_dst_md_path = os.path.join(filesdir, 'README.es.md')
-        readme_po_path = os.path.join(filesdir, 'README.po')
-
-        with open(pre_commit_config_path, 'w') as f:
-            f.write('''repos:
+def test_po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
+    with tmp_dir([
+        (
+            '.pre-commit-config.yaml', '''repos:
   - repo: https://github.com/mondeja/mdpo
     rev: master
     hooks:
@@ -108,28 +79,24 @@ def test_po2md_pre_commit_hook(git_add_commit):
           - README.po
           - -s
           - README.es.md
-''')
-
-        with open(readme_src_md_path, 'w') as f:
-            f.write('# Foo\n')
-        with open(readme_dst_md_path, 'w') as f:
-            f.write('# Foo es\n')
-        with open(readme_po_path, 'w') as f:
-            f.write('''#
+''',
+        ),
+        ('README.md', '# Foo\n'),
+        ('README.es.md', '# Foo es\n'),
+        (
+            'README.po', '''#
 msgid ""
 msgstr ""
 
 msgid "Foo"
 msgstr "Foo es"
-''')
-
+''',
+        ),
+    ]) as (
+        filesdir, _, readme_src_md_path, readme_dst_md_path, readme_po_path,
+    ):
         # first execution, is updated
-        proc = subprocess.run(
-            ['git', 'init'],
-            cwd=filesdir,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
+        proc = git_init(cwd=filesdir)
         assert proc.returncode == 0
 
         git_add_commit('First commit', cwd=filesdir)
@@ -159,18 +126,10 @@ bar es
 '''
 
 
-def test_mdpo2html_pre_commit_hook(git_add_commit):
-    with tempfile.TemporaryDirectory() as filesdir:
-        pre_commit_config_path = os.path.join(
-            filesdir,
-            '.pre-commit-config.yaml',
-        )
-        readme_html_path = os.path.join(filesdir, 'README.html')
-        readme_html_es_path = os.path.join(filesdir, 'README.es.html')
-        readme_po_path = os.path.join(filesdir, 'README.po')
-
-        with open(pre_commit_config_path, 'w') as f:
-            f.write('''repos:
+def test_mdpo2html_pre_commit_hook(tmp_dir, git_init, git_add_commit):
+    with tmp_dir([
+        (
+            '.pre-commit-config.yaml', '''repos:
   - repo: https://github.com/mondeja/mdpo
     rev: master
     hooks:
@@ -181,28 +140,24 @@ def test_mdpo2html_pre_commit_hook(git_add_commit):
           - README.po
           - -s
           - README.es.html
-''')
-
-        with open(readme_html_path, 'w') as f:
-            f.write('<h1>Foo</h1>\n')
-        with open(readme_html_es_path, 'w') as f:
-            f.write('<h1>Foo es</h1>\n')
-        with open(readme_po_path, 'w') as f:
-            f.write('''#
+''',
+        ),
+        ('README.html', '<h1>Foo</h1>\n'),
+        ('README.es.html', '<h1>Foo es</h1>\n'),
+        (
+            'README.po', '''#
 msgid ""
 msgstr ""
 
 msgid "Foo"
 msgstr "Foo es"
-''')
-
+''',
+        ),
+    ]) as (
+        filesdir, _, readme_html_path, readme_html_es_path, readme_po_path,
+    ):
         # first execution, is updated
-        proc = subprocess.run(
-            ['git', 'init'],
-            cwd=filesdir,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
+        proc = git_init(cwd=filesdir)
         assert proc.returncode == 0
 
         git_add_commit('First commit', cwd=filesdir)
@@ -232,17 +187,9 @@ msgstr "Foo es"
             assert f.read() == '<h1>Foo es</h1>\n\n<p>bar es</p>\n'
 
 
-def test_md2po2md_pre_commit_hook(git_add_commit):
-    with tempfile.TemporaryDirectory() as filesdir:
-        pre_commit_config_path = os.path.join(
-            filesdir,
-            '.pre-commit-config.yaml',
-        )
-        readme_md_path = os.path.join(filesdir, 'README.md')
-
-        with open(pre_commit_config_path, 'w') as f:
-            f.write(
-                '''repos:
+def test_md2po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
+    with tmp_dir({
+        '.pre-commit-config.yaml': '''repos:
   - repo: https://github.com/mondeja/mdpo
     rev: master
     hooks:
@@ -255,18 +202,10 @@ def test_md2po2md_pre_commit_hook(git_add_commit):
           - locale/{lang}
           - --no-location
 ''',
-            )
-
-        with open(readme_md_path, 'w') as f:
-            f.write('# Foo\n')
-
+        'README.md': '# Foo\n',
+    }) as filesdir:
         # first execution, files don't exist
-        proc = subprocess.run(
-            ['git', 'init'],
-            cwd=filesdir,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
+        proc = git_init(cwd=filesdir)
         assert proc.returncode == 0
 
         git_add_commit('First commit', cwd=filesdir)
