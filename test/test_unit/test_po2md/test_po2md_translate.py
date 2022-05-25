@@ -1,6 +1,5 @@
 import glob
 import os
-import tempfile
 
 import pytest
 
@@ -43,7 +42,7 @@ def test_translate_markuptext(filename):
 
 
 @pytest.mark.parametrize('filename', (EXAMPLES[0],))
-def test_translate_save(filename):
+def test_translate_save(filename, tmp_file):
     filepath_in = os.path.join(EXAMPLES_DIR, filename)
     filepath_out = filepath_in + '.expect.md'
     po_filepath = os.path.join(
@@ -51,9 +50,11 @@ def test_translate_save(filename):
         os.path.splitext(os.path.basename(filepath_in))[0] + '.po',
     )
 
-    with tempfile.NamedTemporaryFile(suffix='.po') as save_file:
+    with tmp_file(suffix='.po') as save_filepath:
+        pofile_to_markdown(filepath_in, po_filepath, save=save_filepath)
 
-        pofile_to_markdown(filepath_in, po_filepath, save=save_file.name)
+        with open(save_filepath) as f:
+            result = f.read()
 
         with open(filepath_out) as expect_file:
-            assert save_file.read().decode('utf-8') == expect_file.read()
+            assert result == expect_file.read()

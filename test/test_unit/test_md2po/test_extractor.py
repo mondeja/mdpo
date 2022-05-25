@@ -1,5 +1,4 @@
 import os
-import tempfile
 
 import pytest
 
@@ -36,10 +35,10 @@ def test_mark_not_found_as_obsolete(tmp_file):
     )
     new_md_file_content = 'A new string\n'
 
-    with tempfile.NamedTemporaryFile(suffix='.po') as po_file:
+    with tmp_file(suffix='.po') as po_filepath:
         with tmp_file(original_md_file_content, '.md') as original_md_filepath:
             md2po = Md2Po(original_md_filepath)
-            pofile = md2po.extract(po_filepath=po_file.name, save=True)
+            pofile = md2po.extract(po_filepath=po_filepath, save=True)
         assert pofile == f'''#
 msgid ""
 msgstr ""
@@ -58,7 +57,7 @@ msgstr ""
                 new_md_filepath,
                 mark_not_found_as_obsolete=True,
             )
-            pofile = md2po.extract(po_filepath=po_file.name)
+            pofile = md2po.extract(po_filepath=po_filepath)
         assert pofile == f'''#
 msgid ""
 msgstr ""

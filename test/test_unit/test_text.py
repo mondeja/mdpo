@@ -64,39 +64,44 @@ def test_parse_escaped_pair(
 
 
 @pytest.mark.parametrize(
-    ('value', 'expected_value', 'expected_error'),
+    ('value', 'expected_result'),
     (
-        ('1', 1, None),
-        ('1.1', 1, None),
-        (-1, math.inf, None),
-        (-1.1, math.inf, None),
-        ('-1', math.inf, None),
-        ('-1.1', math.inf, None),
-        (0, math.inf, None),
-        (-0, math.inf, None),
-        ('a', None, ValueError),
-        ('inf', math.inf, None),
-        ('-inf', math.inf, None),
-        (-1.1, float('inf'), None),
-        ('-1', float('inf'), None),
+        ('1', 1),
+        ('1.1', 1),
+        (-1, math.inf),
+        (-1.1, math.inf),
+        ('-1', math.inf),
+        ('-1.1', math.inf),
+        (0, math.inf),
+        (-0, math.inf),
+        ('a', ValueError),
+        ('nan', ValueError),
+        ('NotANumber', ValueError),
+        ('inf', math.inf),
+        ('InF', math.inf),
+        ('-inf', math.inf),
+        ('-iNf', math.inf),
+        ('iNfInItY', math.inf),
+        ('+1E6', 1000000),
     ),
 )
-def test_parse_strint_0_inf(value, expected_value, expected_error):
-    if expected_error:
-        with pytest.raises(expected_error):
+def test_parse_strint_0_inf(value, expected_result):
+    if hasattr(expected_result, '__traceback__'):
+        with pytest.raises(expected_result):
             parse_strint_0_inf(value)
     else:
-        assert parse_strint_0_inf(value) == expected_value
+        assert parse_strint_0_inf(value) == expected_result
 
 
-@pytest.mark.parametrize('value', (0, 80, 'inf', 'invalid'))
+@pytest.mark.parametrize(
+    'value', ('0', '80', 'inf', 'infinity', 'nan', 'invalid'),
+)
 def test_parse_wrapwidth_argument(value):
-    if value == 'invalid':
+    if not value.isdigit() and value.lower() not in ('inf', 'infinity'):
         expected_msg = f'Invalid value \'{value}\' for wrapwidth argument.'
         with pytest.raises(ValueError, match=expected_msg):
             parse_wrapwidth_argument(value)
-        return
-
-    assert parse_wrapwidth_argument(value) == (
-        float('inf') if value == 0 else float(value)
-    )
+    else:
+        assert parse_wrapwidth_argument(value) == (
+            float('inf') if float(value) == 0 else float(value)
+        )

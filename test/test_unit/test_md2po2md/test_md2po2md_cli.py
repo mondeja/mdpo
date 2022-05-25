@@ -1,9 +1,6 @@
 """Tests for ``md2po2md`` CLI"""
 
 import os
-import shutil
-import tempfile
-from uuid import uuid4
 
 import pytest
 
@@ -156,56 +153,43 @@ def test_md2po2md_arguments(
     output,
     input_files_content,
     expected_files_content,
+    tmp_dir,
 ):
-    # create base directory and files
-    basedir = os.path.join(tempfile.gettempdir(), uuid4().hex[:8])
-    if os.path.isdir(basedir):
-        shutil.rmtree(basedir)
-    os.mkdir(basedir)
+    with tmp_dir(input_files_content) as filesdir:
+        # run md2po2md
+        cmd = [
+            os.path.join(filesdir, input_paths_glob),
+            output_arg,
+            os.path.join(filesdir, output),
+        ]
 
-    for relpath, content in input_files_content.items():
-        filepath = os.path.join(basedir, relpath)
-        with open(filepath, 'w') as f:
-            f.write(content)
+        # if all languages are passed in the same `--lang`/`-l` argument
+        if all_langs_in_same_arg:
+            cmd.extend([langs_arg, *langs])
+        else:
+            for lang in langs:
+                cmd.extend([langs_arg, lang])
 
-    def cleanup():
-        if os.path.isdir(basedir):
-            shutil.rmtree(basedir)
+        cmd.append('--no-location')
 
-    # run md2po2md
-    cmd = [
-        os.path.join(basedir, input_paths_glob),
-        output_arg, os.path.join(basedir, output),
-    ]
+        if hasattr(expected_files_content, '__traceback__'):
+            with pytest.raises(expected_files_content):
+                run(cmd)
+            return
 
-    # if all languages are passed in the same `--lang`/`-l` argument
-    if all_langs_in_same_arg:
-        cmd.extend([langs_arg, *langs])
-    else:
-        for lang in langs:
-            cmd.extend([langs_arg, lang])
+        run(cmd)
 
-    cmd.append('--no-location')
+        # Check number of files
+        expected_number_of_files = (
+            len(expected_files_content) + len(input_files_content)
+        )
+        n_files = 0
+        for root, dirs, files in os.walk(filesdir, topdown=False):
+            n_files += len(files)
+        assert n_files == expected_number_of_files
 
-    if hasattr(expected_files_content, '__traceback__'):
-        with pytest.raises(expected_files_content):
-            run(cmd)
-        return cleanup()
-    run(cmd)
-
-    # Check number of files
-    expected_number_of_files = (
-        len(expected_files_content.keys()) + len(input_files_content.keys())
-    )
-    n_files = 0
-    for root, dirs, files in os.walk(basedir, topdown=False):
-        n_files += len(files)
-    assert n_files == expected_number_of_files
-
-    # Check expected content
-    for relpath, content in expected_files_content.items():
-        filepath = os.path.join(basedir, relpath)
-        with open(filepath) as f:
-            assert f.read() == content
-
-    cleanup()
+        # Check expected content
+        for relpath, content in expected_files_content.items():
+            filepath = os.path.join(filesdir, relpath)
+            with open(filepath) as f:
+                assert f.read() == content

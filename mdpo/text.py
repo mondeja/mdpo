@@ -122,6 +122,9 @@ def parse_strint_0_inf(value):
     Args:
         value (str): Value to parse.
     """
+    if isinstance(value, str) and value.lower() == 'nan':
+        raise ValueError(f"invalid strict converting of '{value}' to number")
+
     num = float(value)
     try:
         return int(num) if num > 0 else float('inf')

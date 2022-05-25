@@ -5,8 +5,6 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
-import uuid
 
 import pytest
 
@@ -92,18 +90,12 @@ def test_mutliple_files(tmp_file, capsys):
         assert stderr == ''
 
 
-def test_multiple_globs(capsys):
-    filesdata = {
-        'baba': 'baba',
-        'bar': 'bar',
-        'baz': 'baz',
-    }
-
-    with tempfile.TemporaryDirectory() as filesdir:
-        for filename, content in filesdata.items():
-            with open(os.path.join(filesdir, f'{filename}.md'), 'w') as f:
-                f.write(content)
-
+def test_multiple_globs(tmp_dir, capsys):
+    with tmp_dir({
+        'baba.md': 'baba',
+        'bar.md': 'bar',
+        'baz.md': 'baz',
+    }) as filesdir:
         pofile, exitcode = run([
             os.path.join(filesdir, 'ba*.md'),
             os.path.join(filesdir, 'bab*.md'),
@@ -208,7 +200,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ('-s', '--save'))
-def test_save(capsys, arg, tmp_file):
+def test_save(capsys, arg, tmp_file, tmp_file_path):
     pofile_content = '''#
 msgid ""
 msgstr ""
@@ -247,7 +239,7 @@ msgstr ""
     assert stdout == expected_output
 
     # new PO file creation
-    pofile_path = os.path.join(tempfile.gettempdir(), uuid.uuid4().hex[:8])
+    pofile_path = tmp_file_path()
     pofile, exitcode = run([
         '# Bar\n',
         arg,
@@ -275,29 +267,23 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ('-mo', '--mo-filepath', '--mofilepath'))
-def test_mo_filepath(capsys, arg):
-    with tempfile.NamedTemporaryFile(suffix='.mo') as mo_file:
-        pofile, exitcode = run([EXAMPLE['input'], arg, mo_file.name])
+def test_mo_filepath(capsys, arg, tmp_file):
+    with tmp_file(suffix='.mo') as mofile_path:
+        pofile, exitcode = run([EXAMPLE['input'], arg, mofile_path])
         stdout, _ = capsys.readouterr()
         assert exitcode == 0
         assert f'{pofile}\n' == EXAMPLE['output']
         assert stdout == EXAMPLE['output']
-        assert os.path.exists(mo_file.name)
+        assert os.path.exists(mofile_path)
 
 
 @pytest.mark.parametrize('arg', ('-i', '--ignore'))
-def test_ignore_files_by_filepath(capsys, arg):
-    filesdata = {
-        'foo': '### Foo\n\nFoo 2',
-        'bar': '## Bar with `inline code`',
-        'baz': 'baz should not appear',
-    }
-
-    with tempfile.TemporaryDirectory() as filesdir:
-        for filename, content in filesdata.items():
-            with open(os.path.join(filesdir, f'{filename}.md'), 'w') as f:
-                f.write(content)
-
+def test_ignore_files_by_filepath(tmp_dir, capsys, arg):
+    with tmp_dir({
+        'foo.md': '### Foo\n\nFoo 2',
+        'bar.md': '## Bar with `inline code`',
+        'baz.md': 'baz should not appear',
+    }) as filesdir:
         _glob = os.path.join(filesdir, '*.md')
         pofile, exitcode = run([
             _glob,

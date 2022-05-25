@@ -1,7 +1,6 @@
 import glob
 import os
 import random
-import tempfile
 
 import pytest
 
@@ -65,18 +64,20 @@ def test_extract_underline(filename):
 @pytest.mark.parametrize(
     'filename', (random.choice(EXAMPLES['plaintext']['filenames']),),
 )
-def test_extract_save(filename):
+def test_extract_save(filename, tmp_file):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
 
-    with tempfile.NamedTemporaryFile(suffix='.po') as save_file:
-
+    with tmp_file(suffix='.po') as save_filepath:
         markdown_to_pofile(
             filepath,
             plaintext=True,
             save=True,
-            po_filepath=save_file.name,
+            po_filepath=save_filepath,
             location=False,
         )
 
+        with open(save_filepath) as f:
+            result = f.read()
+
         with open(f'{filepath}.expect.po') as expect_file:
-            assert save_file.read().decode('utf-8') == expect_file.read()
+            assert result == expect_file.read()

@@ -3,8 +3,6 @@
 import io
 import os
 import re
-import tempfile
-from uuid import uuid4
 
 import pytest
 
@@ -107,50 +105,43 @@ def test_save(capsys, arg, tmp_file):
 
 
 @pytest.mark.parametrize('arg', ('-i', '--ignore'))
-def test_ignore_files_by_filepath(capsys, arg):
-    pofiles = [
-        (
-            uuid4().hex + '.po',
-            (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
-                'msgstr "Incluida"\n\n'
-            ),
-        ),
-        (
-            uuid4().hex + '.po',
-            (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Excluded"\n'
-                'msgstr "Excluida"\n\n'
-            ),
-        ),
-        (
-            uuid4().hex + '.po',
-            (
-                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Excluded 2"\n'
-                'msgstr "Excluida 2"\n\n'
-            ),
-        ),
-    ]
-
+def test_ignore_files_by_filepath(arg, tmp_dir, capsys):
     expected_output = 'Incluida\n\nExcluded\n\nExcluded 2\n\n'
 
-    with tempfile.TemporaryDirectory() as filesdir:
-        for pofile in pofiles:
-            with open(os.path.join(filesdir, pofile[0]), 'w') as f:
-                f.write(pofile[1])
-
-        input_md_filepath = os.path.join(filesdir, uuid4().hex + '.md')
-        with open(input_md_filepath, 'w') as f:
-            f.write('Included\n\nExcluded\n\nExcluded 2\n')
-
+    with tmp_dir([
+        (
+            'included.po',
+            (
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Included"\n'
+                'msgstr "Incluida"\n'
+            ),
+        ),
+        (
+            'excluded_1.po',
+            (
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Excluded"\n'
+                'msgstr "Excluida"\n'
+            ),
+        ),
+        (
+            'excluded_2.po',
+            (
+                '#\nmsgid ""\nmsgstr ""\n\nmsgid "Excluded 2"\n'
+                'msgstr "Excluida 2"\n'
+            ),
+        ),
+        ('input.md', 'Included\n\nExcluded\n\nExcluded 2\n'),
+    ]) as (
+        filesdir, _, excluded_po_1_path, exlcluded_po_2_path, input_md_path,
+    ):
         output, exitcode = run([
-            input_md_filepath,
+            input_md_path,
             '-p',
             os.path.join(filesdir, '*.po'),
             arg,
-            os.path.join(filesdir, pofiles[1][0]),
+            excluded_po_1_path,
             arg,
-            os.path.join(filesdir, pofiles[2][0]),
+            exlcluded_po_2_path,
         ])
 
     stdout, _ = capsys.readouterr()
