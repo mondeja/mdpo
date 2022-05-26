@@ -103,6 +103,20 @@ def git_add_commit():
     return _git_add_commit
 
 
+@contextlib.contextmanager
+def _maybe_raises(maybe_exception_class, **kwargs):
+    if hasattr(maybe_exception_class, '__traceback__'):
+        with pytest.raises(maybe_exception_class, **kwargs):
+            yield
+    else:
+        yield
+
+
+@pytest.fixture()
+def maybe_raises():
+    return _maybe_raises
+
+
 def get_class_slots(code):
     class ClassSlotsExtractor(ast.NodeVisitor):
         ast_elts_value_attr = (
