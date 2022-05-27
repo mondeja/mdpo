@@ -12,7 +12,8 @@ sys.path.insert(0, os.path.abspath('..'))
 project = 'mdpo'
 author = 'Álvaro Mondéjar Rubio'
 project_copyright = f'2020-2022, {author}'
-
+release = '0.3.86'
+version = '.'.join(release.split('.')[:2])
 
 # -- General configuration ---------------------------------------------------
 
