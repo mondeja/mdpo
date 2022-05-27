@@ -10,11 +10,13 @@ repos:
     hooks:
       - id: trailing-whitespace
         name: trailing-whitespace
-        exclude: test/test_unit/(test_po2md/translate-examples/code-blocks.*|test_event\.py)
+        exclude: tests/test_unit/(test_po2md/translate-examples/code-blocks.*|test_event\.py)
       - id: end-of-file-fixer
         name: end-of-file-fixer
       - id: double-quote-string-fixer
         name: double-quote-string-fixer
+      - id: debug-statements
+        name: debug-statements
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.2.1
     hooks:
@@ -32,41 +34,37 @@ repos:
       - id: flake8
         name: flake8
         additional_dependencies:
-          - flake8-builtins==1.5.3
-          - flake8-comprehensions==3.7.0
-          - flake8-docstrings==1.6.0
-          - flake8-executable==2.1.1
-          - flake8-implicit-str-concat==0.2.0
-          - flake8-print==4.0.0
-          - flake8-printf-formatting==1.1.2
-          - flake8-pytest-style==1.5.1
+          - flake8-builtins
+          - flake8-comprehensions
+          - flake8-docstrings
+          - flake8-executable
+          - flake8-implicit-str-concat
+          - flake8-print
+          - flake8-printf-formatting
+          - flake8-pytest-style
         files: ^(mdpo|test|docs)/
   - repo: https://github.com/PyCQA/isort
     rev: 5.10.1
     hooks:
       - id: isort
-        args:
-          - --filter-files
-        files: \.py$
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.26.3
     hooks:
       - id: yamllint
-        files: .+\.(yml|yaml)
         args:
           - -c
-          - .yamllint
+          - .yamllint.yaml
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.3.2
     hooks:
       - id: markdownlint-cli2
         name: markdownlint-po2md-tests
         language: node
-        entry: bash -c 'cd test/test_unit/test_po2md && exec markdownlint-cli2 translate-examples/*.md wrapwidth-examples/*.md'
+        entry: bash -c 'cd tests/test_unit/test_po2md && exec markdownlint-cli2 translate-examples/*.md wrapwidth-examples/*.md'
         pass_filenames: false
         types:
           - markdown
-        files: ^test/test_unit/test_po2md/
+        files: ^tests/test_unit/test_po2md/
   - repo: https://github.com/mondeja/repo-stream
     rev: v1.3.1
     hooks:
@@ -78,10 +76,23 @@ repos:
     rev: v1.5.2
     hooks:
       - id: dev-extras-required
-      - id: root-editorconfig-required
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: 2.4.0
     hooks:
       - id: editorconfig-checker
+        name: editorconfig-checker
+  - repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+      - id: autoflake
         args:
-          - -exclude=docs/.+\.bat
+          - --in-place
+          - --remove-all-unused-imports
+          - --remove-unused-variables
+          - --remove-duplicate-keys
+          - --ignore-init-module-imports
+  - repo: https://github.com/andreoliwa/nitpick
+    rev: v0.32.0
+    hooks:
+      - id: nitpick-check
+        name: nitpick

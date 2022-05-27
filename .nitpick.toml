@@ -1,0 +1,9 @@
+[tool.nitpick]
+#style = "gh://mondeja/nitpick-styles/python/single-quotes.toml"
+style = [
+    "../nitpick-styles/python/single-quotes.toml",
+    "../nitpick-styles/python/trailing-commas.toml",
+    "../nitpick-styles/python/line-length-80.toml",
+    "../nitpick-styles/python/google-docstrings.toml",
+    "../nitpick-styles/python/readthedocs.toml"
+]
