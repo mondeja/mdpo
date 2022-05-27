@@ -16,7 +16,7 @@ from mdpo.md2po2md.__main__ import run
         'input_paths_glob',
         'output',
         'input_files_content',
-        'expected_files_content',
+        'expected_result',
     ),
     (
         pytest.param(
@@ -152,8 +152,9 @@ def test_md2po2md_arguments(
     input_paths_glob,
     output,
     input_files_content,
-    expected_files_content,
+    expected_result,  # {files: contents} or error
     tmp_dir,
+    maybe_raises,
 ):
     with tmp_dir(input_files_content) as filesdir:
         # run md2po2md
@@ -172,24 +173,20 @@ def test_md2po2md_arguments(
 
         cmd.append('--no-location')
 
-        if hasattr(expected_files_content, '__traceback__'):
-            with pytest.raises(expected_files_content):
-                run(cmd)
-            return
+        with maybe_raises(expected_result):
+            run(cmd)
 
-        run(cmd)
+            # Check number of files
+            expected_number_of_files = (
+                len(expected_result) + len(input_files_content)
+            )
+            n_files = 0
+            for root, dirs, files in os.walk(filesdir, topdown=False):
+                n_files += len(files)
+            assert n_files == expected_number_of_files
 
-        # Check number of files
-        expected_number_of_files = (
-            len(expected_files_content) + len(input_files_content)
-        )
-        n_files = 0
-        for root, dirs, files in os.walk(filesdir, topdown=False):
-            n_files += len(files)
-        assert n_files == expected_number_of_files
-
-        # Check expected content
-        for relpath, content in expected_files_content.items():
-            filepath = os.path.join(filesdir, relpath)
-            with open(filepath) as f:
-                assert f.read() == content
+            # Check expected content
+            for relpath, content in expected_result.items():
+                filepath = os.path.join(filesdir, relpath)
+                with open(filepath) as f:
+                    assert f.read() == content

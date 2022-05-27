@@ -31,34 +31,27 @@ def test_min_not_max_chars_in_a_row(char, text, expected_result):
 
 
 @pytest.mark.parametrize(
-    ('text', 'expected_key', 'expected_value', 'expected_error'),
+    ('text', 'expected_result'),
     (
-        ('foo:bar', 'foo', 'bar', None),
-        ('foo:Bar:', 'foo', 'Bar:', None),
-        ('foo:   bar:', 'foo', 'bar:', None),
-        ('foo: \n  bar:', 'foo', 'bar:', None),
-        ('foo:Bar\\:', 'foo', 'Bar\\:', None),
-        ('\\:foo:bar', ':foo', 'bar', None),
-        (r'foo\\:Bar:baz', 'foo:Bar', 'baz', None),
-        (r'foo\\:Bar:baz\\', 'foo:Bar', r'baz\\', None),
+        ('foo:bar', ('foo', 'bar')),
+        ('foo:Bar:', ('foo', 'Bar:')),
+        ('foo:   bar:', ('foo', 'bar:')),
+        ('foo: \n  bar:', ('foo', 'bar:')),
+        ('foo:Bar\\:', ('foo', 'Bar\\:')),
+        ('\\:foo:bar', (':foo', 'bar')),
+        (r'foo\\:Bar:baz', ('foo:Bar', 'baz')),
+        (r'foo\\:Bar:baz\\', ('foo:Bar', r'baz\\')),
         # : at the beginning means escaped
-        (r':foo\\:Bar:baz\\', ':foo:Bar', r'baz\\', None),
-        ('foo', None, None, ValueError),
-        (':', None, None, ValueError),
-        ('', None, None, ValueError),
+        (r':foo\\:Bar:baz\\', (':foo:Bar', r'baz\\')),
+        ('foo', ValueError),
+        (':', ValueError),
+        ('', ValueError),
     ),
 )
-def test_parse_escaped_pair(
-    text,
-    expected_key,
-    expected_value,
-    expected_error,
-):
-    if expected_error:
-        with pytest.raises(expected_error):
-            parse_escaped_pair(text)
-    else:
+def test_parse_escaped_pair(text, expected_result, maybe_raises):
+    with maybe_raises(expected_result):
         key, value = parse_escaped_pair(text)
+        expected_key, expected_value = expected_result
         assert key == expected_key
         assert value == expected_value
 
@@ -85,11 +78,8 @@ def test_parse_escaped_pair(
         ('+1E6', 1000000),
     ),
 )
-def test_parse_strint_0_inf(value, expected_result):
-    if hasattr(expected_result, '__traceback__'):
-        with pytest.raises(expected_result):
-            parse_strint_0_inf(value)
-    else:
+def test_parse_strint_0_inf(value, expected_result, maybe_raises):
+    with maybe_raises(expected_result):
         assert parse_strint_0_inf(value) == expected_result
 
 

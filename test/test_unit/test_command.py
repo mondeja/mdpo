@@ -73,11 +73,10 @@ def test_normalize_mdpo_command(value, expected_command):
         ),
     ),
 )
-def test_normalize_mdpo_command_aliases(command_aliases, expected_result):
-    if hasattr(expected_result, '__traceback__'):
-        with pytest.raises(expected_result):
-            normalize_mdpo_command_aliases(command_aliases)
-    else:
+def test_normalize_mdpo_command_aliases(
+    command_aliases, expected_result, maybe_raises,
+):
+    with maybe_raises(expected_result):
         assert normalize_mdpo_command_aliases(
             command_aliases,
         ) == expected_result
