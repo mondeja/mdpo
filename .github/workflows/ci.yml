@@ -34,9 +34,9 @@ jobs:
           pip list
       - name: Run unit tests
         # https://github.com/actions/runner/issues/241#issuecomment-577360161
-        run: script -e -c 'pytest -svv test/test_unit --cov=mdpo --cov-config=setup.cfg'
+        run: script -e -c 'pytest -svv tests/test_unit --cov=mdpo --cov-config=setup.cfg'
       - name: Run integration tests
-        run: pytest -svv test/test_integration
+        run: pytest -svv tests/test_integration
       - name: Coveralls
         run: coveralls
         env:

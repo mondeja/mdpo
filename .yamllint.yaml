@@ -1,7 +1,3 @@
-ignore: |
-  venv
-  build
-
 rules:
   braces:
     forbid: true
@@ -21,10 +17,9 @@ rules:
     max-spaces-after: 1
   indentation:
     check-multi-line-strings: true
+    ignore: .github
     indent-sequences: true
     spaces: consistent
-    ignore: |
-      .github
   key-duplicates: enable
   key-ordering:
     ignore: |
@@ -32,7 +27,7 @@ rules:
       .pre-commit-hooks.yaml
       .github
       .readthedocs.yml
-      test/test_unit/test_po2md/.markdownlint-cli2.yaml
+      tests/test_unit/test_po2md/.markdownlint-cli2.yaml
   line-length:
     allow-non-breakable-words: true
     ignore: |

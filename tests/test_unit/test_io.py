@@ -16,7 +16,7 @@ from mdpo.io import (
 
 EMPTY_FILES_DIRNAME = 'empty-files'
 EMPTY_FILES_GLOBSTR = os.path.join(
-    'test', 'test_unit', EMPTY_FILES_DIRNAME, '**', '**.md',
+    'tests', 'test_unit', EMPTY_FILES_DIRNAME, '**', '**.md',
 )
 EMPTY_FILES_GLOB = glob.glob(EMPTY_FILES_GLOBSTR)
 
@@ -27,7 +27,7 @@ class TestFilterPaths:
     def empty_file_path(self, directory, filename=None):
         args = () if not filename else (filename,)
         return os.path.join(
-            'test', 'test_unit', EMPTY_FILES_DIRNAME, directory, *args,
+            'tests', 'test_unit', EMPTY_FILES_DIRNAME, directory, *args,
         )
 
     def test_ignore_files_by_filename(self):
