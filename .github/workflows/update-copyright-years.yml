@@ -1,9 +1,9 @@
 name: Update copyright years
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: 0 3 2 1 *
-  workflow_dispatch:
 
 jobs:
   update-license-year:

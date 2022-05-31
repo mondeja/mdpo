@@ -65,17 +65,16 @@ repos:
         types:
           - markdown
         files: ^tests/test_unit/test_po2md/
-  - repo: https://github.com/mondeja/repo-stream
-    rev: v1.3.1
-    hooks:
-      - id: repo-stream
-        args:
-          - -config=https://github.com/mondeja/repo-stream-config
-          - -updater=upstream
   - repo: https://github.com/mondeja/pre-commit-hooks
-    rev: v1.5.2
+    rev: v1.8.0
     hooks:
       - id: dev-extras-required
+      - id: file-check-lines
+        name: MANIFEST.in includes
+        files: ^MANIFEST\.in$
+        args:
+          - include README.md
+          - include LICENSE
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: 2.4.0
     hooks:
@@ -96,3 +95,18 @@ repos:
     hooks:
       - id: nitpick-check
         name: nitpick
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: main
+    hooks:
+      - id: check-jsonschema
+        name: .github/workflows/pre-commit.yml schema
+        files: ^\.github/workflows/pre-commit\.yml$
+        args:
+          - --schemafile
+          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/.github/workflows/pre-commit.json
+      - id: check-jsonschema
+        name: .github/workflows/pre-commit-autoupdate.yml schema
+        files: ^\.github/workflows/pre-commit-autoupdate\.yml$
+        args:
+          - --schemafile
+          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/.github/workflows/pre-commit-autoupdate.json
