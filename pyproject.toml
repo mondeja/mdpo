@@ -1,0 +1,84 @@
+[tool.poetry]
+name = "mdpo"
+version = "0.3.86"
+description = "Markdown files translation using PO files."
+readme = "README.md"
+license = "BSD-3-Clause"
+authors = ["Álvaro Mondéjar Rubio <mondejar1994@gmail.com>"]
+repository = "https://github.com/mondeja/mdpo"
+documentation = "https://mdpo.readthedocs.io"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Internationalization",
+    "Topic :: Text Processing",
+    "Topic :: Text Processing :: Markup :: Markdown",
+]
+packages = [{ include = "mdpo/**/*.py" }]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/mondeja/mdpo/issues"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+polib = "^1.1.0"
+pymd4c = "~1.1.2"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^2.15.0"
+bump2version = "^1.0.1"
+nitpick = "^0.32.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "6.2.4"
+pytest-cov = "2.12.1"
+pytest-maybe-raises = "0.1.1"
+
+[tool.poetry.group.doc.dependencies]
+Sphinx = "4.4.0"
+sphinx-argparse-cli = "1.8.3"
+sphinx-github-changelog = "1.2.0"
+sphinx-rtd-theme = "1.0.0"
+sphinx-tabs = "3.2.0"
+
+[tool.poetry.scripts]
+md2po = "mdpo.md2po.__main__:main"
+po2md = "mdpo.po2md.__main__:main"
+md2po2md = "mdpo.md2po2md.__main__:main"
+mdpo2html = "mdpo.mdpo2html.__main__:main"
+
+[tool.poetry-exec-plugin.commands]
+test = "pytest"
+lint = "pre-commit run -a"
+doc = "python -m sphinx -T -E -W docs docs/_build/html"
+
+[tool.pytest.ini_options]
+addopts = "-s --cov=mdpo --cov-report=html"
+
+[tool.coverage]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "except ImportError:",
+    "if '-h' in args or '--help' in args:",
+]
+
+[tool.isort]
+lines_after_imports = 2
+multi_line_output = 3
+line_length = 79
+use_parentheses = true
+combine_as_imports = true
+include_trailing_comma = true
+known_tests = "tests"
+sections = ["STDLIB", "THIRDPARTY", "FIRSTPARTY", "TESTS", "LOCALFOLDER"]
+py_version = 37
+extra_standard_library = [
+    "contextvars",
+    "dataclasses",
+    "importlib.resources",
+    "importlib.metadata",
+    "zoneinfo",
+    "graphlib",
+]

@@ -5,15 +5,15 @@ Contributing
 Development install
 ===================
 
+You need to install Poetry >= 1.2.0.
+
 .. code-block:: bash
 
    git clone https://github.com/mondeja/mdpo.git
-   python3 -m ensurepip
-   python3 -m pip install virtualenv
-   python3 -m virtualenv venv
-   . venv/bin/activate
-   python3 -m pip install -e .[dev]
+   cd mdpo
+   poetry install
    pre-commit install
+   pip install poetry-plugin-exec
 
 
 Build documentation
@@ -21,21 +21,21 @@ Build documentation
 
 .. code-block:: bash
 
-   python3 setup.py build_sphinx
+   poetry exec doc
 
 Test
 ====
 
 .. code-block:: bash
 
-   python3 -m pytest -s
+   poetry exec test
 
 Lint
 ====
 
 .. code-block:: bash
 
-   pre-commit run --all-files
+   poetry exec lint
 
 Release
 =======
