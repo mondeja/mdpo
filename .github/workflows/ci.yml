@@ -32,7 +32,7 @@ jobs:
           cache: poetry
       - name: Install dependencies
         run: |
-          poetry install --only default,test
+          poetry install --with test
           poetry show
       - name: Run unit tests
         run: poetry run pytest tests/test_unit

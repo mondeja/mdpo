@@ -13,4 +13,4 @@ build:
     post_install:
       - pip install poetry==1.2.0b1
       - poetry config virtualenvs.create false
-      - poetry install --only default,doc
+      - poetry install --with doc
