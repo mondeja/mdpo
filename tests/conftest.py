@@ -73,8 +73,7 @@ def _git_init(cwd=None):
     return subprocess.run(
         ['git', 'init'],
         cwd=cwd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        capture_output=True,
     )
 
 
@@ -89,15 +88,13 @@ def git_add_commit():
         add_proc = subprocess.run(
             ['git', 'add', files],
             cwd=cwd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
         )
 
         commit_proc = subprocess.run(
             ['git', 'commit', '-m', message],
             cwd=cwd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
         )
         return add_proc.returncode == 0 and commit_proc.returncode == 0
     return _git_add_commit

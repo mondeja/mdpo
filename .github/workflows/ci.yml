@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install poetry
-        run: pip install --upgrade pip poetry==1.2.0b1
+        run: pip install -U pip poetry==1.2.0b1
       - name: Set up Python v${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
@@ -32,7 +32,7 @@ jobs:
           cache: poetry
       - name: Install dependencies
         run: |
-          poetry install --with test
+          poetry install --only default,test
           poetry show
       - name: Run unit tests
         run: poetry run pytest tests/test_unit

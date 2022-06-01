@@ -39,7 +39,7 @@ def test_stdin(capsys, monkeypatch):
 def test_stdin_subprocess_input(tmp_file):
     proc = subprocess.run(
         'md2po',
-        universal_newlines=True,
+        text=True,
         input=EXAMPLE['input'],
         stdout=subprocess.PIPE,
         check=True,
@@ -50,7 +50,7 @@ def test_stdin_subprocess_input(tmp_file):
     with tmp_file(EXAMPLE['input'], '.md') as mdfile_path:
         proc = subprocess.run(
             ['md2po', '--no-location'],
-            universal_newlines=True,
+            text=True,
             input=mdfile_path,
             stdout=subprocess.PIPE,
             check=True,
@@ -64,10 +64,9 @@ def test_pipe_redirect_file_stdin(tmp_file):
     with tmp_file(EXAMPLE['input'], '.md') as mdfile_path:
         proc = subprocess.run(
             f'< {mdfile_path} md2po',
-            universal_newlines=True,
+            text=True,
             input=EXAMPLE['input'],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
             shell=True,
         )
     assert proc.stdout == EXAMPLE['output']

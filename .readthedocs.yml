@@ -2,8 +2,8 @@ version: 2
 formats: all
 
 sphinx:
-  fail_on_warning: true
   configuration: docs/conf.py
+  fail_on_warning: true
 
 build:
   os: ubuntu-20.04
@@ -13,4 +13,4 @@ build:
     post_install:
       - pip install poetry==1.2.0b1
       - poetry config virtualenvs.create false
-      - poetry install --with doc
+      - poetry install --only default,doc

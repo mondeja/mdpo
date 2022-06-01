@@ -53,6 +53,7 @@ mdpo2html = "mdpo.mdpo2html.__main__:main"
 
 [tool.poetry-exec-plugin.commands]
 test = "pytest"
+"test:all" = "pytest"
 "test:unit" = "pytest tests/test_unit"
 "test:integration" = "pytest tests/test_integration --override-ini addopts=-svv"
 lint = "pre-commit run -a"

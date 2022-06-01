@@ -22,8 +22,6 @@ repos:
     hooks:
       - id: add-trailing-comma
         name: add-trailing-comma
-        args:
-          - --py37-plus
   - repo: https://github.com/PyCQA/flake8
     rev: 4.0.1
     hooks:
