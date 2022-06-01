@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install --only test
-          pip install poetry-plugin-exec coveralls
+          pip install poetry-exec-plugin coveralls
           poetry show
       - name: Run unit tests
         run: poetry exec test:unit
