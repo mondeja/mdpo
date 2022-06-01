@@ -29,7 +29,6 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-          cache: poetry
       - name: Install dependencies
         run: |
           python -m pip install poetry-exec-plugin coveralls
