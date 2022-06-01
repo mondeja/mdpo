@@ -28,7 +28,6 @@ pymd4c = "~1.1.2"
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^2.19.0"
 bump2version = "^1.0.1"
-nitpick = "^0.32.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "6.2.4"
@@ -49,11 +48,11 @@ md2po2md = "mdpo.md2po2md.__main__:main"
 mdpo2html = "mdpo.mdpo2html.__main__:main"
 
 [tool.poetry-exec-plugin.commands]
-test = "pytest"
-"test:unit" = "pytest tests/test_unit"
-"test:integration" = "pytest tests/test_integration --override-ini addopts=-svv"
-lint = "pre-commit run -a"
-doc = "python -m sphinx -T -E -W docs docs/_build/html"
+test = "poetry run pytest"
+"test:unit" = "poetry run pytest tests/test_unit"
+"test:integration" = "poetry run pytest tests/test_integration --override-ini addopts=-svv"
+lint = "poetry run pre-commit run -a"
+doc = "poetry run python -m sphinx -T -E -W docs docs/_build/html"
 
 [tool.pytest.ini_options]
 addopts = "-s --cov=mdpo --cov-report=html"
