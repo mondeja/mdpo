@@ -6,4 +6,5 @@ poetry.lock   -diff
 # Don't export/archive these files
 .gitattributes export-ignore
 .gitignore export-ignore
-/.github       export-ignore
+/.github/**/*.yml export-ignore
+/.github/ export-ignore
