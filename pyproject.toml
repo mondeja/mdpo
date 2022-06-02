@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mdpo"
-version = "0.3.86"
+version = "0.4.0"
 description = "Markdown files translation using PO files."
 readme = "README.md"
 license = "BSD-3-Clause"
