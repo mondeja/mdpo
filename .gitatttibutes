@@ -1,10 +1,4 @@
-*             text=auto
+* text=auto
 
 # Don't diff machine generated files
-poetry.lock   -diff
-
-# Don't export/archive these files
-.gitattributes export-ignore
-.gitignore export-ignore
-/.github/**/*.yml export-ignore
-/.github/ export-ignore
+poetry.lock -diff
