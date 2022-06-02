@@ -48,6 +48,18 @@ repos:
         args:
           - -c
           - .yamllint.yaml
+  - repo: https://github.com/mondeja/pre-commit-hooks
+    rev: v1.8.0
+    hooks:
+      - id: file-check-lines
+        name: .gitattributes lines
+        files: ^\.gitattributes$
+        args:
+          - '* text=auto'
+          - poetry.lock -diff
+          - .gitignore export-ignore
+          - .gitattributes export-ignore
+          - .github export-ignore
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.3.2
     hooks:
@@ -94,3 +106,16 @@ repos:
         args:
           - --schemafile
           - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/.github/workflows/pre-commit-autoupdate.json
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: main
+    hooks:
+      - id: check-jsonschema
+        name: pyproject.toml schema
+        files: ^pyproject\.toml$
+        additional_dependencies:
+          - tomli
+        types:
+          - toml
+        args:
+          - --schemafile
+          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/pyproject/pyproject.toml.json

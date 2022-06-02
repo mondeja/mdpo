@@ -9,8 +9,8 @@ repository = "https://github.com/mondeja/mdpo"
 documentation = "https://mdpo.readthedocs.io"
 classifiers = [
     "Development Status :: 4 - Beta",
-    "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
     "Topic :: Software Development :: Internationalization",
     "Topic :: Text Processing",
     "Topic :: Text Processing :: Markup :: Markdown",
@@ -18,7 +18,7 @@ classifiers = [
 packages = [{ include = "mdpo/**/*.py" }]
 
 [tool.poetry.urls]
-"Bug Tracker" = "https://github.com/mondeja/mdpo/issues"
+"Bug tracker" = "https://github.com/mondeja/mdpo/issues"
 
 [tool.poetry.dependencies]
 python = "^3.7"
