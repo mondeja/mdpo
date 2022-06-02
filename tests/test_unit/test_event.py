@@ -90,7 +90,7 @@ md2po[DEBUG]::<date>::msgid:: msgid='[link]: https://foo.bar "Title"' - msgstr='
 def test_parse_events_kwarg_func():
     def foo():
         return False
-    
+
     assert parse_events_kwarg({'foo': foo})['foo'][0] is foo
     assert parse_events_kwarg({'foo': [foo]})['foo'][0] is foo
 
@@ -99,7 +99,7 @@ def test_parse_events_kwarg_filefunc(tmp_file):
     expected_msg = 'Function not specified for file'
     with pytest.raises(ValueError, match=expected_msg):
         parse_events_kwarg({'bar': 'foo-bar-baz.py'})
-    
+
     expected_msg = "File 'foo-bar-baz.py' specified for event 'bar' not found"
     with pytest.raises(FileNotFoundError, match=expected_msg):
         parse_events_kwarg({'bar': 'foo-bar-baz.py::bar'})
@@ -111,7 +111,7 @@ def bar():
     with tmp_file(file_content, '.py') as tmp_filename:
         func = parse_events_kwarg({'bar': f'{tmp_filename}::bar'})['bar'][0]
         assert func.__name__ == 'bar'
-    
+
         expected_msg = "Function 'foo' specified for event"
         with pytest.raises(ValueError, match=expected_msg):
             parse_events_kwarg({'bar': f'{tmp_filename}::foo'})

@@ -47,6 +47,10 @@ repos:
           - flake8-printf-formatting
           - flake8-pytest-style
         files: ^(mdpo|test|docs)/
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.6.0
+    hooks:
+      - id: autopep8
   - repo: https://github.com/asottile/yesqa
     rev: v1.3.0
     hooks:
