@@ -92,8 +92,18 @@ repos:
       - id: nitpick-check
         name: nitpick
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.15.1
+    rev: main
     hooks:
+      - id: check-jsonschema
+        name: pyproject.toml schema
+        files: ^pyproject\.toml$
+        additional_dependencies:
+          - tomli
+        types_or:
+          - toml
+        args:
+          - --schemafile
+          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/pyproject/pyproject.toml.json
       - id: check-jsonschema
         name: .github/workflows/pre-commit.yml schema
         files: ^\.github/workflows/pre-commit\.yml$
@@ -106,16 +116,3 @@ repos:
         args:
           - --schemafile
           - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/.github/workflows/pre-commit-autoupdate.json
-  - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: main
-    hooks:
-      - id: check-jsonschema
-        name: pyproject.toml schema
-        files: ^pyproject\.toml$
-        additional_dependencies:
-          - tomli
-        types:
-          - toml
-        args:
-          - --schemafile
-          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/pyproject/pyproject.toml.json

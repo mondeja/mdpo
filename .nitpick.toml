@@ -1,8 +1,8 @@
 [tool.nitpick]
 style = [
-    "../nitpick-styles/python/single-quotes.toml",
-    "../nitpick-styles/python/line-length-80.toml",
-    "../nitpick-styles/python/version/min-37.toml",
-    "../nitpick-styles/python/google-docstrings.toml",
-    "../nitpick-styles/python/readthedocs.toml"
+    "gh://mondeja/nitpick-styles/python/single-quotes.toml",
+    "gh://mondeja/nitpick-styles/python/line-length-80.toml",
+    "gh://mondeja/nitpick-styles/python/version/min-37.toml",
+    "gh://mondeja/nitpick-styles/python/google-docstrings.toml",
+    "gh://mondeja/nitpick-styles/python/readthedocs.toml"
 ]
