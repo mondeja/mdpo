@@ -48,6 +48,7 @@ md2po2md = "mdpo.md2po2md.__main__:main"
 mdpo2html = "mdpo.mdpo2html.__main__:main"
 
 [tool.poetry-exec-plugin.commands]
+t = "pytest"
 test = "pytest"
 "test:all" = "pytest"
 "test:unit" = "pytest tests/test_unit"
