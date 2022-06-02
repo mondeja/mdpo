@@ -83,13 +83,7 @@ def to_files_or_content(value):
     except Exception as err:
         # some strings like '[s-m]' will produce
         # 're.error: bad character range ... at position'
-
-        # NOTE: in Python3.6, 're.error' is 'sre_constants' error,
-        # so 'sre_constants' must be removed when Python3.6 support is gone
-        if (
-            err.__module__ in ['re', 'sre_constants']
-            and err.__class__.__name__ == 'error'
-        ):
+        if err.__module__ == 're' and err.__class__.__name__ == 'error':
             return (False, value)
         raise err
     if not parsed:

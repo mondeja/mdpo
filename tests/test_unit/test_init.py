@@ -1,13 +1,8 @@
 import importlib
-import sys
 
 import pytest
 
 
-@pytest.mark.skipif(
-    sys.version_info < (3, 7),
-    reason='PEP562 was implemented in Python 3.7',
-)
 def test_pep562():
     # __getattr__
     mdpo = importlib.import_module('mdpo')
