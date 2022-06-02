@@ -40,7 +40,7 @@ jobs:
         run: poetry run pytest tests/test_integration --override-ini addopts=-svv
       - name: Coveralls
         run: |
-          pip install coveralls
+          pip install coveralls coverage[toml]
           coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
