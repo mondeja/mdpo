@@ -66,6 +66,47 @@ exclude_lines = [
   "if '-h' in args or '--help' in args:",
 ]
 
+[tool.flakeheaven]
+inline-quotes = "single"
+max-line-length = 80
+docstring-convention = "google"
+pytest-parametrize-values-type = "tuple"
+pytest-parametrize-values-row-type = "tuple"
+
+[tool.flakeheaven.plugins]
+pycodestyle = ["+*", "-W503"]
+pyflakes = ["+*"]
+pylint = ["+*"]
+flake8-builtins = ["+*"]
+flake8-comprehensions = ["+*"]
+flake8-docstrings = ["+*"]
+flake8-executable = ["+*"]
+flake8-implicit-str-concat = ["+*"]
+flake8-print = ["+*"]
+flake8-printf-formatting = ["+*"]
+flake8-pytest-style = ["+*"]
+
+[tool.flakeheaven.exceptions."docs/*.rst"]
+flake8-print = ["-T201"]
+flake8-docstrings = ["-D100"]
+
+[tool.flakeheaven.exceptions."tests/**"]
+flake8-docstrings = [
+  "-D100",
+  "-D101",
+  "-D102",
+  "-D103",
+  "-D107",
+  "-D205",
+  "-D415"
+]
+
+[tool.flakeheaven.exceptions."mdpo/**/*.py"]
+flake8-docstrings = ["-D101", "-D102", "-D103", "-D107"]
+
+[tool.flakeheaven.exceptions."mdpo/md.py"]
+flake8-docstrings = ["-D101", "-D102", "-D107"]
+
 [tool.isort]
 lines_after_imports = 2
 multi_line_output = 3

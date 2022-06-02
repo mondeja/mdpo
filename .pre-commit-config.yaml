@@ -32,11 +32,10 @@ repos:
     hooks:
       - id: add-trailing-comma
         name: add-trailing-comma
-  - repo: https://github.com/PyCQA/flake8
-    rev: 4.0.1
+  - repo: https://github.com/flakeheaven/flakeheaven
+    rev: 1.0.1
     hooks:
-      - id: flake8
-        name: flake8
+      - id: flakeheaven
         additional_dependencies:
           - flake8-builtins
           - flake8-comprehensions
@@ -46,16 +45,10 @@ repos:
           - flake8-print
           - flake8-printf-formatting
           - flake8-pytest-style
-        files: ^(mdpo|test|docs)/
   - repo: https://github.com/pre-commit/mirrors-autopep8
     rev: v1.6.0
     hooks:
       - id: autopep8
-  - repo: https://github.com/asottile/yesqa
-    rev: v1.3.0
-    hooks:
-      - id: yesqa
-        name: yesqa
   - repo: https://github.com/PyCQA/isort
     rev: 5.10.1
     hooks:

@@ -5,7 +5,7 @@ import sys
 
 
 def and_join(values):
-    """List ", " join using "and" between the last and penultimate items.
+    """Comma and space join using "and" between the last and penultimate items.
 
     Args:
         values (list): Values to join.
@@ -14,7 +14,7 @@ def and_join(values):
 
 
 def min_not_max_chars_in_a_row(char, text, default=1):
-    r"""Returns the minimum possible of characters not found in a row for a string.
+    r"""Return the minimum possible of characters not found in a row for a string.
 
     For example, given the string ``"c cc cccc"`` and the character ``"c"``,
     returns the minimum number of characters in a row that are not found, so
@@ -47,7 +47,7 @@ def min_not_max_chars_in_a_row(char, text, default=1):
 
     if in_a_rows:
         response = None
-        for n in range(1, max(in_a_rows)+2):
+        for n in range(1, max(in_a_rows) + 2):
             if n not in in_a_rows:
                 response = n
                 break

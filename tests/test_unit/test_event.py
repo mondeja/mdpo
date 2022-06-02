@@ -83,7 +83,7 @@ md2po[DEBUG]::<date>::leave_block:: DOC
 md2po[DEBUG]::<date>::msgid:: msgid=''
 md2po[DEBUG]::<date>::link_reference:: target='link' - href='https://foo.bar' - title='Title'
 md2po[DEBUG]::<date>::msgid:: msgid='[link]: https://foo.bar "Title"' - msgstr='[link]: https://foo.bar "Title"' - flags='['fuzzy']'
-'''
+'''  # noqa E501
     assert comparable_debug_output == expected_output
 
 

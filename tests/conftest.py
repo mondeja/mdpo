@@ -96,7 +96,8 @@ def git_add_commit():
             cwd=cwd,
             capture_output=True,
         )
-        return commit_proc
+
+        return not any([add_proc.returncode, commit_proc.returncode])
     return _git_add_commit
 
 

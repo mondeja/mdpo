@@ -758,8 +758,8 @@ class Md2Po:
                 current_aspan_title = details['title'][0][1]
                 for target, href, title in self.link_references:
                     if (
-                        href == current_aspan_href and
-                        title == current_aspan_title
+                        href == current_aspan_href
+                        and title == current_aspan_title
                     ):
                         self._current_aspan_ref_target = target
                         break
@@ -1106,8 +1106,7 @@ def markdown_to_pofile(
     debug=False,
     **kwargs,
 ):
-    """Extracts all the msgids from a string of Markdown content or a group of
-    files.
+    """Extract all the msgids from Markdown content or files.
 
     Args:
         files_or_content (str, list): Glob path to Markdown files, a list of

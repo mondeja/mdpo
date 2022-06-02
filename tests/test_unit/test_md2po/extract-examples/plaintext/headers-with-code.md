@@ -3,6 +3,8 @@
 ## I also like `Javascript` and `LaTeX`
 
 ```python
+import sys
+
 if __name__ == '__main__':
-    print('Hey world')
+    sys.stdout.write('Hey world\n')
 ```
