@@ -26,7 +26,7 @@ polib = "^1.1.0"
 pymd4c = "~1.1.2"
 
 [tool.poetry.group.dev.dependencies]
-bump2version = "^1.0.1"
+mondeja-bump = { git = "https://github.com/mondeja/mondeja-bump.git" }
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.0.0"
@@ -47,6 +47,14 @@ po2md = "mdpo.po2md.__main__:main"
 md2po2md = "mdpo.md2po2md.__main__:main"
 mdpo2html = "mdpo.mdpo2html.__main__:main"
 
+[tool.bump]
+targets = [
+  { file = "pyproject.toml" },
+  { file = "mdpo/__init__.py" },
+  { file = "docs/conf.py" },
+  { file = "docs/pre-commit-hooks.rst" }
+]
+
 [tool.poetry-exec-plugin.commands]
 t = "pytest"
 test = "pytest"
@@ -55,6 +63,16 @@ test = "pytest"
 "test:integration" = "pytest tests/test_integration --override-ini addopts=-svv"
 lint = "pre-commit run -a"
 doc = "python -m sphinx -T -E -W docs docs/_build/html"
+
+[tool.nitpick]
+style = [
+  "gh://mondeja/nitpick-styles/python/single-quotes.toml",
+  "gh://mondeja/nitpick-styles/python/line-length-80.toml",
+  "gh://mondeja/nitpick-styles/python/version/min-37.toml",
+  "gh://mondeja/nitpick-styles/python/google-docstrings.toml",
+  "gh://mondeja/nitpick-styles/python/sphinx.toml",
+  "gh://mondeja/nitpick-styles/python/readthedocs.toml",
+]
 
 [tool.pytest.ini_options]
 addopts = "-s --cov=mdpo --cov-report=html"

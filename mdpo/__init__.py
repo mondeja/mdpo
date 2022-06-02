@@ -11,7 +11,7 @@ __all__ = [
 
 
 def __getattr__(name):
-    """Implements PEP 562 to avoid uneeded imports in CLIs."""
+    """Implement PEP 562 to avoid uneeded imports in CLIs."""
     import importlib
     func_package_map = {
         'markdown_pofile_to_html': 'mdpo2html',

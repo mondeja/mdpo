@@ -42,9 +42,9 @@ Release
 
 .. code-block:: bash
 
-   python3 -m bump2version <major/minor/patch>
+   version="$(poetry run bump <major/minor/patch>)"
    git add .
    git commit -m "Bump version"
    git push origin master
-   git tag -a v<version>
-   git push origin v<version>
+   git tag -a "v$version"
+   git push origin "v$version"
