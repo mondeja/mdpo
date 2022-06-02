@@ -9,5 +9,5 @@ trim_trailing_whitespace = true
 [*.{py,md}]
 trim_trailing_whitespace = false
 
-[*.css]
+[*.{css,toml}]
 indent_size = 2
