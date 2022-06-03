@@ -3,7 +3,12 @@
 import argparse
 import sys
 
-from mdpo import __version__
+
+try:
+    import importlib.metadata as importlib_metadata
+except ImportError:  # Python == 3.7
+    import importlib_metadata
+
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.text import and_join, parse_escaped_pairs
 
@@ -127,7 +132,7 @@ def add_common_cli_first_arguments(parser, quiet=True):
     )
     parser.add_argument(
         '-v', '--version', action='version',
-        version=f'%(prog)s {__version__}',
+        version=f'%(prog)s {importlib_metadata.version("mdpo")}',
         help='Show program version number and exit.',
     )
     if quiet:

@@ -7,7 +7,7 @@ Development install
 
 You need to install Poetry >= 1.2.0.
 
-.. code-block:: bash
+.. code-block:: sh
 
    git clone https://github.com/mondeja/mdpo.git
    cd mdpo
@@ -15,32 +15,34 @@ You need to install Poetry >= 1.2.0.
    pre-commit install
    pip install poetry-exec-plugin
 
-
-Build documentation
-===================
-
-.. code-block:: bash
-
-   poetry exec doc
-
 Test
 ====
 
-.. code-block:: bash
+.. code-block:: sh
 
    poetry exec test
+   # or just `poetry exec t`
 
 Lint
 ====
 
-.. code-block:: bash
+.. code-block:: sh
 
    poetry exec lint
+
+
+Build documentation
+===================
+
+.. code-block:: sh
+
+   poetry exec doc
+   # or better: `poetry exec doc:show`
 
 Release
 =======
 
-.. code-block:: bash
+.. code-block:: sh
 
    version="$(poetry run bump <major/minor/patch>)"
    git add .

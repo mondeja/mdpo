@@ -24,6 +24,7 @@ packages = [{ include = "mdpo/**/*.py" }]
 python = "^3.7"
 polib = "^1.1.0"
 pymd4c = "~1.1.2"
+importlib_metadata = { version = "*", python = "3.7" }
 
 [tool.poetry.group.dev.dependencies]
 mondeja-bump = "^0.1.1"
@@ -48,12 +49,7 @@ md2po2md = "mdpo.md2po2md.__main__:main"
 mdpo2html = "mdpo.mdpo2html.__main__:main"
 
 [tool.bump]
-targets = [
-  { file = "pyproject.toml" },
-  { file = "mdpo/__init__.py" },
-  { file = "docs/conf.py" },
-  { file = "docs/pre-commit-hooks.rst" }
-]
+targets = [{ file = "pyproject.toml" }, { file = "docs/pre-commit-hooks.rst" }]
 
 [tool.poetry-exec-plugin.commands]
 t = "pytest"
@@ -63,6 +59,9 @@ test = "pytest"
 "test:integration" = "pytest tests/test_integration --override-ini addopts=-svv"
 lint = "pre-commit run -a"
 doc = "python -m sphinx -T -E -W docs docs/_build/html"
+"doc:show" = """poetry exec doc &&
+python -c 'import webbrowser as w;w.open("http://127.0.0.1:8080")' &&
+python -m http.server 8080 -b localhost -d docs/_build/html"""
 
 [tool.nitpick]
 cache = "5 minutes"

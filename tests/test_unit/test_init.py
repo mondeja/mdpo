@@ -14,14 +14,3 @@ def test_pep562():
     expected_msg = 'cannot import name \'foobarbaz\' from \'mdpo\''
     with pytest.raises(ImportError, match=expected_msg):
         getattr(mdpo, 'foobarbaz')
-
-    # __dir__
-    assert dir(mdpo) == [
-        '__description__',
-        '__title__',
-        '__version__',
-        'markdown_pofile_to_html',
-        'markdown_to_pofile',
-        'markdown_to_pofile_to_markdown',
-        'pofile_to_markdown',
-    ]

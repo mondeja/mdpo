@@ -1,18 +1,31 @@
 """Configuration file for the Sphinx documentation build of mdpo."""
 
 import os
+import re
 import sys
 
 
-# -- Path setup --------------------------------------------------------------
+try:
+    import importlib.metadata as importlib_metadata
+except ImportError:
+    # Python < 3.8 with `pip install importlib_metadata`
+    import importlib_metadata
 
-sys.path.insert(0, os.path.abspath('..'))
+
+# -- Path setup --------------------------------------------------------------
+rootdir = os.path.abspath('..')
+sys.path.insert(0, rootdir)
 
 # -- Project information -----------------------------------------------------
-project = 'mdpo'
-author = 'Álvaro Mondéjar Rubio'
-project_copyright = f'2020-2022, {author}'
-release = '0.4.0'
+metadata = importlib_metadata.distribution('mdpo').metadata
+with open(os.path.join(rootdir, 'LICENSE')) as f:
+    license_years_range = re.search(
+        r'Copyright \(c\) (\d+-\d+)', f.read(),
+    ).group(1)
+project = metadata['name']
+author = metadata['author']
+project_copyright = f'{license_years_range}, {author}'
+release = metadata['version']
 version = '.'.join(release.split('.')[:2])
 
 # -- General configuration ---------------------------------------------------
@@ -36,7 +49,7 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'venv', 'dist']
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -49,7 +62,7 @@ html_theme_options = {
     'logo_only': True,
     'style_nav_header_background': 'white',
 }
-html_logo = os.path.abspath(os.path.join('..', 'mdpo.png'))
+html_logo = os.path.join(rootdir, 'mdpo.png')
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
