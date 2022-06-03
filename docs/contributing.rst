@@ -13,7 +13,7 @@ You need to install Poetry >= 1.2.0.
    cd mdpo
    poetry install
    pre-commit install
-   pip install poetry-exec-plugin
+   pip install --user poetry-exec-plugin
 
 Test
 ====

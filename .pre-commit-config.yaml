@@ -128,3 +128,9 @@ repos:
         args:
           - --schemafile
           - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/.github/workflows/pre-commit-autoupdate.json
+      - id: check-jsonschema
+        name: .github/workflows/update-copyright-years.yml schema
+        files: ^\.github/workflows/update-copyright-years\.yml$
+        args:
+          - --schemafile
+          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/base/.github/workflows/update-copyright-years.json
