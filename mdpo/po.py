@@ -9,7 +9,7 @@ from mdpo.polib import poentry__cmp__
 
 
 def po_escaped_string(chars):
-    r"""Convenience function that prepends a ``\`` character to a string.
+    r"""Prepend a ``\`` character to a string.
 
     This is used to escape values inside strings wrapped for the returned
     character.
@@ -24,7 +24,7 @@ def po_escaped_string(chars):
 
 
 def find_entry_in_entries(entry, entries, **kwargs):
-    """Returns an equal entry in a set of :py:class:`polib.POEntry` entries.
+    """Return an equal entry in a set of :py:class:`polib.POEntry` entries.
 
     Finds the first :py:class:`polib.POEntry` instance in the iterable
     ``entries`` that is equal, according to its ``__cmp__`` method, to
@@ -52,7 +52,7 @@ def mark_not_found_entries_as_obsoletes(
     pofile,
     entries,
 ):
-    """Marks entries in a PO file obsoletes if are not in a set of entries.
+    """Mark entries in a PO file obsoletes if are not in a set of entries.
 
     If an entry of the PO file is found in the set of entries, will be marked
     as no obsolete.
@@ -83,7 +83,7 @@ def mark_not_found_entries_as_obsoletes(
 
 
 def remove_not_found_entries(pofile, entries):
-    """Removes entries in a PO file if are not in a set of entries.
+    """Remove entries in a PO file if are not in a set of entries.
 
     Args:
         pofile (:py:class:`polib.POFile`): PO file for which the missing
@@ -137,7 +137,7 @@ def pofiles_to_unique_translations_dicts(pofiles):
 
 
 def paths_or_globs_to_unique_pofiles(pofiles_globs, ignore, po_encoding=None):
-    """Converts any path, paths or glob to :py:class:`polib.POFile` objects.
+    """Convert any path, paths or glob to :py:class:`polib.POFile` objects.
 
     Args:
         pofiles_globs (str, list): Can be a path, a glob, multiples paths

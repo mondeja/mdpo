@@ -5,7 +5,7 @@ import os
 
 
 def filter_paths(filepaths, ignore_paths=[]):
-    """Filters a list of paths removing those defined in other list of paths.
+    """Filter a list of paths removing those defined in other list of paths.
 
     The paths to filter can be defined in the list of paths to ignore in
     several forms:

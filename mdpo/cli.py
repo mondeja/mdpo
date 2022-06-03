@@ -37,7 +37,7 @@ def parse_escaped_pairs_cli_argument(
     value_error_message,
     key_error_message,
 ):
-    """Parses a key argument made by key-value pairs.
+    """Parse a key argument made by key-value pairs.
 
     If an error happens, shows an appropiate message and exists with code 1.
 

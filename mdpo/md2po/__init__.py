@@ -55,6 +55,7 @@ class Md2Po:
     The public internal properties of this class are documented
     below:
     """
+
     __slots__ = {
         'filepaths',
         'content',

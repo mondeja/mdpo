@@ -196,17 +196,10 @@ version = "0.1.1"
 description = "Just bump semantic version."
 category = "dev"
 optional = false
-python-versions = "^3.7"
-develop = false
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-tomlkit = "^0.11.0"
-
-[package.source]
-type = "git"
-url = "https://github.com/mondeja/mondeja-bump.git"
-reference = "HEAD"
-resolved_reference = "a3a4a5a9636e43e8b2847327acf12edee95db963"
+tomlkit = ">=0.11.0,<0.12.0"
 
 [[package]]
 name = "nodeenv"
@@ -659,7 +652,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "101520142266c90a26989fff7204663f808604ed4130e28ce886d3bdcecc8c3e"
+content-hash = "1b84f8656921d51ffcd05e6b71febb6ad747277e01da72ae1be1b6f33b9df4de"
 
 [metadata.files]
 alabaster = [
@@ -815,7 +808,10 @@ markupsafe = [
     {file = "MarkupSafe-2.1.1-cp39-cp39-win_amd64.whl", hash = "sha256:46d00d6cfecdde84d40e572d63735ef81423ad31184100411e6e3388d405e247"},
     {file = "MarkupSafe-2.1.1.tar.gz", hash = "sha256:7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"},
 ]
-mondeja-bump = []
+mondeja-bump = [
+    {file = "mondeja-bump-0.1.1.tar.gz", hash = "sha256:0d20abd63cc21fda06715f39d7dd3784f033e2230038f614d9f88251eccc17d5"},
+    {file = "mondeja_bump-0.1.1-py3-none-any.whl", hash = "sha256:2ce1c2b8e418b84d07d85a09adbb36af8191d924b43546b664f926f803a341e0"},
+]
 nodeenv = [
     {file = "nodeenv-1.6.0-py2.py3-none-any.whl", hash = "sha256:621e6b7076565ddcacd2db0294c0381e01fd28945ab36bcf00f41c5daf63bef7"},
     {file = "nodeenv-1.6.0.tar.gz", hash = "sha256:3ef13ff90291ba2a4a7a4ff9a979b63ffdd00a464dbe04acf0ea6471517a4c2b"},

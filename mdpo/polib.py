@@ -11,7 +11,7 @@ def poentry__cmp__(
     compare_msgstr=True,
     compare_occurrences=True,
 ):
-    """Custom comparation ``__cmp__`` function for :py:class:`polib.POEntry`.
+    """Compare entries like ``__cmp__`` method of :py:class:`polib.POEntry`.
 
     This function add custom entries comparison capabilities to
     :py:class:`polib.POEntry`, needed by mdpo to prevent some errors.
