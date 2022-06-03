@@ -90,6 +90,7 @@ max-line-length = 80
 docstring-convention = "google"
 pytest-parametrize-values-type = "tuple"
 pytest-parametrize-values-row-type = "tuple"
+pytest-parametrize-names-type = "tuple"
 
 [tool.flakeheaven.plugins]
 pycodestyle = ["+*", "-W503"]
