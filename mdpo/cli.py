@@ -3,12 +3,6 @@
 import argparse
 import sys
 
-
-try:
-    import importlib.metadata as importlib_metadata
-except ImportError:  # Python == 3.7
-    import importlib_metadata
-
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.text import and_join, parse_escaped_pairs
 
@@ -16,6 +10,30 @@ from mdpo.text import and_join, parse_escaped_pairs
 SPHINX_IS_RUNNING = 'sphinx' in sys.modules
 OPEN_QUOTE_CHAR = '”' if SPHINX_IS_RUNNING else '"'
 CLOSE_QUOTE_CHAR = '”' if SPHINX_IS_RUNNING else '"'
+
+
+class _DelayedVersionAction(argparse._VersionAction):
+    """Delayed version action for argparse.
+
+    An action kwarg for argparse.add_argument() which computes
+    the version number only when the version option is passed.
+
+    This allows to import importlib.metadata only when the ``--version``
+    option is passed to the CLI.
+
+    TODO: Separate this action to another package, is a really useful
+          pattern to avoid a performance penalization.
+    """
+
+    def __call__(self, *args, **kwargs):
+        try:
+            import importlib.metadata as importlib_metadata
+        except ImportError:  # Python == 3.7
+            import importlib_metadata
+
+        self.version = f'%(prog)s {importlib_metadata.version("mdpo")}'
+
+        super().__call__(*args, **kwargs)
 
 
 def cli_codespan(value, cli=True, sphinx=True):
@@ -131,8 +149,7 @@ def add_common_cli_first_arguments(parser, quiet=True):
         default=argparse.SUPPRESS,
     )
     parser.add_argument(
-        '-v', '--version', action='version',
-        version=f'%(prog)s {importlib_metadata.version("mdpo")}',
+        '-v', '--version', action=_DelayedVersionAction,
         help='Show program version number and exit.',
     )
     if quiet:

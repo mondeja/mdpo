@@ -26,6 +26,9 @@ jobs:
       - name: Install poetry
         run: |
           pip install -U pip poetry==1.2.0b1
+          # for some reason, distro-info is installed with an
+          # old non-compatible PEP-440 version string
+          pip install -U distro-info
           poetry config virtualenvs.create false
           pip list
       - name: Set up Python v${{ matrix.python-version }}
