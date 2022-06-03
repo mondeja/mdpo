@@ -87,10 +87,8 @@ exclude_lines = [
 [tool.flakeheaven]
 inline-quotes = "single"
 max-line-length = 80
-docstring-convention = "google"
-pytest-parametrize-values-type = "tuple"
-pytest-parametrize-values-row-type = "tuple"
-pytest-parametrize-names-type = "tuple"
+pytest_parametrize_values_type = "tuple"
+docstring_convention = "google"
 
 [tool.flakeheaven.plugins]
 pycodestyle = ["+*", "-W503"]

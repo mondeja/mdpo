@@ -33,7 +33,7 @@ repos:
       - id: add-trailing-comma
         name: add-trailing-comma
   - repo: https://github.com/flakeheaven/flakeheaven
-    rev: main
+    rev: 1.0.1
     hooks:
       - id: flakeheaven
         additional_dependencies:
@@ -45,6 +45,8 @@ repos:
           - flake8-print
           - flake8-printf-formatting
           - flake8-pytest-style
+          - pysetenv
+        entry: pysetenv FLAKEHEAVEN_CACHE_TIMEOUT=0 flakeheaven lint
   - repo: https://github.com/pre-commit/mirrors-autopep8
     rev: v1.6.0
     hooks:
