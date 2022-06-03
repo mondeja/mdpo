@@ -27,6 +27,7 @@ jobs:
         run: |
           pip install -U pip poetry==1.2.0b1
           poetry config virtualenvs.create false
+          pip list
       - name: Set up Python v${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
