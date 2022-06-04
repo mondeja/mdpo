@@ -192,14 +192,14 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "mondeja-bump"
-version = "0.1.1"
+version = "0.2.0"
 description = "Just bump semantic version."
 category = "dev"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-tomlkit = ">=0.11.0,<0.12.0"
+tomli = "*"
 
 [[package]]
 name = "nodeenv"
@@ -590,14 +590,6 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
-name = "tomlkit"
-version = "0.11.0"
-description = "Style preserving TOML library"
-category = "dev"
-optional = false
-python-versions = ">=3.6,<4.0"
-
-[[package]]
 name = "typing-extensions"
 version = "4.2.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -652,7 +644,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "02e7dbaf33031fbd6834c1e809e3fdf12a694374a424b26de8be5dbbfd356ea8"
+content-hash = "678ad2a4f0580fa0681d01176597edce8e2d155f38dbdf3b842e2ac499db08b9"
 
 [metadata.files]
 alabaster = [
@@ -809,8 +801,8 @@ markupsafe = [
     {file = "MarkupSafe-2.1.1.tar.gz", hash = "sha256:7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"},
 ]
 mondeja-bump = [
-    {file = "mondeja-bump-0.1.1.tar.gz", hash = "sha256:0d20abd63cc21fda06715f39d7dd3784f033e2230038f614d9f88251eccc17d5"},
-    {file = "mondeja_bump-0.1.1-py3-none-any.whl", hash = "sha256:2ce1c2b8e418b84d07d85a09adbb36af8191d924b43546b664f926f803a341e0"},
+    {file = "mondeja-bump-0.2.0.tar.gz", hash = "sha256:7df81deab12c5eddd338dc89030ba04ea5483729f3f9a1d21f20db1f67f18bbc"},
+    {file = "mondeja_bump-0.2.0-py3-none-any.whl", hash = "sha256:2e2fd4029a0a08430bdddf88b0d1efc6686f40f1a948bdac8429a068cb27efc0"},
 ]
 nodeenv = [
     {file = "nodeenv-1.6.0-py2.py3-none-any.whl", hash = "sha256:621e6b7076565ddcacd2db0294c0381e01fd28945ab36bcf00f41c5daf63bef7"},
@@ -980,10 +972,6 @@ toml = [
 tomli = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
-]
-tomlkit = [
-    {file = "tomlkit-0.11.0-py3-none-any.whl", hash = "sha256:0f4050db66fd445b885778900ce4dd9aea8c90c4721141fde0d6ade893820ef1"},
-    {file = "tomlkit-0.11.0.tar.gz", hash = "sha256:71ceb10c0eefd8b8f11fe34e8a51ad07812cb1dc3de23247425fbc9ddc47b9dd"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.2.0-py3-none-any.whl", hash = "sha256:6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708"},

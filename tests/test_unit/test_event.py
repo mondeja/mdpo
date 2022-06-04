@@ -50,19 +50,19 @@ md2po[DEBUG]::<date>::msgid:: msgid='Header'
 md2po[DEBUG]::<date>::enter_block:: HTML
 md2po[DEBUG]::<date>::text:: <!-- mdpo-for-translator Comment for translator -->
 md2po[DEBUG]::<date>::command:: mdpo-translator - Comment for translator (original command: 'mdpo-for-translator')
-md2po[DEBUG]::<date>::text:: 
+md2po[DEBUG]::<date>::text::''' + ' ' + '''
 
 md2po[DEBUG]::<date>::text:: <!-- mdpo-context foo and bar -->
 md2po[DEBUG]::<date>::command:: mdpo-context - foo and bar
-md2po[DEBUG]::<date>::text:: 
+md2po[DEBUG]::<date>::text::''' + ' ' + '''
 
 md2po[DEBUG]::<date>::leave_block:: HTML
 md2po[DEBUG]::<date>::enter_block:: P
-md2po[DEBUG]::<date>::text:: Content with 
+md2po[DEBUG]::<date>::text:: Content with''' + ' ' + '''
 md2po[DEBUG]::<date>::enter_span:: CODE
 md2po[DEBUG]::<date>::text:: span
 md2po[DEBUG]::<date>::leave_span:: CODE
-md2po[DEBUG]::<date>::text::  and 
+md2po[DEBUG]::<date>::text::  and''' + ' ' + '''
 md2po[DEBUG]::<date>::enter_span:: A - {'href': [(<TextType.NORMAL: 0>, 'https://foo.bar')], 'title': [(<TextType.NORMAL: 0>, 'Title')]}
 md2po[DEBUG]::<date>::text:: referenced-link
 md2po[DEBUG]::<date>::leave_span:: A - {'href': [(<TextType.NORMAL: 0>, 'https://foo.bar')], 'title': [(<TextType.NORMAL: 0>, 'Title')]}
@@ -72,7 +72,7 @@ md2po[DEBUG]::<date>::msgid:: msgid='Content with `span` and [referenced-link][l
 md2po[DEBUG]::<date>::enter_block:: HTML
 md2po[DEBUG]::<date>::text:: <!-- mdpo-disable-next-line -->
 md2po[DEBUG]::<date>::command:: mdpo-disable-next-line
-md2po[DEBUG]::<date>::text:: 
+md2po[DEBUG]::<date>::text::''' + ' ' + '''
 
 md2po[DEBUG]::<date>::leave_block:: HTML
 md2po[DEBUG]::<date>::enter_block:: P
