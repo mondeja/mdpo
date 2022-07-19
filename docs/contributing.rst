@@ -13,7 +13,7 @@ You need to install Poetry >= 1.2.0.
    cd mdpo
    poetry install
    pre-commit install
-   pip install --user poetry-exec-plugin
+   poetry self add poetry-exec-plugin
 
 Test
 ====
@@ -21,7 +21,9 @@ Test
 .. code-block:: sh
 
    poetry exec test
-   # or just `poetry exec t`
+   # `poetry exec t`
+   # `poetry exec test:show`
+
 
 Lint
 ====
@@ -37,7 +39,7 @@ Build documentation
 .. code-block:: sh
 
    poetry exec doc
-   # or better: `poetry exec doc:show`
+   # `poetry exec doc:show`
 
 Release
 =======
