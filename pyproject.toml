@@ -99,13 +99,11 @@ exclude_lines = [
 ]
 
 [tool.flakeheaven]
-inline-quotes = "single"
-max-line-length = 80
+inline_quotes = "single"
+max_line_length = 80
 pytest_fixture_no_parentheses = true
 pytest_parametrize_values_type = "tuple"
 docstring_convention = "google"
-inline_quotes = "single"
-max_line_length = 80
 
 [tool.flakeheaven.plugins]
 pycodestyle = ["+*", "-W503"]
