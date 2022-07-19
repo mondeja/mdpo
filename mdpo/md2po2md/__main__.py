@@ -11,13 +11,13 @@ import sys
 
 from mdpo.cli import (
     SPHINX_IS_RUNNING,
+    add_check_option,
     add_command_alias_argument,
     add_common_cli_first_arguments,
     add_debug_option,
     add_encoding_arguments,
     add_extensions_argument,
     add_nolocation_option,
-    add_pre_commit_option,
     add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
@@ -84,7 +84,7 @@ def build_parser():
     )
     add_encoding_arguments(parser)
     add_debug_option(parser)
-    add_pre_commit_option(parser)
+    add_check_option(parser)
     return parser
 
 

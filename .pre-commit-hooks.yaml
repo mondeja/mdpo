@@ -1,27 +1,27 @@
 - id: md2po
   name: md2po
-  entry: md2po -sq --pre-commit
+  entry: md2po -sq --check
   description: Utility like xgettext to extract Markdown content dumping it inside PO files
   language: python
   types:
     - text
 - id: po2md
   name: po2md
-  entry: po2md --pre-commit
+  entry: po2md --check
   description: Markdown file translator using PO files as reference
   language: python
   types:
     - text
 - id: mdpo2html
   name: mdpo2html
-  entry: mdpo2html --pre-commit
+  entry: mdpo2html --check
   description: HTML-produced-from-Markdown file translator using PO files
   language: python
   types:
     - text
 - id: md2po2md
   name: md2po2md
-  entry: md2po2md --pre-commit
+  entry: md2po2md --check
   description: Translates Markdown files using PO files for a set of predefined language codes creating multiple directories, one for each language
   language: python
   types:

@@ -302,16 +302,16 @@ def add_wrapwidth_argument(
     parser.add_argument(*args, **kwargs)
 
 
-def add_pre_commit_option(parser):
-    """Add the ``--pre-commit`` option to an argument parser.
+def add_check_option(parser):
+    """Add the ``--check`` option to an argument parser.
 
     Args:
         parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
             extend.
     """
     parser.add_argument(
-        '--pre-commit', dest='check_saved_files_changed', action='store_true',
-        help='Run in pre-commit mode, which returns code 1 at exit when a file'
+        '--check', dest='check_saved_files_changed', action='store_true',
+        help='Run in check mode, which returns code 1 at exit when a file'
              ' has been changed or previously did not exist.',
     )
 

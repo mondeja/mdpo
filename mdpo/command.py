@@ -55,12 +55,10 @@ def normalize_mdpo_command(value):
     """
     if not value.startswith('mdpo-'):
         value = f'mdpo-{value}'
-    if value.startswith('mdpo-'):
-        return (
-            value if value.split('-', maxsplit=1)[1] in MDPO_COMMANDS
-            else None
-        )
-    return value if value in MDPO_COMMANDS else None
+    return (
+        value if value.split('-', maxsplit=1)[1] in MDPO_COMMANDS
+        else None
+    )
 
 
 def normalize_mdpo_command_aliases(command_aliases):

@@ -10,12 +10,12 @@ import itertools
 import sys
 
 from mdpo.cli import (
+    add_check_option,
     add_command_alias_argument,
     add_common_cli_first_arguments,
     add_debug_option,
     add_encoding_arguments,
     add_event_argument,
-    add_pre_commit_option,
     add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
@@ -70,7 +70,7 @@ def build_parser():
     add_command_alias_argument(parser)
     add_event_argument(parser)
     add_debug_option(parser)
-    add_pre_commit_option(parser)
+    add_check_option(parser)
     return parser
 
 
