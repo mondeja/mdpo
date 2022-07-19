@@ -21,20 +21,14 @@ rules:
     indent-sequences: true
     spaces: consistent
   key-duplicates: enable
-  key-ordering:
-    ignore: |
-      .pre-commit-config.yaml
-      .pre-commit-hooks.yaml
-      .github
-      .readthedocs.yml
-      tests/test_unit/test_po2md/.markdownlint-cli2.yaml
+  key-ordering: disable
   line-length:
     allow-non-breakable-words: true
     ignore: |
       .pre-commit-config.yaml
       .pre-commit-hooks.yaml
       .github
-    max: 96
+    max: 180
   new-lines:
     type: unix
   octal-values:
@@ -42,9 +36,6 @@ rules:
     forbid-implicit-octal: true
   quoted-strings:
     extra-required:
-      # Dependabot does not parse unquoted hours as strings:
-      # https://github.com/mondeja/latex-ji18n/runs/1459035577
-      # https://github.community/t/dependabot-parser-treat-hours-as-integers/145596
       - \d\d:\d\d
     quote-type: single
     required: only-when-needed

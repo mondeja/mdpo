@@ -16,5 +16,5 @@ jobs:
         name: Set up Python
         with:
           python-version: 3.x
-      - uses: pre-commit/action@v2.0.3
-        name: Run pre-commit
+      - run: pip install pre-commit
+      - run: pre-commit run -a

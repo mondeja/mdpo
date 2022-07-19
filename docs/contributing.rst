@@ -9,7 +9,7 @@ You need to install Poetry >= 1.2.0.
 
 .. code-block:: sh
 
-   git clone https://github.com/mondeja/mdpo.git
+   git clone https://github.com/mondeja/mdpo
    cd mdpo
    poetry install
    pre-commit install

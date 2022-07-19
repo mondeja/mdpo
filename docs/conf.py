@@ -13,7 +13,7 @@ except ImportError:
 
 
 # -- Path setup --------------------------------------------------------------
-rootdir = os.path.abspath('..')
+rootdir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 sys.path.insert(0, rootdir)
 
 # -- Project information -----------------------------------------------------

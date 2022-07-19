@@ -1,4 +1,5 @@
-* text=auto
+* text=auto eol=lf
+*.bat text eol=lf
 
 # Don't diff machine generated files
 poetry.lock -diff

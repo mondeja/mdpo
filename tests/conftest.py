@@ -20,7 +20,7 @@ def _tmp_file(content='', suffix=''):
         yield f.name
 
 
-@pytest.fixture()
+@pytest.fixture
 def tmp_file():
     return _tmp_file
 
@@ -32,7 +32,7 @@ def _tmp_file_path(suffix=''):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def tmp_file_path():
     return _tmp_file_path
 
@@ -64,7 +64,7 @@ def _tmp_dir(files_contents):
             yield (tmpdir, *filepaths)
 
 
-@pytest.fixture()
+@pytest.fixture
 def tmp_dir():
     return _tmp_dir
 
@@ -77,12 +77,12 @@ def _git_init(cwd=None):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def git_init():
     return _git_init
 
 
-@pytest.fixture()
+@pytest.fixture
 def git_add_commit():
     def _git_add_commit(message, files='.', cwd=os.getcwd()):
         add_proc = subprocess.run(
@@ -130,6 +130,6 @@ def get_class_slots(code):
     return visitor.slots
 
 
-@pytest.fixture()
+@pytest.fixture
 def class_slots():
     return get_class_slots

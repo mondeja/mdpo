@@ -1,4 +1,8 @@
 repos:
+  - repo: https://github.com/mondeja/project-config
+    rev: v0.7.3
+    hooks:
+      - id: project-config
   - repo: meta
     hooks:
       - id: check-hooks-apply
@@ -23,16 +27,25 @@ repos:
         name: double-quote-string-fixer
       - id: debug-statements
         name: debug-statements
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.2.0
+    hooks:
+      - id: remove-crlf
+        files: \.bat$
+        name: '*.bat end of lines'
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.6.2
+    rev: v2.7.1
     hooks:
       - id: prettier
         types_or:
           - toml
           - css
+          - json
+          - json5
         additional_dependencies:
           - prettier
           - prettier-plugin-toml
+        minimum_pre_commit_version: 2.9.0
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.2.1
     hooks:
@@ -68,19 +81,6 @@ repos:
         args:
           - -c
           - .yamllint.yaml
-  - repo: https://github.com/mondeja/pre-commit-hooks
-    rev: v1.8.0
-    hooks:
-      - id: file-check-lines
-        name: .gitattributes lines
-        alias: .gitattributes lines
-        files: ^\.gitattributes$
-        args:
-          - '* text=auto'
-          - poetry.lock -diff
-          - .gitignore export-ignore
-          - .gitattributes export-ignore
-          - .github export-ignore
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: 2.4.0
     hooks:
@@ -97,47 +97,6 @@ repos:
           - --remove-unused-variables
           - --remove-duplicate-keys
           - --ignore-init-module-imports
-  - repo: https://github.com/mondeja/nitpick
-    rev: develop
-    hooks:
-      - id: nitpick-check
-        name: nitpick
-        alias: nitpick
-  - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: main
-    hooks:
-      - id: check-jsonschema
-        name: pyproject.toml schema
-        alias: pyproject.toml schema
-        files: ^pyproject\.toml$
-        additional_dependencies:
-          - tomli
-        types_or:
-          - toml
-        args:
-          - --schemafile
-          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/pyproject/pyproject.toml.json
-      - id: check-jsonschema
-        name: .github/workflows/pre-commit.yml schema
-        alias: .github/workflows/pre-commit.yml schema
-        files: ^\.github/workflows/pre-commit\.yml$
-        args:
-          - --schemafile
-          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/.github/workflows/pre-commit.json
-      - id: check-jsonschema
-        name: .github/workflows/pre-commit-autoupdate.yml schema
-        alias: .github/workflows/pre-commit-autoupdate.yml schema
-        files: ^\.github/workflows/pre-commit-autoupdate\.yml$
-        args:
-          - --schemafile
-          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/python/.github/workflows/pre-commit-autoupdate.json
-      - id: check-jsonschema
-        name: .github/workflows/update-copyright-years.yml schema
-        alias: .github/workflows/update-copyright-years.yml schema
-        files: ^\.github/workflows/update-copyright-years\.yml$
-        args:
-          - --schemafile
-          - https://raw.githubusercontent.com/mondeja/nitpick-styles/master/base/.github/workflows/update-copyright-years.json
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.3.2
     hooks:

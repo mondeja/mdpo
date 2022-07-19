@@ -13,21 +13,26 @@ classifiers = [
   "Intended Audience :: Developers",
   "Topic :: Software Development :: Internationalization",
   "Topic :: Text Processing",
-  "Topic :: Text Processing :: Markup :: Markdown",
+  "Topic :: Text Processing :: Markup :: Markdown"
 ]
-packages = [{ include = "mdpo/**/*.py" }]
+
+[[tool.poetry.packages]]
+include = "mdpo/**/*.py"
 
 [tool.poetry.urls]
 "Bug tracker" = "https://github.com/mondeja/mdpo/issues"
+Changelog = "https://github.com/mondeja/mdpo/releases"
 
 [tool.poetry.dependencies]
 python = "^3.7"
 polib = "^1.1.0"
 pymd4c = "~1.1.2"
 importlib-metadata-argparse-version = "^0.1.0"
+contextlib-chdir = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 mondeja-bump = "*"
+project-config = "^0.7.3"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.0.0"
@@ -36,12 +41,15 @@ pytest-maybe-raises = "^0.1.1"
 pre-commit = "^2.19.0"
 
 [tool.poetry.group.doc.dependencies]
-Sphinx = "^4.5.0"
+Sphinx = "^4"
 sphinx-argparse-cli = "~1.8.3"
 sphinx-github-changelog = "~1.2.0"
 sphinx-rtd-theme = "~1.0.0"
 sphinx-tabs = "~3.3.0"
-importlib-metadata = { version = "*", python = "3.7" }
+
+[tool.poetry.group.doc.dependencies.importlib-metadata]
+version = "*"
+python = "3.7"
 
 [tool.poetry.scripts]
 md2po = "mdpo.md2po.__main__:main"
@@ -49,8 +57,11 @@ po2md = "mdpo.po2md.__main__:main"
 md2po2md = "mdpo.md2po2md.__main__:main"
 mdpo2html = "mdpo.mdpo2html.__main__:main"
 
-[tool.bump]
-targets = [{ file = "pyproject.toml" }, { file = "docs/pre-commit-hooks.rst" }]
+[[tool.bump.targets]]
+file = "pyproject.toml"
+
+[[tool.bump.targets]]
+file = "docs/pre-commit-hooks.rst"
 
 [tool.poetry-exec-plugin.commands]
 t = "pytest"
@@ -58,22 +69,23 @@ test = "pytest"
 "test:all" = "pytest"
 "test:unit" = "pytest tests/test_unit"
 "test:integration" = "pytest tests/test_integration --override-ini addopts=-svv"
+"test:show" = "pytest &&\npython -c 'import webbrowser as w;w.open(\"http://127.0.0.1:8080\")' &&\npython -m http.server 8080 -b localhost -d htmlcov\n"
 lint = "pre-commit run -a"
 doc = "python -m sphinx -n -T -E -W docs docs/_build/html"
-"doc:show" = """poetry exec doc &&
-python -c 'import webbrowser as w;w.open("http://127.0.0.1:8080")' &&
-python -m http.server 8080 -b localhost -d docs/_build/html"""
+"doc:show" = """python -m sphinx -n -T -E -W docs docs/_build/html &&
+python -c 'import webbrowser as w;w.open("http://127.0.0.1:8089")' &&
+python -m http.server 8089 -b localhost -d docs/_build/html"""
 
-[tool.nitpick]
+[tool.project-config]
 cache = "5 minutes"
 style = [
-  "gh://mondeja/nitpick-styles/python/base.toml",
-  "gh://mondeja/nitpick-styles/python/single-quotes.toml",
-  "gh://mondeja/nitpick-styles/python/line-length-80.toml",
-  "gh://mondeja/nitpick-styles/python/version/min-37.toml",
-  "gh://mondeja/nitpick-styles/python/sphinx.toml",
-  "gh://mondeja/nitpick-styles/python/readthedocs.toml",
-  "gh://mondeja/nitpick-styles/python/google-docstrings.toml",
+  "gh://mondeja/project-config-styles/python/base.json5",
+  "gh://mondeja/project-config-styles/python/single-quotes.json5",
+  "gh://mondeja/project-config-styles/python/line-length-80.json5",
+  "gh://mondeja/project-config-styles/python/version/min-37.json5",
+  "gh://mondeja/project-config-styles/python/sphinx.json5",
+  "gh://mondeja/project-config-styles/python/readthedocs.json5",
+  "gh://mondeja/project-config-styles/python/google-docstrings.json5"
 ]
 
 [tool.pytest.ini_options]
@@ -83,14 +95,17 @@ addopts = "-s --cov=mdpo --cov-report=html"
 exclude_lines = [
   "pragma: no cover",
   "if __name__ == [\"']__main__[\"']:",
-  "if '-h' in args or '--help' in args:",
+  "if '-h' in args or '--help' in args:"
 ]
 
 [tool.flakeheaven]
 inline-quotes = "single"
 max-line-length = 80
+pytest_fixture_no_parentheses = true
 pytest_parametrize_values_type = "tuple"
 docstring_convention = "google"
+inline_quotes = "single"
+max_line_length = 80
 
 [tool.flakeheaven.plugins]
 pycodestyle = ["+*", "-W503"]
@@ -98,16 +113,16 @@ pyflakes = ["+*"]
 pylint = ["+*"]
 flake8-builtins = ["+*"]
 flake8-comprehensions = ["+*"]
-flake8-docstrings = ["+*"]
+flake8-docstrings = ["+*", "-D107", "-D105"]
 flake8-executable = ["+*"]
 flake8-implicit-str-concat = ["+*"]
 flake8-print = ["+*"]
 flake8-printf-formatting = ["+*"]
 flake8-pytest-style = ["+*"]
 
-[tool.flakeheaven.exceptions."docs/*.rst"]
+[tool.flakeheaven.exceptions."*.rst"]
 flake8-print = ["-T201"]
-flake8-docstrings = ["-D100"]
+flake8-docstrings = ["-D100", "-D101", "-D102"]
 
 [tool.flakeheaven.exceptions."tests/**"]
 flake8-docstrings = [
@@ -115,6 +130,7 @@ flake8-docstrings = [
   "-D101",
   "-D102",
   "-D103",
+  "-D104",
   "-D107",
   "-D205",
   "-D415"
@@ -133,8 +149,16 @@ line_length = 79
 use_parentheses = true
 combine_as_imports = true
 include_trailing_comma = true
+remove_redundant_aliases = true
 known_tests = "tests"
-sections = ["STDLIB", "THIRDPARTY", "FIRSTPARTY", "TESTS", "LOCALFOLDER"]
+sections = [
+  "FUTURE",
+  "STDLIB",
+  "THIRDPARTY",
+  "FIRSTPARTY",
+  "TESTS",
+  "LOCALFOLDER"
+]
 py_version = 37
 extra_standard_library = [
   "contextvars",
@@ -143,4 +167,6 @@ extra_standard_library = [
   "importlib.metadata",
   "zoneinfo",
   "graphlib",
+  "tomllib",
+  "wsgiref.types"
 ]
