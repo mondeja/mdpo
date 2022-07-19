@@ -5,23 +5,39 @@ import re
 import sys
 
 
-try:
-    import importlib.metadata as importlib_metadata
-except ImportError:
-    # Python < 3.8 with `pip install importlib_metadata`
-    import importlib_metadata
-
-
 # -- Path setup --------------------------------------------------------------
 rootdir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 sys.path.insert(0, rootdir)
 
 # -- Project information -----------------------------------------------------
-metadata = importlib_metadata.distribution('mdpo').metadata
+with open(os.path.join(rootdir, 'pyproject.toml')) as f:
+    pyproject_lines = f.read().splitlines()
+
+if pyproject_lines[0] != '[tool.poetry]':
+    raise Exception('The poetry metadata must start pyproject.toml')
+
+metadata = {'name': None, 'author': None, 'version': None}
+for line in pyproject_lines:
+    if line.startswith('name ='):
+        metadata['name'] = line.split(' = ')[1].strip().strip('"').strip("'")
+    elif line.startswith('version ='):
+        metadata['version'] = line.split(
+            ' = ',
+        )[1].strip().strip('"').strip("'")
+    elif line.startswith('authors ='):
+        metadata['author'] = ' '.join(
+            line.split(' = ')[1].strip().strip(
+                '[',
+            ).strip(']').strip('"').strip("'").split(' ')[:-1],
+        )
+    elif not line:
+        break
+
 with open(os.path.join(rootdir, 'LICENSE')) as f:
     license_years_range = re.search(
         r'Copyright \(c\) (\d+-\d+)', f.read(),
     ).group(1)
+
 project = metadata['name']
 author = metadata['author']
 project_copyright = f'{license_years_range}, {author}'
