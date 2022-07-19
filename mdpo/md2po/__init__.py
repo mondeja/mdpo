@@ -992,7 +992,7 @@ class Md2Po:
             if save:
                 if os.environ.get('_MDPO_RUNNING') == 'true':
                     save_arg = '-s/--save'
-                    po_filepath_arg = '-po/--po-filepath'
+                    po_filepath_arg = '-p/--po-filepath'
                 else:
                     save_arg, po_filepath_arg = ('save', 'po_filepath')
                 raise ValueError(

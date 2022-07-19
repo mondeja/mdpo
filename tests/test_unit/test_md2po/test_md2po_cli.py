@@ -162,7 +162,7 @@ def test_debug(capsys, arg):
     assert po_output_checked
 
 
-@pytest.mark.parametrize('arg', ('-po', '--po-filepath', '--pofilepath'))
+@pytest.mark.parametrize('arg', ('-p', '--po-filepath', '--pofilepath'))
 def test_po_filepath(capsys, arg, tmp_file):
     pofile_content = '''#
 msgid ""
@@ -223,7 +223,7 @@ msgstr ""
         pofile, exitcode = run([
             '# Bar\n',
             arg,
-            '-po',
+            '-p',
             pofile_path,
             '-m',
             '--no-location',
@@ -242,7 +242,7 @@ msgstr ""
     pofile, exitcode = run([
         '# Bar\n',
         arg,
-        '-po',
+        '-p',
         pofile_path,
         '-m',
         '--no-location',
@@ -265,7 +265,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ('-mo', '--mo-filepath', '--mofilepath'))
+@pytest.mark.parametrize('arg', ('-m', '--mo-filepath', '--mofilepath'))
 def test_mo_filepath(capsys, arg, tmp_file):
     with tmp_file(suffix='.mo') as mofile_path:
         pofile, exitcode = run([EXAMPLE['input'], arg, mofile_path])
@@ -357,7 +357,7 @@ msgstr ""
 
     if value == 'invalid':
         with pytest.raises(SystemExit):
-            pofile, exitcode = run([content, arg, value, '-p'])
+            pofile, exitcode = run([content, arg, value, '--plaintext'])
         stdout, stderr = capsys.readouterr()
         assert stdout == ''
         assert stderr == (
@@ -365,7 +365,7 @@ msgstr ""
         )
         return
 
-    pofile, exitcode = run([content, arg, value, '-p'])
+    pofile, exitcode = run([content, arg, value, '--plaintext'])
     stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
@@ -720,7 +720,7 @@ def test_md2po_cli_running_osenv(value, capsys):
 def test_md2po_save_without_po_filepath():
     expected_msg = (
         "The argument '-s/--save' does not make sense without passing the"
-        " argument '-po/--po-filepath'."
+        " argument '-p/--po-filepath'."
     )
 
     with pytest.raises(ValueError, match=expected_msg):

@@ -24,7 +24,7 @@ so you don't need to specify them.
              - id: md2po
                args:
                  - README.md
-                 - -po
+                 - -p
                  - README.es.po
 
    .. tab:: files
@@ -37,7 +37,7 @@ so you don't need to specify them.
              - id: md2po
                files: ^README\.md
                args:
-                 - -po
+                 - -p
                  - README.es.po
 
 .. seealso::
@@ -58,7 +58,7 @@ po2md
              - id: po2md
                args:
                  - README.md
-                 - -po
+                 - -p
                  - README.es.po
                  - -s
                  - README.es.md
@@ -73,7 +73,7 @@ po2md
              - id: po2md
                files: ^README\.md
                args:
-                 - -po
+                 - -p
                  - README.es.po
                  - -s
                  - README.es.md

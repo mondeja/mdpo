@@ -52,7 +52,7 @@ def build_parser():
         metavar='PATH',
     )
     parser.add_argument(
-        '-po', '--po-filepath', '--pofilepath', dest='po_filepath',
+        '-p', '--po-filepath', '--pofilepath', dest='po_filepath',
         default=None,
         help='Merge new msgids in the po file indicated at this parameter (if'
              f' {cli_codespan("--save")} argument is passed) or use the msgids'
@@ -75,8 +75,7 @@ def build_parser():
         metavar='OUTPUT_MO_FILEPATH',
     )
     parser.add_argument(
-        '-p', '--plaintext', dest='plaintext',
-        action='store_true',
+        '--plaintext', dest='plaintext', action='store_true',
         help='Do not include markdown markup characters in extracted msgids'
              f' for {cli_codespan("**bold text**", cli=False)},'
              f' {cli_codespan("*italic text*", cli=False)},'
