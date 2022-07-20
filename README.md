@@ -18,7 +18,7 @@
 </p>
 
 <h2 align="center">
-  <a href="https://mdpo.readthedocs.io/en/master/">Documentation</a>
+  <a href="https://mondeja.github.io/mdpo/latest/">Documentation</a>
 </h2>
 
 <p align="center">
