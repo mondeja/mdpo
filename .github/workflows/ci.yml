@@ -78,7 +78,9 @@ jobs:
 
   build-dist:
     if: startsWith(github.ref, 'refs/tags/')
-    needs: test
+    needs:
+      - test
+      - test-docs
     name: Build source distribution
     runs-on: ubuntu-latest
     steps:
@@ -94,6 +96,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           path: dist/*
+          name: distribution
 
   pypi-upload:
     name: Upload to PyPI
@@ -102,7 +105,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: artifact
+          name: distribution
           path: dist
       - uses: pypa/gh-action-pypi-publish@master
         with:
@@ -140,11 +143,11 @@ jobs:
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CREATE_RELEASE_TOKEN }}
       - uses: actions/download-artifact@v3
         name: Download builds
         with:
-          name: artifact
+          name: distribution
           path: dist
       - uses: shogo82148/actions-upload-release-asset@v1
         name: Upload release assets
