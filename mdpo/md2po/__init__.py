@@ -277,10 +277,7 @@ class Md2Po:
             _include_xheader = kwargs.get('xheader', False)
 
             if _include_xheader:
-                try:
-                    import importlib_metadata
-                except ImportError:
-                    import importlib.metadata as importlib_metadata
+                from mdpo.compat import importlib_metadata
                 version = importlib_metadata.version('mdpo')
                 self.metadata.update({'X-Generator': f'mdpo v{version}'})
 

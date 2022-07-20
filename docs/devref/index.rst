@@ -7,6 +7,7 @@ mdpo/
 
    mdpo/mdpo.cli
    mdpo/mdpo.command
+   mdpo/mdpo.compat
    mdpo/mdpo.context
    mdpo/mdpo.event
    mdpo/mdpo.io

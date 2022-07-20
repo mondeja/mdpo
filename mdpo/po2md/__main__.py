@@ -21,7 +21,7 @@ from mdpo.cli import (
     parse_command_aliases_cli_arguments,
     parse_event_argument,
 )
-from mdpo.context import environ
+from mdpo.io import environ
 from mdpo.po2md import Po2Md
 
 
@@ -136,7 +136,7 @@ def run(args=[]):
 
 
 def main():
-    sys.exit(run(args=sys.argv[1:])[1])  # pragma: no cover
+    raise SystemExit(run(args=sys.argv[1:])[1])  # pragma: no cover
 
 
 if __name__ == '__main__':

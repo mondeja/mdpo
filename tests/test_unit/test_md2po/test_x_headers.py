@@ -1,11 +1,6 @@
+from mdpo.compat import importlib_metadata
 from mdpo.md2po import markdown_to_pofile
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-
-
-try:
-    import importlib_metadata
-except ImportError:
-    import importlib.metadata as importlib_metadata
 
 
 def test_xheader_included():

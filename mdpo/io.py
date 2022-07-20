@@ -2,6 +2,22 @@
 
 import glob
 import os
+from contextlib import contextmanager
+
+
+@contextmanager
+def environ(**env):
+    """Overwrite temporarily some environment variables."""
+    original_env = {key: os.getenv(key) for key in env}
+    os.environ.update(env)
+    try:
+        yield
+    finally:
+        for key, value in original_env.items():
+            if value is None:
+                del os.environ[key]
+            else:
+                os.environ[key] = value
 
 
 def filter_paths(filepaths, ignore_paths=[]):
@@ -107,8 +123,10 @@ def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
             f.write(content)
         return True
 
-    with open(filepath) as f:
+    with open(filepath, encoding=encoding) as f:
         prev_content = f.read()
-    with open(filepath, 'w', encoding=encoding) as f:
-        f.write(content)
-    return content != prev_content
+    changed = prev_content != content
+    if changed:
+        with open(filepath, 'w', encoding=encoding) as f:
+            f.write(content)
+    return changed

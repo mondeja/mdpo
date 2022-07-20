@@ -22,7 +22,7 @@ from mdpo.cli import (
     cli_codespan,
     parse_command_aliases_cli_arguments,
 )
-from mdpo.context import environ
+from mdpo.io import environ
 from mdpo.md2po2md import markdown_to_pofile_to_markdown
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
@@ -147,7 +147,7 @@ def run(args=[]):
 
 
 def main():
-    sys.exit(run(args=sys.argv[1:]))  # pragma: no cover
+    raise SystemExit(run(args=sys.argv[1:]))  # pragma: no cover
 
 
 if __name__ == '__main__':

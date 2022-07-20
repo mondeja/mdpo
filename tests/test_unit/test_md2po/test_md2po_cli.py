@@ -8,13 +8,8 @@ import sys
 
 import pytest
 
+from mdpo.compat import importlib_metadata
 from mdpo.md2po.__main__ import run
-
-
-try:
-    import importlib_metadata
-except ImportError:
-    import importlib.metadata as importlib_metadata
 
 
 EXAMPLE = {

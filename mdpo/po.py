@@ -122,7 +122,7 @@ def pofiles_to_unique_translations_dicts(pofiles):
     Returns:
         tuple: dictionaries with translations.
     """
-    translations, translations_with_msgctxt = ({}, {})
+    translations, translations_with_msgctxt = {}, {}
     for pofile in pofiles:
         for entry in pofile:
             if entry.msgctxt:
