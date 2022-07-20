@@ -11,6 +11,12 @@ import pytest
 from mdpo.md2po.__main__ import run
 
 
+try:
+    import importlib_metadata
+except ImportError:
+    import importlib.metadata as importlib_metadata
+
+
 EXAMPLE = {
     'input': '# Header 1\n\nSome text here',
     'output': '''#
@@ -265,7 +271,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ('-m', '--mo-filepath', '--mofilepath'))
+@pytest.mark.parametrize('arg', ('--mo-filepath', '--mofilepath'))
 def test_mo_filepath(capsys, arg, tmp_file):
     with tmp_file(suffix='.mo') as mofile_path:
         pofile, exitcode = run([EXAMPLE['input'], arg, mofile_path])
@@ -373,26 +379,12 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ('-a', '--xheaders'))
+@pytest.mark.parametrize('arg', ('-a', '--xheader'))
 def test_xheaders(capsys, arg):
     markdown_content = '# Foo'
-    expected_output = '''#
+    expected_output = f'''#
 msgid ""
-msgstr ""
-"x-mdpo-bold-end: **\\n"
-"x-mdpo-bold-start: **\\n"
-"x-mdpo-code-end: `\\n"
-"x-mdpo-code-start: `\\n"
-"x-mdpo-italic-end: *\\n"
-"x-mdpo-italic-start: *\\n"
-"x-mdpo-latexmath-end: $\\n"
-"x-mdpo-latexmath-start: $\\n"
-"x-mdpo-latexmathdisplay-end: $$\\n"
-"x-mdpo-latexmathdisplay-start: $$\\n"
-"x-mdpo-strikethrough-end: ~~\\n"
-"x-mdpo-strikethrough-start: ~~\\n"
-"x-mdpo-wikilink-end: ]]\\n"
-"x-mdpo-wikilink-start: [[\\n"
+msgstr "X-Generator: mdpo v{importlib_metadata.version("mdpo")}\\n"
 
 msgid "Foo"
 msgstr ""

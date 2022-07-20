@@ -68,7 +68,7 @@ def build_parser():
               ' raise an error.',
     )
     parser.add_argument(
-        '-mo', '--mo-filepath', '--mofilepath', dest='mo_filepath',
+        '--mo-filepath', '--mofilepath', dest='mo_filepath',
         default=None,
         help='The resulting PO file will be compiled to a mofile and saved in'
              ' the path specified at this parameter.',
@@ -108,7 +108,7 @@ def build_parser():
         po_encoding_help='Resulting PO file encoding.',
     )
     parser.add_argument(
-        '-a', '--xheaders', dest='xheaders',
+        '-a', '--xheader', dest='xheader',
         action='store_true',
         help='Include mdpo specification x-headers. These only will be'
              ' included if you do not pass the parameter'
@@ -207,7 +207,7 @@ def run(args=[]):
             'preserve_not_found': opts.preserve_not_found,
             'location': opts.location,
             'extensions': opts.extensions,
-            'xheaders': opts.xheaders,
+            'xheader': opts.xheader,
             'include_codeblocks': opts.include_codeblocks,
             'ignore_msgids': opts.ignore_msgids,
             'command_aliases': opts.command_aliases,

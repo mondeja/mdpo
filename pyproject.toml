@@ -28,6 +28,7 @@ python = "^3.7"
 polib = "^1.1.0"
 pymd4c = "~1.1.2"
 importlib-metadata-argparse-version = "^0.1.0"
+importlib-metadata = { version = "*", python = "<3.10" }
 contextlib-chdir = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]

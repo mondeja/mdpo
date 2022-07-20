@@ -274,17 +274,15 @@ class Md2Po:
                 self.code_end_string,
             )
 
-            _include_xheaders = kwargs.get('xheaders', False)
+            _include_xheader = kwargs.get('xheader', False)
 
-            if _include_xheaders:
-                self.metadata.update({
-                    'x-mdpo-bold-start': self.bold_start_string,
-                    'x-mdpo-bold-end': self.bold_end_string,
-                    'x-mdpo-italic-start': self.italic_start_string,
-                    'x-mdpo-italic-end': self.italic_end_string,
-                    'x-mdpo-code-start': self.code_start_string,
-                    'x-mdpo-code-end': self.code_end_string,
-                })
+            if _include_xheader:
+                try:
+                    import importlib_metadata
+                except ImportError:
+                    import importlib.metadata as importlib_metadata
+                version = importlib_metadata.version('mdpo')
+                self.metadata.update({'X-Generator': f'mdpo v{version}'})
 
             self._enterspan_replacer = {
                 md4c.SpanType.STRONG.value: self.bold_start_string,
@@ -310,14 +308,6 @@ class Md2Po:
                 )
                 self._leavespan_replacer[md4c.SpanType.DEL.value] = \
                     self.strikethrough_end_string
-
-                if _include_xheaders:
-                    self.metadata.update({
-                        'x-mdpo-strikethrough-start':
-                            self.strikethrough_start_string,
-                        'x-mdpo-strikethrough-end':
-                            self.strikethrough_end_string,
-                    })
 
             if 'latex_math_spans' in self.extensions:
                 self.latexmath_start_string = kwargs.get(
@@ -346,16 +336,6 @@ class Md2Po:
                     md4c.SpanType.LATEXMATH_DISPLAY.value
                 ] = self.latexmathdisplay_end_string
 
-                if _include_xheaders:
-                    self.metadata.update({
-                        'x-mdpo-latexmath-start': self.latexmath_start_string,
-                        'x-mdpo-latexmath-end': self.latexmath_end_string,
-                        'x-mdpo-latexmathdisplay-start':
-                            self.latexmathdisplay_start_string,
-                        'x-mdpo-latexmathdisplay-end':
-                            self.latexmathdisplay_end_string,
-                    })
-
             if 'wikilinks' in self.extensions:
                 self.wikilink_start_string = kwargs.get(
                     'wikilink_start_string', '[[',
@@ -368,12 +348,6 @@ class Md2Po:
                     self.wikilink_start_string
                 self._leavespan_replacer[md4c.SpanType.WIKILINK.value] = \
                     self.wikilink_end_string
-
-                if _include_xheaders:
-                    self.metadata.update({
-                        'x-mdpo-wikilink-start': self.wikilink_start_string,
-                        'x-mdpo-wikilink-end': self.wikilink_end_string,
-                    })
 
             if 'underline' in self.extensions:
                 # underline text is standarized with double '_'
@@ -388,12 +362,6 @@ class Md2Po:
                 )
                 self._leavespan_replacer[md4c.SpanType.U.value] = \
                     self.underline_end_string
-
-                if _include_xheaders:
-                    self.metadata.update({
-                        'x-mdpo-underline-start': self.underline_start_string,
-                        'x-mdpo-underline-end': self.underline_end_string,
-                    })
 
             # optimization to skip checking for
             # ``self.md4c_generic_parser_kwargs.get('underline')``
@@ -1098,7 +1066,7 @@ def markdown_to_pofile(
     extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
     po_encoding=None,
     md_encoding='utf-8',
-    xheaders=False,
+    xheader=False,
     include_codeblocks=False,
     ignore_msgids=[],
     command_aliases={},
@@ -1153,9 +1121,8 @@ def markdown_to_pofile(
             /pymd4c#parser-option-flags>`_.
         po_encoding (str): Resulting PO file encoding.
         md_encoding (str): Markdown content encoding.
-        xheaders (bool): Indicates if the resulting PO file will have mdpo
-            x-headers included. These only can be included if the parameter
-            ``plaintext`` is ``False``.
+        xheader (bool): Indicates if the resulting PO file will have the mdpo
+            x-header included.
         include_codeblocks (bool): Include all code blocks found inside PO file
             result. This is useful if you want to translate all your blocks
             of code. Equivalent to append ``<!-- mdpo-include-codeblock -->``
@@ -1233,7 +1200,7 @@ def markdown_to_pofile(
         preserve_not_found=preserve_not_found,
         location=location,
         extensions=extensions,
-        xheaders=xheaders,
+        xheader=xheader,
         include_codeblocks=include_codeblocks,
         ignore_msgids=ignore_msgids,
         command_aliases=command_aliases,

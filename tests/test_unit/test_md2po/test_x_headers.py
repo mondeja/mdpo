@@ -2,35 +2,25 @@ from mdpo.md2po import markdown_to_pofile
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 
-def test_x_headers_included():
+try:
+    import importlib_metadata
+except ImportError:
+    import importlib.metadata as importlib_metadata
+
+
+def test_xheader_included():
     markdown_content = '# Foo\n'
 
     extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS + ['underline']
     pofile = markdown_to_pofile(
         markdown_content,
-        xheaders=True,
+        xheader=True,
         plaintext=False,
         extensions=extensions,
     )
-    assert pofile == '''#
+    assert str(pofile) == f'''#
 msgid ""
-msgstr ""
-"x-mdpo-bold-end: **\\n"
-"x-mdpo-bold-start: **\\n"
-"x-mdpo-code-end: `\\n"
-"x-mdpo-code-start: `\\n"
-"x-mdpo-italic-end: *\\n"
-"x-mdpo-italic-start: *\\n"
-"x-mdpo-latexmath-end: $\\n"
-"x-mdpo-latexmath-start: $\\n"
-"x-mdpo-latexmathdisplay-end: $$\\n"
-"x-mdpo-latexmathdisplay-start: $$\\n"
-"x-mdpo-strikethrough-end: ~~\\n"
-"x-mdpo-strikethrough-start: ~~\\n"
-"x-mdpo-underline-end: __\\n"
-"x-mdpo-underline-start: __\\n"
-"x-mdpo-wikilink-end: ]]\\n"
-"x-mdpo-wikilink-start: [[\\n"
+msgstr "X-Generator: mdpo v{importlib_metadata.version("mdpo")}\\n"
 
 msgid "Foo"
 msgstr ""

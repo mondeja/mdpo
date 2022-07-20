@@ -221,9 +221,9 @@ def add_nolocation_option(parser):
 
 
 def add_encoding_arguments(
-        parser,
-        po_encoding_help=None,
-        markup_encoding='md',
+    parser,
+    po_encoding_help=None,
+    markup_encoding='md',
 ):
     """Add ``--po-encoding`` ``--md-encoding`` arguments to an argument parser.
 
@@ -256,12 +256,12 @@ def add_encoding_arguments(
 
 
 def add_wrapwidth_argument(
-        parser,
-        markup='po',
-        markup_prefix=False,
-        short=True,
-        default='78',
-        help_to_render=None,
+    parser,
+    markup='po',
+    markup_prefix=False,
+    short=True,
+    default='78',
+    help_to_render=None,
 ):
     """Add a ``--wrapwidth`` argument to an argument parser.
 
