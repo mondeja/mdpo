@@ -608,7 +608,7 @@ class Po2Md:
             self.current_line = self.current_line.rstrip('\n')
             self._save_current_line()
             if not self._inside_indented_codeblock:
-                fence_chars = details['fence_char']*3
+                fence_chars = details['fence_char'] * 3
                 self.current_line += f'{indent}{fence_chars}'
 
             self._save_current_line()
@@ -721,8 +721,8 @@ class Po2Md:
                 current_aspan_title = details['title'][0][1]
                 for target, href, title in self.link_references:
                     if (
-                        href == self._current_aspan_href and
-                        title == current_aspan_title
+                        href == self._current_aspan_href
+                        and title == current_aspan_title
                     ):
                         self._current_aspan_ref_target = target
                         break
@@ -733,7 +733,7 @@ class Po2Md:
                         break
         elif span is md4c.SpanType.CODE:
             self._inside_codespan = True
-            self._codespan_start_index = len(self.current_msgid)-1
+            self._codespan_start_index = len(self.current_msgid) - 1
             self._codespan_inside_current_msgid = True
         elif span is md4c.SpanType.IMG:
             if self.link_references is None:
@@ -900,7 +900,7 @@ class Po2Md:
             else:
                 if self._inside_liblock:
                     indent = '   ' * len(self._current_list_type)
-                    if self.current_line[:len(indent)+1] != indent:
+                    if self.current_line[:len(indent) + 1] != indent:
                         self.current_line += indent
                 self.current_msgid += text
         else:

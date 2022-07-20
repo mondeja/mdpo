@@ -6,8 +6,7 @@ def pre_commit_run_all_files(cwd=os.getcwd()):
     return subprocess.run(
         ['pre-commit', 'run', '--all-files'],
         cwd=cwd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        capture_output=True,
     )
 
 

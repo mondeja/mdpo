@@ -72,6 +72,10 @@ the text that needs to be translated, including markdown characters:
   as ``**Underline text**`` or italic text (with one character, ``_``) and
   dumped as ``*Underline text*``.
 
+.. tip::
+
+   Using the option :ref:`md2po---xheader` of :ref:`md2po CLI <cli:md2po>` you can sign this
+   specification in the affected files.
 
 .. seealso::
    * :ref:`Implementation notes<implementation-notes>`

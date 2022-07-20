@@ -1,0 +1,74 @@
+name: Deploy documentation
+
+permissions:
+  contents: write
+
+on:
+  release:
+    types:
+      - created
+  workflow_dispatch:
+
+jobs:
+  deploy-version-docs:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - --preview
+          poetry self add poetry-exec-plugin
+          poetry self show plugins
+      - name: Set up Python v3
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+      - name: Install dependencies
+        run: |
+          poetry install --with doc
+          poetry show
+      - name: Build documentation
+        run: poetry exec doc
+        env:
+          SPHINX_GITHUB_CHANGELOG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get version
+        id: get-version
+        run: echo "::set-output name=version::$(cat pyproject.toml | grep "version = " -m 1 | cut -d' ' -f3 | cut -c 2- | rev | cut -c 2- | rev)"
+      - name: Deploy documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_build/html
+          destination_dir: ${{ steps.get-version.outputs.version }}
+  deploy-latest-docs:
+    needs: deploy-version-docs
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - --preview
+          poetry self add poetry-exec-plugin
+          poetry self show plugins
+      - name: Set up Python v3
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+      - name: Install dependencies
+        run: |
+          poetry install --with doc
+          poetry show
+      - name: Build documentation
+        run: poetry exec doc
+        env:
+          SPHINX_GITHUB_CHANGELOG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_build/html
+          destination_dir: latest

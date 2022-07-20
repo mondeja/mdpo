@@ -3,7 +3,8 @@
 import argparse
 import sys
 
-from mdpo import __version__
+from importlib_metadata_argparse_version import ImportlibMetadataVersionAction
+
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.text import and_join, parse_escaped_pairs
 
@@ -37,7 +38,7 @@ def parse_escaped_pairs_cli_argument(
     value_error_message,
     key_error_message,
 ):
-    """Parses a key argument made by key-value pairs.
+    """Parse a key argument made by key-value pairs.
 
     If an error happens, shows an appropiate message and exists with code 1.
 
@@ -126,8 +127,9 @@ def add_common_cli_first_arguments(parser, quiet=True):
         default=argparse.SUPPRESS,
     )
     parser.add_argument(
-        '-v', '--version', action='version',
-        version=f'%(prog)s {__version__}',
+        '-v', '--version', action=ImportlibMetadataVersionAction,
+        version='%(prog)s %(version)s',
+        importlib_metadata_version_from='mdpo',
         help='Show program version number and exit.',
     )
     if quiet:
@@ -219,9 +221,9 @@ def add_nolocation_option(parser):
 
 
 def add_encoding_arguments(
-        parser,
-        po_encoding_help=None,
-        markup_encoding='md',
+    parser,
+    po_encoding_help=None,
+    markup_encoding='md',
 ):
     """Add ``--po-encoding`` ``--md-encoding`` arguments to an argument parser.
 
@@ -254,12 +256,12 @@ def add_encoding_arguments(
 
 
 def add_wrapwidth_argument(
-        parser,
-        markup='po',
-        markup_prefix=False,
-        short=True,
-        default='78',
-        help_to_render=None,
+    parser,
+    markup='po',
+    markup_prefix=False,
+    short=True,
+    default='78',
+    help_to_render=None,
 ):
     """Add a ``--wrapwidth`` argument to an argument parser.
 
@@ -300,16 +302,16 @@ def add_wrapwidth_argument(
     parser.add_argument(*args, **kwargs)
 
 
-def add_pre_commit_option(parser):
-    """Add the ``--pre-commit`` option to an argument parser.
+def add_check_option(parser):
+    """Add the ``--check`` option to an argument parser.
 
     Args:
         parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
             extend.
     """
     parser.add_argument(
-        '--pre-commit', dest='check_saved_files_changed', action='store_true',
-        help='Run in pre-commit mode, which returns code 1 at exit when a file'
+        '--check', dest='check_saved_files_changed', action='store_true',
+        help='Run in check mode, which returns code 1 at exit when a file'
              ' has been changed or previously did not exist.',
     )
 

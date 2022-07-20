@@ -50,19 +50,19 @@ md2po[DEBUG]::<date>::msgid:: msgid='Header'
 md2po[DEBUG]::<date>::enter_block:: HTML
 md2po[DEBUG]::<date>::text:: <!-- mdpo-for-translator Comment for translator -->
 md2po[DEBUG]::<date>::command:: mdpo-translator - Comment for translator (original command: 'mdpo-for-translator')
-md2po[DEBUG]::<date>::text:: 
+md2po[DEBUG]::<date>::text::''' + ' ' + '''
 
 md2po[DEBUG]::<date>::text:: <!-- mdpo-context foo and bar -->
 md2po[DEBUG]::<date>::command:: mdpo-context - foo and bar
-md2po[DEBUG]::<date>::text:: 
+md2po[DEBUG]::<date>::text::''' + ' ' + '''
 
 md2po[DEBUG]::<date>::leave_block:: HTML
 md2po[DEBUG]::<date>::enter_block:: P
-md2po[DEBUG]::<date>::text:: Content with 
+md2po[DEBUG]::<date>::text:: Content with''' + ' ' + '''
 md2po[DEBUG]::<date>::enter_span:: CODE
 md2po[DEBUG]::<date>::text:: span
 md2po[DEBUG]::<date>::leave_span:: CODE
-md2po[DEBUG]::<date>::text::  and 
+md2po[DEBUG]::<date>::text::  and''' + ' ' + '''
 md2po[DEBUG]::<date>::enter_span:: A - {'href': [(<TextType.NORMAL: 0>, 'https://foo.bar')], 'title': [(<TextType.NORMAL: 0>, 'Title')]}
 md2po[DEBUG]::<date>::text:: referenced-link
 md2po[DEBUG]::<date>::leave_span:: A - {'href': [(<TextType.NORMAL: 0>, 'https://foo.bar')], 'title': [(<TextType.NORMAL: 0>, 'Title')]}
@@ -72,7 +72,7 @@ md2po[DEBUG]::<date>::msgid:: msgid='Content with `span` and [referenced-link][l
 md2po[DEBUG]::<date>::enter_block:: HTML
 md2po[DEBUG]::<date>::text:: <!-- mdpo-disable-next-line -->
 md2po[DEBUG]::<date>::command:: mdpo-disable-next-line
-md2po[DEBUG]::<date>::text:: 
+md2po[DEBUG]::<date>::text::''' + ' ' + '''
 
 md2po[DEBUG]::<date>::leave_block:: HTML
 md2po[DEBUG]::<date>::enter_block:: P
@@ -83,14 +83,14 @@ md2po[DEBUG]::<date>::leave_block:: DOC
 md2po[DEBUG]::<date>::msgid:: msgid=''
 md2po[DEBUG]::<date>::link_reference:: target='link' - href='https://foo.bar' - title='Title'
 md2po[DEBUG]::<date>::msgid:: msgid='[link]: https://foo.bar "Title"' - msgstr='[link]: https://foo.bar "Title"' - flags='['fuzzy']'
-'''
+'''  # noqa E501
     assert comparable_debug_output == expected_output
 
 
 def test_parse_events_kwarg_func():
     def foo():
         return False
-    
+
     assert parse_events_kwarg({'foo': foo})['foo'][0] is foo
     assert parse_events_kwarg({'foo': [foo]})['foo'][0] is foo
 
@@ -99,7 +99,7 @@ def test_parse_events_kwarg_filefunc(tmp_file):
     expected_msg = 'Function not specified for file'
     with pytest.raises(ValueError, match=expected_msg):
         parse_events_kwarg({'bar': 'foo-bar-baz.py'})
-    
+
     expected_msg = "File 'foo-bar-baz.py' specified for event 'bar' not found"
     with pytest.raises(FileNotFoundError, match=expected_msg):
         parse_events_kwarg({'bar': 'foo-bar-baz.py::bar'})
@@ -111,7 +111,7 @@ def bar():
     with tmp_file(file_content, '.py') as tmp_filename:
         func = parse_events_kwarg({'bar': f'{tmp_filename}::bar'})['bar'][0]
         assert func.__name__ == 'bar'
-    
+
         expected_msg = "Function 'foo' specified for event"
         with pytest.raises(ValueError, match=expected_msg):
             parse_events_kwarg({'bar': f'{tmp_filename}::foo'})

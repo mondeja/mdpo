@@ -1,18 +1,47 @@
 """Configuration file for the Sphinx documentation build of mdpo."""
 
 import os
+import re
 import sys
 
 
 # -- Path setup --------------------------------------------------------------
-
-sys.path.insert(0, os.path.abspath('..'))
+rootdir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+sys.path.insert(0, rootdir)
 
 # -- Project information -----------------------------------------------------
-project = 'mdpo'
-author = 'Álvaro Mondéjar Rubio'
-project_copyright = f'2020-2022, {author}'
-release = '0.3.86'
+with open(os.path.join(rootdir, 'pyproject.toml')) as f:
+    pyproject_lines = f.read().splitlines()
+
+if pyproject_lines[0] != '[tool.poetry]':
+    raise Exception('The poetry metadata must start pyproject.toml')
+
+metadata = {'name': None, 'author': None, 'version': None}
+for line in pyproject_lines:
+    if line.startswith('name ='):
+        metadata['name'] = line.split(' = ')[1].strip().strip('"').strip("'")
+    elif line.startswith('version ='):
+        metadata['version'] = line.split(
+            ' = ',
+        )[1].strip().strip('"').strip("'")
+    elif line.startswith('authors ='):
+        metadata['author'] = ' '.join(
+            line.split(' = ')[1].strip().strip(
+                '[',
+            ).strip(']').strip('"').strip("'").split(' ')[:-1],
+        )
+    elif not line:
+        break
+
+with open(os.path.join(rootdir, 'LICENSE')) as f:
+    license_years_range = re.search(
+        r'Copyright \(c\) (\d+-\d+)', f.read(),
+    ).group(1)
+
+project = metadata['name']
+author = metadata['author']
+project_copyright = f'{license_years_range}, {author}'
+release = metadata['version']
 version = '.'.join(release.split('.')[:2])
 
 # -- General configuration ---------------------------------------------------
@@ -36,7 +65,7 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'venv', 'dist']
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -49,7 +78,7 @@ html_theme_options = {
     'logo_only': True,
     'style_nav_header_background': 'white',
 }
-html_logo = os.path.abspath(os.path.join('..', 'mdpo.png'))
+html_logo = os.path.join(rootdir, 'mdpo.png')
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

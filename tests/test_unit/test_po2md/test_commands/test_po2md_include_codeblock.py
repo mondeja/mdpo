@@ -1,6 +1,6 @@
 """It's not needed to include <!-- mdpo-include-codeblock --> command in
-Markdown files, only if code block contents are included in PO files will be
-translated directly.
+Markdown files, only if code block contents are included in PO files will
+be translated directly.
 """
 
 from mdpo.po2md import pofile_to_markdown

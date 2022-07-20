@@ -127,9 +127,9 @@ def markdown_to_pofile_to_markdown(
             format_kwargs['ext'] = md_ext.lstrip('.')
             md_filepath = output_paths_schema.format(**format_kwargs)
             if os.path.isdir(md_filepath):
-                md_filepath = (
-                    md_filepath.rstrip(os.sep) + os.sep +
-                    os.path.basename(filepath)
+                md_filepath = os.path.join(
+                    md_filepath.rstrip(os.sep),
+                    os.path.basename(filepath),
                 )
 
             # md2po

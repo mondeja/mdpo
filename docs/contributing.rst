@@ -5,46 +5,50 @@ Contributing
 Development install
 ===================
 
-.. code-block:: bash
+You need to install Poetry >= 1.2.0.
 
-   git clone https://github.com/mondeja/mdpo.git
-   python3 -m ensurepip
-   python3 -m pip install virtualenv
-   python3 -m virtualenv venv
-   . venv/bin/activate
-   python3 -m pip install -e .[dev]
+.. code-block:: sh
+
+   git clone https://github.com/mondeja/mdpo
+   cd mdpo
+   poetry install
    pre-commit install
+   poetry self add poetry-exec-plugin
+
+Test
+====
+
+.. code-block:: sh
+
+   poetry exec test
+   # `poetry exec t`
+   # `poetry exec test:show`
+
+
+Lint
+====
+
+.. code-block:: sh
+
+   poetry exec lint
 
 
 Build documentation
 ===================
 
-.. code-block:: bash
+.. code-block:: sh
 
-   python3 setup.py build_sphinx
-
-Test
-====
-
-.. code-block:: bash
-
-   python3 -m pytest -s
-
-Lint
-====
-
-.. code-block:: bash
-
-   pre-commit run --all-files
+   poetry exec doc
+   # `poetry exec doc:show`
 
 Release
 =======
 
-.. code-block:: bash
+.. code-block:: sh
 
-   python3 -m bump2version <major/minor/patch>
+   version="$(poetry run bump <major/minor/patch>)"
    git add .
    git commit -m "Bump version"
    git push origin master
-   git tag -a v<version>
-   git push origin v<version>
+   git tag -a "v$version"
+   git push origin "v$version"

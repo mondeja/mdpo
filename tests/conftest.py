@@ -20,7 +20,7 @@ def _tmp_file(content='', suffix=''):
         yield f.name
 
 
-@pytest.fixture()
+@pytest.fixture
 def tmp_file():
     return _tmp_file
 
@@ -32,7 +32,7 @@ def _tmp_file_path(suffix=''):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def tmp_file_path():
     return _tmp_file_path
 
@@ -64,7 +64,7 @@ def _tmp_dir(files_contents):
             yield (tmpdir, *filepaths)
 
 
-@pytest.fixture()
+@pytest.fixture
 def tmp_dir():
     return _tmp_dir
 
@@ -73,33 +73,31 @@ def _git_init(cwd=None):
     return subprocess.run(
         ['git', 'init'],
         cwd=cwd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        capture_output=True,
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def git_init():
     return _git_init
 
 
-@pytest.fixture()
+@pytest.fixture
 def git_add_commit():
     def _git_add_commit(message, files='.', cwd=os.getcwd()):
         add_proc = subprocess.run(
             ['git', 'add', files],
             cwd=cwd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
         )
 
         commit_proc = subprocess.run(
             ['git', 'commit', '-m', message],
             cwd=cwd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
         )
-        return add_proc.returncode == 0 and commit_proc.returncode == 0
+
+        return not any([add_proc.returncode, commit_proc.returncode])
     return _git_add_commit
 
 
@@ -132,6 +130,6 @@ def get_class_slots(code):
     return visitor.slots
 
 
-@pytest.fixture()
+@pytest.fixture
 def class_slots():
     return get_class_slots

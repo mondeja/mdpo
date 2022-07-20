@@ -10,14 +10,14 @@ import itertools
 import sys
 
 from mdpo.cli import (
+    add_check_option,
     add_command_alias_argument,
     add_common_cli_first_arguments,
     add_encoding_arguments,
-    add_pre_commit_option,
     cli_codespan,
     parse_command_aliases_cli_arguments,
 )
-from mdpo.context import environ
+from mdpo.io import environ
 from mdpo.mdpo2html import MdPo2HTML
 
 
@@ -53,7 +53,7 @@ def build_parser():
     )
     add_encoding_arguments(parser, markup_encoding='html')
     add_command_alias_argument(parser)
-    add_pre_commit_option(parser)
+    add_check_option(parser)
     return parser
 
 
@@ -113,7 +113,7 @@ def run(args=[]):
 
 
 def main():
-    sys.exit(run(args=sys.argv[1:])[1])  # pragma: no cover
+    raise SystemExit(run(args=sys.argv[1:])[1])  # pragma: no cover
 
 
 if __name__ == '__main__':

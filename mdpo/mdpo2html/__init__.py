@@ -328,9 +328,9 @@ class MdPo2HTML(HTMLParser):
             )
             self.output += f'<{tag}{attrs_repr}>'
         elif (
-            (self.context and self.context[0] in self.ignore_grouper_tags) or
-            (tag == 'ul' and not self.context) or
-            (tag in {'blockquote', 'table', 'thead', 'tbody', 'tr'})
+            (self.context and self.context[0] in self.ignore_grouper_tags)
+            or (tag == 'ul' and not self.context)
+            or (tag in {'blockquote', 'table', 'thead', 'tbody', 'tr'})
         ):
             attrs_repr = (
                 f' {_html_attrs_to_str(OrderedDict(attrs))}' if attrs else ''
@@ -379,11 +379,14 @@ class MdPo2HTML(HTMLParser):
         # print(f'     DATA: \'{data}\'')
 
         if data:
-            if not self.replacer or (
-                    self.context and
-                    self.context[0] in self.ignore_grouper_tags
-            ) or \
-                    not self.context:
+            if (
+                not self.replacer
+                or (
+                    self.context
+                    and self.context[0] in self.ignore_grouper_tags
+                )
+                or not self.context
+            ):
                 self.output += data
             else:
                 if self.context:
@@ -473,7 +476,9 @@ def markdown_pofile_to_html(
     command_aliases={},
     **kwargs,
 ):
-    r"""Produces a translated HTML file given a previous HTML file (created by a
+    r"""HTML-produced-from-Markdown file translator using PO files.
+
+    Produces a translated HTML file given a previous HTML file (created by a
     Markdown-to-HTML processor) and a set of PO files as reference for msgstrs.
 
     Args:

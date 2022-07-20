@@ -11,18 +11,18 @@ import sys
 
 from mdpo.cli import (
     SPHINX_IS_RUNNING,
+    add_check_option,
     add_command_alias_argument,
     add_common_cli_first_arguments,
     add_debug_option,
     add_encoding_arguments,
     add_extensions_argument,
     add_nolocation_option,
-    add_pre_commit_option,
     add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
 )
-from mdpo.context import environ
+from mdpo.io import environ
 from mdpo.md2po2md import markdown_to_pofile_to_markdown
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
@@ -84,7 +84,7 @@ def build_parser():
     )
     add_encoding_arguments(parser)
     add_debug_option(parser)
-    add_pre_commit_option(parser)
+    add_check_option(parser)
     return parser
 
 
@@ -147,7 +147,7 @@ def run(args=[]):
 
 
 def main():
-    sys.exit(run(args=sys.argv[1:]))  # pragma: no cover
+    raise SystemExit(run(args=sys.argv[1:]))  # pragma: no cover
 
 
 if __name__ == '__main__':

@@ -8,6 +8,7 @@ import sys
 
 import pytest
 
+from mdpo.compat import importlib_metadata
 from mdpo.md2po.__main__ import run
 
 
@@ -39,7 +40,7 @@ def test_stdin(capsys, monkeypatch):
 def test_stdin_subprocess_input(tmp_file):
     proc = subprocess.run(
         'md2po',
-        universal_newlines=True,
+        text=True,
         input=EXAMPLE['input'],
         stdout=subprocess.PIPE,
         check=True,
@@ -50,7 +51,7 @@ def test_stdin_subprocess_input(tmp_file):
     with tmp_file(EXAMPLE['input'], '.md') as mdfile_path:
         proc = subprocess.run(
             ['md2po', '--no-location'],
-            universal_newlines=True,
+            text=True,
             input=mdfile_path,
             stdout=subprocess.PIPE,
             check=True,
@@ -64,10 +65,9 @@ def test_pipe_redirect_file_stdin(tmp_file):
     with tmp_file(EXAMPLE['input'], '.md') as mdfile_path:
         proc = subprocess.run(
             f'< {mdfile_path} md2po',
-            universal_newlines=True,
+            text=True,
             input=EXAMPLE['input'],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
             shell=True,
         )
     assert proc.stdout == EXAMPLE['output']
@@ -163,7 +163,7 @@ def test_debug(capsys, arg):
     assert po_output_checked
 
 
-@pytest.mark.parametrize('arg', ('-po', '--po-filepath', '--pofilepath'))
+@pytest.mark.parametrize('arg', ('-p', '--po-filepath', '--pofilepath'))
 def test_po_filepath(capsys, arg, tmp_file):
     pofile_content = '''#
 msgid ""
@@ -224,7 +224,7 @@ msgstr ""
         pofile, exitcode = run([
             '# Bar\n',
             arg,
-            '-po',
+            '-p',
             pofile_path,
             '-m',
             '--no-location',
@@ -243,7 +243,7 @@ msgstr ""
     pofile, exitcode = run([
         '# Bar\n',
         arg,
-        '-po',
+        '-p',
         pofile_path,
         '-m',
         '--no-location',
@@ -266,7 +266,7 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ('-mo', '--mo-filepath', '--mofilepath'))
+@pytest.mark.parametrize('arg', ('--mo-filepath', '--mofilepath'))
 def test_mo_filepath(capsys, arg, tmp_file):
     with tmp_file(suffix='.mo') as mofile_path:
         pofile, exitcode = run([EXAMPLE['input'], arg, mofile_path])
@@ -358,7 +358,7 @@ msgstr ""
 
     if value == 'invalid':
         with pytest.raises(SystemExit):
-            pofile, exitcode = run([content, arg, value, '-p'])
+            pofile, exitcode = run([content, arg, value, '--plaintext'])
         stdout, stderr = capsys.readouterr()
         assert stdout == ''
         assert stderr == (
@@ -366,7 +366,7 @@ msgstr ""
         )
         return
 
-    pofile, exitcode = run([content, arg, value, '-p'])
+    pofile, exitcode = run([content, arg, value, '--plaintext'])
     stdout, _ = capsys.readouterr()
 
     assert exitcode == 0
@@ -374,26 +374,12 @@ msgstr ""
     assert stdout == expected_output
 
 
-@pytest.mark.parametrize('arg', ('-a', '--xheaders'))
-def test_xheaders(capsys, arg):
+@pytest.mark.parametrize('arg', ('-a', '--xheader'))
+def test_xheader(capsys, arg):
     markdown_content = '# Foo'
-    expected_output = '''#
+    expected_output = f'''#
 msgid ""
-msgstr ""
-"x-mdpo-bold-end: **\\n"
-"x-mdpo-bold-start: **\\n"
-"x-mdpo-code-end: `\\n"
-"x-mdpo-code-start: `\\n"
-"x-mdpo-italic-end: *\\n"
-"x-mdpo-italic-start: *\\n"
-"x-mdpo-latexmath-end: $\\n"
-"x-mdpo-latexmath-start: $\\n"
-"x-mdpo-latexmathdisplay-end: $$\\n"
-"x-mdpo-latexmathdisplay-start: $$\\n"
-"x-mdpo-strikethrough-end: ~~\\n"
-"x-mdpo-strikethrough-start: ~~\\n"
-"x-mdpo-wikilink-end: ]]\\n"
-"x-mdpo-wikilink-start: [[\\n"
+msgstr "X-Generator: mdpo v{importlib_metadata.version("mdpo")}\\n"
 
 msgid "Foo"
 msgstr ""
@@ -721,7 +707,7 @@ def test_md2po_cli_running_osenv(value, capsys):
 def test_md2po_save_without_po_filepath():
     expected_msg = (
         "The argument '-s/--save' does not make sense without passing the"
-        " argument '-po/--po-filepath'."
+        " argument '-p/--po-filepath'."
     )
 
     with pytest.raises(ValueError, match=expected_msg):

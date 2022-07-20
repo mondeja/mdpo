@@ -11,6 +11,7 @@ import sys
 from mdpo.cli import (
     CLOSE_QUOTE_CHAR,
     OPEN_QUOTE_CHAR,
+    add_check_option,
     add_command_alias_argument,
     add_common_cli_first_arguments,
     add_debug_option,
@@ -18,14 +19,13 @@ from mdpo.cli import (
     add_event_argument,
     add_extensions_argument,
     add_nolocation_option,
-    add_pre_commit_option,
     add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
     parse_event_argument,
     parse_metadata_cli_arguments,
 )
-from mdpo.context import environ
+from mdpo.io import environ
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
@@ -52,7 +52,7 @@ def build_parser():
         metavar='PATH',
     )
     parser.add_argument(
-        '-po', '--po-filepath', '--pofilepath', dest='po_filepath',
+        '-p', '--po-filepath', '--pofilepath', dest='po_filepath',
         default=None,
         help='Merge new msgids in the po file indicated at this parameter (if'
              f' {cli_codespan("--save")} argument is passed) or use the msgids'
@@ -68,15 +68,14 @@ def build_parser():
               ' raise an error.',
     )
     parser.add_argument(
-        '-mo', '--mo-filepath', '--mofilepath', dest='mo_filepath',
+        '--mo-filepath', '--mofilepath', dest='mo_filepath',
         default=None,
         help='The resulting PO file will be compiled to a mofile and saved in'
              ' the path specified at this parameter.',
         metavar='OUTPUT_MO_FILEPATH',
     )
     parser.add_argument(
-        '-p', '--plaintext', dest='plaintext',
-        action='store_true',
+        '--plaintext', dest='plaintext', action='store_true',
         help='Do not include markdown markup characters in extracted msgids'
              f' for {cli_codespan("**bold text**", cli=False)},'
              f' {cli_codespan("*italic text*", cli=False)},'
@@ -109,11 +108,9 @@ def build_parser():
         po_encoding_help='Resulting PO file encoding.',
     )
     parser.add_argument(
-        '-a', '--xheaders', dest='xheaders',
-        action='store_true',
-        help='Include mdpo specification x-headers. These only will be'
-             ' included if you do not pass the parameter'
-             f' {cli_codespan("--plaintext")}.',
+        '-a', '--xheader', dest='xheader', action='store_true',
+        help='Include in the resulting PO file the mdpo specification'
+             ' X-Header "X-Generation", whose value is "mdpo v<version>".',
     )
     parser.add_argument(
         '-c', '--include-codeblocks',
@@ -153,7 +150,7 @@ def build_parser():
     add_command_alias_argument(parser)
     add_event_argument(parser)
     add_debug_option(parser)
-    add_pre_commit_option(parser)
+    add_check_option(parser)
     return parser
 
 
@@ -208,7 +205,7 @@ def run(args=[]):
             'preserve_not_found': opts.preserve_not_found,
             'location': opts.location,
             'extensions': opts.extensions,
-            'xheaders': opts.xheaders,
+            'xheader': opts.xheader,
             'include_codeblocks': opts.include_codeblocks,
             'ignore_msgids': opts.ignore_msgids,
             'command_aliases': opts.command_aliases,
@@ -241,7 +238,7 @@ def run(args=[]):
 
 
 def main():
-    sys.exit(run(args=sys.argv[1:])[1])  # pragma: no cover
+    raise SystemExit(run(args=sys.argv[1:])[1])  # pragma: no cover
 
 
 if __name__ == '__main__':

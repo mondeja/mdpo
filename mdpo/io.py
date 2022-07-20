@@ -2,10 +2,26 @@
 
 import glob
 import os
+from contextlib import contextmanager
+
+
+@contextmanager
+def environ(**env):
+    """Overwrite temporarily some environment variables."""
+    original_env = {key: os.getenv(key) for key in env}
+    os.environ.update(env)
+    try:
+        yield
+    finally:
+        for key, value in original_env.items():
+            if value is None:
+                del os.environ[key]
+            else:
+                os.environ[key] = value
 
 
 def filter_paths(filepaths, ignore_paths=[]):
-    """Filters a list of paths removing those defined in other list of paths.
+    """Filter a list of paths removing those defined in other list of paths.
 
     The paths to filter can be defined in the list of paths to ignore in
     several forms:
@@ -83,13 +99,7 @@ def to_files_or_content(value):
     except Exception as err:
         # some strings like '[s-m]' will produce
         # 're.error: bad character range ... at position'
-
-        # NOTE: in Python3.6, 're.error' is 'sre_constants' error,
-        # so 'sre_constants' must be removed when Python3.6 support is gone
-        if (
-            err.__module__ in ['re', 'sre_constants']
-            and err.__class__.__name__ == 'error'
-        ):
+        if err.__module__ == 're' and err.__class__.__name__ == 'error':
             return (False, value)
         raise err
     if not parsed:
@@ -113,8 +123,10 @@ def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
             f.write(content)
         return True
 
-    with open(filepath) as f:
+    with open(filepath, encoding=encoding) as f:
         prev_content = f.read()
-    with open(filepath, 'w', encoding=encoding) as f:
-        f.write(content)
-    return content != prev_content
+    changed = prev_content != content
+    if changed:
+        with open(filepath, 'w', encoding=encoding) as f:
+            f.write(content)
+    return changed

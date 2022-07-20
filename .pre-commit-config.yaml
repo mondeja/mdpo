@@ -1,10 +1,20 @@
 repos:
+  - repo: https://github.com/mondeja/project-config
+    rev: v0.7.3
+    hooks:
+      - id: project-config
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+        name: check-hooks-apply
+      - id: check-useless-excludes
+        name: check-useless-excludes
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.31.0
     hooks:
       - id: pyupgrade
         args:
-          - --py36-plus
+          - --py37-plus
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0
     hooks:
@@ -17,22 +27,34 @@ repos:
         name: double-quote-string-fixer
       - id: debug-statements
         name: debug-statements
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.2.0
+    hooks:
+      - id: remove-crlf
+        files: \.bat$
+        name: '*.bat end of lines'
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.7.1
+    hooks:
+      - id: prettier
+        types_or:
+          - toml
+          - css
+          - json
+          - json5
+        additional_dependencies:
+          - prettier
+          - prettier-plugin-toml
+        minimum_pre_commit_version: 2.9.0
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.2.1
     hooks:
       - id: add-trailing-comma
         name: add-trailing-comma
-        args:
-          - --py36-plus
-  - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.20.0
+  - repo: https://github.com/flakeheaven/flakeheaven
+    rev: 1.0.1
     hooks:
-      - id: setup-cfg-fmt
-  - repo: https://github.com/PyCQA/flake8
-    rev: 4.0.1
-    hooks:
-      - id: flake8
-        name: flake8
+      - id: flakeheaven
         additional_dependencies:
           - flake8-builtins
           - flake8-comprehensions
@@ -42,7 +64,12 @@ repos:
           - flake8-print
           - flake8-printf-formatting
           - flake8-pytest-style
-        files: ^(mdpo|test|docs)/
+          - pysetenv
+        entry: pysetenv FLAKEHEAVEN_CACHE_TIMEOUT=0 flakeheaven lint
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.6.0
+    hooks:
+      - id: autopep8
   - repo: https://github.com/PyCQA/isort
     rev: 5.10.1
     hooks:
@@ -54,33 +81,12 @@ repos:
         args:
           - -c
           - .yamllint.yaml
-  - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.3.2
-    hooks:
-      - id: markdownlint-cli2
-        name: markdownlint-po2md-tests
-        language: node
-        entry: bash -c 'cd tests/test_unit/test_po2md && exec markdownlint-cli2 translate-examples/*.md wrapwidth-examples/*.md'
-        pass_filenames: false
-        types:
-          - markdown
-        files: ^tests/test_unit/test_po2md/
-  - repo: https://github.com/mondeja/repo-stream
-    rev: v1.3.1
-    hooks:
-      - id: repo-stream
-        args:
-          - -config=https://github.com/mondeja/repo-stream-config
-          - -updater=upstream
-  - repo: https://github.com/mondeja/pre-commit-hooks
-    rev: v1.5.2
-    hooks:
-      - id: dev-extras-required
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: 2.4.0
     hooks:
       - id: editorconfig-checker
         name: editorconfig-checker
+        alias: ec
   - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:
@@ -91,8 +97,14 @@ repos:
           - --remove-unused-variables
           - --remove-duplicate-keys
           - --ignore-init-module-imports
-  - repo: https://github.com/andreoliwa/nitpick
-    rev: v0.32.0
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.3.2
     hooks:
-      - id: nitpick-check
-        name: nitpick
+      - id: markdownlint-cli2
+        name: markdownlint-po2md-tests
+        language: node
+        entry: sh -c 'cd tests/test_unit/test_po2md && exec markdownlint-cli2 translate-examples/*.md wrapwidth-examples/*.md'
+        pass_filenames: false
+        types:
+          - markdown
+        files: ^tests/test_unit/test_po2md/

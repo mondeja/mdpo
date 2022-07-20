@@ -551,7 +551,6 @@ msgstr ""
 
 def test_location_file_independent(tmp_dir):
     """Location block counters should be reset for each file."""
-
     with tmp_dir([
         ('foo.md', '# Foo\n'),
         ('bar.md', '# Bar\n'),
