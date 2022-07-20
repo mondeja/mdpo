@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>event.py &mdash; mdpo 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override-styles.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="io.py" href="mdpo.io.html" />
+    <link rel="prev" title="compat.py" href="mdpo.compat.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+            <a href="../../index.html">
+            <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">mdpo/</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html">cli.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.command.html">command.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.compat.html">compat.py</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">event.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.io.html">io.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md.html">md.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md4c.html">md4c.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html">po.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.polib.html">polib.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.text.html">text.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md2po/mdpo.md2po.index.html">md2po/</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo2html/mdpo.mdpo2html.index.html">mdpo2html/</a></li>
+<li class="toctree-l2"><a class="reference internal" href="po2md/mdpo.po2md.index.html">po2md/</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md2po2md/mdpo.md2po2md.index.html">md2po2md/</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">mdpo/</a> &raquo;</li>
+      <li>event.py</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/devref/mdpo/mdpo.event.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo.event">
+<span id="event-py"></span><h1>event.py<a class="headerlink" href="#module-mdpo.event" title="Permalink to this headline"></a></h1>
+<p>Custom events executed during the parsing process of an implementation.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.event.add_debug_events">
+<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">add_debug_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">implementation_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.add_debug_events" title="Permalink to this definition"></a></dt>
+<dd><p>Add debugging events to an events dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>implementation_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Implementation name, shown when
+printing debugging events.</p></li>
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Events dictionary.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.event.debug_events">
+<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">debug_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.debug_events" title="Permalink to this definition"></a></dt>
+<dd><p>Debugging events for interfaces. Displays in STDOUT all event targets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>program</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Command line interface name, to display it at the
+beginning of the output.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Event target printing functions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.event.parse_events_kwarg">
+<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">parse_events_kwarg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events_kwarg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.parse_events_kwarg" title="Permalink to this definition"></a></dt>
+<dd><p>Parse <code class="docutils literal notranslate"><span class="pre">events</span></code> kwarg passed to implementations.</p>
+<p>Each event can be a function or a path to a function inside a file
+using the syntax <code class="docutils literal notranslate"><span class="pre">path/to/file.py::function</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>events_kwarg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Dictionary of event names and their location.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Event names mapping to a list of functions to execute.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.event.raise_skip_event">
+<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">raise_skip_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">event_args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.raise_skip_event" title="Permalink to this definition"></a></dt>
+<dd><p>Execute all functions defined for an event of a parser.</p>
+<p>If a function returns <code class="docutils literal notranslate"><span class="pre">False</span></code>, this function will return <code class="docutils literal notranslate"><span class="pre">True</span></code> meaning
+that an event is trying to skip the associated function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Dictionary with all events defined.</p></li>
+<li><p><strong>event_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the event whose functions will be executed.</p></li>
+<li><p><strong>*event_args</strong> – Arguments propagated to the events functions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if an event function returns <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code>
+otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mdpo.compat.html" class="btn btn-neutral float-left" title="compat.py" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.io.html" class="btn btn-neutral float-right" title="io.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2022, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

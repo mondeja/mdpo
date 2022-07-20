@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdpo’s rationale &mdash; mdpo 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/override-styles.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Traditional approach" href="traditional-approach.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+            <a href="index.html">
+            <img src="_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">mdpo’s rationale</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#are-markup-characters-part-of-a-translation">Are markup characters part of a translation?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#infinite-state-machine-approach">Infinite state machine approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#do-the-markup-characters-express-meaning">Do the markup characters express meaning?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mdpo-approach">mdpo approach</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#advantages">Advantages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devref/index.html">mdpo/</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>mdpo’s rationale</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/rationale.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mdpo-s-rationale">
+<h1>mdpo’s rationale<a class="headerlink" href="#mdpo-s-rationale" title="Permalink to this headline"></a></h1>
+<section id="are-markup-characters-part-of-a-translation">
+<h2>Are markup characters part of a translation?<a class="headerlink" href="#are-markup-characters-part-of-a-translation" title="Permalink to this headline"></a></h2>
+<section id="infinite-state-machine-approach">
+<h3>Infinite state machine approach<a class="headerlink" href="#infinite-state-machine-approach" title="Permalink to this headline"></a></h3>
+<p>A long time ago I read on StackOverflow that a good translation process is one
+that does not include markup characters inside source and target languages.
+I partially agree with that statement, but it implies the existence of an ideal
+world in what we can remove all markup characters of source file, send to our
+translators a plain text file, and when the translation is returned to us, we
+could rebuilt the markup characters in the target language. As long as there
+is no artificial intelligence capable of doing that in a stable way, we need
+to look for other ways to fix the problem.</p>
+<p>Beyond that statement, an artificial intelligence capable of solve the
+problem or rebuild the target language file would be possible? I don’t know,
+but think about next simple example. This machine would need to be able to
+translate the Markdown string <code class="docutils literal notranslate"><span class="pre">**Flexible**</span> <span class="pre">replacement</span> <span class="pre">**again**</span></code> to the
+Spanish <code class="docutils literal notranslate"><span class="pre">Reemplazamiento</span> <span class="pre">**flexible</span> <span class="pre">de</span> <span class="pre">nuevo**</span></code>, giving it as input the
+strings <code class="docutils literal notranslate"><span class="pre">Reemplazamiento</span> <span class="pre">flexible</span> <span class="pre">de</span> <span class="pre">nuevo</span></code> and
+<code class="docutils literal notranslate"><span class="pre">**Flexible**</span> <span class="pre">replacement</span> <span class="pre">**again**</span></code>. For this simple example maybe it could
+learn it without big problems, but think about idiomatic twists, language
+contexts and the growth of languages in an ever-changing world within the
+framework of a stable translation process at the cost of expensive learning
+procedures.</p>
+<p>Do you want to wait for a machine capable of doing such a large job to appear
+to have acceptable translations? Personally I don’t.</p>
+</section>
+<section id="do-the-markup-characters-express-meaning">
+<h3>Do the markup characters express meaning?<a class="headerlink" href="#do-the-markup-characters-express-meaning" title="Permalink to this headline"></a></h3>
+<p>In one language could be a sentence with bold characters in a part of a
+sentence that could express meaning. This meaning could be expressed in another
+way in other language. So I declare that a good translation process is one that
+allows markup characters without the need to force the translator to do mental
+juggling working with them.</p>
+<p>This implies a PO files translator capable of work with markup characters
+templates using an editor which allows to create markups like editors do. But,
+this thing doesn’t exists currently.</p>
+</section>
+</section>
+<section id="mdpo-approach">
+<h2>mdpo approach<a class="headerlink" href="#mdpo-approach" title="Permalink to this headline"></a></h2>
+<p>The solution proposed by this library is to extract from Markdown files only
+the text that needs to be translated, including markdown characters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">**Bold</span> <span class="pre">text**</span></code> is not changed, is dumped into msgids as <code class="docutils literal notranslate"><span class="pre">**Bold</span> <span class="pre">text**</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*Italic</span> <span class="pre">text*</span></code> is not changed, is dumped into msgids as <code class="docutils literal notranslate"><span class="pre">*Italic</span> <span class="pre">text*</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">``Code</span> <span class="pre">text``</span></code> and <code class="docutils literal notranslate"><span class="pre">`Code</span> <span class="pre">text`</span></code> are unified to use the minimum possible
+backticks for start and end characters and dumped into msgids as
+<code class="docutils literal notranslate"><span class="pre">`Code</span> <span class="pre">text`</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[Link</span> <span class="pre">text](target)</span></code> is not changed if the text is different than the
+target, is dumped into msgids as is. In the case that link text and target
+are equal, is converted to an <a class="reference external" href="https://spec.commonmark.org/0.30/#autolinks">autolink</a> and dumped into msgids as
+<code class="docutils literal notranslate"><span class="pre">&lt;link&gt;</span></code>.</p></li>
+<li><p>Images as <code class="docutils literal notranslate"><span class="pre">![Image</span> <span class="pre">alternative</span> <span class="pre">text](/target.ext</span> <span class="pre">&quot;Image</span> <span class="pre">title</span> <span class="pre">text&quot;)</span></code>,
+are not changed, but included as is.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~~Strikethrough</span> <span class="pre">text~~</span></code> is not changed, is dumped into msgids as
+<code class="docutils literal notranslate"><span class="pre">~~Strikethrough</span> <span class="pre">text~~</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$LaTeX</span> <span class="pre">maths$</span></code> and <code class="docutils literal notranslate"><span class="pre">$$LaTeX</span> <span class="pre">maths</span> <span class="pre">displays$$</span></code> are not changed, are dumped
+into msgids as <code class="docutils literal notranslate"><span class="pre">$LaTeX</span> <span class="pre">maths$</span></code> and <code class="docutils literal notranslate"><span class="pre">$$LaTeX</span> <span class="pre">maths</span> <span class="pre">displays$$</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__Underline</span> <span class="pre">text__</span></code> and <code class="docutils literal notranslate"><span class="pre">_Underline</span> <span class="pre">text_</span></code> are unified to
+<code class="docutils literal notranslate"><span class="pre">__Underline</span> <span class="pre">text__</span></code> into msgids if <code class="docutils literal notranslate"><span class="pre">underline</span></code> mode is active,
+otherwise are treated like bold text (with two characters <code class="docutils literal notranslate"><span class="pre">__</span></code>) and dumped
+as <code class="docutils literal notranslate"><span class="pre">**Underline</span> <span class="pre">text**</span></code> or italic text (with one character, <code class="docutils literal notranslate"><span class="pre">_</span></code>) and
+dumped as <code class="docutils literal notranslate"><span class="pre">*Underline</span> <span class="pre">text*</span></code>.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Using the option <a class="reference internal" href="cli.html#md2po---xheader"><span class="std std-ref">md2po --xheader</span></a> of <a class="reference internal" href="cli.html#md2po"><span class="std std-ref">md2po CLI</span></a> you can sign this
+specification in the affected files.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="implementation-notes.html#implementation-notes"><span class="std std-ref">Implementation notes</span></a></p></li>
+</ul>
+</div>
+<section id="advantages">
+<h3>Advantages<a class="headerlink" href="#advantages" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Updates into source files are synchronized. A change in one string declares
+the old one obsolete and the translation can be updated quickly.</p></li>
+<li><p>Translators work with PO files directly, an open source standard for
+translations.</p></li>
+<li><p>Parts of the Markdown files that do not need to be translated as code blocks
+or are not included in the translation (by default), reducing possibility of
+markup failures in translations.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="traditional-approach.html" class="btn btn-neutral float-left" title="Traditional approach" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2022, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
