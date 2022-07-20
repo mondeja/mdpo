@@ -18,7 +18,7 @@
 </p>
 
 <h2 align="center">
-  <a href="https://mondeja.github.io/mdpo/latest/">Documentation</a>
+  <a href="https://mondeja.github.io/mdpo/">Documentation</a>
 </h2>
 
 <p align="center">
@@ -45,4 +45,4 @@ pip install mdpo
 [coverage-image]: https://img.shields.io/coveralls/github/mondeja/mdpo?logo=coveralls
 [coverage-link]: https://coveralls.io/github/mondeja/mdpo
 [doc-image]: https://img.shields.io/github/workflow/status/mondeja/mdpo/Test?label=docs&logo=readthedocs&logoColor=white
-[doc-link]: https://mdpo.readthedocs.io/en/master/
+[doc-link]: https://mondeja.github.io/mdpo/
