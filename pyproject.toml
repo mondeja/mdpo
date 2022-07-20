@@ -6,7 +6,7 @@ readme = "README.md"
 license = "BSD-3-Clause"
 authors = ["Álvaro Mondéjar Rubio <mondejar1994@gmail.com>"]
 repository = "https://github.com/mondeja/mdpo"
-documentation = "https://mdpo.readthedocs.io"
+documentation = "https://mondeja.github.io/mdpo/"
 classifiers = [
   "Development Status :: 4 - Beta",
   "Operating System :: OS Independent",
