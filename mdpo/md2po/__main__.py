@@ -109,8 +109,8 @@ def build_parser():
     )
     parser.add_argument(
         '-a', '--xheader', dest='xheader', action='store_true',
-        help='Include the mdpo specification X-Header "X-Generation",'
-             ' whose value is "mdpo v{version}".',
+        help='Include in the resulting PO file the mdpo specification'
+             ' X-Header "X-Generation", whose value is "mdpo v<version>".',
     )
     parser.add_argument(
         '-c', '--include-codeblocks',
