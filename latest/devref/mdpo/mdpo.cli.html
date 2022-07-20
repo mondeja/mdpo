@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cli.py &mdash; mdpo 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override-styles.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="command.py" href="mdpo.command.html" />
+    <link rel="prev" title="mdpo/" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+            <a href="../../index.html">
+            <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">mdpo/</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">cli.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.command.html">command.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.compat.html">compat.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.event.html">event.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.io.html">io.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md.html">md.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md4c.html">md4c.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html">po.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.polib.html">polib.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.text.html">text.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md2po/mdpo.md2po.index.html">md2po/</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo2html/mdpo.mdpo2html.index.html">mdpo2html/</a></li>
+<li class="toctree-l2"><a class="reference internal" href="po2md/mdpo.po2md.index.html">po2md/</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md2po2md/mdpo.md2po2md.index.html">md2po2md/</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">mdpo/</a> &raquo;</li>
+      <li>cli.py</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/devref/mdpo/mdpo.cli.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo.cli">
+<span id="cli-py"></span><h1>cli.py<a class="headerlink" href="#module-mdpo.cli" title="Permalink to this headline"></a></h1>
+<p>mdpo command line interface utilities.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.add_check_option">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">add_check_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.add_check_option" title="Permalink to this definition"></a></dt>
+<dd><p>Add the <code class="docutils literal notranslate"><span class="pre">--check</span></code> option to an argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>) – Arguments parser to
+extend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.add_command_alias_argument">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">add_command_alias_argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.add_command_alias_argument" title="Permalink to this definition"></a></dt>
+<dd><p>Add the <code class="docutils literal notranslate"><span class="pre">--command-alias</span></code> argument to an argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>) – Arguments parser to
+extend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.add_common_cli_first_arguments">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">add_common_cli_first_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quiet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.add_common_cli_first_arguments" title="Permalink to this definition"></a></dt>
+<dd><p>Add common mdpo arguments to an argument parser at the beginning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>) – Arguments parser to
+extend.</p></li>
+<li><p><strong>quiet</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Include the argument <code class="docutils literal notranslate"><span class="pre">-q/--quiet</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.add_debug_option">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">add_debug_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.add_debug_option" title="Permalink to this definition"></a></dt>
+<dd><p>Add the <code class="docutils literal notranslate"><span class="pre">-D/--debug</span></code> option to an argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>) – Arguments parser to
+extend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.add_encoding_arguments">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">add_encoding_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po_encoding_help</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">markup_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'md'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.add_encoding_arguments" title="Permalink to this definition"></a></dt>
+<dd><p>Add <code class="docutils literal notranslate"><span class="pre">--po-encoding</span></code> <code class="docutils literal notranslate"><span class="pre">--md-encoding</span></code> arguments to an argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>) – Arguments parser to
+extend.</p></li>
+<li><p><strong>po_encoding_help</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Help text for the <code class="docutils literal notranslate"><span class="pre">--po-encoding</span></code> argument.</p></li>
+<li><p><strong>markup_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Type of markup encoding, can be <code class="docutils literal notranslate"><span class="pre">&quot;md&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;html&quot;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.add_event_argument">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">add_event_argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.add_event_argument" title="Permalink to this definition"></a></dt>
+<dd><p>Add the <code class="docutils literal notranslate"><span class="pre">--event</span></code> optional argument to an argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>) – Arguments parser to
+extend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.add_extensions_argument">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">add_extensions_argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.add_extensions_argument" title="Permalink to this definition"></a></dt>
+<dd><p>Add the <code class="docutils literal notranslate"><span class="pre">-x/--extension</span></code> argument to an argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>) – Arguments parser to
+extend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.add_nolocation_option">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">add_nolocation_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.add_nolocation_option" title="Permalink to this definition"></a></dt>
+<dd><p>Add the <code class="docutils literal notranslate"><span class="pre">--no-location/--nolocation</span></code> option to an argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>) – Arguments parser to
+extend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.add_wrapwidth_argument">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">add_wrapwidth_argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'po'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">markup_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'78'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help_to_render</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.add_wrapwidth_argument" title="Permalink to this definition"></a></dt>
+<dd><p>Add a <code class="docutils literal notranslate"><span class="pre">--wrapwidth</span></code> argument to an argument parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parser</strong> (<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a>) – Arguments parser to
+extend.</p></li>
+<li><p><strong>markup</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – For which type of files the argument will affect. Either
+<code class="docutils literal notranslate"><span class="pre">&quot;md&quot;</span></code> for Markdown or <code class="docutils literal notranslate"><span class="pre">&quot;po&quot;</span></code> for PO files.</p></li>
+<li><p><strong>markup_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Add the <code class="docutils literal notranslate"><span class="pre">markup</span></code> prefix in the argument using
+the format <code class="docutils literal notranslate"><span class="pre">--&lt;markup&gt;-wrapwidth</span></code>.</p></li>
+<li><p><strong>short</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Add the short version of the argument (<code class="docutils literal notranslate"><span class="pre">-w</span></code>).</p></li>
+<li><p><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Default value.</p></li>
+<li><p><strong>help_to_render</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – String used to indicate the content that will be
+wrapped according to the argument.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.cli_codespan">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">cli_codespan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cli</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphinx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.cli_codespan" title="Permalink to this definition"></a></dt>
+<dd><p>Command line codespan wrapper.</p>
+<p>This is a compatibility function to make CLI codespans looks good in
+sphinx-argparse-cli documentation and using <code class="docutils literal notranslate"><span class="pre">--help</span></code> option in CLI
+itself. sphinx-argparse-cli expects the usage of double backticks for
+codespans, but that format is ugly in CLI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Value to wrap.</p></li>
+<li><p><strong>cli</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Wrap when used from command line.</p></li>
+<li><p><strong>sphinx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Wrap when used from Sphinx.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.parse_command_aliases_cli_arguments">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">parse_command_aliases_cli_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command_aliases</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.parse_command_aliases_cli_arguments" title="Permalink to this definition"></a></dt>
+<dd><p>Parse <code class="docutils literal notranslate"><span class="pre">--command-alias</span></code> argument values passed to CLIs.</p>
+<p>If a value can’t be passed or a custom command is duplicated, writes an
+appropiate error message to STDERR and exits with code 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Values taken by <code class="docutils literal notranslate"><span class="pre">--command-alias</span></code> arguments.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Command aliases mapping ni the format accepted by the API.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.parse_escaped_pairs_cli_argument">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">parse_escaped_pairs_cli_argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_error_message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_error_message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.parse_escaped_pairs_cli_argument" title="Permalink to this definition"></a></dt>
+<dd><p>Parse a key argument made by key-value pairs.</p>
+<p>If an error happens, shows an appropiate message and exists with code 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pairs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of key-value pairs.</p></li>
+<li><p><strong>value_error_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Error message schema shown when a pair
+can’t be parsed.</p></li>
+<li><p><strong>key_error_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Error message schema shown when a key is
+repeated.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parsed key-value pairs.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.parse_event_argument">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">parse_event_argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.parse_event_argument" title="Permalink to this definition"></a></dt>
+<dd><p>Parse <code class="docutils literal notranslate"><span class="pre">--event</span></code> CLI argument values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Event names and function paths in the form
+<code class="docutils literal notranslate"><span class="pre">event_name:</span> <span class="pre">path/to/file.py::func</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mapping of event names and <cite>file::function</cite> paths.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.cli.parse_metadata_cli_arguments">
+<span class="sig-prename descclassname"><span class="pre">mdpo.cli.</span></span><span class="sig-name descname"><span class="pre">parse_metadata_cli_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.cli.parse_metadata_cli_arguments" title="Permalink to this definition"></a></dt>
+<dd><p>Parse <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> argument values passed to CLIs.</p>
+<p>If a value can’t be passed or a metadata key is duplicated, writes an
+appropiate error message to STDERR and exits with code 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Values taken by <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> arguments.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Metadata mapping ni the format accepted by the API.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="mdpo/" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.command.html" class="btn btn-neutral float-right" title="command.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2022, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
