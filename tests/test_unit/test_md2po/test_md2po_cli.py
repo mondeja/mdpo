@@ -380,7 +380,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ('-a', '--xheader'))
-def test_xheaders(capsys, arg):
+def test_xheader(capsys, arg):
     markdown_content = '# Foo'
     expected_output = f'''#
 msgid ""

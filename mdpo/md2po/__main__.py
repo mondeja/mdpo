@@ -108,11 +108,9 @@ def build_parser():
         po_encoding_help='Resulting PO file encoding.',
     )
     parser.add_argument(
-        '-a', '--xheader', dest='xheader',
-        action='store_true',
-        help='Include mdpo specification x-headers. These only will be'
-             ' included if you do not pass the parameter'
-             f' {cli_codespan("--plaintext")}.',
+        '-a', '--xheader', dest='xheader', action='store_true',
+        help='Include the mdpo specification X-Header "X-Generation",'
+             ' whose value is "mdpo v{version}".',
     )
     parser.add_argument(
         '-c', '--include-codeblocks',
