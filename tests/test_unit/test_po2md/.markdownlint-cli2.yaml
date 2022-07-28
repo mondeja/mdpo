@@ -33,3 +33,11 @@ config:
   # Bare URLs in markdownlint doesn't support link titles, but MD4C yes
   # See https://github.com/DavidAnson/markdownlint/issues/424
   no-bare-urls: false
+
+  # Strong and emphasis styles are not consistent in underscore tests
+  strong-style: false
+  emphasis-style: false
+
+  # Link fragments could not be valid in certain tests:
+  # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md#md051
+  link-fragments: false
