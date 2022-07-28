@@ -1,11 +1,4 @@
 repos:
-  - repo: local
-    hooks:
-      - id: md2po
-        name: md2po
-        entry: md2po --check
-        language: python
-        files: ^README\.md$
   - repo: https://github.com/mondeja/project-config
     rev: v0.7.4
     hooks:
