@@ -97,6 +97,12 @@ repos:
           - --remove-unused-variables
           - --remove-duplicate-keys
           - --ignore-init-module-imports
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: v3.10.2
+    hooks:
+      - id: markdown-link-check
+        name: markdown-link-check
+        files: ^README\.md$
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.5.0
     hooks:
