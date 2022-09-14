@@ -1,5 +1,9 @@
 name: Update copyright years
 
+permissions:
+  contents: write
+  pull-requests: write
+
 on:
   workflow_dispatch:
   schedule:
