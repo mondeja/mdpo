@@ -118,6 +118,7 @@ flake8-implicit-str-concat = ["+*"]
 flake8-print = ["+*"]
 flake8-printf-formatting = ["+*"]
 flake8-pytest-style = ["+*"]
+dlint = ["+*"]
 
 [tool.flakeheaven.exceptions."*.rst"]
 flake8-print = ["-T201"]

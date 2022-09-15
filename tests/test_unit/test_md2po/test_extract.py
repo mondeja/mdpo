@@ -62,7 +62,9 @@ def test_extract_underline(filename):
 
 
 @pytest.mark.parametrize(
-    'filename', (random.choice(EXAMPLES['plaintext']['filenames']),),
+    'filename', (
+        random.choice(EXAMPLES['plaintext']['filenames']),  # noqa: DUO102
+    ),
 )
 def test_extract_save(filename, tmp_file):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)

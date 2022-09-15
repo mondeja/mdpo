@@ -63,7 +63,7 @@ def test_stdin_subprocess_input(tmp_file):
 @pytest.mark.skipif(sys.platform != 'linux', reason='Linux only test')
 def test_pipe_redirect_file_stdin(tmp_file):
     with tmp_file(EXAMPLE['input'], '.md') as mdfile_path:
-        proc = subprocess.run(
+        proc = subprocess.run(  # noqa: DUO116
             f'< {mdfile_path} md2po',
             text=True,
             input=EXAMPLE['input'],
