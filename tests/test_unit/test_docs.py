@@ -11,20 +11,20 @@ def test_devref_index():
         if line.startswith('   mdpo'):
             if line.endswith('.index'):
                 implementations_index.append(
-                    '/'.join(line.lstrip(' ').split('/')[:2]),
+                    'src/' + '/'.join(line.lstrip().split('/')[:-1]),
                 )
             else:
-                utils_index.append(line.lstrip(' ').replace('/mdpo', ''))
+                utils_index.append(line.lstrip(' ').replace('/src', ''))
 
+    src_mdpo_dirpath = os.path.join('src', 'mdpo')
     utils_modules, implementation_packages = [], []
-    for filename in os.listdir('mdpo'):
+    for filename in os.listdir(src_mdpo_dirpath):
         if filename.startswith('__'):  # ignore __init__.py
             continue
 
-        filepath = os.path.join('mdpo', filename)
+        filepath = os.path.join(src_mdpo_dirpath, filename)
         if os.path.isfile(filepath):
-            basename_no_ext = filename.rstrip('.py')
-            utils_modules.append(f'mdpo.{basename_no_ext}')
+            utils_modules.append(f'mdpo/mdpo.{os.path.splitext(filename)[0]}')
         else:
             implementation_packages.append(filepath)
 
