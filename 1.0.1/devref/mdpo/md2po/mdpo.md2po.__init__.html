@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>__init__.py &mdash; mdpo 1.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/override-styles.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="__main__.py" href="mdpo.md2po.__main__.html" />
+    <link rel="prev" title="md2po/" href="mdpo.md2po.index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+            <a href="../../../index.html">
+            <img src="../../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">mdpo/</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.cli.html">cli.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.command.html">command.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.compat.html">compat.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.event.html">event.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.io.html">io.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.md.html">md.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.md4c.html">md4c.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.po.html">po.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.polib.html">polib.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo.text.html">text.py</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="mdpo.md2po.index.html">md2po/</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">__init__.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.__main__.html">__main__.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdpo2html/mdpo.mdpo2html.index.html">mdpo2html/</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../po2md/mdpo.po2md.index.html">po2md/</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../md2po2md/mdpo.md2po2md.index.html">md2po2md/</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">mdpo/</a> &raquo;</li>
+          <li><a href="mdpo.md2po.index.html">md2po/</a> &raquo;</li>
+      <li>__init__.py</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/devref/mdpo/md2po/mdpo.md2po.__init__.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo.md2po.__init__">
+<span id="init-py"></span><h1>__init__.py<a class="headerlink" href="#module-mdpo.md2po.__init__" title="Permalink to this headline"></a></h1>
+<p>Markdown to PO files extractor according to mdpo specification.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mdpo.md2po.__init__.</span></span><span class="sig-name descname"><span class="pre">Md2Po</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files_or_content</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po" title="Permalink to this definition"></a></dt>
+<dd><p>Markdown to PO files extractor.</p>
+<p>This class is where all the extraction process is carried out.
+If you are executing custom extraction events, you may want to
+read the documentation about the properties of this class to
+properly control the internal state of the parser.</p>
+<p class="rubric">Example</p>
+<p>If you want to extract all “Foo” messages as “Bar”,
+regardless of the content of the Markdown input,
+you could do something like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">transform_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s1">&#39;Foo&#39;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_msgid</span> <span class="o">=</span> <span class="s1">&#39;Bar&#39;</span>  <span class="c1"># self is Md2Po</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="n">markdown_to_pofile</span><span class="p">(</span><span class="s1">&#39;Foo&#39;</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">transform_foo</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>The public internal properties of this class are documented
+below:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.current_msgctxt">
+<span class="sig-name descname"><span class="pre">current_msgctxt</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.current_msgctxt" title="Permalink to this definition"></a></dt>
+<dd><p>Context message that will be saved in the next
+message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.current_msgid">
+<span class="sig-name descname"><span class="pre">current_msgid</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.current_msgid" title="Permalink to this definition"></a></dt>
+<dd><p>The msgid being currently built for the next
+message entry. Keep in mind that, if you are executing
+an event that will be followed by an span one
+(<code class="docutils literal notranslate"><span class="pre">enter_span</span></code> or <code class="docutils literal notranslate"><span class="pre">exit_span</span></code>), the content of the
+msgid will change before save it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.current_tcomment">
+<span class="sig-name descname"><span class="pre">current_tcomment</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.current_tcomment" title="Permalink to this definition"></a></dt>
+<dd><p>Translator comment that will be saved in the next
+message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.disable">
+<span class="sig-name descname"><span class="pre">disable</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.disable" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates if the extractor is currently disabled,
+which happens after a <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-disable</span> <span class="pre">--&gt;</span></code> command
+is found, before any subsecuents <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>
+commands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.disable_next_block">
+<span class="sig-name descname"><span class="pre">disable_next_block</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.disable_next_block" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates if the next block will be extracted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.disable_next_codeblock">
+<span class="sig-name descname"><span class="pre">disable_next_codeblock</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.disable_next_codeblock" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates if the next codeblock will be extracted
+when <cite>include_codeblocks</cite> is disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.disabled_entries">
+<span class="sig-name descname"><span class="pre">disabled_entries</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.disabled_entries" title="Permalink to this definition"></a></dt>
+<dd><p>Not extracted entries because the extractor
+has been disabled while processing them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.enable_next_block">
+<span class="sig-name descname"><span class="pre">enable_next_block</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.enable_next_block" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates if the next block will be extracted
+when the extractor is disabled (<code class="docutils literal notranslate"><span class="pre">disable</span> <span class="pre">is</span> <span class="pre">True</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.events">
+<span class="sig-name descname"><span class="pre">events</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.events" title="Permalink to this definition"></a></dt>
+<dd><p>Custom events excuted during the parsing while
+extracting content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.extensions">
+<span class="sig-name descname"><span class="pre">extensions</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.extensions" title="Permalink to this definition"></a></dt>
+<dd><p>MD4C extensions used to parse the content.
+See all available in <a class="reference internal" href="../mdpo.md4c.html"><span class="doc">md4c.py</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.found_entries">
+<span class="sig-name descname"><span class="pre">found_entries</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.found_entries" title="Permalink to this definition"></a></dt>
+<dd><p>Extracted entries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.ignore_msgids">
+<span class="sig-name descname"><span class="pre">ignore_msgids</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.ignore_msgids" title="Permalink to this definition"></a></dt>
+<dd><p>The msgids to ignore for extraction</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.include_codeblocks">
+<span class="sig-name descname"><span class="pre">include_codeblocks</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.include_codeblocks" title="Permalink to this definition"></a></dt>
+<dd><p>Extract code blocks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.include_next_codeblock">
+<span class="sig-name descname"><span class="pre">include_next_codeblock</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.include_next_codeblock" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates if the next codeblock will be extracted
+when <cite>include_codeblocks</cite> is enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.msgstr">
+<span class="sig-name descname"><span class="pre">msgstr</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.msgstr" title="Permalink to this definition"></a></dt>
+<dd><p>Default msgstr used if the current is not found
+inside the previous content of the specified PO file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.po_filepath">
+<span class="sig-name descname"><span class="pre">po_filepath</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.po_filepath" title="Permalink to this definition"></a></dt>
+<dd><p>PO file path to which the content will be extracted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.Md2Po.pofile">
+<span class="sig-name descname"><span class="pre">pofile</span></span><a class="headerlink" href="#mdpo.md2po.__init__.Md2Po.pofile" title="Permalink to this definition"></a></dt>
+<dd><p><a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POFile</span></code></a> PO file object representing
+the extracted content.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.md2po.__init__.markdown_to_pofile">
+<span class="sig-prename descclassname"><span class="pre">mdpo.md2po.__init__.</span></span><span class="sig-name descname"><span class="pre">markdown_to_pofile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files_or_content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msgstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po_filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mo_filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plaintext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrapwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">78</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mark_not_found_as_obsolete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_not_found</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['collapse_whitespace',</span> <span class="pre">'tables',</span> <span class="pre">'strikethrough',</span> <span class="pre">'tasklists',</span> <span class="pre">'latex_math_spans',</span> <span class="pre">'wikilinks']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xheader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_codeblocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_msgids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command_aliases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md2po.__init__.markdown_to_pofile" title="Permalink to this definition"></a></dt>
+<dd><p>Extract all the msgids from Markdown content or files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files_or_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Glob path to Markdown files, a list of
+files or a string with Markdown content.</p></li>
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Paths of files to ignore. Useful when a glob does not
+fit your requirements indicating the files to extract content.
+Also, filename or a dirname can be defined without indicate the
+full path.</p></li>
+<li><p><strong>msgstr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Default message string for extracted msgids.</p></li>
+<li><p><strong>po_filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – File that will be used as <a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POFile</span></code></a>
+instance where to dump the new msgids and that will be used
+as source checking not found strings that will be marked as
+obsolete if is the case (see <code class="docutils literal notranslate"><span class="pre">save</span></code> and
+<code class="docutils literal notranslate"><span class="pre">mark_not_found_as_obsolete</span></code> optional parameters).</p></li>
+<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Save the new content to the PO file indicated in the
+parameter <code class="docutils literal notranslate"><span class="pre">po_filepath</span></code>. If is enabled and <code class="docutils literal notranslate"><span class="pre">po_filepath</span></code> is
+<code class="docutils literal notranslate"><span class="pre">None</span></code> a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> will be raised.</p></li>
+<li><p><strong>mo_filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The resulting PO file will be compiled to a MO file
+and saved in the path specified at this parameter.</p></li>
+<li><p><strong>plaintext</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If you pass <code class="docutils literal notranslate"><span class="pre">True</span></code> to this parameter (as default)
+the content will be extracted as is, without markup characters
+included.
+Passing <code class="docutils literal notranslate"><span class="pre">plaintext</span></code> as <code class="docutils literal notranslate"><span class="pre">False</span></code>, extracted msgids
+will contain some markup characters used to appoint the
+location of <code class="docutils literal notranslate"><span class="pre">`inline</span> <span class="pre">code`</span></code>, <code class="docutils literal notranslate"><span class="pre">**bold</span> <span class="pre">text**</span></code>,
+<code class="docutils literal notranslate"><span class="pre">*italic</span> <span class="pre">text*</span></code> and <code class="docutils literal notranslate"><span class="pre">`[links]`</span></code>, that might be useful
+for you. It depends on the use you are going to give to
+this library activate this mode (<code class="docutils literal notranslate"><span class="pre">plaintext=False</span></code>) or not.</p></li>
+<li><p><strong>wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Wrap width for po file indicated at <code class="docutils literal notranslate"><span class="pre">po_filepath</span></code>
+parameter. If negative, 0, ‘inf’ or ‘math.inf’ the content won’t
+be wrapped.</p></li>
+<li><p><strong>mark_not_found_as_obsolete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – The strings extracted from markdown
+that will not be found inside the provided PO file will be marked
+as obsolete.</p></li>
+<li><p><strong>preserve_not_found</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – The strings extracted from markdown that
+will not be found inside the provided PO file wouldn’t be removed.
+Only has effect if <code class="docutils literal notranslate"><span class="pre">mark_not_found_as_obsolete</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Store references of top-level blocks in which are
+found the messages in PO file <cite>#: reference</cite> comments.</p></li>
+<li><p><strong>extensions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – md4c extensions used to parse markdown content,
+formatted as a list of ‘pymd4c’ keyword arguments. You can see all
+available at <a class="reference external" href="https://github.com/dominickpastore/pymd4c#parser-option-flags">pymd4c repository</a>.</p></li>
+<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Resulting PO file encoding.</p></li>
+<li><p><strong>md_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Markdown content encoding.</p></li>
+<li><p><strong>xheader</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Indicates if the resulting PO file will have the mdpo
+x-header included.</p></li>
+<li><p><strong>include_codeblocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Include all code blocks found inside PO file
+result. This is useful if you want to translate all your blocks
+of code. Equivalent to append <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-include-codeblock</span> <span class="pre">--&gt;</span></code>
+command before each code block.</p></li>
+<li><p><strong>ignore_msgids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of msgids ot ignore from being extracted.</p></li>
+<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
+names in comments. The <code class="docutils literal notranslate"><span class="pre">mdpo-</span></code> prefix in command names resolution
+is optional. For example, if you want to use <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-on</span> <span class="pre">--&gt;</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>, you can pass the dictionaries
+<code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;mdpo-enable&quot;}</span></code> or <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;enable&quot;}</span></code> to this
+parameter.</p></li>
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Metadata to include in the produced PO file. If the
+file contains previous metadata fields, these will be updated
+preserving the values of the already defined.</p></li>
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – <p>Preprocessing events executed during the parsing
+process that can be used to customize the extraction process.
+Takes functions or list of functions as values. If one of these
+functions returns <code class="docutils literal notranslate"><span class="pre">False</span></code>, that part of the parsing is skipped
+by <code class="docutils literal notranslate"><span class="pre">md2po</span></code>. Available events are the next:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">enter_block(self,</span> <span class="pre">block,</span> <span class="pre">details)</span></code>: Executed when the parsing
+a Markdown block starts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">leave_block(self,</span> <span class="pre">block,</span> <span class="pre">details)</span></code>: Executed when the parsing
+a Markdown block ends.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enter_span(self,</span> <span class="pre">span,</span> <span class="pre">details)</span></code>: Executed when the parsing of
+a Markdown span starts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">leave_span(self,</span> <span class="pre">span,</span> <span class="pre">details)</span></code>: Executed when the parsing of
+a Markdown span ends.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">text(self,</span> <span class="pre">block,</span> <span class="pre">text)</span></code>: Executed when the parsing of text
+starts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">command(self,</span> <span class="pre">mdpo_command,</span> <span class="pre">comment,</span> <span class="pre">original</span> <span class="pre">command)</span></code>:
+Executed when a mdpo HTML command is found.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">msgid(self,</span> <span class="pre">msgid,</span> <span class="pre">msgstr,</span> <span class="pre">msgctxt,</span> <span class="pre">tcomment,</span> <span class="pre">flags)</span></code>:
+Executed when a msgid is going to be stored.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">link_reference(self,</span> <span class="pre">target,</span> <span class="pre">href,</span> <span class="pre">title)</span></code>: Executed when a
+link reference is going to be stored.</p></li>
+</ul>
+<p>You can also define the location of these functions by strings
+with the syntax <code class="docutils literal notranslate"><span class="pre">path/to/file.py::function_name</span></code>.</p>
+<p>All <code class="docutils literal notranslate"><span class="pre">self</span></code> arguments are an instance of Md2Po parser. You can
+take advanced control of the parsing process manipulating the
+state of the parser. For example, if you want to skip a certain
+msgid to be included, you can do:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">msgid_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgid</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">msgid</span> <span class="o">==</span> <span class="s1">&#39;foo&#39;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disable_next_block</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Add events displaying all parsed elements in the
+extraction process.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">content</span> <span class="o">=</span> <span class="s1">&#39;Some text with `inline code`&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">markdown_to_pofile</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">plaintext</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">e</span><span class="o">.</span><span class="n">msgid</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">msgstr</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">}</span>
+<span class="go">{&#39;Some text with inline code&#39;: &#39;&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">markdown_to_pofile</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">e</span><span class="o">.</span><span class="n">msgid</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">msgstr</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">}</span>
+<span class="go">{&#39;Some text with `inline code`&#39;: &#39;&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">markdown_to_pofile</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">msgstr</span><span class="o">=</span><span class="s1">&#39;Default message&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">e</span><span class="o">.</span><span class="n">msgid</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">msgstr</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">}</span>
+<span class="go">{&#39;Some text with `inline code`&#39;: &#39;Default message&#39;}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POFile</span></code></a> Pofile instance with new msgids included.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mdpo.md2po.index.html" class="btn btn-neutral float-left" title="md2po/" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.md2po.__main__.html" class="btn btn-neutral float-right" title="__main__.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2022, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
