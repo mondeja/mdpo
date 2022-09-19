@@ -134,16 +134,15 @@ jobs:
           TAG_BODY="${TAG_BODY//$'\r'/'%0D'}"
           echo ::set-output name=body::$TAG_BODY
       - name: Create Release
-        uses: actions/create-release@v1.1.4
+        uses: softprops/action-gh-release@v1
         id: create-release
         with:
+          name: ${{ steps.tag.outputs.title }}
           tag_name: ${{ steps.tag.outputs.title }}
-          release_name: ${{ steps.tag.outputs.title }}
           body: ${{ steps.tag.outputs.body }}
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.CREATE_RELEASE_TOKEN }}
+          token: secrets.CREATE_RELEASE_TOKEN
       - uses: actions/download-artifact@v3
         name: Download builds
         with:
