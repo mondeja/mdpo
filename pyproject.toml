@@ -59,6 +59,10 @@ sphinx-tabs = "~3.3.0"
 version = "*"
 python = "3.7"
 
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [[tool.bump.targets]]
 file = "pyproject.toml"
 
