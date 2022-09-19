@@ -115,7 +115,7 @@ def test___slots__(class_slots):
     assert slots
 
     md2po_implementation_filepath = os.path.join(
-        'mdpo', 'md2po', '__init__.py',
+        'src', 'mdpo', 'md2po', '__init__.py',
     )
     with open(md2po_implementation_filepath) as f:
         content = f.read()

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mdpo"
-version = "1.0.0"
+version = "1.0.1"
 description = "Markdown files translation using PO files."
 readme = "README.md"
 license = "BSD-3-Clause"
@@ -8,7 +8,7 @@ authors = ["Álvaro Mondéjar Rubio <mondejar1994@gmail.com>"]
 repository = "https://github.com/mondeja/mdpo"
 documentation = "https://mondeja.github.io/mdpo/"
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Production/Stable",
   "Operating System :: OS Independent",
   "Intended Audience :: Developers",
   "Topic :: Software Development :: Internationalization",
@@ -17,7 +17,14 @@ classifiers = [
 ]
 
 [[tool.poetry.packages]]
-include = "mdpo/**/*.py"
+include = "mdpo"
+from = "src"
+
+[tool.poetry.scripts]
+md2po = "mdpo.md2po.__main__:main"
+po2md = "mdpo.po2md.__main__:main"
+md2po2md = "mdpo.md2po2md.__main__:main"
+mdpo2html = "mdpo.mdpo2html.__main__:main"
 
 [tool.poetry.urls]
 "Bug tracker" = "https://github.com/mondeja/mdpo/issues"
@@ -36,8 +43,8 @@ mondeja-bump = "*"
 project-config = "^0.7.3"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7.0.0"
-pytest-cov = "^3.0.0"
+pytest = "^7"
+pytest-cov = "^3"
 pytest-maybe-raises = "^0.1.1"
 pre-commit = "^2.19.0"
 
@@ -52,11 +59,9 @@ sphinx-tabs = "~3.3.0"
 version = "*"
 python = "3.7"
 
-[tool.poetry.scripts]
-md2po = "mdpo.md2po.__main__:main"
-po2md = "mdpo.po2md.__main__:main"
-md2po2md = "mdpo.md2po2md.__main__:main"
-mdpo2html = "mdpo.mdpo2html.__main__:main"
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [[tool.bump.targets]]
 file = "pyproject.toml"
@@ -84,6 +89,7 @@ style = [
   "gh://mondeja/project-config-styles/python/single-quotes.json5",
   "gh://mondeja/project-config-styles/python/line-length-80.json5",
   "gh://mondeja/project-config-styles/python/version/min-37.json5",
+  "gh://mondeja/project-config-styles/python/tests.json5",
   "gh://mondeja/project-config-styles/python/sphinx.json5",
   "gh://mondeja/project-config-styles/python/readthedocs.json5",
   "gh://mondeja/project-config-styles/python/google-docstrings.json5"
@@ -95,6 +101,9 @@ addopts = "-s --cov=mdpo --cov-report=html"
 [tool.coverage.report]
 exclude_lines = [
   "pragma: no cover",
+  "def __repr__\\(",
+  "raise NotImplementedError",
+  "@(abc\\.)?abstractmethod",
   "if __name__ == [\"']__main__[\"']:",
   "if '-h' in args or '--help' in args:"
 ]
@@ -136,10 +145,10 @@ flake8-docstrings = [
   "-D415"
 ]
 
-[tool.flakeheaven.exceptions."mdpo/**/*.py"]
+[tool.flakeheaven.exceptions."src/**/*.py"]
 flake8-docstrings = ["-D101", "-D102", "-D103", "-D107"]
 
-[tool.flakeheaven.exceptions."mdpo/md.py"]
+[tool.flakeheaven.exceptions."src/md.py"]
 flake8-docstrings = ["-D101", "-D102", "-D107"]
 
 [tool.isort]
