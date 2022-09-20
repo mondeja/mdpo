@@ -450,7 +450,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ('--command-alias',))
-def test_command_aliases(capsys, arg, tmp_file):
+def test_command_aliases(capsys, arg):
     markdown_content = '''<!-- :off -->
 This should be ignored.
 
@@ -485,7 +485,7 @@ msgstr ""
 
 
 @pytest.mark.parametrize('arg', ('-d', '--metadata'))
-def test_metadata(capsys, arg, tmp_file):
+def test_metadata(capsys, arg):
     expected_output = '''#
 msgid ""
 msgstr ""

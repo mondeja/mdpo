@@ -129,11 +129,16 @@ flake8-printf-formatting = ["+*"]
 flake8-pytest-style = ["+*"]
 flake8-bugbear = ["+*"]
 flake8-encodings = ["+*"]
+flake8-no-pep420 = ["+*"]
+flake8-absolute-import = ["+*"]
+flake8-unused-arguments = ["+*"]
+flake8-slots = ["+*"]
 dlint = ["+*"]
 
-[tool.flakeheaven.exceptions."*.rst"]
+[tool.flakeheaven.exceptions."docs/**"]
 flake8-print = ["-T201"]
 flake8-docstrings = ["-D100", "-D101", "-D102"]
+flake8-no-pep420 = ["-INP001"]
 
 [tool.flakeheaven.exceptions."tests/**"]
 flake8-docstrings = [
@@ -146,6 +151,7 @@ flake8-docstrings = [
   "-D205",
   "-D415"
 ]
+flake8-no-pep420 = ["-INP001"]
 
 [tool.flakeheaven.exceptions."src/**/*.py"]
 flake8-docstrings = ["-D101", "-D102", "-D103", "-D107"]

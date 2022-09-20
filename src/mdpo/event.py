@@ -85,7 +85,7 @@ def debug_events(program):
     def print_leave_span(self, span, details):
         debug('leave_span', _block_msg(span, details))
 
-    def print_text(self, block, text):
+    def print_text(self, block, text):  # noqa: U100
         debug('text', text)
 
     def print_link_reference(self, target, href, title):

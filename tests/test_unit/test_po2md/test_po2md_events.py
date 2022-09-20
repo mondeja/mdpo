@@ -6,7 +6,7 @@ from mdpo.po2md import Po2Md, pofile_to_markdown
 
 
 def test_link_reference_footnotes(tmp_file):
-    def process_footnote_references(self, target, href, title):
+    def process_footnote_references(self, target, href, title):  # noqa: U100
         if re.match(r'^\^\d', target):
             # footnotes are treated as text blocks, so we don't need to
             # translate them here
@@ -69,7 +69,7 @@ Esto es una nota al pie[^1]. Esto es otra[^2].
 
 
 def test_command_event(tmp_file):
-    def _abort_command(self, *args):
+    def _abort_command(self, *args):  # noqa: U100
         assert not self.disable
         return False
 
@@ -97,7 +97,7 @@ hola
 
 
 def test_msgid_event(tmp_file):
-    def _abort_command(self, *args):
+    def _abort_command(self, *args):  # noqa: U100
         return False
 
     input_content = '''hello

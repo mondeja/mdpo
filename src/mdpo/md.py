@@ -122,10 +122,10 @@ class MarkdownSpanWrapper:
     def _get_currently_applied_indent(self):
         return self.indent if self.output else self.first_line_indent
 
-    def enter_block(self, block, details):
+    def enter_block(self, block, details):  # noqa: U100
         pass
 
-    def leave_block(self, block, details):
+    def leave_block(self, block, details):  # noqa: U100
         pass
 
     def enter_span(self, span, details):
@@ -178,7 +178,7 @@ class MarkdownSpanWrapper:
                 self.current_line += f' "{polib.escape(title)}"'
             self.current_line += ')'
 
-    def text(self, block, text):
+    def text(self, block, text):  # noqa: U100
         if self._inside_codespan:
             width = self._get_currently_applied_width()
             indent = self._get_currently_applied_indent()
