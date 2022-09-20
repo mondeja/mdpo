@@ -68,6 +68,7 @@ repos:
           - flake8-encodings
           - flake8-no-pep420
           - flake8-absolute-import
+          - flake8-slots
           - dlint
           - pysetenv
         entry: pysetenv FLAKEHEAVEN_CACHE_TIMEOUT=0 flakeheaven lint
