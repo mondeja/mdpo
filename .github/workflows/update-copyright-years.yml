@@ -1,7 +1,6 @@
 name: Update copyright years
 
 permissions:
-  contents: write
   pull-requests: write
 
 on:
