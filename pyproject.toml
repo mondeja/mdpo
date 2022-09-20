@@ -128,6 +128,7 @@ flake8-print = ["+*"]
 flake8-printf-formatting = ["+*"]
 flake8-pytest-style = ["+*"]
 flake8-bugbear = ["+*"]
+flake8-encodings = ["+*"]
 dlint = ["+*"]
 
 [tool.flakeheaven.exceptions."*.rst"]

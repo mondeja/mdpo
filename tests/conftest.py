@@ -41,7 +41,7 @@ def _create_tmpdir_file(tmpdir, file_relpath, content):
     filepath = os.path.join(tmpdir, file_relpath)
     file_parent_dir = os.path.abspath(os.path.dirname(filepath))
     os.makedirs(file_parent_dir, exist_ok=True)
-    with open(filepath, 'w') as f:
+    with open(filepath, 'w', encoding='utf-8') as f:
         f.write(content)
     return filepath
 

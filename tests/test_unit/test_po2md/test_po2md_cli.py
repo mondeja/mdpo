@@ -100,7 +100,7 @@ def test_save(capsys, arg, tmp_file):
         assert f'{output}\n' == EXAMPLE['markdown-output']
         assert stdout == ''
 
-        with open(output_md_filepath) as f:
+        with open(output_md_filepath, encoding='utf-8') as f:
             assert f'{f.read()}\n' == EXAMPLE['markdown-output']
 
 

@@ -230,7 +230,7 @@ msgstr ""
             '--no-location',
         ])
 
-        with open(pofile_path) as f:
+        with open(pofile_path, encoding='utf-8') as f:
             assert f'{f.read()}\n' == expected_output
 
     stdout, _ = capsys.readouterr()
@@ -257,7 +257,7 @@ msgid "Bar"
 msgstr ""
 
 '''
-    with open(pofile_path) as f:
+    with open(pofile_path, encoding='utf-8') as f:
         assert f'{f.read()}\n' == expected_output
 
     stdout, _ = capsys.readouterr()

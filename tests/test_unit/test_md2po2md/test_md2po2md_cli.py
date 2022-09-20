@@ -188,5 +188,5 @@ def test_md2po2md_arguments(
             # Check expected content
             for relpath, content in expected_result.items():
                 filepath = os.path.join(filesdir, relpath)
-                with open(filepath) as f:
+                with open(filepath, encoding='utf-8') as f:
                     assert f.read() == content

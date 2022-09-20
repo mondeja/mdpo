@@ -30,13 +30,13 @@ def test_translate_markuptext(filename):
         filepath_in, location=False, po_filepath=po_filepath,
     )
 
-    with open(po_filepath) as f:
+    with open(po_filepath, encoding='utf-8') as f:
         pofile_content = f.read()
     assert str(pofile) == pofile_content
 
     # assert translation
     output = pofile_to_markdown(filepath_in, po_filepath)
-    with open(filepath_out) as f:
+    with open(filepath_out, encoding='utf-8') as f:
         expected_output = f.read()
     assert output == expected_output
 
@@ -53,8 +53,8 @@ def test_translate_save(filename, tmp_file):
     with tmp_file(suffix='.po') as save_filepath:
         pofile_to_markdown(filepath_in, po_filepath, save=save_filepath)
 
-        with open(save_filepath) as f:
+        with open(save_filepath, encoding='utf-8') as f:
             result = f.read()
 
-        with open(filepath_out) as expect_file:
+        with open(filepath_out, encoding='utf-8') as expect_file:
             assert result == expect_file.read()
