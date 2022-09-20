@@ -86,7 +86,7 @@ def parse_options(args):
     return opts
 
 
-def run(args=[]):
+def run(args=frozenset()):
     with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 

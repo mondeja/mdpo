@@ -181,7 +181,7 @@ def test_md2po2md_arguments(
                 len(expected_result) + len(input_files_content)
             )
             n_files = 0
-            for root, dirs, files in os.walk(filesdir, topdown=False):
+            for _root, _dirs, files in os.walk(filesdir, topdown=False):
                 n_files += len(files)
             assert n_files == expected_number_of_files
 

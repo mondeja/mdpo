@@ -73,14 +73,14 @@ class MarkdownSpanWrapper:
         first_line_width=80,
         indent='',
         first_line_indent='',
-        md4c_extensions={},
+        md4c_extensions=None,
         **kwargs,
     ):
         self.width = width
         self.first_line_width = first_line_width
         self.indent = indent
         self.first_line_indent = first_line_indent
-        self.md4c_extensions = md4c_extensions
+        self.md4c_extensions = md4c_extensions or {}
 
         self.output = ''
         self.current_line = ''

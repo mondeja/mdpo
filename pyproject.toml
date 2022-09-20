@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mdpo"
-version = "1.0.1"
+version = "1.0.2"
 description = "Markdown files translation using PO files."
 readme = "README.md"
 license = "BSD-3-Clause"
@@ -127,6 +127,7 @@ flake8-implicit-str-concat = ["+*"]
 flake8-print = ["+*"]
 flake8-printf-formatting = ["+*"]
 flake8-pytest-style = ["+*"]
+flake8-bugbear = ["+*"]
 dlint = ["+*"]
 
 [tool.flakeheaven.exceptions."*.rst"]

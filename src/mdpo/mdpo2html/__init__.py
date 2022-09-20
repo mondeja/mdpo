@@ -50,16 +50,16 @@ class MdPo2HTML(HTMLParser):
     def __init__(
         self,
         pofiles,
-        ignore=[],
+        ignore=frozenset(),
         merge_adjacent_markups=False,
-        code_tags=['code'],
-        bold_tags=['b', 'strong'],
-        italic_tags=['em', 'i'],
-        link_tags=['a'],
-        image_tags=['img'],
-        ignore_grouper_tags=['div', 'hr'],
+        code_tags=frozenset(['code']),
+        bold_tags=frozenset(['b', 'strong']),
+        italic_tags=frozenset(['em', 'i']),
+        link_tags=frozenset(['a']),
+        image_tags=frozenset(['img']),
+        ignore_grouper_tags=frozenset(['div', 'hr']),
         po_encoding=None,
-        command_aliases={},
+        command_aliases=None,
         _check_saved_files_changed=None,
     ):
         self.pofiles = paths_or_globs_to_unique_pofiles(
@@ -82,7 +82,9 @@ class MdPo2HTML(HTMLParser):
         self.disabled_entries = []
 
         # custom mdpo command resolution
-        self.command_aliases = normalize_mdpo_command_aliases(command_aliases)
+        self.command_aliases = normalize_mdpo_command_aliases(
+            command_aliases or {},
+        )
 
         # lazy translators mode
         self.merge_adjacent_markups = merge_adjacent_markups
@@ -185,7 +187,7 @@ class MdPo2HTML(HTMLParser):
                     raw_html_template += f'<{handled}'
 
                     # attrs_except_href_title = []
-                    for attr, value in attrs.items():
+                    for attr in attrs:
                         if attr in ['title', 'href']:
                             raw_html_template += f' {attr}="{{}}"'
                         # else:
@@ -469,11 +471,11 @@ class MdPo2HTML(HTMLParser):
 def markdown_pofile_to_html(
     filepath_or_content,
     pofiles,
-    ignore=[],
+    ignore=frozenset(),
     save=None,
     po_encoding=None,
     html_encoding='utf-8',
-    command_aliases={},
+    command_aliases=None,
     **kwargs,
 ):
     r"""HTML-produced-from-Markdown file translator using PO files.

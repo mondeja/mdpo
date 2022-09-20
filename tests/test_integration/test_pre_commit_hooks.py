@@ -2,7 +2,8 @@ import os
 import subprocess
 
 
-def pre_commit_run_all_files(cwd=os.getcwd()):
+def pre_commit_run_all_files(cwd=None):
+    cwd = cwd or os.getcwd()
     return subprocess.run(
         ['pre-commit', 'run', '--all-files'],
         cwd=cwd,
