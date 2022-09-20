@@ -568,7 +568,7 @@ class Po2Md:
             if self._current_list_type and not self._inside_quoteblock:
                 self._save_current_line()
         elif block is md4c.BlockType.HTML:
-            self._inside_htmlblock = [True, None]
+            self._inside_htmlblock = [True, False]
 
     def leave_block(self, block, details):
         # raise 'leave_block' event
