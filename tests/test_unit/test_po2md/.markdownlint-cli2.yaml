@@ -41,3 +41,6 @@ config:
   # Link fragments could not be valid in certain tests:
   # https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md#md051
   link-fragments: false
+
+  # HTML blocks are preserved in output
+  no-inline-html: false

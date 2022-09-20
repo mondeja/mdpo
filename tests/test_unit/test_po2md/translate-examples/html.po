@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Some text"
+msgstr "Algo de texto"
+
+msgid "More text"
+msgstr "Más texto"

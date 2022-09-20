@@ -247,7 +247,10 @@ class Po2Md:
             self._leavespan_replacer[md4c.SpanType.WIKILINK.value] = \
                 self.wikilink_end_string
 
-        self._inside_htmlblock = False
+        self._inside_htmlblock = [
+            False,  # the parser is inside an HTML block
+            None,  # a mdpo command has been found in the HTML block
+        ]
         self._inside_codeblock = False
         self._inside_indented_codeblock = False
         self._inside_hblock = False
@@ -326,7 +329,9 @@ class Po2Md:
     def _process_command(self, text):
         original_command, comment = parse_mdpo_html_command(text)
         if original_command is None:
-            return
+            return False
+
+        self._inside_htmlblock[1] = True
 
         try:
             command = self.command_aliases[original_command]
@@ -335,6 +340,8 @@ class Po2Md:
 
         # process solved command
         self.command(command, comment, original_command)
+
+        return True
 
     def _escape_translation(self, text):
         if self._aimg_title_inside_current_msgid:
@@ -561,7 +568,7 @@ class Po2Md:
             if self._current_list_type and not self._inside_quoteblock:
                 self._save_current_line()
         elif block is md4c.BlockType.HTML:
-            self._inside_htmlblock = True
+            self._inside_htmlblock = [True, None]
 
     def leave_block(self, block, details):
         # raise 'leave_block' event
@@ -681,7 +688,11 @@ class Po2Md:
                 self._save_current_line()
             self._current_thead_aligns = []
         elif block is md4c.BlockType.HTML:
-            self._inside_htmlblock = False
+            if not self._inside_htmlblock[1]:
+                self.current_line += '\n'
+            else:
+                self.current_line = self.current_line.rstrip('\n')
+            self._inside_htmlblock[0] = False
 
     def enter_span(self, span, details):
         # raise 'enter_span' event
@@ -851,7 +862,7 @@ class Po2Md:
         ):
             return
 
-        if not self._inside_htmlblock:
+        if not self._inside_htmlblock[0]:
             if not self._inside_codeblock:
                 if self._inside_liblock and text == '\n':
                     text = ' '
@@ -903,7 +914,8 @@ class Po2Md:
                         self.current_line += indent
                 self.current_msgid += text
         else:
-            self._process_command(text)
+            if not self._process_command(text):
+                self.current_line += text
 
     def _append_link_references(self):
         if self.link_references:
