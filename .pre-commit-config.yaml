@@ -66,6 +66,7 @@ repos:
           - flake8-pytest-style
           - flake8-bugbear
           - flake8-encodings
+          - flake8-no-pep420
           - dlint
           - pysetenv
         entry: pysetenv FLAKEHEAVEN_CACHE_TIMEOUT=0 flakeheaven lint
