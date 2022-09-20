@@ -20,7 +20,7 @@ def environ(**env):
                 os.environ[key] = value
 
 
-def filter_paths(filepaths, ignore_paths=[]):
+def filter_paths(filepaths, ignore_paths=frozenset()):
     """Filter a list of paths removing those defined in other list of paths.
 
     The paths to filter can be defined in the list of paths to ignore in

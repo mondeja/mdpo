@@ -115,7 +115,7 @@ class Po2Md:
         'link_references',
     }
 
-    def __init__(self, pofiles, ignore=[], po_encoding=None, **kwargs):
+    def __init__(self, pofiles, ignore=frozenset(), po_encoding=None, **kwargs):
         #: list(str): Paths to PO files to translate.
         self.pofiles = paths_or_globs_to_unique_pofiles(
             pofiles,
@@ -132,9 +132,7 @@ class Po2Md:
 
         #: dict: Custom events excuted during the parsing while
         #: translating content.
-        self.events = (
-            parse_events_kwarg(kwargs['events']) if 'events' in kwargs else {}
-        )
+        self.events = parse_events_kwarg(kwargs.get('events') or {})
         if kwargs.get('debug'):
             add_debug_events('po2md', self.events)
 
@@ -180,9 +178,8 @@ class Po2Md:
         self.translations = None
         self.translations_with_msgctxt = None
 
-        self.command_aliases = (
-            normalize_mdpo_command_aliases(kwargs['command_aliases'])
-            if 'command_aliases' in kwargs else {}
+        self.command_aliases = normalize_mdpo_command_aliases(
+            kwargs.get('command_aliases') or {},
         )
 
         self.wrapwidth = (
@@ -453,7 +450,9 @@ class Po2Md:
     def _save_current_line(self):
         # strip all spaces according to unicodedata database ignoring newlines,
         # see https://docs.python.org/3/library/stdtypes.html#str.splitlines
-        self.outputlines.append(self.current_line.rstrip(' \v\x0b\f\x0c'))
+        self.outputlines.append(
+            self.current_line.rstrip(' \v\x0b\f\x0c'),  # noqa: B005
+        )
         self.current_line = ''
 
     def enter_block(self, block, details):
@@ -987,13 +986,13 @@ class Po2Md:
 def pofile_to_markdown(
     filepath_or_content,
     pofiles,
-    ignore=[],
+    ignore=frozenset(),
     save=None,
     md_encoding='utf-8',
     po_encoding=None,
-    command_aliases={},
+    command_aliases=None,
     wrapwidth=80,
-    events={},
+    events=None,
     debug=False,
     **kwargs,
 ):

@@ -84,7 +84,8 @@ def git_init():
 
 @pytest.fixture
 def git_add_commit():
-    def _git_add_commit(message, files='.', cwd=os.getcwd()):
+    def _git_add_commit(message, files='.', cwd=None):
+        cwd = cwd or os.getcwd()
         add_proc = subprocess.run(
             ['git', 'add', files],
             cwd=cwd,

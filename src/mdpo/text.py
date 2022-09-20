@@ -74,7 +74,7 @@ def parse_escaped_pair(value, separator=':'):
     import re
     splits = re.split(
         re.compile(fr'([^\\]{separator})'),
-        value.lstrip(r'\\'),
+        value.lstrip('\\'),
         maxsplit=1,
     )
     if len(splits) == 1:

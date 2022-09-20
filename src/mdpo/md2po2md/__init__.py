@@ -13,15 +13,15 @@ def markdown_to_pofile_to_markdown(
     input_paths_glob,
     output_paths_schema,
     extensions=DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
-    command_aliases={},
+    command_aliases=None,
     location=True,
     debug=False,
     po_wrapwidth=78,
     md_wrapwidth=80,
     po_encoding=None,
     md_encoding=None,
-    md2po_kwargs={},
-    po2md_kwargs={},
+    md2po_kwargs=None,
+    po2md_kwargs=None,
     _check_saved_files_changed=False,
 ):
     """Translate a set of Markdown files using PO files.
@@ -141,7 +141,7 @@ def markdown_to_pofile_to_markdown(
                 location=location,
                 wrapwidth=po_wrapwidth,
                 _check_saved_files_changed=_check_saved_files_changed,
-                **md2po_kwargs,
+                **(md2po_kwargs or {}),
             )
             md2po.extract(
                 save=True,
@@ -160,7 +160,7 @@ def markdown_to_pofile_to_markdown(
                 po_encoding=po_encoding,
                 wrapwidth=md_wrapwidth,
                 _check_saved_files_changed=_check_saved_files_changed,
-                **po2md_kwargs,
+                **(po2md_kwargs or {}),
             )
             po2md.translate(
                 filepath,

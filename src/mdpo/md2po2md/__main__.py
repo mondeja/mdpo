@@ -88,7 +88,7 @@ def build_parser():
     return parser
 
 
-def parse_options(args=[]):
+def parse_options(args):
     parser = build_parser()
     if '-h' in args or '--help' in args:
         parser.print_help()
@@ -117,7 +117,7 @@ def parse_options(args=[]):
     return opts
 
 
-def run(args=[]):
+def run(args=frozenset()):
     exitcode = 0
 
     with environ(_MDPO_RUNNING='true'):

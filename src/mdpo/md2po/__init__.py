@@ -175,9 +175,7 @@ class Md2Po:
 
         #: dict: Custom events excuted during the parsing while
         #: extracting content.
-        self.events = (
-            parse_events_kwarg(kwargs['events']) if 'events' in kwargs else {}
-        )
+        self.events = parse_events_kwarg(kwargs.get('events') or {})
         if kwargs.get('debug'):
             add_debug_events('md2po', self.events)
 
@@ -223,9 +221,8 @@ class Md2Po:
         #: The msgids to ignore for extraction
         self.ignore_msgids = kwargs.get('ignore_msgids', [])
 
-        self.command_aliases = (
-            normalize_mdpo_command_aliases(kwargs['command_aliases'])
-            if 'command_aliases' in kwargs else {}
+        self.command_aliases = normalize_mdpo_command_aliases(
+            kwargs.get('command_aliases') or {},
         )
 
         self.mark_not_found_as_obsolete = kwargs.get(
@@ -239,7 +236,7 @@ class Md2Po:
             False if kwargs.get('_check_saved_files_changed') else None
         )
 
-        self.metadata = {}
+        self.metadata = kwargs.get('metadata') or {}
 
         self.location = kwargs.get('location', True)
         # "top level" here because blocks inside blocks are not taken into
@@ -388,9 +385,6 @@ class Md2Po:
         self.link_references = None
         self._current_wikilink_target = None
         self._current_imgspan = {}
-
-        if 'metadata' in kwargs:
-            self.metadata.update(kwargs['metadata'])
 
     def _save_msgid(
         self,
@@ -1050,7 +1044,7 @@ class Md2Po:
 
 def markdown_to_pofile(
     files_or_content,
-    ignore=[],
+    ignore=frozenset(),
     msgstr='',
     po_filepath=None,
     save=False,
@@ -1065,10 +1059,10 @@ def markdown_to_pofile(
     md_encoding='utf-8',
     xheader=False,
     include_codeblocks=False,
-    ignore_msgids=[],
-    command_aliases={},
-    metadata={},
-    events={},
+    ignore_msgids=frozenset(),
+    command_aliases=None,
+    metadata=None,
+    events=None,
     debug=False,
     **kwargs,
 ):
