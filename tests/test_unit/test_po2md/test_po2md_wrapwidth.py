@@ -31,6 +31,6 @@ def test_wrapwidth(filename, wrapwidth):
 
     output = pofile_to_markdown(filepath_in, po_filepath, wrapwidth=wrapwidth)
 
-    with open(filepath_out) as f:
+    with open(filepath_out, encoding='utf-8') as f:
         expected_output = f.read()
     assert output == expected_output

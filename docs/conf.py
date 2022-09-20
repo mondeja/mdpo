@@ -10,7 +10,8 @@ rootdir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 sys.path.insert(0, rootdir)
 
 # -- Project information -----------------------------------------------------
-with open(os.path.join(rootdir, 'pyproject.toml')) as f:
+pyproject_toml_path = os.path.join(rootdir, 'pyproject.toml')
+with open(pyproject_toml_path, encoding='utf-8') as f:
     pyproject_lines = f.read().splitlines()
 
 if pyproject_lines[0] != '[tool.poetry]':
@@ -33,7 +34,8 @@ for line in pyproject_lines:
     elif not line:
         break
 
-with open(os.path.join(rootdir, 'LICENSE')) as f:
+license_path = os.path.join(rootdir, 'LICENSE')
+with open(license_path, encoding='utf-8') as f:
     license_years_range = re.search(
         r'Copyright \(c\) (\d+-\d+)', f.read(),
     ).group(1)

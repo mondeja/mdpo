@@ -39,7 +39,7 @@ def test_md2po_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         assert proc.stdout.decode('utf-8').splitlines()[-1].endswith('Passed')
 
         # second execution, is outdated
-        with open(readme_md_path, 'a') as f:
+        with open(readme_md_path, 'a', encoding='utf-8') as f:
             f.write('\nbar\n')
 
         git_add_commit('Second commit', cwd=filesdir)
@@ -51,7 +51,7 @@ def test_md2po_pre_commit_hook(tmp_dir, git_init, git_add_commit):
             '- files were modified by this hook'
         )
 
-        with open(readme_po_path) as f:
+        with open(readme_po_path, encoding='utf-8') as f:
             assert f.read() == '''#
 msgid ""
 msgstr ""
@@ -106,9 +106,9 @@ msgstr "Foo es"
         assert proc.stdout.decode('utf-8').splitlines()[-1].endswith('Passed')
 
         # second execution, is outdated
-        with open(readme_src_md_path, 'a') as f:
+        with open(readme_src_md_path, 'a', encoding='utf-8') as f:
             f.write('\nbar\n')
-        with open(readme_po_path, 'a') as f:
+        with open(readme_po_path, 'a', encoding='utf-8') as f:
             f.write('\nmsgid "bar"\nmsgstr "bar es"\n')
 
         git_add_commit('Second commit', cwd=filesdir)
@@ -119,7 +119,7 @@ msgstr "Foo es"
         assert proc.stdout.decode('utf-8').splitlines()[-1] == (
             '- files were modified by this hook'
         )
-        with open(readme_dst_md_path) as f:
+        with open(readme_dst_md_path, encoding='utf-8') as f:
             assert f.read() == '''# Foo es
 
 bar es
@@ -166,13 +166,13 @@ msgstr "Foo es"
         assert proc.returncode == 0
         assert proc.stdout.decode('utf-8').splitlines()[-1].endswith('Passed')
 
-        with open(readme_html_es_path) as f:
+        with open(readme_html_es_path, encoding='utf-8') as f:
             assert f.read() == '<h1>Foo es</h1>\n'
 
         # second execution, is outdated
-        with open(readme_html_path, 'a') as f:
+        with open(readme_html_path, 'a', encoding='utf-8') as f:
             f.write('\n<p>bar</p>\n')
-        with open(readme_po_path, 'a') as f:
+        with open(readme_po_path, 'a', encoding='utf-8') as f:
             f.write('\nmsgid "bar"\nmsgstr "bar es"\n')
 
         git_add_commit('Second commit', cwd=filesdir)
@@ -183,7 +183,7 @@ msgstr "Foo es"
         assert proc.stdout.decode('utf-8').splitlines()[-1] == (
             '- files were modified by this hook'
         )
-        with open(readme_html_es_path) as f:
+        with open(readme_html_es_path, encoding='utf-8') as f:
             assert f.read() == '<h1>Foo es</h1>\n\n<p>bar es</p>\n'
 
 
@@ -225,7 +225,7 @@ def test_md2po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         assert os.path.isfile(readme_md_es_path)
         assert os.path.isfile(readme_po_es_path)
 
-        with open(readme_po_es_path) as f:
+        with open(readme_po_es_path, encoding='utf-8') as f:
             assert f.read() == '''#
 msgid ""
 msgstr ""
@@ -234,11 +234,11 @@ msgid "Foo"
 msgstr ""
 '''
 
-        with open(readme_md_es_path) as f:
+        with open(readme_md_es_path, encoding='utf-8') as f:
             assert f.read() == '# Foo\n'
 
         # second execution, translation
-        with open(readme_po_es_path, 'w') as f:
+        with open(readme_po_es_path, 'w', encoding='utf-8') as f:
             f.write('''#
 msgid ""
 msgstr ""
@@ -255,7 +255,7 @@ msgstr "Foo es"
             '- files were modified by this hook'
         )
 
-        with open(readme_md_es_path) as f:
+        with open(readme_md_es_path, encoding='utf-8') as f:
             assert f.read() == '# Foo es\n'
 
         # third execution, is updated

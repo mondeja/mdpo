@@ -8,7 +8,7 @@ def test_MarkdownSpanWrapper___slots__(class_slots):
     assert slots
 
     md_util_filepath = os.path.join('src', 'mdpo', 'md.py')
-    with open(md_util_filepath) as f:
+    with open(md_util_filepath, encoding='utf-8') as f:
         content = f.read()
 
     for slot in slots:

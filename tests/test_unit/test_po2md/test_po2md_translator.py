@@ -10,7 +10,7 @@ def test___slots__(class_slots):
     po2md_implementation_filepath = os.path.join(
         'src', 'mdpo', 'po2md', '__init__.py',
     )
-    with open(po2md_implementation_filepath) as f:
+    with open(po2md_implementation_filepath, encoding='utf-8') as f:
         content = f.read()
 
     for slot in slots:

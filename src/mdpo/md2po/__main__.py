@@ -159,7 +159,7 @@ def parse_options(args):
     if '-h' in args or '--help' in args:
         parser.print_help()
         sys.exit(1)
-    opts, unknown = parser.parse_known_args(args)
+    opts, _ = parser.parse_known_args(args)
 
     files_or_content = ''
     if not sys.stdin.isatty():
@@ -178,7 +178,7 @@ def parse_options(args):
         opts.extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
     if opts.ignore_msgids is not None:
-        with open(opts.ignore_msgids) as f:
+        with open(opts.ignore_msgids, encoding=opts.po_encoding) as f:
             opts.ignore_msgids = f.read().splitlines()
     else:
         opts.ignore_msgids = []

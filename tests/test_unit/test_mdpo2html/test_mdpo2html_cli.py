@@ -66,7 +66,7 @@ def test_save(capsys, arg, tmp_file):
         assert output == EXAMPLE['html-output']
         assert stdout == ''
 
-        with open(html_output_filepath) as f:
+        with open(html_output_filepath, encoding='utf-8') as f:
             output_html_content = f.read()
 
         assert output_html_content == EXAMPLE['html-output']

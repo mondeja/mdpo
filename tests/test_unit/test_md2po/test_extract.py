@@ -34,7 +34,7 @@ def test_extract_plaintext(filename):
     filepath = os.path.join(EXAMPLES['plaintext']['dirpath'], filename)
     pofile = markdown_to_pofile(filepath, plaintext=True, location=False)
 
-    with open(f'{filepath}.expect.po') as expect_file:
+    with open(f'{filepath}.expect.po', encoding='utf-8') as expect_file:
         assert str(pofile) == expect_file.read()
 
 
@@ -43,7 +43,7 @@ def test_extract_markuptext(filename):
     filepath = os.path.join(EXAMPLES['markuptext']['dirpath'], filename)
     pofile = markdown_to_pofile(filepath, plaintext=False, location=False)
 
-    with open(f'{filepath}.expect.po') as expect_file:
+    with open(f'{filepath}.expect.po', encoding='utf-8') as expect_file:
         assert str(pofile) == expect_file.read()
 
 
@@ -57,7 +57,7 @@ def test_extract_underline(filename):
         location=False,
     )
 
-    with open(f'{filepath}.expect.po') as expect_file:
+    with open(f'{filepath}.expect.po', encoding='utf-8') as expect_file:
         assert str(pofile) == expect_file.read()
 
 
@@ -78,8 +78,8 @@ def test_extract_save(filename, tmp_file):
             location=False,
         )
 
-        with open(save_filepath) as f:
+        with open(save_filepath, encoding='utf-8') as f:
             result = f.read()
 
-        with open(f'{filepath}.expect.po') as expect_file:
+        with open(f'{filepath}.expect.po', encoding='utf-8') as expect_file:
             assert result == expect_file.read()

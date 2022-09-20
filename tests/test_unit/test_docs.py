@@ -3,7 +3,7 @@ import os
 
 def test_devref_index():
     devref_index_path = os.path.join('docs', 'devref', 'index.rst')
-    with open(devref_index_path) as f:
+    with open(devref_index_path, encoding='utf-8') as f:
         devref_index_content = f.read()
 
     utils_index, implementations_index = [], []
