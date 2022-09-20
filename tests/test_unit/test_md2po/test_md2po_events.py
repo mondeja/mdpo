@@ -23,7 +23,7 @@ def test_enter_leave_block_event(abort_event):
         content,
         events={
             'enter_block': print_is_task_list_item,
-            'leave_block': lambda *_: not abort_event,
+            'leave_block': lambda *_: not abort_event,  # noqa: U101
         },
     )
 
@@ -42,7 +42,7 @@ def test_enter_block_event(abort_event):
     md2po = Md2Po(
         content,
         events={
-            'enter_block': lambda *_: not abort_event,
+            'enter_block': lambda *_: not abort_event,  # noqa: U101
         },
     )
 
@@ -66,8 +66,8 @@ def test_enter_leave_span_event(abort_event, expected_msgid):
     pofile = markdown_to_pofile(
         content,
         events={
-            'enter_span': lambda *_: not abort_event,
-            'leave_span': lambda *_: not abort_event,
+            'enter_span': lambda *_: not abort_event,  # noqa: U101
+            'leave_span': lambda *_: not abort_event,  # noqa: U101
         },
     )
 
@@ -81,7 +81,7 @@ def test_text_event(abort_event):
     md2po = Md2Po(
         content,
         events={
-            'text': lambda *_: abort_event,
+            'text': lambda *_: abort_event,  # noqa: U101
         },
         include_codeblocks=True,
     )
@@ -97,8 +97,8 @@ def test_command_event(abort_event):
     def error_when_unknown_command_event(
         self,
         command,
-        comment,
-        original_command,
+        comment,  # noqa: U100
+        original_command,  # noqa: U100
     ):
         # here 'normalize_mdpo_command' is added to simulate a real behaviour,
         # is not related with the test itself
@@ -126,8 +126,8 @@ def test_command_event_return_false():
     def skip_counter_command_event(
         self,
         command,
-        comment,
-        original_command,
+        comment,  # noqa: U100
+        original_command,  # noqa: U100
     ):
         if command == 'mdpo-skip':
             self.skip_counter += 1
@@ -179,7 +179,7 @@ msgstr ""
 
 
 def test_msgid_event():
-    def dont_save_hate_msgid(self, msgid, *args):
+    def dont_save_hate_msgid(self, msgid, *args):  # noqa: U100
         if msgid == 'hate':
             return False
 
@@ -210,7 +210,7 @@ msgstr ""
 
 
 def test_link_reference_event():
-    def process_footnotes(self, target, href, title):
+    def process_footnotes(self, target, href, title):  # noqa: U100
         if re.match(r'^\^\d', target):
             return False
 

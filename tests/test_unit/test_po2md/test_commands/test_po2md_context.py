@@ -41,12 +41,7 @@ msgstr "Quizás"
     assert output == markdown_output
 
 
-@pytest.mark.parametrize(
-    ('command', 'command_aliases'), (
-        ('mdpo-context', {}),
-        ('contextualization', {'contextualization': 'context'}),
-    ),
-)
-def test_context_without_value(command, command_aliases):
+@pytest.mark.parametrize('command', ('mdpo-context', 'contextualization'))
+def test_context_without_value(command):
     # does not raises error, is ignored
     assert pofile_to_markdown(f'<!-- {command} -->', '') == ''

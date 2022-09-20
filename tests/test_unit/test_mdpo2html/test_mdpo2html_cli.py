@@ -73,7 +73,7 @@ def test_save(capsys, arg, tmp_file):
 
 
 @pytest.mark.parametrize('arg', ('-i', '--ignore'))
-def test_ignore_files_by_filepath(arg, tmp_dir, tmp_file, capsys):
+def test_ignore_files_by_filepath(arg, tmp_dir, capsys):
     expected_output = (
         '<p>Incluida</p>\n\n<p>Excluded</p>\n\n<p>Excluded 2</p>\n\n\n'
     )
