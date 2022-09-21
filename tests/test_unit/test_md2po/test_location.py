@@ -559,7 +559,7 @@ def test_location_file_independent(tmp_dir, wrap_location_comment):
 msgid ""
 msgstr ""
 
-{wrap_location_comment(bar_md_filepath, 'block 1 (header)')}
+{wrap_location_comment(foo_md_filepath, 'block 1 (header)')}
 msgid "Bar"
 msgstr ""
 
