@@ -570,4 +570,4 @@ msgstr ""
 
         output = markdown_to_pofile(os.path.join(filesdir, '*.md'))
 
-    assert output == expected_output
+    assert str(output) == expected_output
