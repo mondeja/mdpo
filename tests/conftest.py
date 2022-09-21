@@ -147,7 +147,7 @@ def class_slots():
 def _wrap_location_comment(filepath, rest):
     target_type, location = rest.split(' ', 1)
     result = f'#: {filepath}:{target_type}'
-    if len(result) > 78:
+    if len(result) > 75:
         result += '\n#:'
     result += f' {location}'
     return result
