@@ -49,6 +49,7 @@ jobs:
           rm __install_poetry.py
           echo $scripts_path >> $GITHUB_PATH
       - name: Get MD4C version
+        if: runner.os == 'macOS'
         uses: oprypin/find-latest-tag@v1
         id: md4c_version
         with:
