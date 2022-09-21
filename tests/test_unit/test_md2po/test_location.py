@@ -549,7 +549,7 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_file_independent(tmp_dir):
+def test_location_file_independent(tmp_dir, wrap_location_comment):
     """Location block counters should be reset for each file."""
     with tmp_dir([
         ('foo.md', '# Foo\n'),
@@ -559,11 +559,11 @@ def test_location_file_independent(tmp_dir):
 msgid ""
 msgstr ""
 
-#: {bar_md_filepath}:block 1 (header)
+{wrap_location_comment(bar_md_filepath, 'block 1 (header)')}
 msgid "Bar"
 msgstr ""
 
-#: {foo_md_filepath}:block 1 (header)
+{wrap_location_comment(bar_md_filepath, 'block 1 (header)')}
 msgid "Foo"
 msgstr ""
 '''
