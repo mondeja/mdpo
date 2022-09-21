@@ -13,17 +13,22 @@ import pytest
 
 
 rootdir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-temporal_dir = os.path.join(rootdir, 'tests', 'temp')
+temporal_dir = os.path.join(rootdir, 'temp')
 if not os.path.isdir(temporal_dir):
     os.mkdir(temporal_dir)
+
+tests_dir = os.path.join(rootdir, 'tests')
+if tests_dir not in sys.path:
+    sys.path.insert(0, tests_dir)
 
 
 @contextlib.contextmanager
 def _tmp_file(content='', suffix=''):
-    with tempfile.NamedTemporaryFile(suffix=suffix) as f:
-        f.write(content.encode('utf-8'))
+    filepath = _tmp_file_path(suffix=suffix)
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
         f.seek(0)
-        yield f.name
+        yield filepath
 
 
 @pytest.fixture
@@ -137,3 +142,17 @@ def get_class_slots(code):
 @pytest.fixture
 def class_slots():
     return get_class_slots
+
+
+def _wrap_location_comment(filepath, rest):
+    target_type, location = rest.split(' ', 1)
+    result = f'#: {filepath}:{target_type}'
+    if len(result) > 78:
+        result += '\n#: '
+    result += location
+    return result
+
+
+@pytest.fixture
+def wrap_location_comment():
+    return _wrap_location_comment

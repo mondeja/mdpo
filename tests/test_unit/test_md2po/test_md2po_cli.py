@@ -81,8 +81,6 @@ def test_mutliple_files(tmp_file, capsys):
         stdout, stderr = capsys.readouterr()
 
         assert exitcode == 0
-        assert len(f'{pofile}\n'.splitlines()) == 12
-        assert len(stdout.splitlines()) == 12
         assert 'msgid "bar"' in str(pofile)
         assert 'msgid "bar"' in stdout
         assert 'msgid "foo"' in str(pofile)

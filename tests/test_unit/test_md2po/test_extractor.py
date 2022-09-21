@@ -28,7 +28,7 @@ msgstr ""
 '''
 
 
-def test_mark_not_found_as_obsolete(tmp_file):
+def test_mark_not_found_as_obsolete(tmp_file, wrap_location_comment):
     original_md_file_content = (
         'Some string in the markdown\n\n'
         'Another string\n\n'
@@ -43,11 +43,11 @@ def test_mark_not_found_as_obsolete(tmp_file):
 msgid ""
 msgstr ""
 
-#: {original_md_filepath}:block 1 (paragraph)
+{wrap_location_comment(original_md_filepath, 'block 1 (paragraph)')}
 msgid "Some string in the markdown"
 msgstr ""
 
-#: {original_md_filepath}:block 2 (paragraph)
+{wrap_location_comment(original_md_filepath, 'block 2 (paragraph)')}
 msgid "Another string"
 msgstr ""
 '''
@@ -58,11 +58,11 @@ msgstr ""
                 mark_not_found_as_obsolete=True,
             )
             pofile = md2po.extract(po_filepath=po_filepath)
-        assert pofile == f'''#
+        assert str(pofile) == f'''#
 msgid ""
 msgstr ""
 
-#: {new_md_filepath}:block 1 (paragraph)
+{wrap_location_comment(new_md_filepath, 'block 1 (paragraph)')}
 msgid "A new string"
 msgstr ""
 

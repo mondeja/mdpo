@@ -7,7 +7,7 @@
 prueba.md
 prueba.po
 report.html
-tests/temp/
+temp/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
