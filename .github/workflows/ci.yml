@@ -48,6 +48,26 @@ jobs:
           scripts_path=$(python -c 'import __install_poetry as i;print(i.bin_dir())')
           rm __install_poetry.py
           echo $scripts_path >> $GITHUB_PATH
+      - name: Get MD4C version
+        id: md4c-version
+        run: |
+          md4c_version=$(< pyproject.toml grep 'pymd4c' | cut -d'~' -f2 | cut -d'"' -f1)
+          echo ::set-output name=version::$md4c_version
+      - name: Fetch MD4C
+        uses: actions/checkout@v3
+        if: runner.os == 'macOS'
+        with:
+          repository: mity/md4c
+          ref: release-${{steps.md4c-version.outputs.version}}
+          path: md4c-lib
+      - name: Build MD4C
+        if: runner.os == 'macOS'
+        run: |
+          mkdir md4c-lib/build
+          cd md4c-lib/build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake --build . --config Release
+          cmake --install .
       - name: Install dependencies
         run: |
           poetry install --with test
