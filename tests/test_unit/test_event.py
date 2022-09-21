@@ -130,6 +130,7 @@ class Foo:
             {'bar': f'{tmp_filename}::Foo.bar'},
         )['bar'][0]
         assert func.__name__ == 'bar'
+        assert func() is False
 
 
 def test_events_from_filepath_class_func_class_not_found(tmp_file):
