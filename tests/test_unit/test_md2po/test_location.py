@@ -3,7 +3,7 @@ import os
 from mdpo.md2po import markdown_to_pofile
 
 
-def test_location_paragraphs(tmp_file):
+def test_location_paragraphs(tmp_file, wrap_location_comment):
     markdown_content = '''Foo 1
 
 # Foo 2
@@ -26,39 +26,39 @@ def test_location_paragraphs(tmp_file):
 msgid ""
 msgstr ""
 
-#: {md_filepath}:block 1 (paragraph)
+{wrap_location_comment(md_filepath, 'block 1 (paragraph)')}
 msgid "Foo 1"
 msgstr ""
 
-#: {md_filepath}:block 2 (header)
+{wrap_location_comment(md_filepath, 'block 2 (header)')}
 msgid "Foo 2"
 msgstr ""
 
-#: {md_filepath}:block 3 (unordered list)
+{wrap_location_comment(md_filepath, 'block 3 (unordered list)')}
 msgid "Foo 3"
 msgstr ""
 
-#: {md_filepath}:block 3 (unordered list)
+{wrap_location_comment(md_filepath, 'block 3 (unordered list)')}
 msgid "Foo 4"
 msgstr ""
 
-#: {md_filepath}:block 4 (ordered list)
+{wrap_location_comment(md_filepath, 'block 4 (ordered list)')}
 msgid "Foo 5"
 msgstr ""
 
-#: {md_filepath}:block 4 (ordered list)
+{wrap_location_comment(md_filepath, 'block 4 (ordered list)')}
 msgid "Foo 6"
 msgstr ""
 
-#: {md_filepath}:block 5 (quote)
+{wrap_location_comment(md_filepath, 'block 5 (quote)')}
 msgid "Foo 7"
 msgstr ""
 
-#: {md_filepath}:block 5 (quote)
+{wrap_location_comment(md_filepath, 'block 5 (quote)')}
 msgid "Foo 8"
 msgstr ""
 
-#: {md_filepath}:block 5 (quote)
+{wrap_location_comment(md_filepath, 'block 5 (quote)')}
 msgid "Foo 9"
 msgstr ""
 '''
@@ -67,7 +67,7 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_headers(tmp_file):
+def test_location_headers(tmp_file, wrap_location_comment):
     markdown_content = '''# Foo 1
 
 - # Foo 2
@@ -88,35 +88,35 @@ def test_location_headers(tmp_file):
 msgid ""
 msgstr ""
 
-#: {md_filepath}:block 1 (header)
+{wrap_location_comment(md_filepath, 'block 1 (header)')}
 msgid "Foo 1"
 msgstr ""
 
-#: {md_filepath}:block 2 (unordered list)
+{wrap_location_comment(md_filepath, 'block 2 (unordered list)')}
 msgid "Foo 2"
 msgstr ""
 
-#: {md_filepath}:block 2 (unordered list)
+{wrap_location_comment(md_filepath, 'block 2 (unordered list)')}
 msgid "Foo 3"
 msgstr ""
 
-#: {md_filepath}:block 3 (ordered list)
+{wrap_location_comment(md_filepath, 'block 3 (ordered list)')}
 msgid "Foo 4"
 msgstr ""
 
-#: {md_filepath}:block 3 (ordered list)
+{wrap_location_comment(md_filepath, 'block 3 (ordered list)')}
 msgid "Foo 5"
 msgstr ""
 
-#: {md_filepath}:block 4 (quote)
+{wrap_location_comment(md_filepath, 'block 4 (quote)')}
 msgid "Foo 6"
 msgstr ""
 
-#: {md_filepath}:block 4 (quote)
+{wrap_location_comment(md_filepath, 'block 4 (quote)')}
 msgid "Foo 7"
 msgstr ""
 
-#: {md_filepath}:block 4 (quote)
+{wrap_location_comment(md_filepath, 'block 4 (quote)')}
 msgid "Foo 8"
 msgstr ""
 '''
@@ -125,7 +125,7 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_quotes(tmp_file):
+def test_location_quotes(tmp_file, wrap_location_comment):
     markdown_content = '''> Foo 1
 
 - Foo 2
@@ -144,31 +144,31 @@ def test_location_quotes(tmp_file):
 msgid ""
 msgstr ""
 
-#: {md_filepath}:block 1 (quote)
+{wrap_location_comment(md_filepath, 'block 1 (quote)')}
 msgid "Foo 1"
 msgstr ""
 
-#: {md_filepath}:block 2 (unordered list)
+{wrap_location_comment(md_filepath, 'block 2 (unordered list)')}
 msgid "Foo 2"
 msgstr ""
 
-#: {md_filepath}:block 2 (unordered list)
+{wrap_location_comment(md_filepath, 'block 2 (unordered list)')}
 msgid "Foo 3"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Foo 4"
 msgstr ""
 
-#: {md_filepath}:block 4 (ordered list)
+{wrap_location_comment(md_filepath, 'block 4 (ordered list)')}
 msgid "Foo 5"
 msgstr ""
 
-#: {md_filepath}:block 5 (quote)
+{wrap_location_comment(md_filepath, 'block 5 (quote)')}
 msgid "Foo 6"
 msgstr ""
 
-#: {md_filepath}:block 5 (quote)
+{wrap_location_comment(md_filepath, 'block 5 (quote)')}
 msgid "Foo 7"
 msgstr ""
 '''
@@ -178,7 +178,7 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_unordered_lists(tmp_file):
+def test_location_unordered_lists(tmp_file, wrap_location_comment):
     markdown_content = '''- Foo 1
 - Foo 2
    - Foo 3
@@ -202,55 +202,55 @@ def test_location_unordered_lists(tmp_file):
 msgid ""
 msgstr ""
 
-#: {md_filepath}:block 1 (unordered list)
+{wrap_location_comment(md_filepath, 'block 1 (unordered list)')}
 msgid "Foo 1"
 msgstr ""
 
-#: {md_filepath}:block 1 (unordered list)
+{wrap_location_comment(md_filepath, 'block 1 (unordered list)')}
 msgid "Foo 2"
 msgstr ""
 
-#: {md_filepath}:block 1 (unordered list)
+{wrap_location_comment(md_filepath, 'block 1 (unordered list)')}
 msgid "Foo 3"
 msgstr ""
 
-#: {md_filepath}:block 1 (unordered list)
+{wrap_location_comment(md_filepath, 'block 1 (unordered list)')}
 msgid "Foo 4"
 msgstr ""
 
-#: {md_filepath}:block 1 (unordered list)
+{wrap_location_comment(md_filepath, 'block 1 (unordered list)')}
 msgid "Foo 5"
 msgstr ""
 
-#: {md_filepath}:block 1 (unordered list)
+{wrap_location_comment(md_filepath, 'block 1 (unordered list)')}
 msgid "Foo 6"
 msgstr ""
 
-#: {md_filepath}:block 2 (ordered list)
+{wrap_location_comment(md_filepath, 'block 2 (ordered list)')}
 msgid "Foo 7"
 msgstr ""
 
-#: {md_filepath}:block 2 (ordered list)
+{wrap_location_comment(md_filepath, 'block 2 (ordered list)')}
 msgid "Foo 8"
 msgstr ""
 
-#: {md_filepath}:block 2 (ordered list)
+{wrap_location_comment(md_filepath, 'block 2 (ordered list)')}
 msgid "Foo 9"
 msgstr ""
 
-#: {md_filepath}:block 2 (ordered list)
+{wrap_location_comment(md_filepath, 'block 2 (ordered list)')}
 msgid "Foo 10"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Foo 11"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Foo 12"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Foo 13"
 msgstr ""
 '''
@@ -259,7 +259,7 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_ordered_lists(tmp_file):
+def test_location_ordered_lists(tmp_file, wrap_location_comment):
     markdown_content = '''1. Foo 1
 1. Foo 2
    1. Foo 3
@@ -283,55 +283,55 @@ def test_location_ordered_lists(tmp_file):
 msgid ""
 msgstr ""
 
-#: {md_filepath}:block 1 (ordered list)
+{wrap_location_comment(md_filepath, 'block 1 (ordered list)')}
 msgid "Foo 1"
 msgstr ""
 
-#: {md_filepath}:block 1 (ordered list)
+{wrap_location_comment(md_filepath, 'block 1 (ordered list)')}
 msgid "Foo 2"
 msgstr ""
 
-#: {md_filepath}:block 1 (ordered list)
+{wrap_location_comment(md_filepath, 'block 1 (ordered list)')}
 msgid "Foo 3"
 msgstr ""
 
-#: {md_filepath}:block 1 (ordered list)
+{wrap_location_comment(md_filepath, 'block 1 (ordered list)')}
 msgid "Foo 4"
 msgstr ""
 
-#: {md_filepath}:block 1 (ordered list)
+{wrap_location_comment(md_filepath, 'block 1 (ordered list)')}
 msgid "Foo 5"
 msgstr ""
 
-#: {md_filepath}:block 1 (ordered list)
+{wrap_location_comment(md_filepath, 'block 1 (ordered list)')}
 msgid "Foo 6"
 msgstr ""
 
-#: {md_filepath}:block 2 (unordered list)
+{wrap_location_comment(md_filepath, 'block 2 (unordered list)')}
 msgid "Foo 7"
 msgstr ""
 
-#: {md_filepath}:block 2 (unordered list)
+{wrap_location_comment(md_filepath, 'block 2 (unordered list)')}
 msgid "Foo 8"
 msgstr ""
 
-#: {md_filepath}:block 2 (unordered list)
+{wrap_location_comment(md_filepath, 'block 2 (unordered list)')}
 msgid "Foo 9"
 msgstr ""
 
-#: {md_filepath}:block 2 (unordered list)
+{wrap_location_comment(md_filepath, 'block 2 (unordered list)')}
 msgid "Foo 10"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Foo 11"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Foo 12"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Foo 13"
 msgstr ""
 '''
@@ -340,7 +340,7 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_code_blocks(tmp_file):
+def test_location_code_blocks(tmp_file, wrap_location_comment):
     markdown_content = '''<!-- mdpo-include-codeblock -->
 ```python
 foo = "bar"
@@ -373,27 +373,27 @@ var foo = "bar";
 msgid ""
 msgstr ""
 
-#: {md_filepath}:block 2 (code)
+{wrap_location_comment(md_filepath, 'block 2 (code)')}
 msgid "foo = \\"bar\\"\\n"
 msgstr ""
 
-#: {md_filepath}:block 5 (code)
+{wrap_location_comment(md_filepath, 'block 5 (code)')}
 msgid "int foo;\\n"
 msgstr ""
 
-#: {md_filepath}:block 6 (unordered list)
+{wrap_location_comment(md_filepath, 'block 6 (unordered list)')}
 msgid "Foo"
 msgstr ""
 
-#: {md_filepath}:block 6 (unordered list)
+{wrap_location_comment(md_filepath, 'block 6 (unordered list)')}
 msgid "Bar"
 msgstr ""
 
-#: {md_filepath}:block 6 (unordered list)
+{wrap_location_comment(md_filepath, 'block 6 (unordered list)')}
 msgid "code_which_must_be_included = True\\n"
 msgstr ""
 
-#: {md_filepath}:block 7 (quote)
+{wrap_location_comment(md_filepath, 'block 7 (quote)')}
 msgid "var codeWhichMustBeIncluded = true;\\n"
 msgstr ""
 '''
@@ -402,7 +402,7 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_html(tmp_file):
+def test_location_html(tmp_file, wrap_location_comment):
     markdown_content = '''<!-- a comment -->
 
 <!-- another comment -->
@@ -415,7 +415,7 @@ paragraph
 msgid ""
 msgstr ""
 
-#: {md_filepath}:block 3 (paragraph)
+{wrap_location_comment(md_filepath, 'block 3 (paragraph)')}
 msgid "paragraph"
 msgstr ""
 '''
@@ -424,7 +424,7 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_tables(tmp_file):
+def test_location_tables(tmp_file, wrap_location_comment):
     markdown_content = '''paragraph
 
 | Foo 1      | Foo 2  | Foo 3  | Foo 4  |
@@ -443,103 +443,103 @@ def test_location_tables(tmp_file):
 msgid ""
 msgstr ""
 
-#: {md_filepath}:block 1 (paragraph)
+{wrap_location_comment(md_filepath, 'block 1 (paragraph)')}
 msgid "paragraph"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 1"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 2"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 3"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 4"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 5"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 6"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 7"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 8"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 9"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 10"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 11"
 msgstr ""
 
-#: {md_filepath}:block 2 (table)
+{wrap_location_comment(md_filepath, 'block 2 (table)')}
 msgid "Foo 12"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 1"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 2"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 3"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 4"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 5"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 6"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 7"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 8"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 9"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 10"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 11"
 msgstr ""
 
-#: {md_filepath}:block 3 (quote)
+{wrap_location_comment(md_filepath, 'block 3 (quote)')}
 msgid "Bar 12"
 msgstr ""
 '''
@@ -549,7 +549,7 @@ msgstr ""
     assert str(output) == expected_output
 
 
-def test_location_file_independent(tmp_dir):
+def test_location_file_independent(tmp_dir, wrap_location_comment):
     """Location block counters should be reset for each file."""
     with tmp_dir([
         ('foo.md', '# Foo\n'),
@@ -559,15 +559,15 @@ def test_location_file_independent(tmp_dir):
 msgid ""
 msgstr ""
 
-#: {bar_md_filepath}:block 1 (header)
+{wrap_location_comment(bar_md_filepath, 'block 1 (header)')}
 msgid "Bar"
 msgstr ""
 
-#: {foo_md_filepath}:block 1 (header)
+{wrap_location_comment(foo_md_filepath, 'block 1 (header)')}
 msgid "Foo"
 msgstr ""
 '''
 
         output = markdown_to_pofile(os.path.join(filesdir, '*.md'))
 
-    assert output == expected_output
+    assert str(output) == expected_output

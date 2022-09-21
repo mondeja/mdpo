@@ -163,7 +163,7 @@ def parse_events_kwarg(events_kwarg):
                         f" '{event_name}' not found",
                     )
 
-                modname = fpath.split('.')[0].replace(os.sep, '.')
+                modname = os.path.splitext(fpath)[0].replace(os.sep, '.')
                 if modname in sys.modules:
                     mod = sys.modules[modname]
                 else:

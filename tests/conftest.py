@@ -4,6 +4,7 @@ import ast
 import contextlib
 import inspect
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -12,12 +13,25 @@ import uuid
 import pytest
 
 
+rootdir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+temporal_dir = os.path.join(rootdir, 'temp')
+if os.path.isdir(temporal_dir):
+    shutil.rmtree(temporal_dir)
+os.mkdir(temporal_dir)
+
+tests_dir = os.path.join(rootdir, 'tests')
+if tests_dir not in sys.path:
+    sys.path.insert(0, tests_dir)
+
+
 @contextlib.contextmanager
 def _tmp_file(content='', suffix=''):
-    with tempfile.NamedTemporaryFile(suffix=suffix) as f:
-        f.write(content.encode('utf-8'))
+    filepath = _tmp_file_path(suffix=suffix)
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
         f.seek(0)
-        yield f.name
+    yield filepath
+    os.remove(filepath)
 
 
 @pytest.fixture
@@ -26,10 +40,7 @@ def tmp_file():
 
 
 def _tmp_file_path(suffix=''):
-    return os.path.join(
-        tempfile.gettempdir(),
-        f'{uuid.uuid4().hex[:8]}{suffix}',
-    )
+    return os.path.join(temporal_dir, f'{uuid.uuid4().hex[:8]}{suffix}')
 
 
 @pytest.fixture
@@ -134,3 +145,24 @@ def get_class_slots(code):
 @pytest.fixture
 def class_slots():
     return get_class_slots
+
+
+def _wrap_location_comment(filepath, rest):
+    target_type, number, context = rest.split(' ', 2)
+    result = f'#: {filepath}:{target_type}'
+    if len(result) > 77:
+        result += f'\n#: {number}'
+    else:
+        if len(result) + len(number) > 77:
+            result += f'\n#: {number}'
+        else:
+            result += f' {number}'
+            if len(result) > 77:
+                result += '\n#:'
+    result += f' {context}'
+    return result
+
+
+@pytest.fixture
+def wrap_location_comment():
+    return _wrap_location_comment

@@ -11,7 +11,7 @@ def test_devref_index():
         if line.startswith('   mdpo'):
             if line.endswith('.index'):
                 implementations_index.append(
-                    'src/' + '/'.join(line.lstrip().split('/')[:-1]),
+                    os.path.join('src', *(line.lstrip().split('/')[:-1])),
                 )
             else:
                 utils_index.append(line.lstrip(' ').replace('/src', ''))

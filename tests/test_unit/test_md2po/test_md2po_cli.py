@@ -37,6 +37,10 @@ def test_stdin(capsys, monkeypatch):
     assert stdout == EXAMPLE['output']
 
 
+@pytest.mark.skipif(
+    sys.platform == 'win32',
+    reason='STDIN file not accesible on Windows',
+)
 def test_stdin_subprocess_input(tmp_file):
     proc = subprocess.run(
         'md2po',
@@ -60,7 +64,10 @@ def test_stdin_subprocess_input(tmp_file):
         assert proc.stdout == EXAMPLE['output']
 
 
-@pytest.mark.skipif(sys.platform != 'linux', reason='Linux only test')
+@pytest.mark.skipif(
+    sys.platform == 'win32',
+    reason='STDIN file not accesible on Windows',
+)
 def test_pipe_redirect_file_stdin(tmp_file):
     with tmp_file(EXAMPLE['input'], '.md') as mdfile_path:
         proc = subprocess.run(  # noqa: DUO116
@@ -81,8 +88,6 @@ def test_mutliple_files(tmp_file, capsys):
         stdout, stderr = capsys.readouterr()
 
         assert exitcode == 0
-        assert len(f'{pofile}\n'.splitlines()) == 12
-        assert len(stdout.splitlines()) == 12
         assert 'msgid "bar"' in str(pofile)
         assert 'msgid "bar"' in stdout
         assert 'msgid "foo"' in str(pofile)
