@@ -49,16 +49,17 @@ jobs:
           rm __install_poetry.py
           echo $scripts_path >> $GITHUB_PATH
       - name: Get MD4C version
-        id: md4c-version
-        run: |
-          md4c_version=$(< pyproject.toml grep 'pymd4c' | cut -d'~' -f2 | cut -d'"' -f1)
-          echo ::set-output name=version::$md4c_version
+        uses: oprypin/find-latest-tag@v1
+        id: md4c_version
+        with:
+          repository: mity/md4c
+          prefix: release-
       - name: Fetch MD4C
         uses: actions/checkout@v3
         if: runner.os == 'macOS'
         with:
           repository: mity/md4c
-          ref: release-${{steps.md4c-version.outputs.version}}
+          ref: ${{steps.md4c-version.outputs.tag}}
           path: md4c-lib
       - name: Build MD4C
         if: runner.os == 'macOS'
