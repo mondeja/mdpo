@@ -4,6 +4,7 @@ import ast
 import contextlib
 import inspect
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -14,8 +15,9 @@ import pytest
 
 rootdir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 temporal_dir = os.path.join(rootdir, 'temp')
-if not os.path.isdir(temporal_dir):
-    os.mkdir(temporal_dir)
+if os.path.isdir(temporal_dir):
+    shutil.rmtree(temporal_dir)
+os.mkdir(temporal_dir)
 
 tests_dir = os.path.join(rootdir, 'tests')
 if tests_dir not in sys.path:
@@ -28,7 +30,8 @@ def _tmp_file(content='', suffix=''):
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(content)
         f.seek(0)
-        yield filepath
+    yield filepath
+    os.remove(filepath)
 
 
 @pytest.fixture
