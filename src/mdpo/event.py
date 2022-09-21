@@ -174,12 +174,31 @@ def parse_events_kwarg(events_kwarg):
                     sys.modules[modname] = mod
                     spec.loader.exec_module(mod)
 
-                if not hasattr(mod, funcname):
+                func_owner = mod
+                if '.' in funcname:
+                    # is a method
+                    classname, funcname = funcname.split('.')
+                    if not hasattr(mod, classname):
+                        raise ValueError(
+                            f"Class '{classname}' specified for event"
+                            f" '{event_name}' not found in file '{fpath}'",
+                        )
+
+                    cls = getattr(mod, classname)
+                    if not hasattr(cls, funcname):
+                        raise ValueError(
+                            f"Method '{funcname}' specified for event"
+                            f" '{event_name}' not found in class '{classname}'"
+                            f" in file '{fpath}'",
+                        )
+                    func_owner = cls
+                elif not hasattr(mod, funcname):
                     raise ValueError(
                         f"Function '{funcname}' specified for event"
                         f" '{event_name}' not found in file '{fpath}'",
                     )
-                events[event_name].append(getattr(mod, funcname))
+
+                events[event_name].append(getattr(func_owner, funcname))
             else:
                 # is a function
                 events[event_name].append(func_or_filefunc)
