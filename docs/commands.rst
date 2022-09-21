@@ -144,7 +144,7 @@ the next commands:
   this command (same behaviour as passing the argument
   :ref:`md2po---include-codeblocks` or ``include_codeblocks=True`` if you are
   using the
-  :doc:`programmatic interface </devref/mdpo/po2md/mdpo.po2md.__init__>`).
+  :doc:`programmatic interface </dev/reference/mdpo.po2md>`).
 * ``<!-- mdpo-disable-codeblocks -->``: Does not include codeblocks placed
   after this command.
 * ``<!-- mdpo-include-codeblock -->``: Include next codeblock placed after this

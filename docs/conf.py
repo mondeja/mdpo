@@ -2,7 +2,11 @@
 
 import os
 import re
+import subprocess
 import sys
+
+
+SPHINX_IS_RUNNING = 'sphinx' in sys.modules
 
 
 # -- Path setup --------------------------------------------------------------
@@ -101,3 +105,21 @@ intersphinx_mapping = {
 # -- Options for `sphinx.ext.autosectionlabel` -------------------------------
 
 autosectionlabel_prefix_document = True
+
+# --- sphinx-apidoc ---
+
+if SPHINX_IS_RUNNING:
+    subprocess.run(
+        [
+            'sphinx-apidoc',
+            '-o',
+            os.path.join(rootdir, 'docs/dev/reference'),
+            '-H',
+            'Reference',
+            '-ePMf',
+            os.path.join(rootdir, 'src/mdpo'),
+        ],
+        check=True,
+    )
+
+# ---------------------------------------------------------
