@@ -84,7 +84,7 @@ def markdown_to_pofile_to_markdown(
         ):
             # some strings like '[s-m]' will produce
             # 're.error: bad character range ... at position'
-            raise ValueError(
+            raise FileNotFoundError(
                 "The argument 'input_paths_glob' must be a valid glob or file"
                 ' path.',
             )
