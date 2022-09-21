@@ -1,6 +1,7 @@
 # Package custom ignores
 /__main__.py
 /docs/_build/
+/docs/dev/reference/
 /dev.md
 /example-project
 /LC_MESSAGES

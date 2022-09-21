@@ -1,9 +1,9 @@
 """md4c related stuff for mdpo."""
 
 
-#: :list: `md4c parser <https://github.com/mity/md4c>`_ extensions used as
-#: default by :doc:`md2po </devref/mdpo/md2po/mdpo.md2po.__init__>` and
-#: :doc:`po2md </devref/mdpo/po2md/mdpo.po2md.__init__>` implementations.
+#: :list: `md4c parser <https://github.com/mity/md4c>`_ extensions
+#: used by default on :doc:`md2po </dev/reference/mdpo.md2po>` and
+#: :doc:`po2md </dev/reference/mdpo.po2md>` implementations.
 DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS = [
     'collapse_whitespace',
     'tables',

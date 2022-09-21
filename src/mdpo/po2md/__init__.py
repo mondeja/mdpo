@@ -124,7 +124,7 @@ class Po2Md:
         )
 
         #: list(str): MD4C extensions used to parse the content.
-        #: See all available in :doc:`/devref/mdpo/mdpo.md4c`.
+        #: See all available in :doc:`/dev/reference/mdpo.md4c`.
         self.extensions = kwargs.get(
             'extensions',
             DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS,
