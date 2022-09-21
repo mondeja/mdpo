@@ -6,6 +6,9 @@ charset = utf-8
 indent_style = space
 trim_trailing_whitespace = true
 
+[Makefile]
+indent_style = tab
+
 # We do Markdown processing in tests
 [*.md]
 trim_trailing_whitespace = false

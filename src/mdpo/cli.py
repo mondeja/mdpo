@@ -347,3 +347,17 @@ def parse_event_argument(value):
         event_name, filefunc = event_name_filefunc.split(':', maxsplit=1)
         events[event_name.strip()] = filefunc.strip()
     return events
+
+
+def add_po_library_option(parser):
+    """Add the ``--po-library`` option to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
+            extend.
+    """
+    parser.add_argument(
+        '-l', '--po-library', dest='po_library', type=str,
+        choices=['polib', 'gettextpo'], default='polib',
+        help='Select the library used to manipulate PO files.',
+    )

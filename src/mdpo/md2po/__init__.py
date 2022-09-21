@@ -60,6 +60,7 @@ class Md2Po:
         'filepaths',
         'content',
         'pofile',
+        'po_library',
         'po_filepath',
         'msgstr',
         'found_entries',
@@ -154,6 +155,8 @@ class Md2Po:
 
         #: str: PO file path to which the content will be extracted.
         self.po_filepath = None
+
+        self.po_library = kwargs.get('po_library')
 
         #: str: Default msgstr used if the current is not found
         #: inside the previous content of the specified PO file.
@@ -396,12 +399,9 @@ class Md2Po:
     ):
         if msgid in self.ignore_msgids:
             return
-        entry = polib.POEntry(
-            msgid=msgid,
-            msgstr=msgstr,
-            comment=tcomment,
-            msgctxt=msgctxt,
-            flags=[] if not fuzzy else ['fuzzy'],
+
+        entry = self.po_library.create_pofile_entry(
+            msgid, msgstr, tcomment, msgctxt, fuzzy,
         )
 
         occurrence = None
@@ -429,10 +429,11 @@ class Md2Po:
                 ),
             )
 
-            if occurrence not in entry.occurrences:
-                entry.occurrences.append(occurrence)
+            if self.po_library.is_polib():
+                if occurrence not in entry.occurrences:
+                    entry.occurrences.append(occurrence)
 
-        _equal_entry = find_entry_in_entries(
+        equal_entry = find_entry_in_entries(
             entry,
             self.pofile,
             compare_obsolete=False,
@@ -440,13 +441,22 @@ class Md2Po:
             compare_occurrences=False,
         )
 
-        if _equal_entry and _equal_entry.msgstr:
-            entry.msgstr = _equal_entry.msgstr
-            if _equal_entry.fuzzy and not entry.fuzzy:
-                entry.flags.append('fuzzy')
-        if entry not in self.pofile:
-            self.pofile.append(entry)
+        if equal_entry:
+            equal_entry_msgstr = self.po_library.get_entry_attr(
+                entry, 'msgstr')
+            if equal_entry_msgstr:
+                self.po_library.set_entry_attr(
+                    entry, 'msgstr', equal_entry_msgstr)
+                if (
+                    self.po_library.is_polib()
+                    and equal_entry.fuzzy
+                    and not entry.fuzzy
+                ):
+                    entry.flags.append('fuzzy')
+        else:
+            self.po_library.append_entry_to_pofile(self.pofile, entry)
         self.found_entries.append(entry)
+        print(self.found_entries)
 
     def _save_current_msgid(self, msgstr='', fuzzy=False):
         # raise 'msgid' event
@@ -963,15 +973,13 @@ class Md2Po:
             if not os.path.exists(po_filepath):
                 self.po_filepath = ''
 
-        pofile_kwargs = (
-            {'autodetect_encoding': False, 'encoding': po_encoding}
-            if po_encoding else {}
-        )
-        self.pofile = polib.pofile(
+        self.pofile = self.po_library.create_pofile(
             self.po_filepath,
+            encoding=po_encoding,
             wrapwidth=parse_wrapwidth_argument(wrapwidth),
-            **pofile_kwargs,
         )
+
+        print('HERW', list(iter(self.pofile)))
 
         parser = md4c.GenericParser(
             0,
@@ -1019,7 +1027,10 @@ class Md2Po:
                 self.pofile,
                 self.found_entries,
             )
-        elif self.mark_not_found_as_obsolete:
+        elif (
+            self.po_library.is_polib()
+            and self.mark_not_found_as_obsolete
+        ):
             mark_not_found_entries_as_obsoletes(
                 self.pofile,
                 self.found_entries,
@@ -1036,9 +1047,9 @@ class Md2Po:
                     encoding=self.pofile.encoding,
                 )
             else:
-                self.pofile.save(fpath=po_filepath)
+                self.po_library.save_pofile(self.pofile, po_filepath)
         if mo_filepath:
-            self.pofile.save_as_mofile(mo_filepath)
+            self.po_library.save_mofile(self.pofile, mo_filepath)
         return self.pofile
 
 
@@ -1064,6 +1075,7 @@ def markdown_to_pofile(
     metadata=None,
     events=None,
     debug=False,
+    po_library='polib',
     **kwargs,
 ):
     """Extract all the msgids from Markdown content or files.
@@ -1182,6 +1194,9 @@ def markdown_to_pofile(
     Returns:
         :class:`polib.POFile` Pofile instance with new msgids included.
     """
+    if isinstance(po_library, str):
+        from mdpo.compat import instanciate_po_library
+        po_library = instanciate_po_library(po_library)
     return Md2Po(
         files_or_content,
         ignore=ignore,
@@ -1198,6 +1213,7 @@ def markdown_to_pofile(
         metadata=metadata,
         events=events,
         debug=debug,
+        po_library=po_library,
         **kwargs,
     ).extract(
         po_filepath=po_filepath,

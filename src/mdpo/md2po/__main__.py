@@ -19,12 +19,14 @@ from mdpo.cli import (
     add_event_argument,
     add_extensions_argument,
     add_nolocation_option,
+    add_po_library_option,
     add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
     parse_event_argument,
     parse_metadata_cli_arguments,
 )
+from mdpo.compat import instanciate_po_library
 from mdpo.io import environ
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
@@ -150,6 +152,7 @@ def build_parser():
     add_command_alias_argument(parser)
     add_event_argument(parser)
     add_debug_option(parser)
+    add_po_library_option(parser)
     add_check_option(parser)
     return parser
 
@@ -198,6 +201,7 @@ def run(args=frozenset()):
     with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
+        po_library = instanciate_po_library(opts.po_library)
         init_kwargs = {
             'ignore': opts.ignore,
             'plaintext': opts.plaintext,
@@ -212,6 +216,7 @@ def run(args=frozenset()):
             'metadata': opts.metadata,
             'events': opts.events,
             'debug': opts.debug,
+            'po_library': po_library,
             '_check_saved_files_changed': opts.check_saved_files_changed,
         }
 
@@ -228,7 +233,11 @@ def run(args=frozenset()):
         pofile = md2po.extract(**extract_kwargs)
 
         if not opts.quiet:
-            sys.stdout.write(f'{pofile.__unicode__()}\n')
+            output = po_library.pofile_to_string(
+                pofile,
+                encoding=opts.po_encoding,
+            )
+            sys.stdout.write(f'{output}\n')
 
         # pre-commit mode
         if opts.check_saved_files_changed and md2po._saved_files_changed:

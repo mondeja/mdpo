@@ -23,11 +23,17 @@ def po_escaped_string(chars):
     return f'\\{chars[0]}'
 
 
-def find_entry_in_entries(entry, entries, **kwargs):
+def find_entry_in_entries(
+    entry,
+    entries,
+    compare_obsolete=True,
+    compare_msgstr=True,
+    compare_occurrences=True,
+):
     """Return an equal entry in a set of :py:class:`polib.POEntry` entries.
 
     Finds the first :py:class:`polib.POEntry` instance in the iterable
-    ``entries`` that is equal, according to its ``__cmp__`` method, to
+    ``entries`` that is equal,according to its ``__cmp__`` method, to
     the :py:class:`polib.POEntry` instance passed as ``entry`` argument.
 
     Args:
@@ -42,7 +48,13 @@ def find_entry_in_entries(entry, entries, **kwargs):
     """
     response = None
     for compared_entry in entries:
-        if poentry__cmp__(entry, compared_entry, **kwargs) == 0:
+        if poentry__cmp__(
+            entry,
+            compared_entry,
+            compare_obsolete=compare_obsolete,
+            compare_msgstr=compare_msgstr,
+            compare_occurrences=compare_occurrences,
+        ) == 0:
             response = compared_entry
             break
     return response

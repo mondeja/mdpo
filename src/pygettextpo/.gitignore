@@ -1,0 +1,6 @@
+gettextpo.html
+gettextpo*.so
+/*.egg-info
+/build
+/dist
+/MANIFEST
