@@ -107,7 +107,7 @@ from mdpo.md2po2md.__main__ import run
             '[s-m]',
             '{lang}/{basename}',
             {},
-            ValueError,
+            FileNotFoundError,
             id='invalid-glob-ValueError',
         ),
         pytest.param(
