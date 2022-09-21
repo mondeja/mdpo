@@ -168,7 +168,7 @@ def parse_events_kwarg(events_kwarg):
                     mod = sys.modules[modname]
                 else:
                     spec = importlib.util.spec_from_file_location(
-                        modname, os.path.realpath(fpath),
+                        modname, fpath,
                     )
                     mod = importlib.util.module_from_spec(spec)
                     sys.modules[modname] = mod

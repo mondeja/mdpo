@@ -12,6 +12,12 @@ import uuid
 import pytest
 
 
+rootdir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+temporal_dir = os.path.join(rootdir, 'tests', 'temp')
+if not os.path.isdir(temporal_dir):
+    os.mkdir(temporal_dir)
+
+
 @contextlib.contextmanager
 def _tmp_file(content='', suffix=''):
     with tempfile.NamedTemporaryFile(suffix=suffix) as f:
@@ -26,10 +32,7 @@ def tmp_file():
 
 
 def _tmp_file_path(suffix=''):
-    return os.path.join(
-        tempfile.gettempdir(),
-        f'{uuid.uuid4().hex[:8]}{suffix}',
-    )
+    return os.path.join(temporal_dir, f'{uuid.uuid4().hex[:8]}{suffix}')
 
 
 @pytest.fixture
