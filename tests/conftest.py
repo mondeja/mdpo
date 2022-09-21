@@ -153,7 +153,9 @@ def _wrap_location_comment(filepath, rest):
         if len(result) + len(number) > 79:
             result += f'\n#: {number}'
         else:
-            result += f' {number}\n#:'
+            result += f' {number}'
+            if len(result) > 80:
+                result += '\n#:'
     result += f' {context}'
     return result
 
