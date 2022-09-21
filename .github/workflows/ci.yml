@@ -16,23 +16,39 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version:
-          - '3.7'
-          - '3.8'
-          - '3.9'
-          - '3.10'
+        include:
+          - platform: ubuntu-latest
+            python-version: 3.7
+          - platform: ubuntu-latest
+            python-version: 3.8
+          - platform: ubuntu-latest
+            python-version: 3.9
+          - platform: ubuntu-latest
+            python-version: '3.10'
+          - platform: macos-latest
+            python-version: 3.7
+          - platform: macos-latest
+            python-version: '3.10'
+          - platform: windows-latest
+            python-version: 3.7
+          - platform: windows-latest
+            python-version: '3.10'
     steps:
       - uses: actions/checkout@v3
-      - name: Install poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - --preview
-          poetry self add poetry-exec-plugin
-          poetry self show plugins
       - name: Set up Python v3
         uses: actions/setup-python@v3
         with:
           python-version: 3.x
           cache: poetry
+      - name: Install poetry
+        id: poetry
+        shell: bash
+        run: |
+          curl -sSL https://install.python-poetry.org > __install_poetry.py
+          python __install_poetry.py --preview
+          scripts_path=$(python -c 'import __install_poetry as i;print(i.bin_dir())')
+          rm __install_poetry.py
+          echo $scripts_path >> $GITHUB_PATH
       - name: Install dependencies
         run: |
           poetry install --with test
