@@ -115,3 +115,46 @@ def bar():
         expected_msg = "Function 'foo' specified for event"
         with pytest.raises(ValueError, match=expected_msg):
             parse_events_kwarg({'bar': f'{tmp_filename}::foo'})
+
+
+def test_events_from_filepath_class_func(tmp_file):
+    # https://github.com/mondeja/mdpo/issues/234
+    file_content = '''
+class Foo:
+    @classmethod
+    def bar(cls):
+        return False
+'''
+    with tmp_file(file_content, '.py') as tmp_filename:
+        func = parse_events_kwarg(
+            {'bar': f'{tmp_filename}::Foo.bar'},
+        )['bar'][0]
+        assert func.__name__ == 'bar'
+
+
+def test_events_from_filepath_class_func_class_not_found(tmp_file):
+    # https://github.com/mondeja/mdpo/issues/234
+    file_content = '''
+class Foo:
+    @classmethod
+    def bar(cls):
+        return False
+'''
+    with tmp_file(file_content, '.py') as tmp_filename:
+        expected_msg = "Class 'Bar' specified for event 'bar' not found"
+        with pytest.raises(ValueError, match=expected_msg):
+            parse_events_kwarg({'bar': f'{tmp_filename}::Bar.foo'})
+
+
+def test_events_from_filepath_class_func_method_not_found(tmp_file):
+    # https://github.com/mondeja/mdpo/issues/234
+    file_content = '''
+class Foo:
+    @classmethod
+    def bar(cls):
+        return False
+'''
+    with tmp_file(file_content, '.py') as tmp_filename:
+        expected_msg = "Method 'foo' specified for event 'bar' not found"
+        with pytest.raises(ValueError, match=expected_msg):
+            parse_events_kwarg({'bar': f'{tmp_filename}::Foo.foo'})
