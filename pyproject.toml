@@ -13,7 +13,8 @@ classifiers = [
   "Intended Audience :: Developers",
   "Topic :: Software Development :: Internationalization",
   "Topic :: Text Processing",
-  "Topic :: Text Processing :: Markup :: Markdown"
+  "Topic :: Text Processing :: Markup :: Markdown",
+  "Environment :: Console"
 ]
 
 [[tool.poetry.packages]]
@@ -85,14 +86,14 @@ python -m http.server 8089 -b localhost -d docs/_build/html"""
 [tool.project-config]
 cache = "5 minutes"
 style = [
-  "gh://mondeja/project-config-styles/python/base.json5",
-  "gh://mondeja/project-config-styles/python/single-quotes.json5",
-  "gh://mondeja/project-config-styles/python/line-length-80.json5",
-  "gh://mondeja/project-config-styles/python/version/min-37.json5",
-  "gh://mondeja/project-config-styles/python/tests.json5",
-  "gh://mondeja/project-config-styles/python/sphinx.json5",
-  "gh://mondeja/project-config-styles/python/readthedocs.json5",
-  "gh://mondeja/project-config-styles/python/google-docstrings.json5"
+  "gh://mondeja/project-config-styles@v1/python/base.json5",
+  "gh://mondeja/project-config-styles@v1/python/single-quotes.json5",
+  "gh://mondeja/project-config-styles@v1/python/line-length-80.json5",
+  "gh://mondeja/project-config-styles@v1/python/version/min-37.json5",
+  "gh://mondeja/project-config-styles@v1/python/tests.json5",
+  "gh://mondeja/project-config-styles@v1/python/sphinx.json5",
+  "gh://mondeja/project-config-styles@v1/python/readthedocs.json5",
+  "gh://mondeja/project-config-styles@v1/python/google-docstrings.json5"
 ]
 
 [tool.pytest.ini_options]

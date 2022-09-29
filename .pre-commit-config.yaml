@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/mondeja/project-config
-    rev: v0.7.5
+    rev: v0.7.6
     hooks:
       - id: project-config
   - repo: meta
@@ -10,7 +10,7 @@ repos:
       - id: check-useless-excludes
         name: check-useless-excludes
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.38.0
+    rev: v2.38.2
     hooks:
       - id: pyupgrade
         args:
@@ -47,7 +47,7 @@ repos:
           - prettier-plugin-toml
         minimum_pre_commit_version: 2.9.0
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v2.2.3
+    rev: v2.3.0
     hooks:
       - id: add-trailing-comma
         name: add-trailing-comma
@@ -95,7 +95,7 @@ repos:
         name: editorconfig-checker
         alias: ec
   - repo: https://github.com/myint/autoflake
-    rev: v1.6.0
+    rev: v1.6.1
     hooks:
       - id: autoflake
         args:
@@ -105,7 +105,7 @@ repos:
           - --remove-duplicate-keys
           - --ignore-init-module-imports
   - repo: https://github.com/tcort/markdown-link-check
-    rev: v3.10.2
+    rev: v3.10.3
     hooks:
       - id: markdown-link-check
         name: markdown-link-check

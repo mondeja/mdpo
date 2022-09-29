@@ -6,7 +6,7 @@ permissions:
 on:
   release:
     types:
-      - created
+      - released
   workflow_dispatch:
 
 jobs:
