@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; mdpo 1.0.1 documentation</title>
+  <title>Changelog &mdash; mdpo 1.0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="next" title="Contributing" href="dev/contributing.html" />
     <link rel="prev" title="pre-commit hooks" href="pre-commit-hooks.html" /> 
 </head>
 
@@ -59,6 +59,8 @@
 <li class="toctree-l1"><a class="reference internal" href="api.html">Public mdpo APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pre-commit-hooks.html">pre-commit hooks</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#release-v1-0-3">v1.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-v1-0-2">v1.0.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#release-v1-0-1">v1.0.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#release-v1-0-0">v1.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#release-v0-3-86">v0.3.86</a></li>
@@ -153,9 +155,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="implementation-notes.html">Implementation notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="devref/index.html">mdpo/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/reference/modules.html">Reference</a></li>
 </ul>
 
         </div>
@@ -184,6 +186,21 @@
              
   <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h1>
+<section id="release-v1-0-3">
+<h2>v1.0.3<a class="headerlink" href="#release-v1-0-3" title="Permalink to this headline"></a></h2>
+<p><em>Released on 2022-09-20 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.0.3">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.0.3/">PyPI</a></em></p>
+<p>Bug fixes:</p>
+<ul>
+<li>Preserve HTML blocks in po2md output.</li>
+<li>Fixed edge case encoding bug in Windows when decoding PO files with md2po.</li>
+</ul></section>
+<section id="release-v1-0-2">
+<h2>v1.0.2<a class="headerlink" href="#release-v1-0-2" title="Permalink to this headline"></a></h2>
+<p><em>Released on 2022-09-20 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.0.2">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.0.2/">PyPI</a></em></p>
+<p>Bug fixes:</p>
+<ul>
+<li>Fixed some edge case errors related to memory management.</li>
+</ul></section>
 <section id="release-v1-0-1">
 <h2>v1.0.1<a class="headerlink" href="#release-v1-0-1" title="Permalink to this headline"></a></h2>
 <p><em>Released on 2022-09-19 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.0.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.0.1/">PyPI</a></em></p>
@@ -198,7 +215,7 @@
 <ul>
 <li>Removed support for Python 3.6.</li>
 <li><code>-po</code> option of <code>md2po</code> has been renamed to <code>-p</code>.</li>
-<li><code>--plaintext</code> option of <code>md2po</code> does not have contraction <code>-p</code> now.</li>
+<li><code>--plaintext</code> option of <code>md2po</code> does not offer the contraction <code>-p</code> now.</li>
 <li><code>-mo</code> contraction of <code>--mo-filepath</code> option of <code>md2po</code> has been removed.</li>
 <li>Now only one <code>X-Generation</code> header with the value <code>mdpo v{version}</code> is added when using the option <code>--xheader</code> of <code>md2po</code> (<code>--xheaders</code> option has been renamed to <code>--xheader</code>).</li>
 <li>Changed name of <code>--pre-commit</code> option by <code>--check</code> used to return exit code 1 if any of the files have changed.</li>
@@ -824,7 +841,7 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="pre-commit-hooks.html" class="btn btn-neutral float-left" title="pre-commit hooks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="dev/contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -51,6 +51,7 @@ The output produced by :ref:`cli:po2md` is compatible with the following
    {
      "no-blanks-blockquote": false,
      "no-bare-urls": false,
+     "no-inline-html": false,
      "ul-indent": {
        "indent": 3
      }
