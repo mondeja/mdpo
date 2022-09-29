@@ -1,0 +1,60 @@
+/* mdpo documentation's own style */
+
+/* side nav section titles */
+.wy-menu > .caption > span {
+  color: #d66671;
+}
+
+/* links */
+.rst-content a,
+.rst-content a:visited,
+.rst-other-versions span > a,
+.rst-other-versions span > a:visited,
+.rst-other-versions small > a,
+.rst-other-versions small > a:visited {
+  color: #bc0013;
+  transition: color 80ms;
+}
+.rst-content a:hover,
+.rst-other-versions span > a:hover,
+.rst-other-versions small > a:hover {
+  color: #f70019;
+}
+
+/* Show version under logo */
+.version {
+  color: #bc0013 !important;
+}
+
+/* search bar */
+#rtd-search-form > input[type="text"] {
+  border-color: rgba(100, 100, 100, 0.4);
+}
+
+/* Hack for lists inside adminitions */
+.admonition > ul {
+  margin-bottom: 0px !important;
+}
+
+/* https://github.com/readthedocs/sphinx_rtd_theme/issues/1029 */
+.toctree-wrapper > ul > li ul {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Admonition tips */
+.admonition.tip {
+  background: #eff9f5;
+}
+.admonition.tip > .admonition-title {
+  background: #00ab66;
+}
+
+/* Hide changelog entries in toctree: https://stackoverflow.com/a/64368882/9167585 */
+#mdpo-s-documentation
+  .toctree-wrapper:nth-child(even)
+  > ul
+  > .toctree-l1:last-child
+  > ul {
+  display: none;
+}

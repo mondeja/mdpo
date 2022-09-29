@@ -1,0 +1,8 @@
+mdpo.mdpo2html.\_\_main\_\_ module
+==================================
+
+.. automodule:: mdpo.mdpo2html.__main__
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

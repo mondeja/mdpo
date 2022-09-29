@@ -1,0 +1,16 @@
+mdpo.mdpo2html package
+======================
+
+.. automodule:: mdpo.mdpo2html
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mdpo.mdpo2html.__main__

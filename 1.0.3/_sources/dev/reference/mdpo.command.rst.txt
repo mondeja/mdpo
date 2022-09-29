@@ -1,0 +1,8 @@
+mdpo.command module
+===================
+
+.. automodule:: mdpo.command
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
