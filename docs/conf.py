@@ -18,9 +18,6 @@ pyproject_toml_path = os.path.join(rootdir, 'pyproject.toml')
 with open(pyproject_toml_path, encoding='utf-8') as f:
     pyproject_lines = f.read().splitlines()
 
-if pyproject_lines[0] != '[tool.poetry]':
-    raise Exception('The poetry metadata must start pyproject.toml')
-
 metadata = {'name': None, 'author': None, 'version': None}
 for line in pyproject_lines:
     if line.startswith('name ='):

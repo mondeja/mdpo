@@ -10,6 +10,20 @@ on:
       - v*
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install -U hatch
+      - name: Lint
+        run: hatch run style:lint
+
   test:
     name: Test
     runs-on: ${{ matrix.platform }}
@@ -19,35 +33,36 @@ jobs:
         include:
           - platform: ubuntu-latest
             python-version: 3.7
+            py: py37
           - platform: ubuntu-latest
             python-version: 3.8
+            py: py38
           - platform: ubuntu-latest
             python-version: 3.9
+            py: py39
           - platform: ubuntu-latest
             python-version: '3.10'
+            py: py310
           - platform: macos-latest
             python-version: 3.7
+            py: py37
           - platform: macos-latest
             python-version: '3.10'
+            py: py310
           - platform: windows-latest
-            python-version: 3.7
+            python-version: 3.8
+            py: py38
           - platform: windows-latest
             python-version: '3.10'
+            py: py310
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python v3
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.x
-      - name: Install poetry
-        id: poetry
-        shell: bash
-        run: |
-          curl -sSL https://install.python-poetry.org > __install_poetry.py
-          python __install_poetry.py --preview
-          scripts_path=$(python -c 'import __install_poetry as i;print(i.bin_dir())')
-          rm __install_poetry.py
-          echo $scripts_path >> $GITHUB_PATH
+          python-version: ${{ matrix.python-version }}
+      - name: Install Hatch
+        run: pip install -U hatch
       - name: Get MD4C version
         if: runner.os == 'macOS'
         uses: oprypin/find-latest-tag@v1
@@ -70,14 +85,10 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --config Release
           cmake --install .
-      - name: Install dependencies
-        run: |
-          poetry install --with test
-          poetry show
       - name: Run unit tests
-        run: poetry run pytest tests/test_unit
+        run: hatch run +py=${{ matrix.py }} tests:unit
       - name: Run integration tests
-        run: poetry run pytest tests/test_integration --override-ini addopts=-svv
+        run: hatch run +py=${{ matrix.py }} tests:integration
       - name: Coveralls
         run: |
           pip install coveralls coverage[toml]
@@ -91,22 +102,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - --preview
-          poetry self add poetry-exec-plugin
-          poetry self show plugins
       - name: Set up Python v3
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
-          cache: poetry
       - name: Install dependencies
-        run: |
-          poetry install --with doc
-          poetry show
+        run: pip install -U hatch
       - name: Build documentation
-        run: poetry exec doc
+        run: hatch run docs:build
         env:
           SPHINX_GITHUB_CHANGELOG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v3
@@ -116,20 +119,21 @@ jobs:
   build-dist:
     if: startsWith(github.ref, 'refs/tags/')
     needs:
+      - lint
       - test
       - test-docs
     name: Build package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-        name: Install Python v3.x
+      - uses: actions/setup-python@v4
+        name: Setup Python v3.x
         with:
           python-version: 3.x
-      - name: Install build dependencies
-        run: pip install build
+      - name: Install dependencies
+        run: pip install -U hatch
       - name: Build package
-        run: python -m build
+        run: hatch build
       - uses: actions/upload-artifact@v3
         with:
           path: dist/*

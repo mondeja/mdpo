@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/mondeja/project-config
-    rev: v0.7.6
+    rev: v0.7.7
     hooks:
       - id: project-config
   - repo: meta
@@ -10,7 +10,7 @@ repos:
       - id: check-useless-excludes
         name: check-useless-excludes
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.38.2
+    rev: v3.1.0
     hooks:
       - id: pyupgrade
         args:
@@ -34,7 +34,7 @@ repos:
         files: \.bat$
         name: '*.bat end of lines'
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.0
+    rev: v3.0.0-alpha.2
     hooks:
       - id: prettier
         types_or:
@@ -95,7 +95,7 @@ repos:
         name: editorconfig-checker
         alias: ec
   - repo: https://github.com/myint/autoflake
-    rev: v1.6.1
+    rev: v1.7.5
     hooks:
       - id: autoflake
         args:
