@@ -50,8 +50,8 @@ jobs:
             python-version: '3.10'
             py: py310
           - platform: windows-latest
-            python-version: 3.7
-            py: py37
+            python-version: 3.8
+            py: py38
           - platform: windows-latest
             python-version: '3.10'
             py: py310
