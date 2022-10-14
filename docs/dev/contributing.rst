@@ -17,7 +17,7 @@ Test
 .. code-block:: sh
 
    hatch run tests:unit
-   # `hatch run tests:e2e`
+   # `hatch run tests:integration`
    # `hatch run tests:all`
    # `hatch run tests:cov`
 

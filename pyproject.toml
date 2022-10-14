@@ -70,9 +70,9 @@ dependencies = [
 [tool.hatch.envs.tests.scripts]
 all = "pytest"
 unit = "pytest tests/test_unit"
-e2e = "pytest tests/test_integration --override-ini addopts=-svv"
+integration = "pytest tests/test_integration --override-ini addopts=-svv"
 cov = """hatch run +py=py310 tests:unit &&
-hatch run +py=py310 tests:e2e &&
+hatch run +py=py310 tests:integration &&
 python -c 'import webbrowser as w;w.open("http://127.0.0.1:8088")' &&
 python -m http.server 8088 -b localhost -d htmlcov
 """
@@ -100,7 +100,7 @@ python -m http.server 8089 -b localhost -d docs/_build/html"""
 targets = [{ file = "pyproject.toml" }, { file = "docs/pre-commit-hooks.rst" }]
 
 [tool.project-config]
-cache = "never"
+cache = "2 days"
 style = [
   "gh://mondeja/project-config-styles@v2/python/base.json5",
   "gh://mondeja/project-config-styles@v2/python/single-quotes.json5",
