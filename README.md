@@ -40,9 +40,9 @@ additional features.
 pip install mdpo
 ```
 
-[tests-image]: https://img.shields.io/github/workflow/status/mondeja/mdpo/Test?logo=github&label=tests
-[tests-link]: https://github.com/mondeja/mdpo/actions?query=workflow%3ATest
+[tests-image]: https://img.shields.io/github/workflow/status/mondeja/mdpo/CI?logo=github&label=tests
+[tests-link]: https://github.com/mondeja/mdpo/actions?query=workflow%3ACI
 [coverage-image]: https://img.shields.io/coveralls/github/mondeja/mdpo?logo=coveralls
 [coverage-link]: https://coveralls.io/github/mondeja/mdpo
-[doc-image]: https://img.shields.io/github/workflow/status/mondeja/mdpo/Test?label=docs&logo=readthedocs&logoColor=white
+[doc-image]: https://img.shields.io/github/workflow/status/mondeja/mdpo/CI?label=docs&logo=readthedocs&logoColor=white
 [doc-link]: https://mondeja.github.io/mdpo/
