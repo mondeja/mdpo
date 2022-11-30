@@ -9,6 +9,7 @@ prueba.md
 prueba.po
 report.html
 temp/
+.hatch/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
