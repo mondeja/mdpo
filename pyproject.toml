@@ -62,17 +62,17 @@ lint = "pre-commit run -a"
 [tool.hatch.envs.tests]
 dependencies = [
   "pytest~=7.0",
-  "pytest-cov~=3.0",
+  "coverage~=6.4",
   "pytest-maybe-raises~=0.1",
   "pre-commit",
 ]
 
 [tool.hatch.envs.tests.scripts]
-all = "pytest"
-unit = "pytest tests/test_unit"
-integration = "pytest tests/test_integration --override-ini addopts=-svv"
-cov = """hatch run +py=py310 tests:unit &&
-hatch run +py=py310 tests:integration &&
+all = "coverage run -m pytest"
+unit = "coverage run -m pytest tests/test_unit"
+integration = "coverage run -m pytest tests/test_integration --override-ini addopts=-svv"
+cov = """hatch run +py=py310 tests:all &&
+coverage html &&
 python -c 'import webbrowser as w;w.open("http://127.0.0.1:8088")' &&
 python -m http.server 8088 -b localhost -d htmlcov
 """
@@ -112,7 +112,10 @@ style = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "-s --cov=mdpo --cov-report=html"
+addopts = "-s"
+
+[tool.coverage.run]
+source = ["src"]
 
 [tool.coverage.report]
 exclude_lines = [
