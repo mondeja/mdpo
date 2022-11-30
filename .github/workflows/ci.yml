@@ -85,10 +85,8 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --config Release
           cmake --install .
-      - name: Run unit tests
-        run: hatch run +py=${{ matrix.py }} tests:unit
-      - name: Run integration tests
-        run: hatch run +py=${{ matrix.py }} tests:integration
+      - name: Run tests
+        run: hatch run +py=${{ matrix.py }} tests:all
       - name: Coveralls
         run: |
           pip install coveralls coverage[toml]
