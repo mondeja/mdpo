@@ -71,11 +71,12 @@ dependencies = [
 all = "coverage run -m pytest"
 unit = "coverage run -m pytest tests/test_unit"
 integration = "coverage run -m pytest tests/test_integration --override-ini addopts=-svv"
-cov = """hatch run +py=py310 tests:all &&
-coverage html &&
-python -c 'import webbrowser as w;w.open("http://127.0.0.1:8088")' &&
-python -m http.server 8088 -b localhost -d htmlcov
-"""
+cov = [
+  "hatch run +py=py310 tests:all",
+  "coverage html",
+  "python -c 'import webbrowser as w;w.open(\"http://127.0.0.1:8088\")'",
+  "python -m http.server 8088 -b localhost -d htmlcov"
+]
 
 [[tool.hatch.envs.tests.matrix]]
 python = ["py37", "py38", "py39", "py310"]
@@ -102,13 +103,13 @@ targets = [{ file = "pyproject.toml" }, { file = "docs/pre-commit-hooks.rst" }]
 [tool.project-config]
 cache = "2 days"
 style = [
-  "gh://mondeja/project-config-styles@v2/python/base.json5",
-  "gh://mondeja/project-config-styles@v2/python/single-quotes.json5",
-  "gh://mondeja/project-config-styles@v2/python/line-length-80.json5",
-  "gh://mondeja/project-config-styles@v2/python/tests.json5",
-  "gh://mondeja/project-config-styles@v2/python/sphinx.json5",
-  "gh://mondeja/project-config-styles@v2/python/readthedocs.json5",
-  "gh://mondeja/project-config-styles@v2/python/google-docstrings.json5"
+  "gh://mondeja/project-config-styles@v3/python/base.json5",
+  "gh://mondeja/project-config-styles@v3/python/single-quotes.json5",
+  "gh://mondeja/project-config-styles@v3/python/line-length-80.json5",
+  "gh://mondeja/project-config-styles@v3/python/tests.json5",
+  "gh://mondeja/project-config-styles@v3/python/sphinx.json5",
+  "gh://mondeja/project-config-styles@v3/python/readthedocs.json5",
+  "gh://mondeja/project-config-styles@v3/python/google-docstrings.json5"
 ]
 
 [tool.pytest.ini_options]
