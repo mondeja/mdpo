@@ -10,13 +10,13 @@ repos:
       - id: check-useless-excludes
         name: check-useless-excludes
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.1.0
+    rev: v3.2.3
     hooks:
       - id: pyupgrade
         args:
           - --py37-plus
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v4.4.0
     hooks:
       - id: trailing-whitespace
         name: trailing-whitespace
@@ -34,7 +34,7 @@ repos:
         files: \.bat$
         name: '*.bat end of lines'
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.2
+    rev: v3.0.0-alpha.4
     hooks:
       - id: prettier
         types_or:
@@ -52,7 +52,7 @@ repos:
       - id: add-trailing-comma
         name: add-trailing-comma
   - repo: https://github.com/flakeheaven/flakeheaven
-    rev: 3.0.0
+    rev: 3.2.1
     hooks:
       - id: flakeheaven
         additional_dependencies:
@@ -74,7 +74,7 @@ repos:
           - pysetenv
         entry: pysetenv FLAKEHEAVEN_CACHE_TIMEOUT=0 flakeheaven lint
   - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.7.0
+    rev: v2.0.0
     hooks:
       - id: autopep8
   - repo: https://github.com/PyCQA/isort
@@ -89,13 +89,13 @@ repos:
           - -c
           - .yamllint.yaml
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 2.6.1
+    rev: 2.6.2
     hooks:
       - id: editorconfig-checker
         name: editorconfig-checker
         alias: ec
   - repo: https://github.com/myint/autoflake
-    rev: v1.7.5
+    rev: v2.0.0
     hooks:
       - id: autoflake
         args:
