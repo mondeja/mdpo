@@ -49,7 +49,7 @@ jobs:
           - platform: macos-latest
             python-version: 3.7
             py: py37
-          - platform: macos-11
+          - platform: macos-10.15
             python-version: '3.11'
             py: py311
           - platform: windows-latest
