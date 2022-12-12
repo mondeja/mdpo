@@ -88,6 +88,7 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --config Release
           cmake --install .
+          ldconfig
       - name: Run tests
         run: hatch run +py=${{ matrix.py }} tests:all
       - name: Coveralls
