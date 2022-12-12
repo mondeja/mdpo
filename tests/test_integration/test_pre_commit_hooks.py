@@ -16,7 +16,7 @@ def test_md2po_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         (
             '.pre-commit-config.yaml', '''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: master
+    rev: py311
     hooks:
       - id: md2po
         files: ^README\\.md
@@ -70,7 +70,7 @@ def test_po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         (
             '.pre-commit-config.yaml', '''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: master
+    rev: py311
     hooks:
       - id: po2md
         files: ^README\\.md
@@ -131,7 +131,7 @@ def test_mdpo2html_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         (
             '.pre-commit-config.yaml', '''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: master
+    rev: py311
     hooks:
       - id: mdpo2html
         files: ^README\\.html
@@ -191,7 +191,7 @@ def test_md2po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
     with tmp_dir({
         '.pre-commit-config.yaml': '''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: master
+    rev: py311
     hooks:
       - id: md2po2md
         files: ^README\\.md
@@ -250,7 +250,7 @@ msgstr "Foo es"
         git_add_commit('Second commit', cwd=filesdir)
 
         proc = pre_commit_run_all_files(cwd=filesdir)
-        assert proc.returncode == 1
+        assert proc.returncode != 0
         assert proc.stdout.decode('utf-8').splitlines()[-1] == (
             '- files were modified by this hook'
         )
