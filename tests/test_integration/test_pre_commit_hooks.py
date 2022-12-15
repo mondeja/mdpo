@@ -16,7 +16,7 @@ def test_md2po_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         (
             '.pre-commit-config.yaml', '''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: py311
+    rev: master
     hooks:
       - id: md2po
         files: ^README\\.md
@@ -70,7 +70,7 @@ def test_po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         (
             '.pre-commit-config.yaml', '''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: py311
+    rev: master
     hooks:
       - id: po2md
         files: ^README\\.md
@@ -131,7 +131,7 @@ def test_mdpo2html_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         (
             '.pre-commit-config.yaml', '''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: py311
+    rev: master
     hooks:
       - id: mdpo2html
         files: ^README\\.html
@@ -191,7 +191,7 @@ def test_md2po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
     with tmp_dir({
         '.pre-commit-config.yaml': '''repos:
   - repo: https://github.com/mondeja/mdpo
-    rev: py311
+    rev: master
     hooks:
       - id: md2po2md
         files: ^README\\.md
