@@ -12,3 +12,4 @@ venv*/
 *.tgz
 docs/_build/
 .vscode
+/temp/
