@@ -46,9 +46,12 @@ jobs:
           - platform: ubuntu-latest
             python-version: '3.11'
             py: py311
-          - platform: macos-10.15
+          - platform: macos-latest
             python-version: 3.7
             py: py37
+          - platform: macos-latest
+            python-version: 3.9
+            py: py39
           - platform: macos-latest
             python-version: '3.11'
             py: py311
@@ -66,8 +69,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install Hatch
         run: pip install -U hatch
-      - name: Install mdpo for testing
-        run: pip install --debug .
       - name: Run tests
         run: hatch run +py=${{ matrix.py }} tests:all
       - name: Coveralls
