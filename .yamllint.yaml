@@ -37,7 +37,7 @@ rules:
   quoted-strings:
     extra-required:
       - \d\d:\d\d
-    quote-type: single
+    quote-type: double
     required: only-when-needed
   trailing-spaces: enable
   truthy: disable
