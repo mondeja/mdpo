@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/mondeja/project-config
-    rev: v0.7.8
+    rev: v0.7.9
     hooks:
       - id: project-config
   - repo: meta
@@ -10,7 +10,7 @@ repos:
       - id: check-useless-excludes
         name: check-useless-excludes
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.2.3
+    rev: v3.3.1
     hooks:
       - id: pyupgrade
         args:
@@ -50,7 +50,7 @@ repos:
         minimum_pre_commit_version: 2.9.0
         exclude: ^tests
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v2.3.0
+    rev: v2.4.0
     hooks:
       - id: add-trailing-comma
         name: add-trailing-comma
@@ -77,11 +77,11 @@ repos:
           - pysetenv
         entry: pysetenv FLAKEHEAVEN_CACHE_TIMEOUT=0 flakeheaven lint
   - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v2.0.0
+    rev: v2.0.1
     hooks:
       - id: autopep8
   - repo: https://github.com/PyCQA/isort
-    rev: 5.10.1
+    rev: 5.11.2
     hooks:
       - id: isort
   - repo: https://github.com/adrienverge/yamllint
