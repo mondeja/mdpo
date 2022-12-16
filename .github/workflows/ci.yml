@@ -71,13 +71,12 @@ jobs:
         run: pip install -U hatch
       - name: Run tests
         run: hatch run +py=${{ matrix.py }} tests:all
-      - name: Coveralls
+      - name: Convert coverage to XML
         run: |
-          pip install coveralls coverage[toml]
-          coveralls
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_SERVICE_NAME: github
+          pip install coverage
+          coverage xml
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
 
   test-docs:
     name: Build documentation
