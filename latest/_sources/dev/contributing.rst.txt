@@ -5,24 +5,21 @@ Contributing
 Development install
 ===================
 
-You need to install Poetry >= 1.2.0.
-
 .. code-block:: sh
 
    git clone https://github.com/mondeja/mdpo
    cd mdpo
-   poetry install
-   pre-commit install
-   poetry self add poetry-exec-plugin
+   pip install hatch
 
 Test
 ====
 
 .. code-block:: sh
 
-   poetry exec test
-   # `poetry exec t`
-   # `poetry exec test:show`
+   hatch run tests:unit
+   # `hatch run tests:integration`
+   # `hatch run tests:all`
+   # `hatch run tests:cov`
 
 
 Lint
@@ -30,7 +27,7 @@ Lint
 
 .. code-block:: sh
 
-   poetry exec lint
+   hatch run style:lint
 
 
 Build documentation
@@ -38,15 +35,15 @@ Build documentation
 
 .. code-block:: sh
 
-   poetry exec doc
-   # `poetry exec doc:show`
+   hatch run docs:build
+   # `hatch run docs:serve`
 
 Release
 =======
 
 .. code-block:: sh
 
-   version="$(poetry run bump <major/minor/patch>)"
+   version="$(hatch run bump <major/minor/patch>)"
    git add .
    git commit -m "Bump version"
    git push origin master

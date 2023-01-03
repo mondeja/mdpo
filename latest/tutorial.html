@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial &mdash; mdpo 1.0.3 documentation</title>
+  <title>Tutorial &mdash; mdpo 1.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -85,8 +85,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Tutorial</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Tutorial</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -105,20 +105,20 @@ tutorial are covered the most common workflows.</p>
 <p>If you want to translate a Markdown source using a PO file and produce
 translated Markdown output, use this method.</p>
 <p>Given the next directories tree:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>📁 .
-├── 📁 locale
-│   └── 📁 es
-│       └── 📄 LC_MESSAGES
-└── 📄 README.md
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>📁<span class="w"> </span>.
+├──<span class="w"> </span>📁<span class="w"> </span>locale
+│<span class="w">   </span>└──<span class="w"> </span>📁<span class="w"> </span>es
+│<span class="w">       </span>└──<span class="w"> </span>📄<span class="w"> </span>LC_MESSAGES
+└──<span class="w"> </span>📄<span class="w"> </span>README.md
 </pre></div>
 </div>
 <p>Use the next command to create or update the PO file for <code class="docutils literal notranslate"><span class="pre">README.md</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>md2po README.md --quiet --save --po-filepath locale/es/LC_MESSAGES/readme.po
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>md2po<span class="w"> </span>README.md<span class="w"> </span>--quiet<span class="w"> </span>--save<span class="w"> </span>--po-filepath<span class="w"> </span>locale/es/LC_MESSAGES/readme.po
 </pre></div>
 </div>
 <p>Then, in order of translate the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> producing other file as result:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>po2md README.md --pofiles locale/es/LC_MESSAGES/readme.po --quiet <span class="se">\</span>
-  --save locale/es/LC_MESSAGES/README.md
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>po2md<span class="w"> </span>README.md<span class="w"> </span>--pofiles<span class="w"> </span>locale/es/LC_MESSAGES/readme.po<span class="w"> </span>--quiet<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--save<span class="w"> </span>locale/es/LC_MESSAGES/README.md
 </pre></div>
 </div>
 <p>This will be the output after previous two commands:</p>
@@ -142,7 +142,7 @@ translated Markdown output, use this method.</p>
 <section id="simple-readme-file-translation">
 <h2>Simple README file translation<a class="headerlink" href="#simple-readme-file-translation" title="Permalink to this headline"></a></h2>
 <p>Just use <a class="reference internal" href="cli.html#md2po2md"><span class="std std-ref">md2po2md CLI</span></a>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>md2po2md README.md -l es fr -o <span class="s2">&quot;locale/{lang}&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>md2po2md<span class="w"> </span>README.md<span class="w"> </span>-l<span class="w"> </span>es<span class="w"> </span>fr<span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;locale/{lang}&quot;</span>
 </pre></div>
 </div>
 <p>Define the languages to translate into using the <code class="docutils literal notranslate"><span class="pre">--lang</span></code>/<code class="docutils literal notranslate"><span class="pre">-l</span></code> option.</p>
@@ -160,15 +160,15 @@ translated Markdown output, use this method.</p>
 </pre></div>
 </div>
 <p>This will be the output after the previous command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>📁 .
-├── 📁 locale
-│   ├── 📁 es
-│   <span class="p">|</span>   ├── 📄 README.md
-│   <span class="p">|</span>   └── 📄 readme.po
-<span class="p">|</span>   └── 📁 fr
-│       ├── 📄 README.md
-│       └── 📄 readme.po
-└── 📄 README.md
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>📁<span class="w"> </span>.
+├──<span class="w"> </span>📁<span class="w"> </span>locale
+│<span class="w">   </span>├──<span class="w"> </span>📁<span class="w"> </span>es
+│<span class="w">   </span><span class="p">|</span><span class="w">   </span>├──<span class="w"> </span>📄<span class="w"> </span>README.md
+│<span class="w">   </span><span class="p">|</span><span class="w">   </span>└──<span class="w"> </span>📄<span class="w"> </span>readme.po
+<span class="p">|</span><span class="w">   </span>└──<span class="w"> </span>📁<span class="w"> </span>fr
+│<span class="w">       </span>├──<span class="w"> </span>📄<span class="w"> </span>README.md
+│<span class="w">       </span>└──<span class="w"> </span>📄<span class="w"> </span>readme.po
+└──<span class="w"> </span>📄<span class="w"> </span>README.md
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -189,24 +189,24 @@ PO files, use this method.</p>
 in the <a class="reference external" href="bug_tracker">bug tracker</a>.</p>
 </div>
 <p>Given next directory tree:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>📁 .
-├── 📁 locale
-│   └── 📁 es
-│       └── 📁 LC_MESSAGES
-├── 📄 README.html
-└── 📄 README.md
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>📁<span class="w"> </span>.
+├──<span class="w"> </span>📁<span class="w"> </span>locale
+│<span class="w">   </span>└──<span class="w"> </span>📁<span class="w"> </span>es
+│<span class="w">       </span>└──<span class="w"> </span>📁<span class="w"> </span>LC_MESSAGES
+├──<span class="w"> </span>📄<span class="w"> </span>README.html
+└──<span class="w"> </span>📄<span class="w"> </span>README.md
 </pre></div>
 </div>
 <p>Where the file <code class="docutils literal notranslate"><span class="pre">README.html</span></code> have been produced using an HTML processor, use
 next command to create and update the translation pofile for <code class="docutils literal notranslate"><span class="pre">README.html</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>md2po README.md --quiet --save --po-filepath locale/es/LC_MESSAGES/readme.po
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>md2po<span class="w"> </span>README.md<span class="w"> </span>--quiet<span class="w"> </span>--save<span class="w"> </span>--po-filepath<span class="w"> </span>locale/es/LC_MESSAGES/readme.po
 </pre></div>
 </div>
 <p>After that, you can use the new file <code class="docutils literal notranslate"><span class="pre">locale/es/LC_MESSAGES/readme.po</span></code> to
 replace the contents of the file <code class="docutils literal notranslate"><span class="pre">README.html</span></code> with your translations, using
 next command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mdpo2html README.html --pofiles locale/es/LC_MESSAGES/readme.po --quiet <span class="se">\</span>
-  --save locale/es/LC_MESSAGES/README.html
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mdpo2html<span class="w"> </span>README.html<span class="w"> </span>--pofiles<span class="w"> </span>locale/es/LC_MESSAGES/readme.po<span class="w"> </span>--quiet<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--save<span class="w"> </span>locale/es/LC_MESSAGES/README.html
 </pre></div>
 </div>
 <p>And this will produce your translated file in
@@ -241,7 +241,7 @@ next command:</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2022, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2022, {.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

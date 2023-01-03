@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Public mdpo APIs &mdash; mdpo 1.0.3 documentation</title>
+  <title>Public mdpo APIs &mdash; mdpo 1.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -86,8 +86,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Public mdpo APIs</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Public mdpo APIs</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -109,24 +109,24 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>files_or_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Glob path to Markdown files, a list of
+<li><p><strong>files_or_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Glob path to Markdown files, a list of
 files or a string with Markdown content.</p></li>
-<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Paths of files to ignore. Useful when a glob does not
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Paths of files to ignore. Useful when a glob does not
 fit your requirements indicating the files to extract content.
 Also, filename or a dirname can be defined without indicate the
 full path.</p></li>
-<li><p><strong>msgstr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Default message string for extracted msgids.</p></li>
-<li><p><strong>po_filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – File that will be used as <a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POFile</span></code></a>
+<li><p><strong>msgstr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Default message string for extracted msgids.</p></li>
+<li><p><strong>po_filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – File that will be used as <a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POFile</span></code></a>
 instance where to dump the new msgids and that will be used
 as source checking not found strings that will be marked as
 obsolete if is the case (see <code class="docutils literal notranslate"><span class="pre">save</span></code> and
 <code class="docutils literal notranslate"><span class="pre">mark_not_found_as_obsolete</span></code> optional parameters).</p></li>
-<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Save the new content to the PO file indicated in the
+<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Save the new content to the PO file indicated in the
 parameter <code class="docutils literal notranslate"><span class="pre">po_filepath</span></code>. If is enabled and <code class="docutils literal notranslate"><span class="pre">po_filepath</span></code> is
 <code class="docutils literal notranslate"><span class="pre">None</span></code> a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> will be raised.</p></li>
-<li><p><strong>mo_filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The resulting PO file will be compiled to a MO file
+<li><p><strong>mo_filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The resulting PO file will be compiled to a MO file
 and saved in the path specified at this parameter.</p></li>
-<li><p><strong>plaintext</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If you pass <code class="docutils literal notranslate"><span class="pre">True</span></code> to this parameter (as default)
+<li><p><strong>plaintext</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If you pass <code class="docutils literal notranslate"><span class="pre">True</span></code> to this parameter (as default)
 the content will be extracted as is, without markup characters
 included.
 Passing <code class="docutils literal notranslate"><span class="pre">plaintext</span></code> as <code class="docutils literal notranslate"><span class="pre">False</span></code>, extracted msgids
@@ -135,39 +135,39 @@ location of <code class="docutils literal notranslate"><span class="pre">`inline
 <code class="docutils literal notranslate"><span class="pre">*italic</span> <span class="pre">text*</span></code> and <code class="docutils literal notranslate"><span class="pre">`[links]`</span></code>, that might be useful
 for you. It depends on the use you are going to give to
 this library activate this mode (<code class="docutils literal notranslate"><span class="pre">plaintext=False</span></code>) or not.</p></li>
-<li><p><strong>wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Wrap width for po file indicated at <code class="docutils literal notranslate"><span class="pre">po_filepath</span></code>
+<li><p><strong>wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Wrap width for po file indicated at <code class="docutils literal notranslate"><span class="pre">po_filepath</span></code>
 parameter. If negative, 0, ‘inf’ or ‘math.inf’ the content won’t
 be wrapped.</p></li>
-<li><p><strong>mark_not_found_as_obsolete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – The strings extracted from markdown
+<li><p><strong>mark_not_found_as_obsolete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – The strings extracted from markdown
 that will not be found inside the provided PO file will be marked
 as obsolete.</p></li>
-<li><p><strong>preserve_not_found</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – The strings extracted from markdown that
+<li><p><strong>preserve_not_found</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – The strings extracted from markdown that
 will not be found inside the provided PO file wouldn’t be removed.
 Only has effect if <code class="docutils literal notranslate"><span class="pre">mark_not_found_as_obsolete</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Store references of top-level blocks in which are
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Store references of top-level blocks in which are
 found the messages in PO file <cite>#: reference</cite> comments.</p></li>
-<li><p><strong>extensions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – md4c extensions used to parse markdown content,
+<li><p><strong>extensions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – md4c extensions used to parse markdown content,
 formatted as a list of ‘pymd4c’ keyword arguments. You can see all
 available at <a class="reference external" href="https://github.com/dominickpastore/pymd4c#parser-option-flags">pymd4c repository</a>.</p></li>
-<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Resulting PO file encoding.</p></li>
-<li><p><strong>md_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Markdown content encoding.</p></li>
-<li><p><strong>xheader</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Indicates if the resulting PO file will have the mdpo
+<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Resulting PO file encoding.</p></li>
+<li><p><strong>md_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Markdown content encoding.</p></li>
+<li><p><strong>xheader</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Indicates if the resulting PO file will have the mdpo
 x-header included.</p></li>
-<li><p><strong>include_codeblocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Include all code blocks found inside PO file
+<li><p><strong>include_codeblocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Include all code blocks found inside PO file
 result. This is useful if you want to translate all your blocks
 of code. Equivalent to append <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-include-codeblock</span> <span class="pre">--&gt;</span></code>
 command before each code block.</p></li>
-<li><p><strong>ignore_msgids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of msgids ot ignore from being extracted.</p></li>
-<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
+<li><p><strong>ignore_msgids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of msgids ot ignore from being extracted.</p></li>
+<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
 names in comments. The <code class="docutils literal notranslate"><span class="pre">mdpo-</span></code> prefix in command names resolution
 is optional. For example, if you want to use <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-on</span> <span class="pre">--&gt;</span></code>
 instead of <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>, you can pass the dictionaries
 <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;mdpo-enable&quot;}</span></code> or <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;enable&quot;}</span></code> to this
 parameter.</p></li>
-<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Metadata to include in the produced PO file. If the
+<li><p><strong>metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Metadata to include in the produced PO file. If the
 file contains previous metadata fields, these will be updated
 preserving the values of the already defined.</p></li>
-<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – <p>Preprocessing events executed during the parsing
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – <p>Preprocessing events executed during the parsing
 process that can be used to customize the extraction process.
 Takes functions or list of functions as values. If one of these
 functions returns <code class="docutils literal notranslate"><span class="pre">False</span></code>, that part of the parsing is skipped
@@ -202,7 +202,7 @@ msgid to be included, you can do:</p>
 </pre></div>
 </div>
 </p></li>
-<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Add events displaying all parsed elements in the
+<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Add events displaying all parsed elements in the
 extraction process.</p></li>
 </ul>
 </dd>
@@ -241,28 +241,28 @@ input format as Markdown is just a subset of HTML.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filepath_or_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Markdown filepath or content to translate.</p></li>
-<li><p><strong>pofiles</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – from where to extract messages to make the replacements translating
+<li><p><strong>filepath_or_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Markdown filepath or content to translate.</p></li>
+<li><p><strong>pofiles</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – from where to extract messages to make the replacements translating
 strings.</p></li>
-<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Paths of PO files to ignore. Useful when a glob does not
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Paths of PO files to ignore. Useful when a glob does not
 fit your requirements indicating the files to extract content.
 Also, filename or a dirname can be defined without indicate the
 full path.</p></li>
-<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Saves the output content in file whose path is specified
+<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Saves the output content in file whose path is specified
 at this parameter.</p></li>
-<li><p><strong>md_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Markdown content encoding.</p></li>
-<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – PO files encoding. If you need different encodings
+<li><p><strong>md_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Markdown content encoding.</p></li>
+<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – PO files encoding. If you need different encodings
 for each file, you must define it in the “Content-Type” field of
 each PO file metadata, in the form
 <code class="docutils literal notranslate"><span class="pre">&quot;Content-Type:</span> <span class="pre">text/plain;</span> <span class="pre">charset=&lt;ENCODING&gt;\n&quot;</span></code>.</p></li>
-<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
+<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
 names in comments. The <code class="docutils literal notranslate"><span class="pre">mdpo-</span></code> prefix in command names resolution
 is optional. For example, if you want to use <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-on</span> <span class="pre">--&gt;</span></code>
 instead of <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>, you can pass the dictionaries
 <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;mdpo-enable&quot;}</span></code> or <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;enable&quot;}</span></code> to this
 parameter.</p></li>
-<li><p><strong>wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Maximum width used rendering the Markdown output.</p></li>
-<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – <p>Preprocessing events executed during the translation
+<li><p><strong>wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Maximum width used rendering the Markdown output.</p></li>
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – <p>Preprocessing events executed during the translation
 process that can be used to customize the output. Takes list of
 functions as values. If one of these functions returns <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 that part of the translation process is skipped by <code class="docutils literal notranslate"><span class="pre">po2md</span></code>.
@@ -289,7 +289,7 @@ translation process).</p></li>
 <p>You can also define the location of these functions by strings
 with the syntax <code class="docutils literal notranslate"><span class="pre">path/to/file.py::function_name</span></code>.</p>
 </p></li>
-<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Add events displaying all parsed elements in the
+<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Add events displaying all parsed elements in the
 translation process.</p></li>
 </ul>
 </dd>
@@ -297,7 +297,7 @@ translation process.</p></li>
 <dd class="field-even"><p>Markdown output file with translated content.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -313,9 +313,9 @@ translation process.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>langs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of languages used to build the output directories.</p></li>
-<li><p><strong>input_paths_glob</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Glob covering Markdown files to translate.</p></li>
-<li><p><strong>output_paths_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – <p>Path schema for outputs, built using
+<li><p><strong>langs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of languages used to build the output directories.</p></li>
+<li><p><strong>input_paths_glob</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Glob covering Markdown files to translate.</p></li>
+<li><p><strong>output_paths_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – <p>Path schema for outputs, built using
 placeholders. There is a mandatory placeholder for languages:
 <code class="docutils literal notranslate"><span class="pre">{lang}</span></code>; and one optional for output basename: <code class="docutils literal notranslate"><span class="pre">{basename}</span></code>.
 For example, for the schema <code class="docutils literal notranslate"><span class="pre">locale/{lang}</span></code>, the languages
@@ -332,28 +332,28 @@ each language with <code class="docutils literal notranslate"><span class="pre">
 Unexistent directories and files will be created, so you don’t
 have to prepare the output directories before the execution.</p>
 </p></li>
-<li><p><strong>extensions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – <p>md4c extensions used to parse markdown content,
+<li><p><strong>extensions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – <p>md4c extensions used to parse markdown content,
 formatted as a list of ‘pymd4c’ keyword arguments. You can see all
 available at <a class="reference external" href="https://github.com/dominickpastore/pymd4c#parser-option-flags">pymd4c repository</a>.</p>
 </p></li>
-<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
+<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
 names in comments. The <code class="docutils literal notranslate"><span class="pre">mdpo-</span></code> prefix in command names resolution
 is optional. For example, if you want to use <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-on</span> <span class="pre">--&gt;</span></code>
 instead of <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>, you can pass the dictionaries
 <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;mdpo-enable&quot;}</span></code> or <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;enable&quot;}</span></code> to this
 parameter.</p></li>
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Store references of top-level blocks in which are
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Store references of top-level blocks in which are
 found the messages in PO file <code class="docutils literal notranslate"><span class="pre">#:</span> <span class="pre">reference</span></code> comments.</p></li>
-<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Add events displaying all parsed elements in the
+<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Add events displaying all parsed elements in the
 extraction process.</p></li>
-<li><p><strong>po_wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Maximum width for PO files.</p></li>
-<li><p><strong>md_wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Maximum width for produced Markdown contents, when
+<li><p><strong>po_wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Maximum width for PO files.</p></li>
+<li><p><strong>md_wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Maximum width for produced Markdown contents, when
 possible.</p></li>
-<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – PO files encoding.</p></li>
-<li><p><strong>md_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Markdown files encoding.</p></li>
-<li><p><strong>md2po_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Additional optional arguments passed to
+<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – PO files encoding.</p></li>
+<li><p><strong>md_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Markdown files encoding.</p></li>
+<li><p><strong>md2po_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Additional optional arguments passed to
 <code class="docutils literal notranslate"><span class="pre">markdown_to_pofile</span></code> function.</p></li>
-<li><p><strong>po2md_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Additional optional arguments passed to
+<li><p><strong>po2md_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Additional optional arguments passed to
 <code class="docutils literal notranslate"><span class="pre">pofile_to_markdown</span></code> function.</p></li>
 </ul>
 </dd>
@@ -373,20 +373,20 @@ Markdown-to-HTML processor) and a set of PO files as reference for msgstrs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filepath_or_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – HTML whose content wants to be translated.</p></li>
-<li><p><strong>pofiles</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Glob for set of pofiles used as reference translating
+<li><p><strong>filepath_or_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – HTML whose content wants to be translated.</p></li>
+<li><p><strong>pofiles</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Glob for set of pofiles used as reference translating
 the strings to another language.</p></li>
-<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of paths to pofiles to ignore, useful if the glob
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of paths to pofiles to ignore, useful if the glob
 patterns in <code class="docutils literal notranslate"><span class="pre">pofiles</span></code> parameter does not fit your requirements.</p></li>
-<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – If you pass this parameter as a path to one HTML file,
+<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If you pass this parameter as a path to one HTML file,
 even if does not exists, will be saved in the path the output of
 the function.</p></li>
-<li><p><strong>html_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – HTML content encoding.</p></li>
-<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – PO files encoding. If you need different encodings
+<li><p><strong>html_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – HTML content encoding.</p></li>
+<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – PO files encoding. If you need different encodings
 for each file, you must define it in the “Content-Type” field of
 each PO file metadata, in the form
 <code class="docutils literal notranslate"><span class="pre">&quot;Content-Type:</span> <span class="pre">text/plain;</span> <span class="pre">charset=&lt;ENCODING&gt;\n&quot;</span></code>.</p></li>
-<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
+<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
 names in comments. The <code class="docutils literal notranslate"><span class="pre">mdpo-</span></code> prefix in command names resolution
 is optional. For example, if you want to use <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-on</span> <span class="pre">--&gt;</span></code>
 instead of <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>, you can pass the dictionaries
@@ -405,7 +405,7 @@ parameter.</p></li>
 <dd class="field-odd"><p>HTML output translated version of the given file.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -424,7 +424,7 @@ parameter.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2022, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2022, {.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

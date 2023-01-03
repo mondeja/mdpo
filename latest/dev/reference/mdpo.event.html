@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mdpo.event module &mdash; mdpo 1.0.3 documentation</title>
+  <title>mdpo.event module &mdash; mdpo 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -99,10 +99,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">Reference</a> &raquo;</li>
-          <li><a href="mdpo.html">mdpo package</a> &raquo;</li>
-      <li>mdpo.event module</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="mdpo.html">mdpo package</a></li>
+      <li class="breadcrumb-item active">mdpo.event module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/dev/reference/mdpo.event.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -127,9 +127,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>implementation_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Implementation name, shown when
+<li><p><strong>implementation_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Implementation name, shown when
 printing debugging events.</p></li>
-<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Events dictionary.</p></li>
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Events dictionary.</p></li>
 </ul>
 </dd>
 </dl>
@@ -141,14 +141,14 @@ printing debugging events.</p></li>
 <dd><p>Debugging events for interfaces. Displays in STDOUT all event targets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>program</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Command line interface name, to display it at the
+<dd class="field-odd"><p><strong>program</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Command line interface name, to display it at the
 beginning of the output.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Event target printing functions.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -161,13 +161,13 @@ beginning of the output.</p>
 using the syntax <code class="docutils literal notranslate"><span class="pre">path/to/file.py::function</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>events_kwarg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Dictionary of event names and their location.</p>
+<dd class="field-odd"><p><strong>events_kwarg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Dictionary of event names and their location.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Event names mapping to a list of functions to execute.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -181,8 +181,8 @@ that an event is trying to skip the associated function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Dictionary with all events defined.</p></li>
-<li><p><strong>event_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the event whose functions will be executed.</p></li>
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Dictionary with all events defined.</p></li>
+<li><p><strong>event_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the event whose functions will be executed.</p></li>
 <li><p><strong>*event_args</strong> – Arguments propagated to the events functions.</p></li>
 </ul>
 </dd>
@@ -191,7 +191,7 @@ that an event is trying to skip the associated function.</p>
 otherwise.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -209,7 +209,7 @@ otherwise.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2022, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2022, {.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
