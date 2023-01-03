@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdpo.polib module &mdash; mdpo 1.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override-styles.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="mdpo.text module" href="mdpo.text.html" />
+    <link rel="prev" title="mdpo.po module" href="mdpo.po.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+            <a href="../../index.html">
+            <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mdpo.html">mdpo package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mdpo.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="mdpo.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html">mdpo.cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.command.html">mdpo.command module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.compat.html">mdpo.compat module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.event.html">mdpo.event module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.io.html">mdpo.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md.html">mdpo.md module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md4c.html">mdpo.md4c module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html">mdpo.po module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mdpo.polib module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html">mdpo.text module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="mdpo.html">mdpo package</a></li>
+      <li class="breadcrumb-item active">mdpo.polib module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/dev/reference/mdpo.polib.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo.polib">
+<span id="mdpo-polib-module"></span><h1>mdpo.polib module<a class="headerlink" href="#module-mdpo.polib" title="Permalink to this headline"></a></h1>
+<p>Workaround for polib issue and required improvement to make work mdpo.</p>
+<p>See <a class="reference external" href="https://github.com/izimobil/polib/pulls">https://github.com/izimobil/polib/pulls</a> for details.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.polib.poentry__cmp__">
+<span class="sig-prename descclassname"><span class="pre">mdpo.polib.</span></span><span class="sig-name descname"><span class="pre">poentry__cmp__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_obsolete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_msgstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_occurrences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.polib.poentry__cmp__" title="Permalink to this definition"></a></dt>
+<dd><p>Compare entries like <code class="docutils literal notranslate"><span class="pre">__cmp__</span></code> method of <a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POEntry" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POEntry</span></code></a>.</p>
+<p>This function add custom entries comparison capabilities to
+<a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POEntry" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POEntry</span></code></a>, needed by mdpo to prevent some errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POEntry" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POEntry</span></code></a>) – Entry to be compared.</p></li>
+<li><p><strong>other</strong> (<a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POEntry" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POEntry</span></code></a>) – Entry to compare against.</p></li>
+<li><p><strong>compare_obsolete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Indicates if the <code class="docutils literal notranslate"><span class="pre">obsolete</span></code> property of the
+entries will be used comparing them.</p></li>
+<li><p><strong>compare_msgstr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Indicates if the <code class="docutils literal notranslate"><span class="pre">msgstr</span></code> property of the
+entries will be used comparing them.</p></li>
+<li><p><strong>compare_occurrences</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Indicates if the <code class="docutils literal notranslate"><span class="pre">occurrences</span></code> property
+of the entries will be used comparing them.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mdpo.po.html" class="btn btn-neutral float-left" title="mdpo.po module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.text.html" class="btn btn-neutral float-right" title="mdpo.text module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2022, {.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

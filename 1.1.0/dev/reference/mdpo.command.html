@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdpo.command module &mdash; mdpo 1.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override-styles.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="mdpo.compat module" href="mdpo.compat.html" />
+    <link rel="prev" title="mdpo.cli module" href="mdpo.cli.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+            <a href="../../index.html">
+            <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mdpo.html">mdpo package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mdpo.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="mdpo.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html">mdpo.cli module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mdpo.command module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.compat.html">mdpo.compat module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.event.html">mdpo.event module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.io.html">mdpo.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md.html">mdpo.md module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md4c.html">mdpo.md4c module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html">mdpo.po module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.polib.html">mdpo.polib module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html">mdpo.text module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="mdpo.html">mdpo package</a></li>
+      <li class="breadcrumb-item active">mdpo.command module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/dev/reference/mdpo.command.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo.command">
+<span id="mdpo-command-module"></span><h1>mdpo.command module<a class="headerlink" href="#module-mdpo.command" title="Permalink to this headline"></a></h1>
+<p>mdpo HTML commands related utilities.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.command.get_valid_mdpo_command_names">
+<span class="sig-prename descclassname"><span class="pre">mdpo.command.</span></span><span class="sig-name descname"><span class="pre">get_valid_mdpo_command_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.command.get_valid_mdpo_command_names" title="Permalink to this definition"></a></dt>
+<dd><p>Return valid mdpo commands names, with and without “mdpo-” prefix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Valid mdpo command names.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.command.normalize_mdpo_command">
+<span class="sig-prename descclassname"><span class="pre">mdpo.command.</span></span><span class="sig-name descname"><span class="pre">normalize_mdpo_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.command.normalize_mdpo_command" title="Permalink to this definition"></a></dt>
+<dd><p>Normalize a valid command and returns None if the command is invalid.</p>
+<p>This function works for lazy command validation (the user doesn’t need
+to specify the <code class="docutils literal notranslate"><span class="pre">mdpo-</span></code> prefix used for command names).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Command to be normalized.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Normalized command or None if is invalid.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.command.normalize_mdpo_command_aliases">
+<span class="sig-prename descclassname"><span class="pre">mdpo.command.</span></span><span class="sig-name descname"><span class="pre">normalize_mdpo_command_aliases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command_aliases</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.command.normalize_mdpo_command_aliases" title="Permalink to this definition"></a></dt>
+<dd><p>Validate and normalizes a mapping of mdpo command aliases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Aliases for mdpo commands, in the form
+<code class="docutils literal notranslate"><span class="pre">{&quot;&lt;new-command-name&gt;&quot;:</span> <span class="pre">&quot;&lt;mdpo-command&gt;&quot;}</span></code>.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if an mdpo command resolution doesn’t exists.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Mapping validated and normalized.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.command.parse_mdpo_html_command">
+<span class="sig-prename descclassname"><span class="pre">mdpo.command.</span></span><span class="sig-name descname"><span class="pre">parse_mdpo_html_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.command.parse_mdpo_html_command" title="Permalink to this definition"></a></dt>
+<dd><p>Parse a mdpo HTML command inside a string value.</p>
+<p>This function is used by md2po implementation to discover the HTML commands
+used by mdpo to customize the extraction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Text where will a command will be searched.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Namename of the command (not including the <code class="docutils literal notranslate"><span class="pre">&quot;mdpo&quot;</span></code> prefix)
+and its value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mdpo.cli.html" class="btn btn-neutral float-left" title="mdpo.cli module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.compat.html" class="btn btn-neutral float-right" title="mdpo.compat module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2022, {.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

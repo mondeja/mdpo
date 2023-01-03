@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdpo.po2md package &mdash; mdpo 1.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override-styles.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="mdpo.po2md.__main__ module" href="mdpo.po2md.__main__.html" />
+    <link rel="prev" title="mdpo.mdpo2html.__main__ module" href="mdpo.mdpo2html.__main__.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+            <a href="../../index.html">
+            <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mdpo.html">mdpo package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="mdpo.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.html">mdpo.md2po package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po2md.html">mdpo.md2po2md package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.html">mdpo.mdpo2html package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mdpo.po2md package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="mdpo.html">mdpo package</a></li>
+      <li class="breadcrumb-item active">mdpo.po2md package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/dev/reference/mdpo.po2md.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo.po2md">
+<span id="mdpo-po2md-package"></span><h1>mdpo.po2md package<a class="headerlink" href="#module-mdpo.po2md" title="Permalink to this headline"></a></h1>
+<p>Markdown files translator using PO files as reference.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mdpo.po2md.</span></span><span class="sig-name descname"><span class="pre">Po2Md</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pofiles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>PO files to Markdown translator implementation.</p>
+<p>This class is where all the translation process is carried out.
+If you are executing custom translation events, you may want to
+read the documentation about the properties of this class to
+properly control the internal state of the parser.</p>
+<p class="rubric">Example</p>
+<p>If you want to translate all “Foo” messages as “Bar”,
+regardless of the content of the actual translation,
+you could do something like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">transform_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s1">&#39;Foo&#39;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_msgid</span> <span class="o">=</span> <span class="s1">&#39;Bar&#39;</span>  <span class="c1"># self is Po2Md</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="n">pofile_to_markdown</span><span class="p">(</span>
+    <span class="s1">&#39;Foo&#39;</span><span class="p">,</span>
+    <span class="n">pofile_path</span><span class="p">,</span>
+    <span class="n">events</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">transform_foo</span><span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The public internal properties of this class are documented
+below:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._aimg_title_inside_current_msgid">
+<span class="sig-name descname"><span class="pre">_aimg_title_inside_current_msgid</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._aimg_title_inside_current_msgid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._append_link_references">
+<span class="sig-name descname"><span class="pre">_append_link_references</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md._append_link_references" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._codespan_backticks">
+<span class="sig-name descname"><span class="pre">_codespan_backticks</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._codespan_backticks" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._codespan_inside_current_msgid">
+<span class="sig-name descname"><span class="pre">_codespan_inside_current_msgid</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._codespan_inside_current_msgid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._codespan_start_index">
+<span class="sig-name descname"><span class="pre">_codespan_start_index</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._codespan_start_index" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._current_aspan_href">
+<span class="sig-name descname"><span class="pre">_current_aspan_href</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._current_aspan_href" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._current_aspan_ref_target">
+<span class="sig-name descname"><span class="pre">_current_aspan_ref_target</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._current_aspan_ref_target" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._current_aspan_text">
+<span class="sig-name descname"><span class="pre">_current_aspan_text</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._current_aspan_text" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._current_imgspan">
+<span class="sig-name descname"><span class="pre">_current_imgspan</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._current_imgspan" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._current_list_type">
+<span class="sig-name descname"><span class="pre">_current_list_type</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._current_list_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._current_thead_aligns">
+<span class="sig-name descname"><span class="pre">_current_thead_aligns</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._current_thead_aligns" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._current_wikilink_target">
+<span class="sig-name descname"><span class="pre">_current_wikilink_target</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._current_wikilink_target" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._enterspan_replacer">
+<span class="sig-name descname"><span class="pre">_enterspan_replacer</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._enterspan_replacer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._escape_translation">
+<span class="sig-name descname"><span class="pre">_escape_translation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md._escape_translation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_aspan">
+<span class="sig-name descname"><span class="pre">_inside_aspan</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_aspan" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_codeblock">
+<span class="sig-name descname"><span class="pre">_inside_codeblock</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_codeblock" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_codespan">
+<span class="sig-name descname"><span class="pre">_inside_codespan</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_codespan" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_hblock">
+<span class="sig-name descname"><span class="pre">_inside_hblock</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_hblock" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_htmlblock">
+<span class="sig-name descname"><span class="pre">_inside_htmlblock</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_htmlblock" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_indented_codeblock">
+<span class="sig-name descname"><span class="pre">_inside_indented_codeblock</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_indented_codeblock" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_liblock">
+<span class="sig-name descname"><span class="pre">_inside_liblock</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_liblock" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_liblock_first_p">
+<span class="sig-name descname"><span class="pre">_inside_liblock_first_p</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_liblock_first_p" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_pblock">
+<span class="sig-name descname"><span class="pre">_inside_pblock</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_pblock" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._inside_quoteblock">
+<span class="sig-name descname"><span class="pre">_inside_quoteblock</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._inside_quoteblock" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._leavespan_replacer">
+<span class="sig-name descname"><span class="pre">_leavespan_replacer</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._leavespan_replacer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._ol_marks">
+<span class="sig-name descname"><span class="pre">_ol_marks</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._ol_marks" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._process_command">
+<span class="sig-name descname"><span class="pre">_process_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md._process_command" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._save_current_line">
+<span class="sig-name descname"><span class="pre">_save_current_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md._save_current_line" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._save_current_msgid">
+<span class="sig-name descname"><span class="pre">_save_current_msgid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md._save_current_msgid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._saved_files_changed">
+<span class="sig-name descname"><span class="pre">_saved_files_changed</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._saved_files_changed" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._translate_msgid">
+<span class="sig-name descname"><span class="pre">_translate_msgid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msgid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msgctxt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tcomment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md._translate_msgid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md._ul_marks">
+<span class="sig-name descname"><span class="pre">_ul_marks</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md._ul_marks" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.bold_end_string">
+<span class="sig-name descname"><span class="pre">bold_end_string</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.bold_end_string" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.bold_start_string">
+<span class="sig-name descname"><span class="pre">bold_start_string</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.bold_start_string" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.code_end_string">
+<span class="sig-name descname"><span class="pre">code_end_string</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.code_end_string" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.code_end_string_escaped">
+<span class="sig-name descname"><span class="pre">code_end_string_escaped</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.code_end_string_escaped" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.code_start_string">
+<span class="sig-name descname"><span class="pre">code_start_string</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.code_start_string" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.code_start_string_escaped">
+<span class="sig-name descname"><span class="pre">code_start_string_escaped</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.code_start_string_escaped" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.command">
+<span class="sig-name descname"><span class="pre">command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mdpo_command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_command</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md.command" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.command_aliases">
+<span class="sig-name descname"><span class="pre">command_aliases</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.command_aliases" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.content">
+<span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.content" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.current_line">
+<span class="sig-name descname"><span class="pre">current_line</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.current_line" title="Permalink to this definition"></a></dt>
+<dd><p>Line currently being saved in the output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.current_msgctxt">
+<span class="sig-name descname"><span class="pre">current_msgctxt</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.current_msgctxt" title="Permalink to this definition"></a></dt>
+<dd><p>Context message that will be translated in the next
+msgid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.current_msgid">
+<span class="sig-name descname"><span class="pre">current_msgid</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.current_msgid" title="Permalink to this definition"></a></dt>
+<dd><p>The msgid being currently built for the next msgstr
+translation. Keep in mind that, if you are executing an event
+that will be followed by an span one (<code class="docutils literal notranslate"><span class="pre">enter_span</span></code> or
+<code class="docutils literal notranslate"><span class="pre">exit_span</span></code>), the content of the msgid will change before
+translate it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.current_tcomment">
+<span class="sig-name descname"><span class="pre">current_tcomment</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.current_tcomment" title="Permalink to this definition"></a></dt>
+<dd><p>Translator comment that will be translated in the next
+msgid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.disable">
+<span class="sig-name descname"><span class="pre">disable</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.disable" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates if the translator is currently disabled,
+which happens after a <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-disable</span> <span class="pre">--&gt;</span></code> command
+is found, before any subsecuents <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>
+commands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.disable_next_block">
+<span class="sig-name descname"><span class="pre">disable_next_block</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.disable_next_block" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates if the next block will be translated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.disabled_entries">
+<span class="sig-name descname"><span class="pre">disabled_entries</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.disabled_entries" title="Permalink to this definition"></a></dt>
+<dd><p>Disabled PO entries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(<a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POEntry" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POEntry</span></code></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.enable_next_block">
+<span class="sig-name descname"><span class="pre">enable_next_block</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.enable_next_block" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates if the next block will be translated
+when the translator is disabled</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.enter_block">
+<span class="sig-name descname"><span class="pre">enter_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md.enter_block" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.enter_span">
+<span class="sig-name descname"><span class="pre">enter_span</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">span</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md.enter_span" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.events">
+<span class="sig-name descname"><span class="pre">events</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.events" title="Permalink to this definition"></a></dt>
+<dd><p>Custom events excuted during the parsing while
+translating content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.extensions">
+<span class="sig-name descname"><span class="pre">extensions</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.extensions" title="Permalink to this definition"></a></dt>
+<dd><p>MD4C extensions used to parse the content.
+See all available in <a class="reference internal" href="mdpo.md4c.html"><span class="doc">mdpo.md4c module</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.italic_end_string">
+<span class="sig-name descname"><span class="pre">italic_end_string</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.italic_end_string" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.italic_end_string_escaped">
+<span class="sig-name descname"><span class="pre">italic_end_string_escaped</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.italic_end_string_escaped" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.italic_start_string">
+<span class="sig-name descname"><span class="pre">italic_start_string</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.italic_start_string" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.italic_start_string_escaped">
+<span class="sig-name descname"><span class="pre">italic_start_string_escaped</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.italic_start_string_escaped" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.leave_block">
+<span class="sig-name descname"><span class="pre">leave_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md.leave_block" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.leave_span">
+<span class="sig-name descname"><span class="pre">leave_span</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">span</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md.leave_span" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.link_references">
+<span class="sig-name descname"><span class="pre">link_references</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.link_references" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.output">
+<span class="sig-name descname"><span class="pre">output</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.output" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.outputlines">
+<span class="sig-name descname"><span class="pre">outputlines</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.outputlines" title="Permalink to this definition"></a></dt>
+<dd><p>Lines currently added to the output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.pofiles">
+<span class="sig-name descname"><span class="pre">pofiles</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.pofiles" title="Permalink to this definition"></a></dt>
+<dd><p>Paths to PO files to translate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.text">
+<span class="sig-name descname"><span class="pre">text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md.text" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath_or_content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.Po2Md.translate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.translated_entries">
+<span class="sig-name descname"><span class="pre">translated_entries</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.translated_entries" title="Permalink to this definition"></a></dt>
+<dd><p>Translated PO entries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(<a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POEntry" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POEntry</span></code></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.translations">
+<span class="sig-name descname"><span class="pre">translations</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.translations" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.translations_with_msgctxt">
+<span class="sig-name descname"><span class="pre">translations_with_msgctxt</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.translations_with_msgctxt" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.wikilink_end_string">
+<span class="sig-name descname"><span class="pre">wikilink_end_string</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.wikilink_end_string" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.wikilink_start_string">
+<span class="sig-name descname"><span class="pre">wikilink_start_string</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.wikilink_start_string" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mdpo.po2md.Po2Md.wrapwidth">
+<span class="sig-name descname"><span class="pre">wrapwidth</span></span><a class="headerlink" href="#mdpo.po2md.Po2Md.wrapwidth" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.po2md.pofile_to_markdown">
+<span class="sig-prename descclassname"><span class="pre">mdpo.po2md.</span></span><span class="sig-name descname"><span class="pre">pofile_to_markdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath_or_content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pofiles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command_aliases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrapwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">80</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po2md.pofile_to_markdown" title="Permalink to this definition"></a></dt>
+<dd><p>Translate Markdown content or file using PO files as reference.</p>
+<p>This implementation reproduces the same valid Markdown output, given the
+provided AST, with replaced translations, but doesn’t rebuilds the same
+input format as Markdown is just a subset of HTML.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath_or_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Markdown filepath or content to translate.</p></li>
+<li><p><strong>pofiles</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – from where to extract messages to make the replacements translating
+strings.</p></li>
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Paths of PO files to ignore. Useful when a glob does not
+fit your requirements indicating the files to extract content.
+Also, filename or a dirname can be defined without indicate the
+full path.</p></li>
+<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Saves the output content in file whose path is specified
+at this parameter.</p></li>
+<li><p><strong>md_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Markdown content encoding.</p></li>
+<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – PO files encoding. If you need different encodings
+for each file, you must define it in the “Content-Type” field of
+each PO file metadata, in the form
+<code class="docutils literal notranslate"><span class="pre">&quot;Content-Type:</span> <span class="pre">text/plain;</span> <span class="pre">charset=&lt;ENCODING&gt;\n&quot;</span></code>.</p></li>
+<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
+names in comments. The <code class="docutils literal notranslate"><span class="pre">mdpo-</span></code> prefix in command names resolution
+is optional. For example, if you want to use <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-on</span> <span class="pre">--&gt;</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>, you can pass the dictionaries
+<code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;mdpo-enable&quot;}</span></code> or <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;enable&quot;}</span></code> to this
+parameter.</p></li>
+<li><p><strong>wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Maximum width used rendering the Markdown output.</p></li>
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – <p>Preprocessing events executed during the translation
+process that can be used to customize the output. Takes list of
+functions as values. If one of these functions returns <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+that part of the translation process is skipped by <code class="docutils literal notranslate"><span class="pre">po2md</span></code>.
+Available events are the next:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">enter_block(self,</span> <span class="pre">block,</span> <span class="pre">details)</span></code>: Executed when the parsing
+of a Markdown block starts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">leave_block(self,</span> <span class="pre">block,</span> <span class="pre">details)</span></code>: Executed when the parsing
+of a Markdown block ends.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enter_span(self,</span> <span class="pre">span,</span> <span class="pre">details)</span></code>: Executed when the parsing of
+a Markdown span starts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">leave_span(self,</span> <span class="pre">span,</span> <span class="pre">details)</span></code>: Executed when the parsing of
+a Markdown span ends.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">text(self,</span> <span class="pre">block,</span> <span class="pre">text)</span></code>: Executed when the parsing of text
+starts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">command(self,</span> <span class="pre">mdpo_command,</span> <span class="pre">comment,</span> <span class="pre">original</span> <span class="pre">command)</span></code>:
+Executed when a mdpo HTML command is found.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">msgid(self,</span> <span class="pre">msgid,</span> <span class="pre">msgstr,</span> <span class="pre">msgctxt,</span> <span class="pre">tcomment,</span> <span class="pre">flags)</span></code>:
+Executed when a msgid is going to be replaced.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">link_reference(self,</span> <span class="pre">target,</span> <span class="pre">href,</span> <span class="pre">title)</span></code>: Executed when each
+reference link is being written in the output (at the end of the
+translation process).</p></li>
+</ul>
+<p>You can also define the location of these functions by strings
+with the syntax <code class="docutils literal notranslate"><span class="pre">path/to/file.py::function_name</span></code>.</p>
+</p></li>
+<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Add events displaying all parsed elements in the
+translation process.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Markdown output file with translated content.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.po2md.__main__.html">mdpo.po2md.__main__ module</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mdpo.mdpo2html.__main__.html" class="btn btn-neutral float-left" title="mdpo.mdpo2html.__main__ module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.po2md.__main__.html" class="btn btn-neutral float-right" title="mdpo.po2md.__main__ module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2022, {.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
