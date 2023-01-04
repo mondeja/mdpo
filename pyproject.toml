@@ -104,13 +104,13 @@ targets = [{ file = "pyproject.toml" }, { file = "docs/pre-commit-hooks.rst" }]
 [tool.project-config]
 cache = "2 days"
 style = [
-  "gh://mondeja/project-config-styles@v4/python/base.json5",
-  "gh://mondeja/project-config-styles@v4/python/single-quotes.json5",
-  "gh://mondeja/project-config-styles@v4/python/line-length-80.json5",
-  "gh://mondeja/project-config-styles@v4/python/tests.json5",
-  "gh://mondeja/project-config-styles@v4/python/sphinx.json5",
-  "gh://mondeja/project-config-styles@v4/python/readthedocs.json5",
-  "gh://mondeja/project-config-styles@v4/python/google-docstrings.json5"
+  "gh://mondeja/project-config-styles@v4.2/python/base.json5",
+  "gh://mondeja/project-config-styles@v4.2/python/single-quotes.json5",
+  "gh://mondeja/project-config-styles@v4.2/python/line-length-80.json5",
+  "gh://mondeja/project-config-styles@v4.2/python/tests.json5",
+  "gh://mondeja/project-config-styles@v4.2/python/sphinx.json5",
+  "gh://mondeja/project-config-styles@v4.2/python/readthedocs.json5",
+  "gh://mondeja/project-config-styles@v4.2/python/google-docstrings.json5"
 ]
 
 [tool.pytest.ini_options]
