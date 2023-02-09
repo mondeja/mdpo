@@ -22,7 +22,7 @@ Given the next directories tree:
    📁 .
    ├── 📁 locale
    │   └── 📁 es
-   │       └── 📄 LC_MESSAGES
+   │       └── 📁 LC_MESSAGES
    └── 📄 README.md
 
 
