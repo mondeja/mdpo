@@ -85,20 +85,20 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.28.0
+    rev: v1.29.0
     hooks:
       - id: yamllint
         args:
           - -c
           - .yamllint.yaml
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 2.6.2
+    rev: 2.7.1
     hooks:
       - id: editorconfig-checker
         name: editorconfig-checker
         alias: ec
   - repo: https://github.com/myint/autoflake
-    rev: v2.0.0
+    rev: v2.0.1
     hooks:
       - id: autoflake
         args:
