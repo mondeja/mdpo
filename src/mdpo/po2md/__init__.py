@@ -1,5 +1,7 @@
 """Markdown files translator using PO files as reference."""
 
+import string
+
 import md4c
 import polib
 
@@ -16,7 +18,11 @@ from mdpo.po import (
     po_escaped_string,
     pofiles_to_unique_translations_dicts,
 )
-from mdpo.text import min_not_max_chars_in_a_row, parse_wrapwidth_argument
+from mdpo.text import (
+    min_not_max_chars_in_a_row,
+    parse_wrapwidth_argument,
+    unicode_linebreak_wrap,
+)
 
 
 class Po2Md:
@@ -437,6 +443,20 @@ class Po2Md:
                     wikilink_start_string=self.wikilink_start_string,
                     wikilink_end_string=self.wikilink_end_string,
                 ).wrap(translation)
+
+                # Break lines with Unicode Line Break algorithm
+                #
+                # Only execute it for strings without code spans
+                # and without normal whitespace characters
+                if (
+                    self.code_end_string not in translation
+                    and self.code_start_string not in translation
+                    and not any([ws in translation for ws in string.whitespace])
+                ):
+                    translation = unicode_linebreak_wrap(
+                        translation,
+                        self.wrapwidth,
+                    )
 
                 if self._inside_hblock or self._current_thead_aligns:
                     translation = translation.rstrip('\n')

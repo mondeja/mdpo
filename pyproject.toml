@@ -25,6 +25,7 @@ keywords = ["markdown", "pofile", "translation", "html", "po", "i18n"]
 dependencies = [
   "polib~=1.1",
   "pymd4c~=1.3",
+  "unicode-linebreak",
   "importlib-metadata-argparse-version",
   "importlib-metadata; python_version < '3.10'",
   "contextlib-chdir~=1.0",
