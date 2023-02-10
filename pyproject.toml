@@ -1,6 +1,6 @@
 [project]
 name = "mdpo"
-version = "1.1.0"
+version = "1.1.1"
 description = "Markdown files translation using PO files."
 readme = "README.md"
 license = "BSD-3-Clause"
