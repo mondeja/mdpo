@@ -187,9 +187,7 @@ def unicode_linebreak_wrap(text, wrapwidth):
             _current_line = ''
             _current_line_start_index = index
         elif _line_length_at_next_break >= wrapwidth:
-            result += _current_line[:-1].strip()
-            if '\n' not in _current_line and '\r' not in _current_line:
-                result += '\n'
+            result += f'{_current_line[:-1].strip()}\n'
             _current_line = ''
             _current_line_start_index = index - 1
 
