@@ -436,6 +436,7 @@ class MdPo2HTML(HTMLParser):
                         'Code blocks translations are not supported'
                         ' by mdpo2html implementation.',
                         SyntaxWarning,
+                        stacklevel=2,
                     )
                 else:
                     self.output += data_as_comment

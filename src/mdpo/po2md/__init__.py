@@ -1,8 +1,7 @@
 """Markdown files translator using PO files as reference."""
 
-import string
-
 import md4c
+import md_ulb_pwrap
 import polib
 
 from mdpo.command import (
@@ -11,18 +10,14 @@ from mdpo.command import (
 )
 from mdpo.event import add_debug_events, parse_events_kwarg, raise_skip_event
 from mdpo.io import save_file_checking_file_changed, to_file_content_if_is_file
-from mdpo.md import MarkdownSpanWrapper, parse_link_references
+from mdpo.md import parse_link_references
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import (
     paths_or_globs_to_unique_pofiles,
     po_escaped_string,
     pofiles_to_unique_translations_dicts,
 )
-from mdpo.text import (
-    min_not_max_chars_in_a_row,
-    parse_wrapwidth_argument,
-    unicode_linebreak_wrap,
-)
+from mdpo.text import min_not_max_chars_in_a_row, parse_wrapwidth_argument
 
 
 class Po2Md:
@@ -189,7 +184,9 @@ class Po2Md:
         )
 
         self.wrapwidth = (
-            # infinte gives some undesired rendering
+            # infinite would be 2 ** 24 because the underlying library
+            # for wrapping (md-ulb-pwrap) doesn't accept the infinite
+            # Python object
             (
                 2 ** 24 if kwargs['wrapwidth'] in [float('inf'), 0]
                 else parse_wrapwidth_argument(kwargs['wrapwidth'])
@@ -423,43 +420,22 @@ class Po2Md:
                         first_line_width_diff = -3
 
             if not self._inside_codeblock:
-                indent = ''
-                if len(self._current_list_type) > 1:
-                    indent = '   ' * len(self._current_list_type)
-
-                translation = MarkdownSpanWrapper(
-                    width=self.wrapwidth,
-                    first_line_width=self.wrapwidth + first_line_width_diff,
-                    indent=indent,
-                    md4c_extensions=self.extensions,
-                    code_start_string=self.code_start_string,
-                    code_end_string=self.code_end_string,
-                    italic_start_string_escaped=(
-                        self.italic_start_string_escaped
-                    ),
-                    italic_end_string_escaped=self.italic_end_string_escaped,
-                    code_start_string_escaped=self.code_start_string_escaped,
-                    code_end_string_escaped=self.code_end_string_escaped,
-                    wikilink_start_string=self.wikilink_start_string,
-                    wikilink_end_string=self.wikilink_end_string,
-                ).wrap(translation)
-
-                # Break lines with Unicode Line Break algorithm
+                # Wrap lines with Unicode Line Break algorithm
                 #
-                # Only execute it for strings without code spans
-                # and without normal whitespace characters
-                if (
-                    self.code_end_string not in translation
-                    and self.code_start_string not in translation
-                    and not any([ws in translation for ws in string.whitespace])
-                ):
-                    translation = unicode_linebreak_wrap(
+                # Only execute it for text outside tables
+                if not self._current_thead_aligns:
+                    translation = md_ulb_pwrap.ulb_wrap_paragraph(
                         translation,
                         self.wrapwidth,
+                        self.wrapwidth + first_line_width_diff,
                     )
 
-                if self._inside_hblock or self._current_thead_aligns:
-                    translation = translation.rstrip('\n')
+                    if not any([
+                        self._inside_liblock,
+                        self._inside_hblock,
+                        self._inside_quoteblock,
+                    ]):
+                        translation += '\n'
 
         if translation.rstrip('\n'):
             self.current_line += translation

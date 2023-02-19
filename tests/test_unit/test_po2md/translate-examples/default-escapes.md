@@ -26,8 +26,6 @@ Some text with two literal backticks inside ```inline `` code```.
 
 Some text with three literal backticks inside ````inline ``` code````.
 
-Some text with literal backtick \`, `code` markup, double literal backtick \`\` and ``code with double backtick`` markup.
-
 [this is a link](href "title with \" characters")
 
 [qux](http://foobar.baz){: title="A title" mdpo }

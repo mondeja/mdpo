@@ -31,9 +31,6 @@ Algo de texto con dos tildes invertidas literales dentro de `código `` en líne
 Algo de texto con tres tildes invertidas literales dentro de
 `código ``` en línea`.
 
-Algo de texto con tilde invertida literal \`, marcado de `código`, doble tilde
-invertida literal \`\` y marcado de `código con doble tilde invertida`.
-
 [esto es un link](hreferencia "título con caracteres \"")
 
 [enlace](https://foobar.es){: title="Un título" mdpo }
