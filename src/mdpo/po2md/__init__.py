@@ -184,7 +184,9 @@ class Po2Md:
         )
 
         self.wrapwidth = (
-            # infinte gives some undesired rendering
+            # infinite would be 2 ** 24 because the underlying library
+            # for wrapping (md-ulb-pwrap) doesn't accept the infinite
+            # Python object
             (
                 2 ** 24 if kwargs['wrapwidth'] in [float('inf'), 0]
                 else parse_wrapwidth_argument(kwargs['wrapwidth'])
