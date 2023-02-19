@@ -10,5 +10,5 @@ y la próxima oración debe ser envuelta de nuevo.
 
 Este párrafo tiene una `corta línea de código` que encaja dentro de la línea.
 
-Este párrafo tiene una `corta línea de código` que encaja dentro de la línea y
-la línea debe ser envuelta después de ella.
+Este párrafo tiene una `corta línea de código` que encaja dentro de la línea y la
+línea debe ser envuelta después de ella.

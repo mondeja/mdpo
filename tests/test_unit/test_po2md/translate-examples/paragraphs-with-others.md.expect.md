@@ -7,8 +7,7 @@ deb http://archive.ubuntu.com/ubuntu focal-security main restricted universe mul
 deb http://archive.ubuntu.com/ubuntu focal-updates main restricted universe multiverse
 ```
 
-Los tests son desarrollados usando `pytest`, que es un framework de testeo
-Python.
+Los tests son desarrollados usando `pytest`, que es un framework de testeo Python.
 
 esto es un párrafo y **la siguiente línea comienza con marcado en negrita**
 

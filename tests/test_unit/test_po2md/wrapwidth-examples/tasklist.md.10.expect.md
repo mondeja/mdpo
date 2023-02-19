@@ -1,9 +1,9 @@
 - [ ] 7890
 - [ ] 78 0
-2 4 texto
-roto
-- [x] 7 9
-1 3 5
+2 4
+texto roto
+- [x] 7 9 1
+3 5
 texto roto
 - [ ] Un
 elemento

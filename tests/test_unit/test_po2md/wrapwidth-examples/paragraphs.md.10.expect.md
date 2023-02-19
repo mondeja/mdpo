@@ -12,8 +12,8 @@ es menor
 que su
 largo.
 
-Also más
-de texto
+Algo más de
+texto
 largo que
 contiene
 `un código en línea`
@@ -26,8 +26,7 @@ largo
 enlace
 cuyo
 objetivo
-no
-debería
+no debería
 ser
 envuelto
 en
