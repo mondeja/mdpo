@@ -1,6 +1,7 @@
 """Wrapping rendering tests for ``po2md`` CLI."""
 
 import glob
+import math
 import os
 
 import pytest
@@ -17,11 +18,13 @@ EXAMPLES = sorted(
 )
 
 
-@pytest.mark.parametrize('wrapwidth', (10, 40, 80, 2000))
+@pytest.mark.parametrize('wrapwidth', (10, 40, 80, 2000, 0, math.inf))
 @pytest.mark.parametrize('filename', EXAMPLES)
 def test_wrapwidth(filename, wrapwidth):
     filepath_in = os.path.join(EXAMPLES_DIR, filename)
+    wrapwidth = wrapwidth if wrapwidth != math.inf else 'inf'
     filepath_out = f'{filepath_in}.{wrapwidth}.expect.md'
+
     po_filepath = os.path.join(
         os.path.dirname(filepath_in),
         os.path.splitext(os.path.basename(filepath_in))[0] + '.po',

@@ -4,6 +4,9 @@ import os
 import sys
 
 
+INFINITE_WRAPWIDTH = 65535
+
+
 def and_join(values):
     """Comma and space join using "and" between the last and penultimate items.
 
@@ -127,9 +130,9 @@ def parse_strint_0_inf(value):
 
     num = float(value)
     try:
-        return int(num) if num > 0 else float('inf')
+        return int(num) if num > 0 else INFINITE_WRAPWIDTH
     except OverflowError:  # cannot convert float infinity to integer
-        return float('inf')
+        return INFINITE_WRAPWIDTH
 
 
 def parse_wrapwidth_argument(value):

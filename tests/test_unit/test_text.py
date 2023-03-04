@@ -1,10 +1,10 @@
 """Tests for mdpo text utilities."""
 
-import math
 
 import pytest
 
 from mdpo.text import (
+    INFINITE_WRAPWIDTH,
     min_not_max_chars_in_a_row,
     parse_escaped_pair,
     parse_strint_0_inf,
@@ -61,20 +61,20 @@ def test_parse_escaped_pair(text, expected_result, maybe_raises):
     (
         ('1', 1),
         ('1.1', 1),
-        (-1, math.inf),
-        (-1.1, math.inf),
-        ('-1', math.inf),
-        ('-1.1', math.inf),
-        (0, math.inf),
-        (-0, math.inf),
+        (-1, INFINITE_WRAPWIDTH),
+        (-1.1, INFINITE_WRAPWIDTH),
+        ('-1', INFINITE_WRAPWIDTH),
+        ('-1.1', INFINITE_WRAPWIDTH),
+        (0, INFINITE_WRAPWIDTH),
+        (-0, INFINITE_WRAPWIDTH),
         ('a', ValueError),
         ('nan', ValueError),
         ('NotANumber', ValueError),
-        ('inf', math.inf),
-        ('InF', math.inf),
-        ('-inf', math.inf),
-        ('-iNf', math.inf),
-        ('iNfInItY', math.inf),
+        ('inf', INFINITE_WRAPWIDTH),
+        ('InF', INFINITE_WRAPWIDTH),
+        ('-inf', INFINITE_WRAPWIDTH),
+        ('-iNf', INFINITE_WRAPWIDTH),
+        ('iNfInItY', INFINITE_WRAPWIDTH),
         ('+1E6', 1000000),
     ),
 )
@@ -92,6 +92,9 @@ def test_parse_wrapwidth_argument(value):
         with pytest.raises(ValueError, match=expected_msg):
             parse_wrapwidth_argument(value)
     else:
+
         assert parse_wrapwidth_argument(value) == (
-            float('inf') if float(value) == 0 else float(value)
+            INFINITE_WRAPWIDTH if 'inf' in value or value == '0' else int(
+                value,
+            )
         )
