@@ -17,7 +17,11 @@ from mdpo.po import (
     po_escaped_string,
     pofiles_to_unique_translations_dicts,
 )
-from mdpo.text import min_not_max_chars_in_a_row, parse_wrapwidth_argument
+from mdpo.text import (
+    INFINITE_WRAPWIDTH,
+    min_not_max_chars_in_a_row,
+    parse_wrapwidth_argument,
+)
 
 
 class Po2Md:
@@ -184,11 +188,8 @@ class Po2Md:
         )
 
         self.wrapwidth = (
-            # infinite would be 2 ** 24 because the underlying library
-            # for wrapping (md-ulb-pwrap) doesn't accept the infinite
-            # Python object
             (
-                2 ** 24 if kwargs['wrapwidth'] in [float('inf'), 0]
+                INFINITE_WRAPWIDTH if kwargs['wrapwidth'] in [float('inf'), 0]
                 else parse_wrapwidth_argument(kwargs['wrapwidth'])
             ) if 'wrapwidth' in kwargs else 80
         )
