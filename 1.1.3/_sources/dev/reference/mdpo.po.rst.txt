@@ -1,0 +1,8 @@
+mdpo.po module
+==============
+
+.. automodule:: mdpo.po
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

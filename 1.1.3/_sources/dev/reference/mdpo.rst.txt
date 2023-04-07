@@ -1,0 +1,36 @@
+mdpo package
+============
+
+.. automodule:: mdpo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mdpo.md2po
+   mdpo.md2po2md
+   mdpo.mdpo2html
+   mdpo.po2md
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mdpo.cli
+   mdpo.command
+   mdpo.compat
+   mdpo.event
+   mdpo.io
+   mdpo.md
+   mdpo.md4c
+   mdpo.po
+   mdpo.polib
+   mdpo.text

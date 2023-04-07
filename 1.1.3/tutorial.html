@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; mdpo 1.1.3 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/override-styles.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Customizing extraction" href="commands.html" />
+    <link rel="prev" title="mdpo’s rationale" href="rationale.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#markdown-to-markdown">Markdown to markdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simple-readme-file-translation">Simple README file translation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#html-from-markdown-to-html">HTML-from-Markdown to HTML</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/reference/modules.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline"></a></h1>
+<p><strong>mdpo</strong> provides flexible ways for doing Markdown markup translations. In this
+tutorial are covered the most common workflows.</p>
+<hr><section id="markdown-to-markdown">
+<h2>Markdown to markdown<a class="headerlink" href="#markdown-to-markdown" title="Permalink to this headline"></a></h2>
+<p>If you want to translate a Markdown source using a PO file and produce
+translated Markdown output, use this method.</p>
+<p>Given the next directories tree:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>📁<span class="w"> </span>.
+├──<span class="w"> </span>📁<span class="w"> </span>locale
+│<span class="w">   </span>└──<span class="w"> </span>📁<span class="w"> </span>es
+│<span class="w">       </span>└──<span class="w"> </span>📁<span class="w"> </span>LC_MESSAGES
+└──<span class="w"> </span>📄<span class="w"> </span>README.md
+</pre></div>
+</div>
+<p>Use the next command to create or update the PO file for <code class="docutils literal notranslate"><span class="pre">README.md</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>md2po<span class="w"> </span>README.md<span class="w"> </span>--quiet<span class="w"> </span>--save<span class="w"> </span>--po-filepath<span class="w"> </span>locale/es/LC_MESSAGES/readme.po
+</pre></div>
+</div>
+<p>Then, in order of translate the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> producing other file as result:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>po2md<span class="w"> </span>README.md<span class="w"> </span>--pofiles<span class="w"> </span>locale/es/LC_MESSAGES/readme.po<span class="w"> </span>--quiet<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--save<span class="w"> </span>locale/es/LC_MESSAGES/README.md
+</pre></div>
+</div>
+<p>This will be the output after previous two commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>📁 .
+├── 📁 locale
+│   └── 📁 es
+│       └── 📁 LC_MESSAGES
+│           ├── 📄 README.md
+│           └── 📄 readme.po
+└── 📄 README.md
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="cli.html#md2po"><span class="std std-ref">md2po CLI</span></a></p></li>
+<li><p><a class="reference internal" href="cli.html#po2md"><span class="std std-ref">po2md CLI</span></a></p></li>
+</ul>
+</div>
+<hr></section>
+<section id="simple-readme-file-translation">
+<h2>Simple README file translation<a class="headerlink" href="#simple-readme-file-translation" title="Permalink to this headline"></a></h2>
+<p>Just use <a class="reference internal" href="cli.html#md2po2md"><span class="std std-ref">md2po2md CLI</span></a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>md2po2md<span class="w"> </span>README.md<span class="w"> </span>-l<span class="w"> </span>es<span class="w"> </span>fr<span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;locale/{lang}&quot;</span>
+</pre></div>
+</div>
+<p>Define the languages to translate into using the <code class="docutils literal notranslate"><span class="pre">--lang</span></code>/<code class="docutils literal notranslate"><span class="pre">-l</span></code> option.</p>
+<p>You also can use the next snippet to include links for the translations:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cm">&lt;!-- mdpo-disable --&gt;</span>
+<span class="cm">&lt;!-- mdpo-enable-next-line --&gt;</span>
+&gt; Read this document in other languages:
+&gt;
+&gt; - [Español][readme-es]
+&gt; - [Français][readme-fr]
+<span class="cm">&lt;!-- mdpo-enable --&gt;</span>
+
+[readme-es]: https://github.com/user/repo/blob/master/locale/es/README.md
+[readme-fr]: https://github.com/user/repo/blob/master/locale/fr/README.md
+</pre></div>
+</div>
+<p>This will be the output after the previous command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>📁<span class="w"> </span>.
+├──<span class="w"> </span>📁<span class="w"> </span>locale
+│<span class="w">   </span>├──<span class="w"> </span>📁<span class="w"> </span>es
+│<span class="w">   </span><span class="p">|</span><span class="w">   </span>├──<span class="w"> </span>📄<span class="w"> </span>README.md
+│<span class="w">   </span><span class="p">|</span><span class="w">   </span>└──<span class="w"> </span>📄<span class="w"> </span>readme.po
+<span class="p">|</span><span class="w">   </span>└──<span class="w"> </span>📁<span class="w"> </span>fr
+│<span class="w">       </span>├──<span class="w"> </span>📄<span class="w"> </span>README.md
+│<span class="w">       </span>└──<span class="w"> </span>📄<span class="w"> </span>readme.po
+└──<span class="w"> </span>📄<span class="w"> </span>README.md
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="cli.html#md2po2md"><span class="std std-ref">md2po2md CLI</span></a></p></li>
+</ul>
+</div>
+<hr></section>
+<section id="html-from-markdown-to-html">
+<h2>HTML-from-Markdown to HTML<a class="headerlink" href="#html-from-markdown-to-html" title="Permalink to this headline"></a></h2>
+<p>If you have a HTML file produced from Markdown using a Markdown processor like
+<a class="reference external" href="markdown_py">Python-Markdown</a> and you want to translate it in place using
+PO files, use this method.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method is experimental. If you have issues consider to open an issue
+in the <a class="reference external" href="bug_tracker">bug tracker</a>.</p>
+</div>
+<p>Given next directory tree:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>📁<span class="w"> </span>.
+├──<span class="w"> </span>📁<span class="w"> </span>locale
+│<span class="w">   </span>└──<span class="w"> </span>📁<span class="w"> </span>es
+│<span class="w">       </span>└──<span class="w"> </span>📁<span class="w"> </span>LC_MESSAGES
+├──<span class="w"> </span>📄<span class="w"> </span>README.html
+└──<span class="w"> </span>📄<span class="w"> </span>README.md
+</pre></div>
+</div>
+<p>Where the file <code class="docutils literal notranslate"><span class="pre">README.html</span></code> have been produced using an HTML processor, use
+next command to create and update the translation pofile for <code class="docutils literal notranslate"><span class="pre">README.html</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>md2po<span class="w"> </span>README.md<span class="w"> </span>--quiet<span class="w"> </span>--save<span class="w"> </span>--po-filepath<span class="w"> </span>locale/es/LC_MESSAGES/readme.po
+</pre></div>
+</div>
+<p>After that, you can use the new file <code class="docutils literal notranslate"><span class="pre">locale/es/LC_MESSAGES/readme.po</span></code> to
+replace the contents of the file <code class="docutils literal notranslate"><span class="pre">README.html</span></code> with your translations, using
+next command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mdpo2html<span class="w"> </span>README.html<span class="w"> </span>--pofiles<span class="w"> </span>locale/es/LC_MESSAGES/readme.po<span class="w"> </span>--quiet<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--save<span class="w"> </span>locale/es/LC_MESSAGES/README.html
+</pre></div>
+</div>
+<p>And this will produce your translated file in
+<code class="docutils literal notranslate"><span class="pre">locale/es/LC_MESSAGES/README.html</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>📁 .
+├── 📁 locale
+│   └── 📁 es
+│       └── 📁 LC_MESSAGES
+│           ├── 📄 README.html
+│           └── 📄 readme.po
+├── 📄 README.html
+└── 📄 README.md
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="cli.html#mdpo2html"><span class="std std-ref">mdpo2html CLI</span></a></p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rationale.html" class="btn btn-neutral float-left" title="mdpo’s rationale" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="commands.html" class="btn btn-neutral float-right" title="Customizing extraction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
