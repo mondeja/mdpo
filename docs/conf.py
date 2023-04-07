@@ -27,11 +27,7 @@ for line in pyproject_lines:
             ' = ',
         )[1].strip().strip('"').strip("'")
     elif line.startswith('authors ='):
-        metadata['author'] = ' '.join(
-            line.split(' = ')[1].strip().strip(
-                '[',
-            ).strip(']').strip('"').strip("'").split(' ')[:-1],
-        )
+        metadata['author'] = re.search("name = \"([^\"]+)\"", line).group(1)
     elif not line:
         break
 
