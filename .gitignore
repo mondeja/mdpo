@@ -13,3 +13,4 @@ venv*/
 docs/_build/
 .vscode
 /temp/
+docs/dev/reference/
