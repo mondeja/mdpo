@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mdpo.md module &mdash; mdpo 1.1.0 documentation</title>
+  <title>mdpo.md module &mdash; mdpo 1.1.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -119,168 +119,6 @@
   <section id="module-mdpo.md">
 <span id="mdpo-md-module"></span><h1>mdpo.md module<a class="headerlink" href="#module-mdpo.md" title="Permalink to this headline"></a></h1>
 <p>Markdown related utilities for mdpo.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mdpo.md.</span></span><span class="sig-name descname"><span class="pre">MarkdownSpanWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">80</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_line_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">80</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_line_indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md4c_extensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper._current_aspan_href">
-<span class="sig-name descname"><span class="pre">_current_aspan_href</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper._current_aspan_href" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper._current_aspan_title">
-<span class="sig-name descname"><span class="pre">_current_aspan_title</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper._current_aspan_title" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper._current_wikilink_target">
-<span class="sig-name descname"><span class="pre">_current_wikilink_target</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper._current_wikilink_target" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper._get_currently_applied_indent">
-<span class="sig-name descname"><span class="pre">_get_currently_applied_indent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper._get_currently_applied_indent" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper._get_currently_applied_width">
-<span class="sig-name descname"><span class="pre">_get_currently_applied_width</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper._get_currently_applied_width" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper._inside_codespan">
-<span class="sig-name descname"><span class="pre">_inside_codespan</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper._inside_codespan" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.bold_end_string">
-<span class="sig-name descname"><span class="pre">bold_end_string</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.bold_end_string" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.bold_start_string">
-<span class="sig-name descname"><span class="pre">bold_start_string</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.bold_start_string" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.code_end_string">
-<span class="sig-name descname"><span class="pre">code_end_string</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.code_end_string" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.code_end_string_escaped">
-<span class="sig-name descname"><span class="pre">code_end_string_escaped</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.code_end_string_escaped" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.code_start_string">
-<span class="sig-name descname"><span class="pre">code_start_string</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.code_start_string" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.code_start_string_escaped">
-<span class="sig-name descname"><span class="pre">code_start_string_escaped</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.code_start_string_escaped" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.current_line">
-<span class="sig-name descname"><span class="pre">current_line</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.current_line" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.enter_block">
-<span class="sig-name descname"><span class="pre">enter_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.enter_block" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.enter_span">
-<span class="sig-name descname"><span class="pre">enter_span</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">span</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.enter_span" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.first_line_indent">
-<span class="sig-name descname"><span class="pre">first_line_indent</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.first_line_indent" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.first_line_width">
-<span class="sig-name descname"><span class="pre">first_line_width</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.first_line_width" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.indent">
-<span class="sig-name descname"><span class="pre">indent</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.indent" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.italic_end_string">
-<span class="sig-name descname"><span class="pre">italic_end_string</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.italic_end_string" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.italic_end_string_escaped">
-<span class="sig-name descname"><span class="pre">italic_end_string_escaped</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.italic_end_string_escaped" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.italic_start_string">
-<span class="sig-name descname"><span class="pre">italic_start_string</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.italic_start_string" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.italic_start_string_escaped">
-<span class="sig-name descname"><span class="pre">italic_start_string_escaped</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.italic_start_string_escaped" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.leave_block">
-<span class="sig-name descname"><span class="pre">leave_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.leave_block" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.leave_span">
-<span class="sig-name descname"><span class="pre">leave_span</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">span</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.leave_span" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.md4c_extensions">
-<span class="sig-name descname"><span class="pre">md4c_extensions</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.md4c_extensions" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.output">
-<span class="sig-name descname"><span class="pre">output</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.output" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.text">
-<span class="sig-name descname"><span class="pre">text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.text" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.width">
-<span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.width" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.wikilink_end_string">
-<span class="sig-name descname"><span class="pre">wikilink_end_string</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.wikilink_end_string" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.wikilink_start_string">
-<span class="sig-name descname"><span class="pre">wikilink_start_string</span></span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.wikilink_start_string" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mdpo.md.MarkdownSpanWrapper.wrap">
-<span class="sig-name descname"><span class="pre">wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.MarkdownSpanWrapper.wrap" title="Permalink to this definition"></a></dt>
-<dd><p>Wraps reasonably Markdown lines.</p>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="mdpo.md.parse_link_references">
 <span class="sig-prename descclassname"><span class="pre">mdpo.md.</span></span><span class="sig-name descname"><span class="pre">parse_link_references</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md.parse_link_references" title="Permalink to this definition"></a></dt>
@@ -332,7 +170,7 @@ the resolved translations will be extracted.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2023, {.</p>
+    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
