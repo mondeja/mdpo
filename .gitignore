@@ -14,3 +14,4 @@ docs/_build/
 .vscode
 /temp/
 docs/dev/reference/
+.flakeheaven_cache/

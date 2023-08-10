@@ -6,14 +6,14 @@
 
 <p align="center">
   <a href="https://pypi.org/project/mdpo/">
-    <img src="https://img.shields.io/pypi/v/mdpo"
+    <img src="https://img.shields.io/pypi/v/mdpo?logo=pypi&logoColor=white"
          alt="PyPI">
   </a>
   <a href="https://pypi.org/project/mdpo/">
-    <img src="https://img.shields.io/pypi/pyversions/mdpo?labelColor=333333">
+    <img src="https://img.shields.io/pypi/pyversions/mdpo?logo=python&logoColor=white&labelColor=333333">
   </a>
   <a href="https://github.com/mondeja/mdpo/blob/master/LICENSE">
-    <img src="https://img.shields.io/pypi/l/mdpo?color=light-green">
+    <img src="https://img.shields.io/pypi/l/mdpo?color=light-green&logo=freebsd&logoColor=white">
   </a>
 </p>
 
@@ -24,8 +24,7 @@
 <p align="center">
 Complies with <a href="https://spec.commonmark.org/">CommonMark Specification</a>
 <a href="https://spec.commonmark.org/0.29">v0.29</a> and
-<a href="https://spec.commonmark.org/0.30">v0.30</a>, supporting some
-additional features.
+<a href="https://spec.commonmark.org/0.30">v0.30</a>, supporting additional features.
 </p>
 
 ## Status
