@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
       - name: Install dependencies
         run: pip install -U hatch
       - name: Build documentation
@@ -28,7 +28,7 @@ jobs:
           SPHINX_GITHUB_CHANGELOG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Get version
         id: get-version
-        run: echo "::set-output name=version::$(cat pyproject.toml | grep "version = " -m 1 | cut -d' ' -f3 | cut -c 2- | rev | cut -c 2- | rev)"
+        run: echo "version=$(cat pyproject.toml | grep "version = " -m 1 | cut -d' ' -f3 | cut -c 2- | rev | cut -c 2- | rev)" >> $GITHUB_OUTPUT
       - name: Deploy documentation
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -45,7 +45,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
       - name: Install dependencies
         run: pip install -U hatch
       - name: Build documentation
