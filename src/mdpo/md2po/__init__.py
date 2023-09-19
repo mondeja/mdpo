@@ -1,5 +1,6 @@
 """Markdown to PO files extractor according to mdpo specification."""
 
+import contextlib
 import glob
 import os
 
@@ -448,7 +449,11 @@ class Md2Po:
             self.pofile.append(entry)
         self.found_entries.append(entry)
 
-    def _save_current_msgid(self, msgstr='', fuzzy=False):
+    def _save_current_msgid(
+            self,
+            msgstr='',
+            fuzzy=False,
+    ):
         # raise 'msgid' event
         if raise_skip_event(
             self.events,
@@ -527,14 +532,14 @@ class Md2Po:
                 raise ValueError(
                     'You need to specify a string for the'
                     ' extracted comment with the command'
-                    f' \'{original_command}\'.',
+                    f" '{original_command}'.",
                 )
             self.current_tcomment = comment
         elif mdpo_command == 'mdpo-context':
             if not comment:
                 raise ValueError(
                     'You need to specify a string for the'
-                    f' context with the command \'{original_command}\'.',
+                    f" context with the command '{original_command}'.",
                 )
             self.current_msgctxt = comment
         elif mdpo_command == 'mdpo-include':
@@ -542,7 +547,7 @@ class Md2Po:
                 raise ValueError(
                     'You need to specify a message for the'
                     ' comment to include with the command'
-                    f' \'{original_command}\'.',
+                    f" '{original_command}'.",
                 )
             self.current_msgid = comment
             self._save_current_msgid()
@@ -634,14 +639,13 @@ class Md2Po:
             ]):
                 self._current_top_level_block_number += 1
                 self._current_top_level_block_type = md4c.BlockType.HTML.value
-        elif block is md4c.BlockType.TABLE:
-            if not any([
-                self._quoteblocks_deep,
-                self._inside_olblock,
-                self._uls_deep,
-            ]):
-                self._current_top_level_block_number += 1
-                self._current_top_level_block_type = md4c.BlockType.TABLE.value
+        elif block is md4c.BlockType.TABLE and not any([
+            self._quoteblocks_deep,
+            self._inside_olblock,
+            self._uls_deep,
+        ]):
+            self._current_top_level_block_number += 1
+            self._current_top_level_block_type = md4c.BlockType.TABLE.value
 
     def leave_block(self, block, details):
         # raise 'leave_block' event
@@ -650,9 +654,10 @@ class Md2Po:
 
         if block is md4c.BlockType.CODE:
             self._inside_codeblock = False
-            if not self.disable_next_codeblock:
-                if self.include_codeblocks or self.include_next_codeblock:
-                    self._save_current_msgid()
+            if not self.disable_next_codeblock and (
+                self.include_codeblocks or self.include_next_codeblock
+            ):
+                self._save_current_msgid()
             self.include_next_codeblock = False
             self.disable_next_codeblock = False
         elif block is md4c.BlockType.HTML:
@@ -689,19 +694,15 @@ class Md2Po:
         # underline spans for double '_' character enters two times
         if not self._inside_uspan:
             if self._inside_aspan:  # span inside link text
-                try:
+                with contextlib.suppress(KeyError):
                     self._current_aspan_text += self._enterspan_replacer[
                         span.value
                     ]
-                except KeyError:
-                    pass
             else:
-                try:
+                with contextlib.suppress(KeyError):
                     self.current_msgid += (
                         self._enterspan_replacer[span.value]
                     )
-                except KeyError:
-                    pass
 
         if span is md4c.SpanType.A:
             # here resides the logic of discover if the current link
@@ -765,19 +766,15 @@ class Md2Po:
                 self.current_msgid += self._current_wikilink_target
                 self._current_wikilink_target = None
             if self._inside_aspan:  # span inside link text
-                try:
+                with contextlib.suppress(KeyError):
                     self._current_aspan_text += self._leavespan_replacer[
                         span.value
                     ]
-                except KeyError:
-                    pass
             else:
-                try:
+                with contextlib.suppress(KeyError):
                     self.current_msgid += (
                         self._leavespan_replacer[span.value]
                     )
-                except KeyError:
-                    pass
 
         if span is md4c.SpanType.A:
             if self._current_aspan_ref_target:  # referenced link
@@ -866,7 +863,7 @@ class Md2Po:
                     if self._current_imgspan:
                         self._current_imgspan['text'] = text
                         return
-                    elif self._inside_codespan:
+                    if self._inside_codespan:
                         # fix backticks for codespan start and end to escape
                         # internal backticks
                         self._codespan_backticks = min_not_max_chars_in_a_row(
@@ -902,10 +899,10 @@ class Md2Po:
                         )
                     return
                 self.current_msgid += text
-            else:
-                if not self.disable_next_codeblock:
-                    if self.include_codeblocks or self.include_next_codeblock:
-                        self.current_msgid += text
+            elif not self.disable_next_codeblock and (
+                self.include_codeblocks or self.include_next_codeblock
+            ):
+                self.current_msgid += text
         else:
             self._process_command(text)
 
@@ -1166,6 +1163,8 @@ def markdown_to_pofile(
                        self.disable_next_block = True
         debug (bool): Add events displaying all parsed elements in the
             extraction process.
+        **kwargs: Extra arguments passed to
+            :py:class:`mdpo.md2po.Md2Po` constructor.
 
     Examples:
         >>> content = 'Some text with `inline code`'

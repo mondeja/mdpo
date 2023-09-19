@@ -3,7 +3,6 @@ import os
 import random
 
 import pytest
-
 from mdpo.md2po import markdown_to_pofile
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 

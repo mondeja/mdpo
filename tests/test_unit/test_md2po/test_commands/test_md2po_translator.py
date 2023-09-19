@@ -1,5 +1,4 @@
 import pytest
-
 from mdpo.md2po import markdown_to_pofile
 
 
@@ -10,14 +9,14 @@ from mdpo.md2po import markdown_to_pofile
     ),
 )
 def test_translator_command_paragraph(command, command_aliases):
-    content = f'''<!-- {command} This is a comment for a translator -->
+    content = f"""<!-- {command} This is a comment for a translator -->
 Some text that needs to be clarified
 
 Some text without comment
-'''
+"""
 
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile == '''#
+    assert pofile == """#
 msgid ""
 msgstr ""
 
@@ -27,7 +26,7 @@ msgstr ""
 
 msgid "Some text without comment"
 msgstr ""
-'''
+"""
 
 
 @pytest.mark.parametrize(
@@ -37,12 +36,12 @@ msgstr ""
     ),
 )
 def test_translator_command_without_value(command, command_aliases):
-    content = f'''<!-- {command} -->
+    content = f"""<!-- {command} -->
 Some text that needs to be clarified
-'''
+"""
     expected_msg = (
         'You need to specify a string for the extracted comment with the'
-        f' command \'{command}\'.'
+        f" command '{command}'."
     )
     with pytest.raises(ValueError, match=expected_msg):
         markdown_to_pofile(content, command_aliases=command_aliases)

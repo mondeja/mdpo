@@ -1,22 +1,21 @@
 import os
 
 import pytest
-
 from mdpo.md2po import Md2Po
 
 
 def test_content_extractor():
-    markdown_content = '''# Header 1
+    markdown_content = """# Header 1
 
 Some awesome text
 
 ```fakelanguage
 code block
 ```
-'''
+"""
 
     md2po = Md2Po(markdown_content)
-    assert str(md2po.extract()) == '''#
+    assert str(md2po.extract()) == """#
 msgid ""
 msgstr ""
 
@@ -25,7 +24,7 @@ msgstr ""
 
 msgid "Some awesome text"
 msgstr ""
-'''
+"""
 
 
 def test_mark_not_found_as_obsolete(tmp_file, wrap_location_comment):
@@ -39,7 +38,7 @@ def test_mark_not_found_as_obsolete(tmp_file, wrap_location_comment):
         with tmp_file(original_md_file_content, '.md') as original_md_filepath:
             md2po = Md2Po(original_md_filepath)
             pofile = md2po.extract(po_filepath=po_filepath, save=True)
-        assert pofile == f'''#
+        assert pofile == f"""#
 msgid ""
 msgstr ""
 
@@ -50,7 +49,7 @@ msgstr ""
 {wrap_location_comment(original_md_filepath, 'block 2 (paragraph)')}
 msgid "Another string"
 msgstr ""
-'''
+"""
 
         with tmp_file(new_md_file_content, '.md') as new_md_filepath:
             md2po = Md2Po(
@@ -58,7 +57,7 @@ msgstr ""
                 mark_not_found_as_obsolete=True,
             )
             pofile = md2po.extract(po_filepath=po_filepath)
-        assert str(pofile) == f'''#
+        assert str(pofile) == f"""#
 msgid ""
 msgstr ""
 
@@ -71,31 +70,31 @@ msgstr ""
 
 #~ msgid "Another string"
 #~ msgstr ""
-'''
+"""
 
 
 def test_msgstr():
     content = 'Mensaje por defecto'
     md2po = Md2Po(content, msgstr='Default message')
-    assert str(md2po.extract(content)) == '''#
+    assert str(md2po.extract(content)) == """#
 msgid ""
 msgstr ""
 
 msgid "Mensaje por defecto"
 msgstr "Default message"
-'''
+"""
 
 
 def test_ignore_msgids():
     content = 'foo\n\nbar\n\nbaz\n'
     md2po = Md2Po(content, ignore_msgids=['foo', 'baz'])
-    assert str(md2po.extract(content)) == '''#
+    assert str(md2po.extract(content)) == """#
 msgid ""
 msgstr ""
 
 msgid "bar"
 msgstr ""
-'''
+"""
 
 
 def test_md2po_save_without_po_filepath():

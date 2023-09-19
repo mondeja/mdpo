@@ -8,13 +8,14 @@ def pre_commit_run_all_files(cwd=None):
         ['pre-commit', 'run', '--all-files'],
         cwd=cwd,
         capture_output=True,
+        check=False,
     )
 
 
 def test_md2po_pre_commit_hook(tmp_dir, git_init, git_add_commit):
     with tmp_dir([
         (
-            '.pre-commit-config.yaml', '''repos:
+            '.pre-commit-config.yaml', """repos:
   - repo: https://github.com/mondeja/mdpo
     rev: master
     hooks:
@@ -23,7 +24,7 @@ def test_md2po_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         args:
           - --po-filepath
           - README.po
-''',
+""",
         ),
         ('README.md', '# Foo\n'),
         ('README.po', '#\nmsgid ""\nmsgstr ""\n\nmsgid "Foo"\nmsgstr ""\n'),
@@ -52,7 +53,7 @@ def test_md2po_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         )
 
         with open(readme_po_path, encoding='utf-8') as f:
-            assert f.read() == '''#
+            assert f.read() == """#
 msgid ""
 msgstr ""
 
@@ -62,13 +63,13 @@ msgstr ""
 #: README.md:block 2 (paragraph)
 msgid "bar"
 msgstr ""
-'''
+"""
 
 
 def test_po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
     with tmp_dir([
         (
-            '.pre-commit-config.yaml', '''repos:
+            '.pre-commit-config.yaml', """repos:
   - repo: https://github.com/mondeja/mdpo
     rev: master
     hooks:
@@ -79,18 +80,18 @@ def test_po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
           - README.po
           - -s
           - README.es.md
-''',
+""",
         ),
         ('README.md', '# Foo\n'),
         ('README.es.md', '# Foo es\n'),
         (
-            'README.po', '''#
+            'README.po', """#
 msgid ""
 msgstr ""
 
 msgid "Foo"
 msgstr "Foo es"
-''',
+""",
         ),
     ]) as (
         filesdir, _, readme_src_md_path, readme_dst_md_path, readme_po_path,
@@ -120,16 +121,16 @@ msgstr "Foo es"
             '- files were modified by this hook'
         )
         with open(readme_dst_md_path, encoding='utf-8') as f:
-            assert f.read() == '''# Foo es
+            assert f.read() == """# Foo es
 
 bar es
-'''
+"""
 
 
 def test_mdpo2html_pre_commit_hook(tmp_dir, git_init, git_add_commit):
     with tmp_dir([
         (
-            '.pre-commit-config.yaml', '''repos:
+            '.pre-commit-config.yaml', """repos:
   - repo: https://github.com/mondeja/mdpo
     rev: master
     hooks:
@@ -140,18 +141,18 @@ def test_mdpo2html_pre_commit_hook(tmp_dir, git_init, git_add_commit):
           - README.po
           - -s
           - README.es.html
-''',
+""",
         ),
         ('README.html', '<h1>Foo</h1>\n'),
         ('README.es.html', '<h1>Foo es</h1>\n'),
         (
-            'README.po', '''#
+            'README.po', """#
 msgid ""
 msgstr ""
 
 msgid "Foo"
 msgstr "Foo es"
-''',
+""",
         ),
     ]) as (
         filesdir, _, readme_html_path, readme_html_es_path, readme_po_path,
@@ -189,7 +190,7 @@ msgstr "Foo es"
 
 def test_md2po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
     with tmp_dir({
-        '.pre-commit-config.yaml': '''repos:
+        '.pre-commit-config.yaml': """repos:
   - repo: https://github.com/mondeja/mdpo
     rev: master
     hooks:
@@ -201,7 +202,7 @@ def test_md2po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
           - -o
           - locale/{lang}
           - --no-location
-''',
+""",
         'README.md': '# Foo\n',
     }) as filesdir:
         # first execution, files don't exist
@@ -226,26 +227,26 @@ def test_md2po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
         assert os.path.isfile(readme_po_es_path)
 
         with open(readme_po_es_path, encoding='utf-8') as f:
-            assert f.read() == '''#
+            assert f.read() == """#
 msgid ""
 msgstr ""
 
 msgid "Foo"
 msgstr ""
-'''
+"""
 
         with open(readme_md_es_path, encoding='utf-8') as f:
             assert f.read() == '# Foo\n'
 
         # second execution, translation
         with open(readme_po_es_path, 'w', encoding='utf-8') as f:
-            f.write('''#
+            f.write("""#
 msgid ""
 msgstr ""
 
 msgid "Foo"
 msgstr "Foo es"
-''')
+""")
 
         git_add_commit('Second commit', cwd=filesdir)
 

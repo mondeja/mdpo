@@ -1,5 +1,4 @@
 import pytest
-
 from mdpo.md2po import Md2Po, markdown_to_pofile
 
 
@@ -19,16 +18,16 @@ from mdpo.md2po import Md2Po, markdown_to_pofile
 def test_disable_enable(commands, command_aliases):
     disable_command, enable_command = (commands['disable'], commands['enable'])
 
-    content = f'''This must be included.
+    content = f"""This must be included.
 
 <!-- {disable_command} -->
 This must be ignored
 
 <!-- {enable_command} -->
 This must be included also.
-'''
+"""
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile == '''#
+    assert pofile == """#
 msgid ""
 msgstr ""
 
@@ -37,12 +36,12 @@ msgstr ""
 
 msgid "This must be included also."
 msgstr ""
-'''
+"""
 
 
 def test_disable_enable_raw_inline():
     # enable command is part of the last item in the list
-    content = '''This must be included.
+    content = """This must be included.
 
 <!-- mdpo-disable -->
 - `config.development.yml`
@@ -51,9 +50,9 @@ def test_disable_enable_raw_inline():
 <!-- mdpo-enable -->
 
 This must be included also.
-'''
+"""
     pofile = markdown_to_pofile(content)
-    assert pofile == '''#
+    assert pofile == """#
 msgid ""
 msgstr ""
 
@@ -62,7 +61,7 @@ msgstr ""
 
 msgid "This must be included also."
 msgstr ""
-'''
+"""
 
 
 @pytest.mark.parametrize(
@@ -74,7 +73,7 @@ msgstr ""
     ),
 )
 def test_enable_next_block(command, command_aliases):
-    content = f'''This must be included.
+    content = f"""This must be included.
 
 <!-- mdpo-disable -->
 
@@ -93,10 +92,10 @@ Other line that must be ignored.
 <!-- mdpo-enable -->
 
 The last line also must be included.
-'''
+"""
 
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile == '''#
+    assert pofile == """#
 msgid ""
 msgstr ""
 
@@ -111,7 +110,7 @@ msgstr ""
 
 msgid "The last line also must be included."
 msgstr ""
-'''
+"""
 
 
 @pytest.mark.parametrize(
@@ -123,7 +122,7 @@ msgstr ""
     ),
 )
 def test_disable_next_block(command, command_aliases):
-    content = f'''<!-- mdpo-disable -->
+    content = f"""<!-- mdpo-disable -->
 This must be ignored.
 
 <!-- mdpo-enable -->
@@ -133,9 +132,9 @@ This must be included.
 This must be ignored also.
 
 This must be included also.
-'''
+"""
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile == '''#
+    assert pofile == """#
 msgid ""
 msgstr ""
 
@@ -144,11 +143,11 @@ msgstr ""
 
 msgid "This must be included also."
 msgstr ""
-'''
+"""
 
 
 def test_disabled_entries():
-    content = '''This must be included.
+    content = """This must be included.
 
 <!-- mdpo-disable -->
 
@@ -167,7 +166,7 @@ Other line that must be ignored.
 <!-- mdpo-enable -->
 
 The last line also must be included.
-'''
+"""
 
     md2po = Md2Po(content)
     md2po.extract()

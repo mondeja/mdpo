@@ -5,14 +5,13 @@ import os
 import re
 
 import pytest
-
 from mdpo.po2md.__main__ import run
 
 
 EXAMPLE = {
     'markdown-input': '# Header 1\n\nSome text here\n',
     'markdown-output': '# Encabezado 1\n\nAlgo de texto aquí\n\n',
-    'pofile': '''#
+    'pofile': """#
 msgid ""
 msgstr ""
 
@@ -21,7 +20,7 @@ msgstr "Encabezado 1"
 
 msgid "Some text here"
 msgstr "Algo de texto aquí"
-''',
+""",
 }
 
 
@@ -154,14 +153,14 @@ def test_ignore_files_by_filepath(arg, tmp_dir, capsys):
 @pytest.mark.parametrize('arg', ('-e', '--event'))
 def test_events(arg, tmp_file, capsys):
     md_content = '# Foo\n\nBaz\n'
-    event_file = '''
+    event_file = """
 def transform_text(self, block, text):
     if text == "Foo":
         self.current_msgid = "Bar"
         return False
-'''
+"""
 
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
@@ -171,7 +170,7 @@ msgstr "Bar es"
 msgid "Baz"
 msgstr "Baz es"
 
-'''
+"""
 
     expected_output = '# Bar es\n\nBaz es\n\n'
     with tmp_file(event_file, '.py') as py_tmp_filename, \

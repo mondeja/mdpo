@@ -7,24 +7,24 @@ from mdpo.po2md import pofile_to_markdown
 
 
 def test_include_indented_codeblock(tmp_file):
-    markdown_input = '''
+    markdown_input = """
     var hello = "world";
     var this;
 
 This must be translated.
 
     var thisCodeMustNotBeEdited = undefined;
-'''
+"""
 
-    markdown_output = '''    var hola = "mundo";
+    markdown_output = """    var hola = "mundo";
     var esto;
 
 Esto debe ser traducido.
 
     var thisCodeMustNotBeEdited = undefined;
-'''
+"""
 
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
@@ -37,7 +37,7 @@ msgstr ""
 
 msgid "This must be translated."
 msgstr "Esto debe ser traducido."
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(markdown_input, po_filepath)
@@ -45,7 +45,7 @@ msgstr "Esto debe ser traducido."
 
 
 def test_include_fenced_codeblock(tmp_file):
-    markdown_input = '''```javascript
+    markdown_input = """```javascript
 var hello = "world";
 var this;
 ```
@@ -55,9 +55,9 @@ This must be translated.
 ```javascript
 var thisCodeMustNotBeEdited = undefined;
 ```
-'''
+"""
 
-    markdown_output = '''```javascript
+    markdown_output = """```javascript
 var hola = "mundo";
 var esto;
 ```
@@ -67,9 +67,9 @@ Esto debe ser traducido.
 ```javascript
 var thisCodeMustNotBeEdited = undefined;
 ```
-'''
+"""
 
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
@@ -82,7 +82,7 @@ msgstr ""
 
 msgid "This must be translated."
 msgstr "Esto debe ser traducido."
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(markdown_input, po_filepath)

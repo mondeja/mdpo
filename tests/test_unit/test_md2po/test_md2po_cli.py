@@ -7,14 +7,13 @@ import subprocess
 import sys
 
 import pytest
-
 from mdpo.compat import importlib_metadata
 from mdpo.md2po.__main__ import run
 
 
 EXAMPLE = {
     'input': '# Header 1\n\nSome text here',
-    'output': '''#
+    'output': """#
 msgid ""
 msgstr ""
 
@@ -24,7 +23,7 @@ msgstr ""
 msgid "Some text here"
 msgstr ""
 
-''',
+""",
 }
 
 
@@ -76,6 +75,7 @@ def test_pipe_redirect_file_stdin(tmp_file):
             input=EXAMPLE['input'],
             capture_output=True,
             shell=True,
+            check=False,
         )
     assert proc.stdout == EXAMPLE['output']
     assert proc.returncode == 0
@@ -108,7 +108,7 @@ def test_multiple_globs(tmp_dir, capsys):
         ])
         stdout, stderr = capsys.readouterr()
 
-        expected_output = '''#
+        expected_output = """#
 msgid ""
 msgstr ""
 
@@ -121,7 +121,7 @@ msgstr ""
 msgid "baz"
 msgstr ""
 
-'''
+"""
 
         assert exitcode == 0
         assert f'{pofile}\n' == expected_output
@@ -160,7 +160,7 @@ def test_debug(capsys, arg):
             ),
             line,
         )
-        if line.endswith('msgid=\'\''):
+        if line.endswith("msgid=''"):
             assert '\n'.join([*stdout_lines[i + 1:], '']) == EXAMPLE['output']
             po_output_checked = True
             break
@@ -170,14 +170,14 @@ def test_debug(capsys, arg):
 
 @pytest.mark.parametrize('arg', ('-p', '--po-filepath', '--pofilepath'))
 def test_po_filepath(capsys, arg, tmp_file):
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
 msgid "Foo"
 msgstr ""
-'''
-    expected_output = '''#
+"""
+    expected_output = """#
 msgid ""
 msgstr ""
 
@@ -187,7 +187,7 @@ msgstr ""
 msgid "Bar"
 msgstr ""
 
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as pofile_path:
         pofile, exitcode = run([
@@ -206,14 +206,14 @@ msgstr ""
 
 @pytest.mark.parametrize('arg', ('-s', '--save'))
 def test_save(capsys, arg, tmp_file, tmp_file_path):
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
 msgid "Foo"
 msgstr ""
-'''
-    expected_output = '''#
+"""
+    expected_output = """#
 msgid ""
 msgstr ""
 
@@ -223,7 +223,7 @@ msgstr ""
 msgid "Bar"
 msgstr ""
 
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as pofile_path:
         pofile, exitcode = run([
@@ -254,14 +254,14 @@ msgstr ""
         '--no-location',
     ])
 
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
 msgid "Bar"
 msgstr ""
 
-'''
+"""
     with open(pofile_path, encoding='utf-8') as f:
         assert f'{f.read()}\n' == expected_output
 
@@ -299,7 +299,7 @@ def test_ignore_files_by_filepath(tmp_dir, capsys, arg):
             '--no-location',
         ])
 
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
@@ -309,7 +309,7 @@ msgstr ""
 msgid "Foo 2"
 msgstr ""
 
-'''
+"""
 
     stdout, _ = capsys.readouterr()
     assert exitcode == 0
@@ -324,7 +324,7 @@ def test_markuptext(capsys):
         ' and a [link](https://nowhere.nothing).\n'
     )
 
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
@@ -336,7 +336,7 @@ msgid ""
 "[link](https://nowhere.nothing)."
 msgstr ""
 
-'''
+"""
 
     pofile, exitcode = run([content])
     stdout, _ = capsys.readouterr()
@@ -352,14 +352,14 @@ def test_wrapwidth(capsys, arg, value):
         '# Some long header with **bold characters**, '
         '*italic characters* and a [link](https://nowhere.nothing).\n'
     )
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
 msgid "Some long header with bold characters, italic characters and a link."
 msgstr ""
 
-'''
+"""
 
     if value == 'invalid':
         with pytest.raises(SystemExit):
@@ -367,7 +367,7 @@ msgstr ""
         stdout, stderr = capsys.readouterr()
         assert stdout == ''
         assert stderr == (
-            'Invalid value \'invalid\' for -w/--wrapwidth argument.\n'
+            "Invalid value 'invalid' for -w/--wrapwidth argument.\n"
         )
         return
 
@@ -382,14 +382,14 @@ msgstr ""
 @pytest.mark.parametrize('arg', ('-a', '--xheader'))
 def test_xheader(capsys, arg):
     markdown_content = '# Foo'
-    expected_output = f'''#
+    expected_output = f"""#
 msgid ""
 msgstr "X-Generator: mdpo v{importlib_metadata.version("mdpo")}\\n"
 
 msgid "Foo"
 msgstr ""
 
-'''
+"""
 
     pofile, exitcode = run([markdown_content, arg])
     stdout, _ = capsys.readouterr()
@@ -401,7 +401,7 @@ msgstr ""
 
 @pytest.mark.parametrize('arg', ('-c', '--include-codeblocks'))
 def test_include_codeblocks(capsys, arg):
-    markdown_content = '''
+    markdown_content = """
     var hello = "world";
 
 ```javascript
@@ -409,9 +409,9 @@ var this;
 ```
 
 This must be included also.
-'''
+"""
 
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
@@ -424,7 +424,7 @@ msgstr ""
 msgid "This must be included also."
 msgstr ""
 
-'''
+"""
 
     pofile, exitcode = run([markdown_content, arg])
     stdout, _ = capsys.readouterr()
@@ -436,14 +436,14 @@ msgstr ""
 
 @pytest.mark.parametrize('arg', ('--ignore-msgids',))
 def test_ignore_msgids(capsys, arg, tmp_file):
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
 msgid "bar"
 msgstr ""
 
-'''
+"""
 
     with tmp_file('foo\nbaz', '.txt') as filename:
         pofile, exitcode = run(['foo\n\nbar\n\nbaz\n', arg, filename])
@@ -456,7 +456,7 @@ msgstr ""
 
 @pytest.mark.parametrize('arg', ('--command-alias',))
 def test_command_aliases(capsys, arg):
-    markdown_content = '''<!-- :off -->
+    markdown_content = """<!-- :off -->
 This should be ignored.
 
 <!-- mdpo-on -->
@@ -466,16 +466,16 @@ This should be included.
 <!-- :off -->
 
 This should be also ignored.
-'''
+"""
 
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
 msgid "This should be included."
 msgstr ""
 
-'''
+"""
 
     pofile, exitcode = run([
         markdown_content,
@@ -491,7 +491,7 @@ msgstr ""
 
 @pytest.mark.parametrize('arg', ('-d', '--metadata'))
 def test_metadata(capsys, arg):
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 "Language: es\\n"
@@ -500,7 +500,7 @@ msgstr ""
 msgid "Some content"
 msgstr ""
 
-'''
+"""
 
     pofile, exitcode = run([
         'Some content',
@@ -517,15 +517,15 @@ msgstr ""
 @pytest.mark.parametrize('arg', ('-m', '--merge-pofiles', '--merge-po-files'))
 def test_merge_pofiles(capsys, arg, tmp_file):
     md_content = '# bar\n\n\nbaz\n'
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
 msgid "foo"
 msgstr "foo language"
-'''
+"""
 
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
@@ -538,7 +538,7 @@ msgstr ""
 msgid "baz"
 msgstr ""
 
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         pofile, exitcode = run([
@@ -556,15 +556,15 @@ msgstr ""
 @pytest.mark.parametrize('arg', ('-r', '--remove-not-found'))
 def test_remove_not_found(capsys, arg, tmp_file):
     md_content = '# bar\n\n\nbaz\n'
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
 msgid "foo"
 msgstr "foo language"
-'''
+"""
 
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
@@ -574,7 +574,7 @@ msgstr ""
 msgid "baz"
 msgstr ""
 
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         pofile, exitcode = run([
@@ -597,11 +597,11 @@ msgstr ""
     (
         pytest.param(
             None,
-            '''| Foo | Bar |
+            """| Foo | Bar |
 | :-: | :-: |
 | Baz | Qux |
-''',
-            '''#
+""",
+            """#
 msgid ""
 msgstr ""
 
@@ -617,23 +617,23 @@ msgstr ""
 msgid "Qux"
 msgstr ""
 
-''',
+""",
             id='tables (included by default)',
         ),
         pytest.param(
             ['strikethrough'],
-            '''| Foo | Bar |
+            """| Foo | Bar |
 | :-: | :-: |
 | Baz | Qux |
-''',
-            '''#
+""",
+            """#
 msgid ""
 msgstr ""
 
 msgid "| Foo | Bar | | :-: | :-: | | Baz | Qux |"
 msgstr ""
 
-''',
+""",
             id='strikethrough (overwrite default extensions)',
         ),
     ),
@@ -661,14 +661,14 @@ def test_extensions(
 @pytest.mark.parametrize('arg', ('-e', '--event'))
 def test_events(arg, tmp_file, capsys):
     md_content = '# Foo\n\nBaz\n'
-    event_file = '''
+    event_file = """
 def transform_text(self, block, text):
     if text == "Foo":
         self.current_msgid = "Bar"
         return False
-'''
+"""
 
-    expected_output = '''#
+    expected_output = """#
 msgid ""
 msgstr ""
 
@@ -678,7 +678,7 @@ msgstr ""
 msgid "Baz"
 msgstr ""
 
-'''
+"""
     with tmp_file(event_file, '.py') as tmp_filename:
         pofile, exitcode = run([
             md_content,

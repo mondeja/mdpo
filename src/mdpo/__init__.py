@@ -1,5 +1,6 @@
 """mdpo package."""
 
+
 func_package_map = {
     'markdown_pofile_to_html': 'mdpo2html',
     'markdown_to_pofile': 'md2po',
@@ -7,7 +8,7 @@ func_package_map = {
     'pofile_to_markdown': 'po2md',
 }
 
-__all__ = list(func_package_map.keys())
+__all__ = list(func_package_map)  # noqa: PLE0605 (not implemented by Ruff)
 
 
 def __getattr__(name):
@@ -21,7 +22,7 @@ def __getattr__(name):
         )
     except KeyError:
         raise ImportError(
-            f'cannot import name \'{name}\' from \'mdpo\' ({__file__})',
+            f"cannot import name '{name}' from 'mdpo' ({__file__})",
             name=name,
             path='mdpo',
         ) from None

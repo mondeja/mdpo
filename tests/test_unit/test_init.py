@@ -10,6 +10,6 @@ def test_pep562():
         'mdpo.md2po',
     ).markdown_to_pofile
 
-    expected_msg = 'cannot import name \'foobarbaz\' from \'mdpo\''
+    expected_msg = "cannot import name 'foobarbaz' from 'mdpo'"
     with pytest.raises(ImportError, match=expected_msg):
-        mdpo.foobarbaz
+        mdpo.foobarbaz  # noqa: B018

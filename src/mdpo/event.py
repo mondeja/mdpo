@@ -53,47 +53,59 @@ def debug_events(program):
         date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
         sys.stdout.write(f'{program}[DEBUG]::{date}::{event}:: {msg}\n')
 
-    def print_msgid(self, msgid, msgstr, msgctxt, tcomment, flags):
-        msg = f'msgid=\'{msgid}\''
+    def print_msgid(
+            self,  # noqa: ARG001
+            msgid,
+            msgstr,
+            msgctxt,
+            tcomment,
+            flags,
+    ):
+        msg = f"msgid='{msgid}'"
         if msgstr:
-            msg += f' - msgstr=\'{msgstr}\''
+            msg += f" - msgstr='{msgstr}'"
         if msgctxt:
-            msg += f' - msgctxt=\'{msgctxt}\''
+            msg += f" - msgctxt='{msgctxt}'"
         if tcomment:
-            msg += f' - tcomment=\'{tcomment}\''
+            msg += f" - tcomment='{tcomment}'"
         if flags:
-            msg += f' - flags=\'{flags}\''
+            msg += f" - flags='{flags}'"
         debug('msgid', msg)
 
-    def print_command(self, mdpo_command, comment, original_command):
+    def print_command(
+            self,  # noqa: ARG001
+            mdpo_command,
+            comment,
+            original_command,
+    ):
         msg = mdpo_command
         if comment:
             msg += f' - {comment}'
         if original_command and original_command != mdpo_command:
-            msg += f' (original command: \'{original_command}\')'
+            msg += f" (original command: '{original_command}')"
         debug('command', msg)
 
-    def print_enter_block(self, block, details):
+    def print_enter_block(self, block, details):  # noqa: ARG001
         debug('enter_block', _block_msg(block, details))
 
-    def print_leave_block(self, block, details):
+    def print_leave_block(self, block, details):  # noqa: ARG001
         debug('leave_block', _block_msg(block, details))
 
-    def print_enter_span(self, span, details):
+    def print_enter_span(self, span, details):  # noqa: ARG001
         debug('enter_span', _block_msg(span, details))
 
-    def print_leave_span(self, span, details):
+    def print_leave_span(self, span, details):  # noqa: ARG001
         debug('leave_span', _block_msg(span, details))
 
-    def print_text(self, block, text):  # noqa: U100
+    def print_text(self, block, text):  # noqa: ARG001
         debug('text', text)
 
-    def print_link_reference(self, target, href, title):
-        msg = f'target=\'{target}\''
+    def print_link_reference(self, target, href, title):  # noqa: ARG001
+        msg = f"target='{target}'"
         if href:
-            msg += f' - href=\'{href}\''
+            msg += f" - href='{href}'"
         if title:
-            msg += f' - title=\'{title}\''
+            msg += f" - title='{title}'"
         debug('link_reference', msg)
 
     return {

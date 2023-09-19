@@ -26,12 +26,8 @@ def poentry__cmp__(
         compare_occurrences (bool): Indicates if the ``occurrences`` property
             of the entries will be used comparing them.
     """
-    if compare_obsolete:
-        if self.obsolete != other.obsolete:
-            if self.obsolete:
-                return -1
-            else:
-                return 1
+    if compare_obsolete and self.obsolete != other.obsolete:
+        return -1 if self.obsolete else 1
     if compare_occurrences:
         # `.copy` is an equivalent for full slice [:], but is faster
         # `.copy` doesn't exists for lists in Python2 so for this reason,
@@ -46,27 +42,27 @@ def poentry__cmp__(
     othermsgctxt = other.msgctxt or '0'
     if msgctxt > othermsgctxt:
         return 1
-    elif msgctxt < othermsgctxt:
+    if msgctxt < othermsgctxt:
         return -1
     msgid_plural = self.msgid_plural or '0'
     othermsgid_plural = other.msgid_plural or '0'
     if msgid_plural > othermsgid_plural:
         return 1
-    elif msgid_plural < othermsgid_plural:
+    if msgid_plural < othermsgid_plural:
         return -1
     msgstr_plural = self.msgstr_plural or '0'
     othermsgstr_plural = other.msgstr_plural or '0'
     if msgstr_plural > othermsgstr_plural:
         return 1
-    elif msgstr_plural < othermsgstr_plural:
+    if msgstr_plural < othermsgstr_plural:
         return -1
-    elif self.msgid > other.msgid:
+    if self.msgid > other.msgid:
         return 1
-    elif self.msgid < other.msgid:
+    if self.msgid < other.msgid:
         return -1
     if compare_msgstr:
         if self.msgstr > other.msgstr:
             return 1
-        elif self.msgstr < other.msgstr:
+        if self.msgstr < other.msgstr:
             return -1
     return 0

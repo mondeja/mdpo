@@ -14,7 +14,7 @@ OPEN_QUOTE_CHAR = '”' if SPHINX_IS_RUNNING else '"'
 CLOSE_QUOTE_CHAR = '”' if SPHINX_IS_RUNNING else '"'
 
 
-def cli_codespan(value, cli=True, sphinx=True):
+def cli_codespan(value, cli=True):
     """Command line codespan wrapper.
 
     This is a compatibility function to make CLI codespans looks good in
@@ -25,12 +25,12 @@ def cli_codespan(value, cli=True, sphinx=True):
     Args:
         value (str): Value to wrap.
         cli (bool): Wrap when used from command line.
-        sphinx (bool): Wrap when used from Sphinx.
     """
     if SPHINX_IS_RUNNING:
-        return f'``{value}``' if sphinx else value
-    else:
-        return f'\'{value}\'' if cli else value
+        return f'``{value}``'
+    if cli:
+        return f"'{value}'"
+    return value
 
 
 def parse_escaped_pairs_cli_argument(
@@ -213,7 +213,7 @@ def add_nolocation_option(parser):
     """
     parser.add_argument(
         '--no-location', '--nolocation', dest='location', action='store_false',
-        help='Do not write \'#: filename:line\' lines. Note that using this'
+        help="Do not write '#: filename:line' lines. Note that using this"
              ' option makes it harder for technically skilled translators to'
              ' understand the context of each message. Same as'
              f' {cli_codespan("gettext --no-location")}.',
@@ -246,8 +246,8 @@ def add_encoding_arguments(
     po_encoding_help = (
         'PO files encoding. If you need different encodings for each'
         ' file, you must define them in the "Content-Type" field of each'
-        ' PO file metadata, in the form \'Content-Type: text/plain;'
-        ' charset=<ENCODING>\'.'
+        " PO file metadata, in the form 'Content-Type: text/plain;"
+        " charset=<ENCODING>'."
     ) if po_encoding_help is None else po_encoding_help
     parser.add_argument(
         '--po-encoding', dest='po_encoding', default=None, metavar='ENCODING',
@@ -296,7 +296,7 @@ def add_wrapwidth_argument(
     else:
         to_render = 'the Markdown output, when possible'
     kwargs['help'] = (
-        f'Maximum width rendering {to_render}. If negative, \'0\' or \'inf\','
+        f"Maximum width rendering {to_render}. If negative, '0' or 'inf',"
         ' the content will not be wrapped.'
     )
     parser.add_argument(*args, **kwargs)

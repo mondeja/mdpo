@@ -1,5 +1,4 @@
 import pytest
-
 from mdpo.po2md import Po2Md, pofile_to_markdown
 
 
@@ -19,23 +18,23 @@ from mdpo.po2md import Po2Md, pofile_to_markdown
 def test_disable_enable(commands, command_aliases, tmp_file):
     disable_command, enable_command = (commands['disable'], commands['enable'])
 
-    markdown_input = f'''This must be translated.
+    markdown_input = f"""This must be translated.
 
 <!-- {disable_command} -->
 This must be ignored.
 
 <!-- {enable_command} -->
 This must be translated also.
-'''
+"""
 
-    markdown_output = '''Esto debe ser traducido.
+    markdown_output = """Esto debe ser traducido.
 
 This must be ignored.
 
 Esto también debe ser traducido.
-'''
+"""
 
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
@@ -47,7 +46,7 @@ msgstr "Esto debe ser ignorado."
 
 msgid "This must be translated also."
 msgstr "Esto también debe ser traducido."
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(
@@ -65,7 +64,7 @@ msgstr "Esto también debe ser traducido."
     ),
 )
 def test_enable_next_block(command, command_aliases, tmp_file):
-    markdown_input = f'''This must be translated.
+    markdown_input = f"""This must be translated.
 
 <!-- mdpo-disable -->
 
@@ -84,9 +83,9 @@ Other line that must be ignored.
 <!-- mdpo-enable -->
 
 The last line also must be translated.
-'''
+"""
 
-    markdown_output = '''Esto debe ser traducido.
+    markdown_output = """Esto debe ser traducido.
 
 This must be ignored.
 
@@ -99,9 +98,9 @@ This must be ignored also.
 Other line that must be ignored.
 
 La última línea también debe ser traducida.
-'''
+"""
 
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
@@ -122,7 +121,7 @@ msgstr "Otra línea que debe ser ignorada."
 
 msgid "The last line also must be translated."
 msgstr "La última línea también debe ser traducida."
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(
@@ -142,22 +141,22 @@ msgstr "La última línea también debe ser traducida."
     ),
 )
 def test_disable_next_block(command, command_aliases, tmp_file):
-    markdown_input = f'''This must be translated.
+    markdown_input = f"""This must be translated.
 
 <!-- {command} -->
 This must be ignored.
 
 This must be translated also.
-'''
+"""
 
-    markdown_output = '''Esto debe ser traducido.
+    markdown_output = """Esto debe ser traducido.
 
 This must be ignored.
 
 Esto también debe ser traducido.
-'''
+"""
 
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
@@ -169,7 +168,7 @@ msgstr "Esto debe ser ignorado."
 
 msgid "This must be translated also."
 msgstr "Esto también debe ser traducido."
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(
@@ -181,7 +180,7 @@ msgstr "Esto también debe ser traducido."
 
 
 def test_disabled_entries(tmp_file):
-    markdown_input = '''This must be translated.
+    markdown_input = """This must be translated.
 
 <!-- mdpo-disable -->
 
@@ -200,9 +199,9 @@ Other line that must be ignored.
 <!-- mdpo-enable -->
 
 The last line also must be translated.
-'''
+"""
 
-    pofile_content = '''#
+    pofile_content = """#
 msgid ""
 msgstr ""
 
@@ -223,7 +222,7 @@ msgstr "Otra línea que debe ser ignorada."
 
 msgid "The last line also must be translated."
 msgstr "La última línea también debe ser traducida."
-'''
+"""
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         po2md = Po2Md(po_filepath)
