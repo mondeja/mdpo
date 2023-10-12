@@ -8,6 +8,7 @@ def pre_commit_run_all_files(cwd=None):
         ['pre-commit', 'run', '--all-files'],
         cwd=cwd,
         capture_output=True,
+        check=False,
     )
 
 

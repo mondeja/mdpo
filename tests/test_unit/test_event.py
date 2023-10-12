@@ -2,7 +2,6 @@ import contextlib
 import io
 
 import pytest
-
 from mdpo.event import parse_events_kwarg
 from mdpo.md2po import markdown_to_pofile
 
@@ -83,7 +82,7 @@ md2po[DEBUG]::<date>::leave_block:: DOC
 md2po[DEBUG]::<date>::msgid:: msgid=''
 md2po[DEBUG]::<date>::link_reference:: target='link' - href='https://foo.bar' - title='Title'
 md2po[DEBUG]::<date>::msgid:: msgid='[link]: https://foo.bar "Title"' - msgstr='[link]: https://foo.bar "Title"' - flags='['fuzzy']'
-'''  # noqa E501
+'''
     assert comparable_debug_output == expected_output
 
 

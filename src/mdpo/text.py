@@ -17,7 +17,7 @@ def and_join(values):
 
 
 def min_not_max_chars_in_a_row(char, text, default=1):
-    r"""Return the minimum possible of characters not found in a row for a string.
+    r"""Return minimum possible of characters not found in a row for a string.
 
     For example, given the string ``"c cc cccc"`` and the character ``"c"``,
     returns the minimum number of characters in a row that are not found, so
@@ -31,6 +31,7 @@ def min_not_max_chars_in_a_row(char, text, default=1):
     Args:
         char (str): Character to search.
         text (str): Text inside which find the character repeated in a row.
+        default (int): Default value to return if the character is not found.
 
     Returns:
         int: Minimum number possible of characters not found in a row.
@@ -108,8 +109,8 @@ def parse_escaped_pairs(pairs, separator=':'):
     for pair in pairs:
         try:
             key, value = parse_escaped_pair(pair, separator=separator)
-        except ValueError:
-            raise ValueError(pair)
+        except ValueError as exc:
+            raise ValueError(pair) from exc
         if key in response:
             raise KeyError(key)
         response[key] = value
@@ -143,7 +144,7 @@ def parse_wrapwidth_argument(value):
     """
     try:
         value = parse_strint_0_inf(value)
-    except ValueError:
+    except ValueError as exc:
         if os.environ.get('_MDPO_RUNNING'):  # executed as CLI
             sys.stderr.write(
                 f"Invalid value '{value}' for -w/--wrapwidth argument.\n",
@@ -151,5 +152,5 @@ def parse_wrapwidth_argument(value):
             sys.exit(1)
         raise ValueError(
             f"Invalid value '{value}' for wrapwidth argument.",
-        )
+        ) from exc
     return value

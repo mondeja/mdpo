@@ -52,12 +52,12 @@ def build_parser():
     )
 
     output_paths_schema_help = '' if SPHINX_IS_RUNNING else (
-        ' For example, for the schema \'locale/{lang}\', the languages'
-        ' \'es\' and \'fr\' and a \'README.md\' as input, the next files'
-        ' will be written: \'locale/es/README.po\', \'locale/es/README.md\','
-        ' \'locale/fr/README.po\' and \'locale/fr/README.md\'.'
-        ' Note that you can omit \'{basename}\', specifying a'
-        ' directory for each language with \'locale/{lang}\' for this'
+        " For example, for the schema 'locale/{lang}', the languages"
+        " 'es' and 'fr' and a 'README.md' as input, the next files"
+        " will be written: 'locale/es/README.po', 'locale/es/README.md',"
+        " 'locale/fr/README.po' and 'locale/fr/README.md'."
+        " Note that you can omit '{basename}', specifying a"
+        " directory for each language with 'locale/{lang}' for this"
         ' example.'
     )
     parser.add_argument(

@@ -1,5 +1,4 @@
 import pytest
-
 from mdpo.md2po import markdown_to_pofile
 
 
@@ -40,7 +39,7 @@ msgstr ""
 def test_include_comment_without_value(command, command_aliases):
     expected_msg = (
         'You need to specify a message for the comment to include with the'
-        f' command \'{command}\'.'
+        f" command '{command}'."
     )
     with pytest.raises(ValueError, match=expected_msg):
         markdown_to_pofile(

@@ -5,14 +5,17 @@ from contextlib import redirect_stdout
 
 import md4c
 import pytest
-
 from mdpo.command import normalize_mdpo_command
 from mdpo.md2po import Md2Po, markdown_to_pofile
 
 
 @pytest.mark.parametrize(('abort_event'), (True, False))
 def test_enter_leave_block_event(abort_event):
-    def print_is_task_list_item(self, block, details):
+    def print_is_task_list_item(
+            self,  # noqa: ARG001
+            block,
+            details,
+    ):
         if block is md4c.BlockType.LI:
             sys.stdout.write(str(details['is_task']))
 
@@ -95,10 +98,10 @@ def test_text_event(abort_event):
 @pytest.mark.parametrize(('abort_event'), (True, False))
 def test_command_event(abort_event):
     def error_when_unknown_command_event(
-        self,
+        self,  # noqa: ARG001
         command,
-        comment,  # noqa: U100
-        original_command,  # noqa: U100
+        comment,  # noqa: ARG001
+        original_command,  # noqa: ARG001
     ):
         # here 'normalize_mdpo_command' is added to simulate a real behaviour,
         # is not related with the test itself
@@ -126,14 +129,15 @@ def test_command_event_return_false():
     def skip_counter_command_event(
         self,
         command,
-        comment,  # noqa: U100
-        original_command,  # noqa: U100
+        comment,  # noqa: ARG001
+        original_command,  # noqa: ARG001
     ):
         if command == 'mdpo-skip':
             self.skip_counter += 1
             return False
-        elif command == 'mdpo-disable-next-line':
+        if command == 'mdpo-disable-next-line':
             return False
+        return None
 
     content = '''<!-- mdpo-skip -->
 
@@ -179,9 +183,10 @@ msgstr ""
 
 
 def test_msgid_event():
-    def dont_save_hate_msgid(self, msgid, *args):  # noqa: U100
+    def dont_save_hate_msgid(self, msgid, *args):  # noqa: ARG001
         if msgid == 'hate':
             return False
+        return None
 
     content = '''<!-- mdpo-disable-next-line -->
 hate
@@ -210,9 +215,10 @@ msgstr ""
 
 
 def test_link_reference_event():
-    def process_footnotes(self, target, href, title):  # noqa: U100
+    def process_footnotes(self, target, href, title):  # noqa: ARG001
         if re.match(r'^\^\d', target):
             return False
+        return None
 
     content = '''This is a footnote[^1]. This is another[^2].
 

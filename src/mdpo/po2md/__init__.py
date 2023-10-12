@@ -1,5 +1,7 @@
 """Markdown files translator using PO files as reference."""
 
+import contextlib
+
 import md4c
 import md_ulb_pwrap
 import polib
@@ -420,23 +422,22 @@ class Po2Md:
                     else:
                         first_line_width_diff = -3
 
-            if not self._inside_codeblock:
-                # Wrap lines with Unicode Line Break algorithm
-                #
-                # Only execute it for text outside tables
-                if not self._current_thead_aligns:
-                    translation = md_ulb_pwrap.ulb_wrap_paragraph(
-                        translation,
-                        self.wrapwidth,
-                        self.wrapwidth + first_line_width_diff,
-                    )
+            # Wrap lines with Unicode Line Break algorithm
+            #
+            # Only execute it for text outside tables
+            if not self._inside_codeblock and not self._current_thead_aligns:
+                translation = md_ulb_pwrap.ulb_wrap_paragraph(
+                    translation,
+                    self.wrapwidth,
+                    self.wrapwidth + first_line_width_diff,
+                )
 
-                    if not any([
-                        self._inside_liblock,
-                        self._inside_hblock,
-                        self._inside_quoteblock,
-                    ]):
-                        translation += '\n'
+                if not any([
+                    self._inside_liblock,
+                    self._inside_hblock,
+                    self._inside_quoteblock,
+                ]):
+                    translation += '\n'
 
         if translation.rstrip('\n'):
             self.current_line += translation
@@ -586,13 +587,12 @@ class Po2Md:
                     indent = '   ' * len(self._current_list_type)
                     self.current_line = f'{indent}{self.current_line}'
                     self._save_current_line()
+                elif self._inside_liblock_first_p:
+                    self._inside_liblock_first_p = False
                 else:
-                    if self._inside_liblock_first_p:
-                        self._inside_liblock_first_p = False
-                    else:
-                        indent = '   ' * len(self._current_list_type)
-                        self.current_line = f'\n{indent}{self.current_line}'
-                        self._save_current_line()
+                    indent = '   ' * len(self._current_list_type)
+                    self.current_line = f'\n{indent}{self.current_line}'
+                    self._save_current_line()
             else:
                 self._save_current_line()
 
@@ -615,10 +615,11 @@ class Po2Md:
                 self.current_line += f'{indent}{fence_chars}'
 
             self._save_current_line()
-            if not self._inside_liblock:
-                # prevent two newlines after indented code block
-                if not self._inside_indented_codeblock:
-                    self._save_current_line()
+            # prevent two newlines after indented code block
+            if not self._inside_liblock and (
+                    not self._inside_indented_codeblock
+            ):
+                self._save_current_line()
             self._inside_indented_codeblock = False
         elif block is md4c.BlockType.H:
             self._save_current_msgid()
@@ -666,7 +667,7 @@ class Po2Md:
                     thead_separator += '| --- '
                 elif align == 1:
                     thead_separator += '| :-- '
-                elif align == 2:
+                elif align == 2:  # noqa: PLR2004
                     thead_separator += '| :-: '
                 else:
                     thead_separator += '| --: '
@@ -703,17 +704,13 @@ class Po2Md:
             return
 
         if self._inside_aspan:  # span inside link text
-            try:
+            with contextlib.suppress(KeyError):
                 self._current_aspan_text += self._enterspan_replacer[
                     span.value
                 ]
-            except KeyError:
-                pass
         else:
-            try:
+            with contextlib.suppress(KeyError):
                 self.current_msgid += self._enterspan_replacer[span.value]
-            except KeyError:
-                pass
 
         if span is md4c.SpanType.A:
             self._inside_aspan = True
@@ -769,17 +766,13 @@ class Po2Md:
             self._current_wikilink_target = None
 
         if self._inside_aspan:  # span inside link text
-            try:
+            with contextlib.suppress(KeyError):
                 self._current_aspan_text += self._leavespan_replacer[
                     span.value
                 ]
-            except KeyError:
-                pass
         else:
-            try:
+            with contextlib.suppress(KeyError):
                 self.current_msgid += self._leavespan_replacer[span.value]
-            except KeyError:
-                pass
 
         if span is md4c.SpanType.A:
             if self._current_aspan_ref_target:  # referenced link
@@ -789,24 +782,23 @@ class Po2Md:
                         f'[{self._current_aspan_ref_target}]'
                     )
                 self._current_aspan_ref_target = None
-            else:
-                if self._current_aspan_text == self._current_aspan_href:
-                    # autolink vs link clash (see implementation notes)
-                    self.current_msgid += f'<{self._current_aspan_text}'
-                    if details['title']:
-                        escaped_title = polib.escape(details['title'][0][1])
-                        self.current_msgid += f' "{escaped_title}"'
-                    self.current_msgid += '>'
-                elif self._current_aspan_href:
-                    self.current_msgid += (
-                        f'[{self._current_aspan_text}]'
-                        f'({self._current_aspan_href}'
-                    )
-                    if details['title']:
-                        self._aimg_title_inside_current_msgid = True
-                        escaped_title = polib.escape(details['title'][0][1])
-                        self.current_msgid += f' "{escaped_title}"'
-                    self.current_msgid += ')'
+            elif self._current_aspan_text == self._current_aspan_href:
+                # autolink vs link clash (see implementation notes)
+                self.current_msgid += f'<{self._current_aspan_text}'
+                if details['title']:
+                    escaped_title = polib.escape(details['title'][0][1])
+                    self.current_msgid += f' "{escaped_title}"'
+                self.current_msgid += '>'
+            elif self._current_aspan_href:
+                self.current_msgid += (
+                    f'[{self._current_aspan_text}]'
+                    f'({self._current_aspan_href}'
+                )
+                if details['title']:
+                    self._aimg_title_inside_current_msgid = True
+                    escaped_title = polib.escape(details['title'][0][1])
+                    self.current_msgid += f' "{escaped_title}"'
+                self.current_msgid += ')'
             self._current_aspan_href = None
             self._inside_aspan = False
             self._current_aspan_text = ''
@@ -866,7 +858,7 @@ class Po2Md:
                 if self._current_imgspan:
                     self._current_imgspan['text'] = text
                     return
-                elif self._inside_codespan:
+                if self._inside_codespan:
                     self._codespan_backticks = min_not_max_chars_in_a_row(
                         self.code_start_string,
                         text,
@@ -910,9 +902,8 @@ class Po2Md:
                     if self.current_line[:len(indent) + 1] != indent:
                         self.current_line += indent
                 self.current_msgid += text
-        else:
-            if not self._process_command(text):
-                self.current_line += text
+        elif not self._process_command(text):
+            self.current_line += text
 
     def _append_link_references(self):
         if self.link_references:
@@ -1013,7 +1004,7 @@ def pofile_to_markdown(
 
     Args:
         filepath_or_content (str): Markdown filepath or content to translate.
-        pofiles (str, list) Glob or list of globs matching a set of PO files
+        pofiles (str, list): Glob or list of globs matching a set of PO files
             from where to extract messages to make the replacements translating
             strings.
         ignore (list): Paths of PO files to ignore. Useful when a glob does not
@@ -1062,6 +1053,8 @@ def pofile_to_markdown(
             with the syntax ``path/to/file.py::function_name``.
         debug (bool): Add events displaying all parsed elements in the
             translation process.
+        **kwargs: Extra arguments passed to
+            :py:class:`mdpo.po2md.Po2Md` constructor.
 
     Returns:
         str: Markdown output file with translated content.

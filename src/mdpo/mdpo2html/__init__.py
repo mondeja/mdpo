@@ -1,5 +1,6 @@
 """HTML-produced-from-Markdown files translator using PO files as reference."""
 
+import contextlib
 import html
 import re
 import warnings
@@ -149,7 +150,6 @@ class MdPo2HTML(HTMLParser):
             self.output = '\n'.join(split_output)[:-1]
 
     def _process_replacer(self):
-        # print('REPLACER:', self.replacer)
 
         template_tags = []
         raw_html_template, _current_replacement = ('', '')
@@ -186,15 +186,11 @@ class MdPo2HTML(HTMLParser):
 
                     raw_html_template += f'<{handled}'
 
-                    # attrs_except_href_title = []
                     for attr in attrs:
                         if attr in ['title', 'href']:
                             raw_html_template += f' {attr}="{{}}"'
-                        # else:
                         #     These attributes are not included in output
-                        #    attrs_except_href_title.append((attr, value))
                     # if attrs_except_href_title:
-                    #     raw_html_template += ' '
                     # raw_html_template += _html_attrs_to_str(
                     #     attrs_except_href_title) + '>'
                     raw_html_template += '>'
@@ -280,11 +276,6 @@ class MdPo2HTML(HTMLParser):
                         if tag not in template_tags:
                             template_tags.append(tag)
 
-        # print('RAW TEMPLATE:', raw_html_template)
-        # print('TEMPLATE TAGS:', template_tags)
-        # print(f'CURRENT MSGID: \'{_current_replacement}\'')
-        # print('MSGSTR:', replacement)
-
         html_before_first_replacement = raw_html_template.split('{')[0]
         html_after_last_replacement = raw_html_template.split('}')[-1]
         for tags_group in [self.bold_tags, self.italic_tags, self.code_tags]:
@@ -318,10 +309,7 @@ class MdPo2HTML(HTMLParser):
         self.enable_next_block = False
         self.current_msgctxt = None
 
-        # print('________________________________________________')
-
     def handle_starttag(self, tag, attrs):
-        # print('START TAG: %s | POS: %d:%d' % (tag, *self.getpos()))
 
         if tag in self.ignore_grouper_tags:
             self.context.append(tag)
@@ -351,7 +339,6 @@ class MdPo2HTML(HTMLParser):
             self.context.append(tag)
 
     def handle_endtag(self, tag):
-        # print('END TAG: %s | POS: %d:%d' % (tag, *self.getpos()))
 
         if tag in self.ignore_grouper_tags:
             self.output += f'</{tag}>'
@@ -370,7 +357,6 @@ class MdPo2HTML(HTMLParser):
                 self.context.pop()
 
     def handle_startendtag(self, tag, attrs):
-        # print('STARTEND TAG: %s | POS: %d:%d' % (tag, *self.getpos()))
 
         if not self.replacer:
             self.output += self.get_starttag_text()
@@ -378,7 +364,6 @@ class MdPo2HTML(HTMLParser):
             self.replacer.append(('startend', tag, OrderedDict(attrs)))
 
     def handle_data(self, data):
-        # print(f'     DATA: \'{data}\'')
 
         if data:
             if (
@@ -396,7 +381,6 @@ class MdPo2HTML(HTMLParser):
                 self.replacer.append(('data', data, None))
 
     def handle_comment(self, data):
-        # print(f'     COMMENT: \'{data}\'')
 
         if self.replacer:
             self.replacer.append(('comment', data, None))
@@ -410,10 +394,8 @@ class MdPo2HTML(HTMLParser):
             else:
                 self._remove_lastline_from_output_if_empty()
 
-                try:
+                with contextlib.suppress(KeyError):  # not custom command
                     command = self.command_aliases[command]
-                except KeyError:  # not custom command
-                    pass
 
                 if command in (
                     'mdpo-disable-next-block',
@@ -504,6 +486,8 @@ def markdown_pofile_to_html(
             instead of ``<!-- mdpo-enable -->``, you can pass the dictionaries
             ``{"mdpo-on": "mdpo-enable"}`` or ``{"mdpo-on": "enable"}`` to this
             parameter.
+        **kwargs: Extra keyword arguments passed to
+            :py:class:`mdpo.mdpo2html.MdPo2HTML` constructor.
 
     .. rubric:: Known limitations:
 

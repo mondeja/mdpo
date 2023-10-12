@@ -85,6 +85,7 @@ def _git_init(cwd=None):
         ['git', 'init'],
         cwd=cwd,
         capture_output=True,
+        check=False,
     )
 
 
@@ -101,12 +102,14 @@ def git_add_commit():
             ['git', 'add', files],
             cwd=cwd,
             capture_output=True,
+            check=False,
         )
 
         commit_proc = subprocess.run(
             ['git', 'commit', '-m', message],
             cwd=cwd,
             capture_output=True,
+            check=False,
         )
 
         return not any([add_proc.returncode, commit_proc.returncode])
@@ -150,15 +153,12 @@ def class_slots():
 def _wrap_location_comment(filepath, rest):
     target_type, number, context = rest.split(' ', 2)
     result = f'#: {filepath}:{target_type}'
-    if len(result) > 77:
+    if len(result) + len(number) > 77:
         result += f'\n#: {number}'
     else:
-        if len(result) + len(number) > 77:
-            result += f'\n#: {number}'
-        else:
-            result += f' {number}'
-            if len(result) > 77:
-                result += '\n#:'
+        result += f' {number}'
+        if len(result) > 77:
+            result += '\n#:'
     result += f' {context}'
     return result
 

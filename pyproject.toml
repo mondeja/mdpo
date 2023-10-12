@@ -109,12 +109,9 @@ targets = [{ file = "pyproject.toml" }, { file = "docs/pre-commit-hooks.rst" }]
 [tool.project-config]
 cache = "2 days"
 style = [
-  "gh://mondeja/project-config-styles@v4.4/python/base.json5",
-  "gh://mondeja/project-config-styles@v4.4/python/single-quotes.json5",
-  "gh://mondeja/project-config-styles@v4.4/python/tests.json5",
-  "gh://mondeja/project-config-styles@v4.4/python/sphinx.json5",
-  "gh://mondeja/project-config-styles@v4.4/python/readthedocs.json5",
-  "gh://mondeja/project-config-styles@v4.4/python/google-docstrings.json5"
+  "gh://mondeja/project-config-styles@v5/python/base.json5",
+  "gh://mondeja/project-config-styles@v5/python/sphinx.json5",
+  "gh://mondeja/project-config-styles@v5/python/readthedocs.json5",
 ]
 
 [tool.pytest.ini_options]
@@ -132,81 +129,62 @@ exclude_lines = [
   "if '-h' in args or '--help' in args:"
 ]
 
-[tool.flakeheaven]
+[tool.ruff]
+line-length = 80
+target-version = "py37"
+select = [
+  "W",
+  "B",
+  "E",
+  "I",
+  "F",
+  "A",
+  "D",
+  "G",
+  "Q",
+  "PL",
+  "UP",
+  "PT",
+  "C4",
+  "EXE",
+  "ISC",
+  "T20",
+  "INP",
+  "ARG",
+  "SIM",
+  "RET",
+  "FBT",
+  "ERA",
+  "T10",
+  "COM",
+  "SLOT",
+]
+ignore = [
+  "PLR0911",
+  "PLR0912",
+  "PLR0915",
+  "PLR0913",
+  "FBT002",
+]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.flake8-quotes]
 inline-quotes = "single"
-max-line-length = 80
-pytest-fixture-no-parentheses = true
-pytest-parametrize-values-type = "tuple"
-docstring-convention = "google"
-unused-arguments-ignore-abstract-functions = true
+multiline-quotes = "single"
 
-[tool.flakeheaven.plugins]
-pycodestyle = ["+*", "-W503"]
-pyflakes = ["+*"]
-pylint = ["+*"]
-flake8-builtins = ["+*"]
-flake8-comprehensions = ["+*"]
-flake8-docstrings = ["+*", "-D107", "-D105"]
-flake8-executable = ["+*"]
-flake8-implicit-str-concat = ["+*"]
-flake8-print = ["+*"]
-flake8-printf-formatting = ["+*"]
-flake8-pytest-style = ["+*"]
-flake8-bugbear = ["+*"]
-flake8-encodings = ["+*"]
-flake8-no-pep420 = ["+*"]
-flake8-absolute-import = ["+*"]
-flake8-unused-arguments = ["+*"]
-flake8-slots = ["+*"]
-dlint = ["+*"]
+[tool.ruff.flake8-pytest-style]
+fixture-parentheses = false
+parametrize-values-type = "tuple"
+parametrize-values-row-type = "tuple"
 
-[tool.flakeheaven.exceptions."docs/**"]
-flake8-print = ["-T201"]
-flake8-docstrings = ["-D100", "-D101", "-D102"]
-flake8-no-pep420 = ["-INP001"]
-
-[tool.flakeheaven.exceptions."tests/**"]
-flake8-docstrings = [
-  "-D100",
-  "-D101",
-  "-D102",
-  "-D103",
-  "-D104",
-  "-D107",
-  "-D205",
-  "-D415"
-]
-flake8-no-pep420 = ["-INP001"]
-
-[tool.flakeheaven.exceptions."setup.py"]
-flake8-docstrings = ["-D205"]
-flake8-no-pep420 = ["-INP001"]
-
-[tool.flakeheaven.exceptions."src/**/*.py"]
-flake8-docstrings = ["-D101", "-D102", "-D103", "-D107"]
-
-[tool.flakeheaven.exceptions."src/md.py"]
-flake8-docstrings = ["-D101", "-D102", "-D107"]
-
-[tool.isort]
-lines_after_imports = 2
-multi_line_output = 3
-line_length = 79
-use_parentheses = true
-combine_as_imports = true
-include_trailing_comma = true
-remove_redundant_aliases = true
-known_tests = "tests"
-sections = [
-  "FUTURE",
-  "STDLIB",
-  "THIRDPARTY",
-  "FIRSTPARTY",
-  "TESTS",
-  "LOCALFOLDER"
-]
-py_version = 37
-extra_standard_library = [
+[tool.ruff.isort]
+lines-after-imports = 2
+combine-as-imports = true
+force-wrap-aliases = true
+known-local-folder = ["tests"]
+extra-standard-library = [
   "contextvars",
   "dataclasses",
   "importlib.resources",
@@ -216,6 +194,27 @@ extra_standard_library = [
   "tomllib",
   "wsgiref.types"
 ]
+
+[tool.ruff.per-file-ignores]
+"tests/**" = [
+  "I002",
+  "D100",
+  "D101",
+  "D102",
+  "D103",
+  "D104",
+  "D107",
+  "D205",
+  "D415",
+  "INP001",
+  "PLR0913",
+  "PLR2004",
+]
+"setup.py" = ["D205", "INP001", "I002"]
+"src/**/*.py" = ["D101", "D102", "D103", "D107"]
+"src/md.py" = ["D101", "D102", "D107"]
+"docs/conf.py" = ["INP001"]
+"tests/test_unit/test_event.py" = ["E501", "ISC003"]
 
 [build-system]
 requires = ["hatchling"]

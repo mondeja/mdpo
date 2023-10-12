@@ -1,5 +1,4 @@
 import pytest
-
 from mdpo.md2po import markdown_to_pofile
 
 
@@ -40,7 +39,7 @@ msgstr ""
 def test_context_without_value(command, command_aliases):
     expected_msg = (
         'You need to specify a string for the context with the command'
-        f' \'{command}\'.'
+        f" '{command}'."
     )
     with pytest.raises(ValueError, match=expected_msg):
         markdown_to_pofile(

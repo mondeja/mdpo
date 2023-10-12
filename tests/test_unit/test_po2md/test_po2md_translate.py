@@ -2,7 +2,6 @@ import glob
 import os
 
 import pytest
-
 from mdpo.md2po import markdown_to_pofile
 from mdpo.po2md import pofile_to_markdown
 

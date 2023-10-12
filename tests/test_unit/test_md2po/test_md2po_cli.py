@@ -7,7 +7,6 @@ import subprocess
 import sys
 
 import pytest
-
 from mdpo.compat import importlib_metadata
 from mdpo.md2po.__main__ import run
 
@@ -76,6 +75,7 @@ def test_pipe_redirect_file_stdin(tmp_file):
             input=EXAMPLE['input'],
             capture_output=True,
             shell=True,
+            check=False,
         )
     assert proc.stdout == EXAMPLE['output']
     assert proc.returncode == 0
@@ -160,7 +160,7 @@ def test_debug(capsys, arg):
             ),
             line,
         )
-        if line.endswith('msgid=\'\''):
+        if line.endswith("msgid=''"):
             assert '\n'.join([*stdout_lines[i + 1:], '']) == EXAMPLE['output']
             po_output_checked = True
             break
@@ -367,7 +367,7 @@ msgstr ""
         stdout, stderr = capsys.readouterr()
         assert stdout == ''
         assert stderr == (
-            'Invalid value \'invalid\' for -w/--wrapwidth argument.\n'
+            "Invalid value 'invalid' for -w/--wrapwidth argument.\n"
         )
         return
 

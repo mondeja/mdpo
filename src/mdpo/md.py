@@ -1,5 +1,6 @@
 """Markdown related utilities for mdpo."""
 
+
 LINK_REFERENCE_REGEX = (
     r'^\[([^\]]+)\]:\s+<?([^\s>]+)>?\s*["\'\(]?([^"\'\)]+)?'
 )
@@ -90,13 +91,11 @@ def solve_link_reference_targets(translations):
         for msgid_linkr_group in msgid_linkr_groups:
             for link_reference_text_targets in link_references_text_targets:
 
-                # link_reference_text_targets[msgid][link_reference]
                 if link_reference_text_targets[0][0] == msgid_linkr_group[1]:
                     replacer = (
                         f'[{msgid_linkr_group[0]}][{msgid_linkr_group[1]}]'
                     )
                     replacement = (
-                        # link_reference_text_targets[msgid][target]
                         f'[{msgid_linkr_group[0]}]'
                         f'({link_reference_text_targets[0][1]})'
                     )
@@ -114,13 +113,11 @@ def solve_link_reference_targets(translations):
         for msgstr_linkr_group in msgstr_linkr_groups:
             for link_reference_text_targets in link_references_text_targets:
 
-                # link_reference_text_targets[msgstr][link_reference]
                 if link_reference_text_targets[1][0] == msgstr_linkr_group[1]:
                     replacer = (
                         f'[{msgstr_linkr_group[0]}][{msgstr_linkr_group[1]}]'
                     )
                     replacement = (
-                        # link_reference_text_targets[msgstr][target]
                         f'[{msgstr_linkr_group[0]}]'
                         f'({link_reference_text_targets[1][1]})'
                     )
@@ -136,10 +133,4 @@ def solve_link_reference_targets(translations):
         # store in solutions
         solutions[new_msgid] = new_msgstr
 
-        # print('----> new_msgid', new_msgid)
-        # print('----> new_msgstr', new_msgstr)
-
-    # print('----> link_references_text_targets', link_references_text_targets)
-    # print('----> msgid_msgstrs_with_links', msgid_msgstrs_with_links)
-    # print('----> solutions', solutions)
     return solutions

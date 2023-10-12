@@ -83,16 +83,15 @@ def markdown_to_pofile_to_markdown(
             and err.__class__.__name__ == 'error'
         ):
             # some strings like '[s-m]' will produce
-            # 're.error: bad character range ... at position'
             raise FileNotFoundError(
                 "The argument 'input_paths_glob' must be a valid glob or file"
                 ' path.',
-            )
+            ) from None
         raise err
     else:
         if not input_paths_glob_:
             raise FileNotFoundError(
-                f'The glob \'{input_paths_glob}\' does not match any file.',
+                f"The glob '{input_paths_glob}' does not match any file.",
             )
 
     _saved_files_changed = None if not _check_saved_files_changed else False

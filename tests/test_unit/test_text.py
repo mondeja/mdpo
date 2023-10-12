@@ -2,7 +2,6 @@
 
 
 import pytest
-
 from mdpo.text import (
     INFINITE_WRAPWIDTH,
     min_not_max_chars_in_a_row,
@@ -88,7 +87,7 @@ def test_parse_strint_0_inf(value, expected_result, maybe_raises):
 )
 def test_parse_wrapwidth_argument(value):
     if not value.isdigit() and value.lower() not in ('inf', 'infinity'):
-        expected_msg = f'Invalid value \'{value}\' for wrapwidth argument.'
+        expected_msg = f"Invalid value '{value}' for wrapwidth argument."
         with pytest.raises(ValueError, match=expected_msg):
             parse_wrapwidth_argument(value)
     else:

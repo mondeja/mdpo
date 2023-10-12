@@ -98,7 +98,6 @@ def to_files_or_content(value):
         return (True, value)
     except Exception as err:
         # some strings like '[s-m]' will produce
-        # 're.error: bad character range ... at position'
         if err.__module__ == 're' and err.__class__.__name__ == 'error':
             return (False, value)
         raise err
@@ -112,8 +111,9 @@ def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
     """Save a file checking if the content has changed.
 
     Args:
-        pofile (:py:class:`polib.POFile`): PO file to save.
-        po_filepath (str): Path to the new file to save in.
+        filepath (:py:class:`polib.POFile`): Path to the file to save.
+        content (str): Content to save.
+        encoding (str): Encoding to use when saving the file.
 
     Returns:
         bool: If the PO file content has been changed.
