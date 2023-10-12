@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contributing &mdash; mdpo 1.1.3 documentation</title>
+  <title>Contributing &mdash; mdpo 1.1.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -68,8 +68,8 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#development-install">Development install</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#test">Test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lint">Lint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-tests">Run tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linting-and-formatting">Linting and formatting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#build-documentation">Build documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#release">Release</a></li>
 </ul>
@@ -112,17 +112,16 @@ pip<span class="w"> </span>install<span class="w"> </span>hatch
 </pre></div>
 </div>
 </section>
-<section id="test">
-<h2>Test<a class="headerlink" href="#test" title="Permalink to this headline"></a></h2>
+<section id="run-tests">
+<h2>Run tests<a class="headerlink" href="#run-tests" title="Permalink to this headline"></a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>run<span class="w"> </span>tests:unit
-<span class="c1"># `hatch run tests:integration`</span>
-<span class="c1"># `hatch run tests:all`</span>
-<span class="c1"># `hatch run tests:cov`</span>
+<span class="c1"># hatch run tests:all</span>
+<span class="c1"># hatch run tests:cov</span>
 </pre></div>
 </div>
 </section>
-<section id="lint">
-<h2>Lint<a class="headerlink" href="#lint" title="Permalink to this headline"></a></h2>
+<section id="linting-and-formatting">
+<h2>Linting and formatting<a class="headerlink" href="#linting-and-formatting" title="Permalink to this headline"></a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>run<span class="w"> </span>style:lint
 </pre></div>
 </div>
@@ -130,7 +129,7 @@ pip<span class="w"> </span>install<span class="w"> </span>hatch
 <section id="build-documentation">
 <h2>Build documentation<a class="headerlink" href="#build-documentation" title="Permalink to this headline"></a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>run<span class="w"> </span>docs:build
-<span class="c1"># `hatch run docs:serve`</span>
+<span class="c1"># hatch run docs:serve</span>
 </pre></div>
 </div>
 </section>

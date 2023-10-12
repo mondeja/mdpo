@@ -11,19 +11,18 @@ Development install
    cd mdpo
    pip install hatch
 
-Test
-====
+Run tests
+=========
 
 .. code-block:: sh
 
    hatch run tests:unit
-   # `hatch run tests:integration`
-   # `hatch run tests:all`
-   # `hatch run tests:cov`
+   # hatch run tests:all
+   # hatch run tests:cov
 
 
-Lint
-====
+Linting and formatting
+======================
 
 .. code-block:: sh
 
@@ -36,7 +35,7 @@ Build documentation
 .. code-block:: sh
 
    hatch run docs:build
-   # `hatch run docs:serve`
+   # hatch run docs:serve
 
 Release
 =======
