@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdpo.mdpo2html package &mdash; mdpo 1.1.4 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/override-styles.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="mdpo.mdpo2html.__main__ module" href="mdpo.mdpo2html.__main__.html" />
+    <link rel="prev" title="mdpo.md2po2md.__main__ module" href="mdpo.md2po2md.__main__.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mdpo.html">mdpo package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="mdpo.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.html">mdpo.md2po package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po2md.html">mdpo.md2po2md package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mdpo.mdpo2html package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.html">mdpo.po2md package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="mdpo.html">mdpo package</a></li>
+      <li class="breadcrumb-item active">mdpo.mdpo2html package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/dev/reference/mdpo.mdpo2html.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo.mdpo2html">
+<span id="mdpo-mdpo2html-package"></span><h1>mdpo.mdpo2html package<a class="headerlink" href="#module-mdpo.mdpo2html" title="Permalink to this headline"></a></h1>
+<p>HTML-produced-from-Markdown files translator using PO files as reference.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mdpo.mdpo2html.</span></span><span class="sig-name descname"><span class="pre">MdPo2HTML</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pofiles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_adjacent_markups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({'code'})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold_tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({'b',</span> <span class="pre">'strong'})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">italic_tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({'em',</span> <span class="pre">'i'})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">link_tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({'a'})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({'img'})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_grouper_tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({'div',</span> <span class="pre">'hr'})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command_aliases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_check_saved_files_changed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/html.parser.html#html.parser.HTMLParser" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">html.parser.HTMLParser</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML._merge_adyacent_tags">
+<span class="sig-name descname"><span class="pre">_merge_adyacent_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_tags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML._merge_adyacent_tags" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML._process_replacer">
+<span class="sig-name descname"><span class="pre">_process_replacer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML._process_replacer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML._remove_lastline_from_output_if_empty">
+<span class="sig-name descname"><span class="pre">_remove_lastline_from_output_if_empty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML._remove_lastline_from_output_if_empty" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML.handle_comment">
+<span class="sig-name descname"><span class="pre">handle_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML.handle_comment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML.handle_data">
+<span class="sig-name descname"><span class="pre">handle_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML.handle_data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML.handle_endtag">
+<span class="sig-name descname"><span class="pre">handle_endtag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML.handle_endtag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML.handle_startendtag">
+<span class="sig-name descname"><span class="pre">handle_startendtag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML.handle_startendtag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML.handle_starttag">
+<span class="sig-name descname"><span class="pre">handle_starttag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML.handle_starttag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.MdPo2HTML.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath_or_content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.MdPo2HTML.translate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.mdpo2html._html_attrs_to_str">
+<span class="sig-prename descclassname"><span class="pre">mdpo.mdpo2html.</span></span><span class="sig-name descname"><span class="pre">_html_attrs_to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html._html_attrs_to_str" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a dictionary of HTML attributes to its HTML representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Attributes with values</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>HTML attributes string ready to be used inside a HTML tag.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.mdpo2html.markdown_pofile_to_html">
+<span class="sig-prename descclassname"><span class="pre">mdpo.mdpo2html.</span></span><span class="sig-name descname"><span class="pre">markdown_pofile_to_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath_or_content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pofiles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command_aliases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.mdpo2html.markdown_pofile_to_html" title="Permalink to this definition"></a></dt>
+<dd><p>HTML-produced-from-Markdown file translator using PO files.</p>
+<p>Produces a translated HTML file given a previous HTML file (created by a
+Markdown-to-HTML processor) and a set of PO files as reference for msgstrs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath_or_content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – HTML whose content wants to be translated.</p></li>
+<li><p><strong>pofiles</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Glob for set of pofiles used as reference translating
+the strings to another language.</p></li>
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of paths to pofiles to ignore, useful if the glob
+patterns in <code class="docutils literal notranslate"><span class="pre">pofiles</span></code> parameter does not fit your requirements.</p></li>
+<li><p><strong>save</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If you pass this parameter as a path to one HTML file,
+even if does not exists, will be saved in the path the output of
+the function.</p></li>
+<li><p><strong>html_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – HTML content encoding.</p></li>
+<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – PO files encoding. If you need different encodings
+for each file, you must define it in the “Content-Type” field of
+each PO file metadata, in the form
+<code class="docutils literal notranslate"><span class="pre">&quot;Content-Type:</span> <span class="pre">text/plain;</span> <span class="pre">charset=&lt;ENCODING&gt;\n&quot;</span></code>.</p></li>
+<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
+names in comments. The <code class="docutils literal notranslate"><span class="pre">mdpo-</span></code> prefix in command names resolution
+is optional. For example, if you want to use <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-on</span> <span class="pre">--&gt;</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>, you can pass the dictionaries
+<code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;mdpo-enable&quot;}</span></code> or <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;enable&quot;}</span></code> to this
+parameter.</p></li>
+<li><p><strong>**kwargs</strong> – Extra keyword arguments passed to
+<a class="reference internal" href="#mdpo.mdpo2html.MdPo2HTML" title="mdpo.mdpo2html.MdPo2HTML"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdpo.mdpo2html.MdPo2HTML</span></code></a> constructor.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Known limitations:</p>
+<ul class="simple">
+<li><p>This implementation doesn’t include support for
+<a class="reference internal" href="../../commands.html#include-codeblock-command"><span class="std std-ref">include-codeblock command</span></a>.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>HTML output translated version of the given file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.mdpo2html.__main__.html">mdpo.mdpo2html.__main__ module</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mdpo.md2po2md.__main__.html" class="btn btn-neutral float-left" title="mdpo.md2po2md.__main__ module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.mdpo2html.__main__.html" class="btn btn-neutral float-right" title="mdpo.mdpo2html.__main__ module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
