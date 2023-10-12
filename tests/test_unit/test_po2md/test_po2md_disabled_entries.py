@@ -2,21 +2,21 @@ from mdpo.po2md import Po2Md
 
 
 def test_disabled_entries(tmp_file):
-    po_content = """#
+    po_content = '''#
 msgid ""
 msgstr ""
 
 msgid "foo"
 msgstr "translated foo"
-"""
+'''
 
-    markdown_content = """# foo
+    markdown_content = '''# foo
 
 <!-- mdpo-translator Message for translator -->
 <!-- mdpo-context Context -->
 <!-- mdpo-disable-next-line -->
 this should be in disabled_entries
-"""
+'''
 
     with tmp_file(po_content, '.po') as po_filepath:
         po2md = Po2Md(po_filepath)

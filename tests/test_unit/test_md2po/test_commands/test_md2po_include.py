@@ -9,13 +9,13 @@ from mdpo.md2po import markdown_to_pofile
     ),
 )
 def test_include_comment(command, command_aliases):
-    content = f"""<!-- {command} This comment must be included -->
+    content = f'''<!-- {command} This comment must be included -->
 Some text that needs to be clarified
 
 Some text without comment
-"""
+'''
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile == """#
+    assert pofile == '''#
 msgid ""
 msgstr ""
 
@@ -27,7 +27,7 @@ msgstr ""
 
 msgid "Some text without comment"
 msgstr ""
-"""
+'''
 
 
 @pytest.mark.parametrize(
@@ -49,14 +49,14 @@ def test_include_comment_without_value(command, command_aliases):
 
 
 def test_include_comment_with_extracted():
-    content = """<!-- mdpo-translator Comment for translator in comment -->
+    content = '''<!-- mdpo-translator Comment for translator in comment -->
 <!-- mdpo-include This comment must be included -->
 Some text that needs to be clarified
 
 Some text without comment
-"""
+'''
     pofile = markdown_to_pofile(content)
-    assert pofile == """#
+    assert pofile == '''#
 msgid ""
 msgstr ""
 
@@ -69,19 +69,19 @@ msgstr ""
 
 msgid "Some text without comment"
 msgstr ""
-"""
+'''
 
 
 def test_include_comment_with_extracted_and_context():
-    content = """<!-- mdpo-context Some context for the included -->
+    content = '''<!-- mdpo-context Some context for the included -->
 <!-- mdpo-translator Comment for translator in comment -->
 <!-- mdpo-include This comment must be included -->
 Some text that needs to be clarified
 
 Some text without comment
-"""
+'''
     pofile = markdown_to_pofile(content)
-    assert pofile == """#
+    assert pofile == '''#
 msgid ""
 msgstr ""
 
@@ -95,4 +95,4 @@ msgstr ""
 
 msgid "Some text without comment"
 msgstr ""
-"""
+'''

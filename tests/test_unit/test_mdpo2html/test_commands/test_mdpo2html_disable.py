@@ -9,20 +9,20 @@ from mdpo.mdpo2html import MdPo2HTML, markdown_pofile_to_html
     ),
 )
 def test_disable(command, command_aliases, tmp_file):
-    html_input = f"""<h1>Header</h1>
+    html_input = f'''<h1>Header</h1>
 
 <!-- {command} -->
 
 <p>This message can not be translated.</p>
-"""
+'''
 
-    html_output = """<h1>Encabezado</h1>
+    html_output = '''<h1>Encabezado</h1>
 
 
 <p>This message can not be translated.</p>
-"""
+'''
 
-    pofile_content = """#
+    pofile_content = '''#
 
 msgid ""
 msgstr ""
@@ -32,7 +32,7 @@ msgstr "Encabezado"
 
 msgid "This message can not be translated."
 msgstr "Este mensaje no puede ser traducido."
-"""
+'''
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_pofile_to_html(
@@ -59,7 +59,7 @@ msgstr "Este mensaje no puede ser traducido."
 def test_disable_enable(commands, command_aliases, tmp_file):
     disable_command, enable_command = (commands['disable'], commands['enable'])
 
-    html_input = f"""<h1>Header</h1>
+    html_input = f'''<h1>Header</h1>
 
 <!-- {disable_command} -->
 
@@ -67,17 +67,17 @@ def test_disable_enable(commands, command_aliases, tmp_file):
 
 <!-- {enable_command} -->
 <p>This message must be translated.</p>
-"""
+'''
 
-    html_output = """<h1>Encabezado</h1>
+    html_output = '''<h1>Encabezado</h1>
 
 
 <p>This message can not be translated.</p>
 
 <p>Este mensaje debe ser traducido.</p>
-"""
+'''
 
-    pofile_content = """#
+    pofile_content = '''#
 
 msgid ""
 msgstr ""
@@ -90,7 +90,7 @@ msgstr "Este mensaje no puede ser traducido."
 
 msgid "This message must be translated."
 msgstr "Este mensaje debe ser traducido."
-"""
+'''
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_pofile_to_html(
@@ -110,7 +110,7 @@ msgstr "Este mensaje debe ser traducido."
     ),
 )
 def test_enable_next_block(command, command_aliases, tmp_file):
-    html_input = f"""<h1>Header</h1>
+    html_input = f'''<h1>Header</h1>
 
 <!-- mdpo-disable -->
 <p>This message can not be translated.</p>
@@ -121,9 +121,9 @@ def test_enable_next_block(command, command_aliases, tmp_file):
 <!-- mdpo-enable -->
 
 <p>This message must be translated also.</p>
-"""
+'''
 
-    html_output = """<h1>Encabezado</h1>
+    html_output = '''<h1>Encabezado</h1>
 
 <p>This message can not be translated.</p>
 
@@ -131,9 +131,9 @@ def test_enable_next_block(command, command_aliases, tmp_file):
 
 
 <p>Este mensaje también debe ser traducido.</p>
-"""
+'''
 
-    pofile_content = """#
+    pofile_content = '''#
 
 msgid ""
 msgstr ""
@@ -149,7 +149,7 @@ msgstr "Este mensaje debe ser traducido."
 
 msgid "This message must be translated also."
 msgstr "Este mensaje también debe ser traducido."
-"""
+'''
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_pofile_to_html(
@@ -169,22 +169,22 @@ msgstr "Este mensaje también debe ser traducido."
     ),
 )
 def test_disable_next_block(command, command_aliases, tmp_file):
-    html_input = f"""<h1>Header</h1>
+    html_input = f'''<h1>Header</h1>
 
 <!-- {command} -->
 <p>This message can not be translated.</p>
 
 <p>This message must be translated.</p>
-"""
+'''
 
-    html_output = """<h1>Encabezado</h1>
+    html_output = '''<h1>Encabezado</h1>
 
 <p>This message can not be translated.</p>
 
 <p>Este mensaje debe ser traducido.</p>
-"""
+'''
 
-    pofile_content = """#
+    pofile_content = '''#
 
 msgid ""
 msgstr ""
@@ -197,7 +197,7 @@ msgstr "Este mensaje no puede ser traducido."
 
 msgid "This message must be translated."
 msgstr "Este mensaje debe ser traducido."
-"""
+'''
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_pofile_to_html(
@@ -209,7 +209,7 @@ msgstr "Este mensaje debe ser traducido."
 
 
 def test_disabled_entries(tmp_file):
-    html_input = """<h1>Header</h1>
+    html_input = '''<h1>Header</h1>
 
 <!-- mdpo-disable -->
 <p>This message can not be translated.</p>
@@ -223,9 +223,9 @@ def test_disabled_entries(tmp_file):
 
 <!-- mdpo-disable-next-block -->
 <p>This message can not be translated either.</p>
-"""
+'''
 
-    pofile_content = """#
+    pofile_content = '''#
 
 msgid ""
 msgstr ""
@@ -244,7 +244,7 @@ msgstr "Este mensaje también debe ser traducido."
 
 msgid "This message can not be translated either."
 msgstr "Este mensaje tampoco puede ser traducido."
-"""
+'''
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         mdpo2html = MdPo2HTML(po_filepath)

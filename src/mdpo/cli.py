@@ -28,7 +28,7 @@ def cli_codespan(value, cli=True):
     """
     if SPHINX_IS_RUNNING:
         return f'``{value}``'
-    if cli:
+    if cli:  # pragma: no cover
         return f"'{value}'"
     return value
 

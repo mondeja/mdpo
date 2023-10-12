@@ -109,9 +109,9 @@ targets = [{ file = "pyproject.toml" }, { file = "docs/pre-commit-hooks.rst" }]
 [tool.project-config]
 cache = "2 days"
 style = [
-  "../project-config-styles/python/base.json5",
-  "../project-config-styles/python/sphinx.json5",
-  "../project-config-styles/python/readthedocs.json5",
+  "gh://mondeja/project-config-styles@v5/python/base.json5",
+  "gh://mondeja/project-config-styles@v5/python/sphinx.json5",
+  "gh://mondeja/project-config-styles@v5/python/readthedocs.json5",
 ]
 
 [tool.pytest.ini_options]
@@ -172,6 +172,7 @@ convention = "google"
 
 [tool.ruff.flake8-quotes]
 inline-quotes = "single"
+multiline-quotes = "single"
 
 [tool.ruff.flake8-pytest-style]
 fixture-parentheses = false

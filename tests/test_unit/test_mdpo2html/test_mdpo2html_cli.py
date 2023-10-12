@@ -8,7 +8,7 @@ from mdpo.mdpo2html.__main__ import run
 EXAMPLE = {
     'html-input': '<h1>Header 1</h1>\n\n<p>Some text here</p>\n',
     'html-output': '<h1>Encabezado 1</h1>\n\n<p>Algo de texto aquí</p>\n',
-    'pofile': """#
+    'pofile': '''#
 msgid ""
 msgstr ""
 
@@ -17,7 +17,7 @@ msgstr "Encabezado 1"
 
 msgid "Some text here"
 msgstr "Algo de texto aquí"
-""",
+''',
 }
 
 

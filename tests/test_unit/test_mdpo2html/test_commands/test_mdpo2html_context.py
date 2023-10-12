@@ -9,16 +9,16 @@ from mdpo.mdpo2html import markdown_pofile_to_html
     ),
 )
 def test_context(command, command_aliases, tmp_file):
-    html_input = f"""<!-- {command} month -->
+    html_input = f'''<!-- {command} month -->
 <p>May</p>
 
 <!-- mdpo-context might -->
 <p>May</p>
-"""
+'''
 
     html_output = '\n<p>Mayo</p>\n\n<p>Quizás</p>\n'
 
-    pofile_content = """#
+    pofile_content = '''#
 msgid ""
 msgstr ""
 
@@ -29,7 +29,7 @@ msgstr "Mayo"
 msgctxt "might"
 msgid "May"
 msgstr "Quizás"
-"""
+'''
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = markdown_pofile_to_html(

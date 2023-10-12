@@ -13,12 +13,12 @@ from mdpo.mdpo2html import markdown_pofile_to_html
     ),
 )
 def test_include_codeblock(command, command_aliases, tmp_file):
-    html_input = f"""<!-- {command} -->"""
-    pofile_content = """#
+    html_input = f'''<!-- {command} -->'''
+    pofile_content = '''#
 
 msgid ""
 msgstr ""
-"""
+'''
     with pytest.warns(SyntaxWarning) as record, \
             tmp_file(pofile_content, '.po') as po_filepath:
         markdown_pofile_to_html(

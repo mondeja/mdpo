@@ -139,7 +139,7 @@ def test_command_event_return_false():
             return False
         return None
 
-    content = """<!-- mdpo-skip -->
+    content = '''<!-- mdpo-skip -->
 
 some text
 
@@ -150,7 +150,7 @@ mdpo-skip
 
 <!-- mdpo-disable-next-line -->
 This must be included in output
-"""
+'''
 
     # Md2Po must be subclassed because is defined with fixed slots
     class CustomMd2Po(Md2Po):
@@ -167,7 +167,7 @@ This must be included in output
     output = md2po.extract()
 
     assert md2po.skip_counter == content.count('<!-- mdpo-skip -->')
-    assert output == """#
+    assert output == '''#
 msgid ""
 msgstr ""
 
@@ -179,7 +179,7 @@ msgstr ""
 
 msgid "This must be included in output"
 msgstr ""
-"""
+'''
 
 
 def test_msgid_event():
@@ -188,21 +188,21 @@ def test_msgid_event():
             return False
         return None
 
-    content = """<!-- mdpo-disable-next-line -->
+    content = '''<!-- mdpo-disable-next-line -->
 hate
 
 love
 
 equilibrium
-"""
+'''
 
-    expected_output = """#
+    expected_output = '''#
 msgid ""
 msgstr ""
 
 msgid "equilibrium"
 msgstr ""
-"""
+'''
 
     output = markdown_to_pofile(
         content,
@@ -220,7 +220,7 @@ def test_link_reference_event():
             return False
         return None
 
-    content = """This is a footnote[^1]. This is another[^2].
+    content = '''This is a footnote[^1]. This is another[^2].
 
 Here is a [link reference][foo].
 
@@ -229,9 +229,9 @@ Here is a [link reference][foo].
 [^2]: This is another footnote content.
 
 [foo]: https://github.com/mondeja/mdpo
-"""
+'''
 
-    expected_output = """#
+    expected_output = '''#
 msgid ""
 msgstr ""
 
@@ -250,7 +250,7 @@ msgstr ""
 #, fuzzy
 msgid "[foo]: https://github.com/mondeja/mdpo"
 msgstr "[foo]: https://github.com/mondeja/mdpo"
-"""
+'''
 
     output = markdown_to_pofile(
         content,

@@ -9,14 +9,14 @@ from mdpo.md2po import markdown_to_pofile
     ),
 )
 def test_context(command, command_aliases):
-    content = f"""<!-- mdpo-context month -->
+    content = f'''<!-- mdpo-context month -->
 May
 
 <!-- {command} might -->
 May
-"""
+'''
     pofile = markdown_to_pofile(content, command_aliases=command_aliases)
-    assert pofile == """#
+    assert pofile == '''#
 msgid ""
 msgstr ""
 
@@ -27,7 +27,7 @@ msgstr ""
 msgctxt "might"
 msgid "May"
 msgstr ""
-"""
+'''
 
 
 @pytest.mark.parametrize(

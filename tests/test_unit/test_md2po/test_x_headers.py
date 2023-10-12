@@ -13,10 +13,10 @@ def test_xheader_included():
         plaintext=False,
         extensions=extensions,
     )
-    assert str(pofile) == f"""#
+    assert str(pofile) == f'''#
 msgid ""
 msgstr "X-Generator: mdpo v{importlib_metadata.version("mdpo")}\\n"
 
 msgid "Foo"
 msgstr ""
-"""
+'''

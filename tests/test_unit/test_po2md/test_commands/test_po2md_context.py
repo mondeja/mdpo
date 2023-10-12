@@ -9,16 +9,16 @@ from mdpo.po2md import pofile_to_markdown
     ),
 )
 def test_context(command, command_aliases, tmp_file):
-    markdown_input = f"""<!-- {command} month -->
+    markdown_input = f'''<!-- {command} month -->
 May
 
 <!-- mdpo-context might -->
 May
-"""
+'''
 
     markdown_output = 'Mayo\n\nQuizás\n'
 
-    pofile_content = """#
+    pofile_content = '''#
 msgid ""
 msgstr ""
 
@@ -29,7 +29,7 @@ msgstr "Mayo"
 msgctxt "might"
 msgid "May"
 msgstr "Quizás"
-"""
+'''
 
     with tmp_file(pofile_content, '.po') as po_filepath:
         output = pofile_to_markdown(
