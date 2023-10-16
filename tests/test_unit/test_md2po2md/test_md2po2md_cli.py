@@ -3,6 +3,7 @@
 import os
 
 import pytest
+
 from mdpo.md2po2md.__main__ import run
 
 

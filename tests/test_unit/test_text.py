@@ -2,6 +2,7 @@
 
 
 import pytest
+
 from mdpo.text import (
     INFINITE_WRAPWIDTH,
     min_not_max_chars_in_a_row,

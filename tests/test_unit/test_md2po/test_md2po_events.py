@@ -5,6 +5,7 @@ from contextlib import redirect_stdout
 
 import md4c
 import pytest
+
 from mdpo.command import normalize_mdpo_command
 from mdpo.md2po import Md2Po, markdown_to_pofile
 

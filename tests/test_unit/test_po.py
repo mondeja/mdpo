@@ -1,4 +1,5 @@
 import pytest
+
 from mdpo.po import po_escaped_string
 
 

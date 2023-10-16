@@ -7,6 +7,7 @@ import subprocess
 import sys
 
 import pytest
+
 from mdpo.compat import importlib_metadata
 from mdpo.md2po.__main__ import run
 

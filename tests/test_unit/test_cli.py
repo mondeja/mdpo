@@ -1,4 +1,5 @@
 import pytest
+
 from mdpo.cli import parse_command_aliases_cli_arguments
 
 

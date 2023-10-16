@@ -1,6 +1,7 @@
 """HTML mdpo command utitlites tests."""
 
 import pytest
+
 from mdpo.command import (
     get_valid_mdpo_command_names,
     normalize_mdpo_command,

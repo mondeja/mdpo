@@ -3,6 +3,7 @@ implementation.
 """
 
 import pytest
+
 from mdpo.mdpo2html import markdown_pofile_to_html
 
 

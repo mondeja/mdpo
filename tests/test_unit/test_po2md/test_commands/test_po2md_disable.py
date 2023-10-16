@@ -1,4 +1,5 @@
 import pytest
+
 from mdpo.po2md import Po2Md, pofile_to_markdown
 
 

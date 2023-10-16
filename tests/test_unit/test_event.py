@@ -2,6 +2,7 @@ import contextlib
 import io
 
 import pytest
+
 from mdpo.event import parse_events_kwarg
 from mdpo.md2po import markdown_to_pofile
 

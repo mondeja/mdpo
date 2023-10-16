@@ -1,6 +1,7 @@
 import os
 
 import pytest
+
 from mdpo.md2po import Md2Po
 
 

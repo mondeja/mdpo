@@ -2,6 +2,7 @@ import io
 import os
 
 import pytest
+
 from mdpo.mdpo2html.__main__ import run
 
 

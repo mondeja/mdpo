@@ -5,6 +5,7 @@ import html
 import os
 
 import pytest
+
 from mdpo.io import (
     filter_paths,
     save_file_checking_file_changed,

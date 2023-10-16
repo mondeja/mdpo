@@ -1,4 +1,5 @@
 import pytest
+
 from mdpo.mdpo2html import MdPo2HTML, markdown_pofile_to_html
 
 
