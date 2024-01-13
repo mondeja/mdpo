@@ -14,9 +14,9 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.1
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5.0.0
         with:
           python-version: "3.10"
       - name: Install dependencies
@@ -62,9 +62,9 @@ jobs:
             python-version: "3.11"
             py: py311
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.1
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5.0.0
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install Hatch
@@ -76,15 +76,15 @@ jobs:
           pip install coverage covdefaults
           coverage xml
       - name: Upload coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3.1.4
 
   test-docs:
     name: Build documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.1
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5.0.0
         with:
           python-version: "3.11"
       - name: Install dependencies
@@ -93,7 +93,7 @@ jobs:
         run: hatch run docs:build
         env:
           SPHINX_GITHUB_CHANGELOG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4.0.0
         with:
           path: docs/_build/html/*
 
@@ -106,8 +106,8 @@ jobs:
     name: Build package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4.1.1
+      - uses: actions/setup-python@v5.0.0
         name: Setup Python
         with:
           python-version: "3.11"
@@ -115,7 +115,7 @@ jobs:
         run: pip install -U hatch
       - name: Build package
         run: hatch build
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4.0.0
         with:
           path: dist/*
           name: distribution
@@ -125,11 +125,11 @@ jobs:
     needs: build-dist
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4.1.0
         with:
           name: distribution
           path: dist
-      - uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: pypa/gh-action-pypi-publish@v1.8.11
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
@@ -141,7 +141,7 @@ jobs:
     needs: build-dist
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.1
       - name: Get tag metadata
         id: tag
         run: |
@@ -156,7 +156,7 @@ jobs:
           TAG_BODY="${TAG_BODY//$'\r'/'%0D'}"
           echo "body=$TAG_BODY" >> $GITHUB_OUTPUT
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v0.1.15
         id: create-release
         with:
           name: ${{ steps.tag.outputs.title }}
@@ -164,12 +164,12 @@ jobs:
           body: ${{ steps.tag.outputs.body }}
           draft: false
           prerelease: false
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4.1.0
         name: Download builds
         with:
           name: distribution
           path: dist
-      - uses: shogo82148/actions-upload-release-asset@v1
+      - uses: shogo82148/actions-upload-release-asset@v1.7.2
         name: Upload release assets
         with:
           upload_url: ${{ steps.create-release.outputs.upload_url }}
