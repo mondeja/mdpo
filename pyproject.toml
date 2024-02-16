@@ -96,11 +96,11 @@ dependencies = [
 ]
 
 [tool.hatch.envs.docs.scripts]
-build = "python -m sphinx -n -T -E -W docs docs/_build/html"
+build = "sphinx -n -T -E -W docs docs/_build/html"
 serve = [
-  "python -m sphinx -n -T -E -W docs docs/_build/html",
+  "sphinx -n -T -E -W docs docs/_build/html",
   "python -c 'import webbrowser as w;w.open(\"http://127.0.0.1:8089\")'",
-  "python -m http.server 8089 -b localhost -d docs/_build/html",
+  "http.server 8089 -b localhost -d docs/_build/html",
 ]
 
 [tool.bump]
