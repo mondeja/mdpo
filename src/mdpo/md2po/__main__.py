@@ -18,7 +18,7 @@ from mdpo.cli import (
     add_encoding_arguments,
     add_event_argument,
     add_extensions_argument,
-    add_include_codeblocks_argument,
+    add_include_codeblocks_option,
     add_nolocation_option,
     add_wrapwidth_argument,
     cli_codespan,
@@ -113,7 +113,7 @@ def build_parser():
         help='Include in the resulting PO file the mdpo specification'
              ' X-Header "X-Generation", whose value is "mdpo v<version>".',
     )
-    add_include_codeblocks_argument(parser)
+    add_include_codeblocks_option(parser)
     parser.add_argument(
         '--ignore-msgids', dest='ignore_msgids', default=None,
         help='Path to a plain text file where all msgids to ignore from being'

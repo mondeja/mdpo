@@ -332,7 +332,7 @@ def add_event_argument(parser):
     )
 
 
-def add_include_codeblocks_argument(parser):
+def add_include_codeblocks_option(parser):
     """Add the ``--include-codeblocks`` option to an argument parser.
 
     Args:

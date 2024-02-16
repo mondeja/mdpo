@@ -17,7 +17,7 @@ from mdpo.cli import (
     add_debug_option,
     add_encoding_arguments,
     add_extensions_argument,
-    add_include_codeblocks_argument,
+    add_include_codeblocks_option,
     add_nolocation_option,
     add_wrapwidth_argument,
     cli_codespan,
@@ -83,7 +83,7 @@ def build_parser():
     add_wrapwidth_argument(
         parser, markup='md', markup_prefix=True, short=False, default='80',
     )
-    add_include_codeblocks_argument(parser)
+    add_include_codeblocks_option(parser)
     add_encoding_arguments(parser)
     add_debug_option(parser)
     add_check_option(parser)
