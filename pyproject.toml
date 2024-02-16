@@ -86,7 +86,7 @@ cov = [
 python = ["py37", "py38", "py39", "py310", "py311", "py312"]
 
 [tool.hatch.envs.docs]
-python = "3.10"
+python = "3.11"
 dependencies = [
   "Sphinx~=7.0",
   "sphinx-rtd-theme~=2.0",
