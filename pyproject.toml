@@ -51,11 +51,11 @@ md2po2md = "mdpo.md2po2md.__main__:main"
 mdpo2html = "mdpo.mdpo2html.__main__:main"
 
 [tool.hatch.envs.default]
-python = "3.11"
+python = "3.10"
 dependencies = ["mondeja-bump"]
 
 [tool.hatch.envs.style]
-python = "3.11"
+python = "3.10"
 detached = true
 dependencies = ["pre-commit"]
 
@@ -86,7 +86,7 @@ cov = [
 python = ["py37", "py38", "py39", "py310", "py311", "py312"]
 
 [tool.hatch.envs.docs]
-python = "3.11"
+python = "3.10"
 dependencies = [
   "Sphinx~=7.0",
   "sphinx-rtd-theme~=2.0",
@@ -96,11 +96,11 @@ dependencies = [
 ]
 
 [tool.hatch.envs.docs.scripts]
-build = "sphinx -n -T -E -W docs docs/_build/html"
+build = "python -m sphinx -n -T -E -W docs docs/_build/html"
 serve = [
-  "sphinx -n -T -E -W docs docs/_build/html",
+  "python -m sphinx -n -T -E -W docs docs/_build/html",
   "python -c 'import webbrowser as w;w.open(\"http://127.0.0.1:8089\")'",
-  "http.server 8089 -b localhost -d docs/_build/html",
+  "python -m http.server 8089 -b localhost -d docs/_build/html",
 ]
 
 [tool.bump]
