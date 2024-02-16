@@ -92,7 +92,7 @@ dependencies = [
   "sphinx-rtd-theme~=2.0",
   "sphinx-argparse-cli~=1.12",
   "sphinx-github-changelog~=1.2",
-  "sphinx-tabs~=3.3",
+  "sphinx-tabs~=3.4",
 ]
 
 [tool.hatch.envs.docs.scripts]
