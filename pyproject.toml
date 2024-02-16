@@ -51,11 +51,11 @@ md2po2md = "mdpo.md2po2md.__main__:main"
 mdpo2html = "mdpo.mdpo2html.__main__:main"
 
 [tool.hatch.envs.default]
-python = "3.10"
+python = "3.11"
 dependencies = ["mondeja-bump"]
 
 [tool.hatch.envs.style]
-python = "3.10"
+python = "3.11"
 detached = true
 dependencies = ["pre-commit"]
 
