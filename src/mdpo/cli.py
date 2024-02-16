@@ -332,6 +332,24 @@ def add_event_argument(parser):
     )
 
 
+def add_include_codeblocks_option(parser):
+    """Add the ``--include-codeblocks`` option to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
+            extend.
+    """
+    parser.add_argument(
+        '-c', '--include-codeblocks',
+        dest='include_codeblocks', action='store_true',
+        help='Include all code blocks found inside PO file result. This is'
+             ' useful if you want to translate all your blocks of code.'
+             ' Equivalent to append'
+             f' {cli_codespan("<!-- mdpo-include-codeblock -->")} command'
+             ' before each code block.',
+    )
+
+
 def parse_event_argument(value):
     """Parse ``--event`` CLI argument values.
 

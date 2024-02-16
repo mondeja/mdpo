@@ -20,6 +20,7 @@ def markdown_to_pofile_to_markdown(
     md_wrapwidth=80,
     po_encoding=None,
     md_encoding=None,
+    include_codeblocks=False,
     md2po_kwargs=None,
     po2md_kwargs=None,
     _check_saved_files_changed=False,
@@ -64,6 +65,7 @@ def markdown_to_pofile_to_markdown(
             possible.
         po_encoding (str): PO files encoding.
         md_encoding (str): Markdown files encoding.
+        include_codeblocks (bool): Include codeblocks in the extraction process.
         md2po_kwargs (dict): Additional optional arguments passed to
             ``markdown_to_pofile`` function.
         po2md_kwargs (dict): Additional optional arguments passed to
@@ -139,6 +141,7 @@ def markdown_to_pofile_to_markdown(
                 debug=debug,
                 location=location,
                 wrapwidth=po_wrapwidth,
+                include_codeblocks=include_codeblocks,
                 _check_saved_files_changed=_check_saved_files_changed,
                 **(md2po_kwargs or {}),
             )

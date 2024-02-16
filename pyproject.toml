@@ -1,6 +1,6 @@
 [project]
 name = "mdpo"
-version = "1.1.4"
+version = "1.1.5"
 description = "Markdown files translation using PO files."
 readme = "README.md"
 license = "BSD-3-Clause"
@@ -88,11 +88,11 @@ python = ["py37", "py38", "py39", "py310", "py311", "py312"]
 [tool.hatch.envs.docs]
 python = "3.10"
 dependencies = [
-  "Sphinx~=4.0",
-  "sphinx-rtd-theme~=1.0",
-  "sphinx-argparse-cli~=1.8",
+  "Sphinx~=7.2",
+  "sphinx-rtd-theme~=2.0",
+  "sphinx-argparse-cli~=1.12",
   "sphinx-github-changelog~=1.2",
-  "sphinx-tabs~=3.3",
+  "sphinx-tabs~=3.4",
 ]
 
 [tool.hatch.envs.docs.scripts]
@@ -109,9 +109,9 @@ targets = [{ file = "pyproject.toml" }, { file = "docs/pre-commit-hooks.rst" }]
 [tool.project-config]
 cache = "2 days"
 style = [
-  "gh://mondeja/project-config-styles@v5.1/python/base.json5",
-  "gh://mondeja/project-config-styles@v5.1/python/sphinx.json5",
-  "gh://mondeja/project-config-styles@v5.1/python/readthedocs.json5",
+  "gh://mondeja/project-config-styles@v5.2/python/base.json5",
+  "gh://mondeja/project-config-styles@v5.2/python/sphinx.json5",
+  "gh://mondeja/project-config-styles@v5.2/python/readthedocs.json5",
 ]
 
 [tool.pytest.ini_options]
@@ -132,6 +132,8 @@ exclude_lines = [
 [tool.ruff]
 line-length = 80
 target-version = "py37"
+
+[tool.ruff.lint]
 select = [
   "W",
   "B",
@@ -165,21 +167,22 @@ ignore = [
   "PLR0915",
   "PLR0913",
   "FBT002",
+  "G004",
 ]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 inline-quotes = "single"
 multiline-quotes = "single"
 
-[tool.ruff.flake8-pytest-style]
+[tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
 parametrize-values-type = "tuple"
 parametrize-values-row-type = "tuple"
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 lines-after-imports = 2
 combine-as-imports = true
 force-wrap-aliases = true
@@ -196,7 +199,7 @@ extra-standard-library = [
   "wsgiref.types"
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "tests/**" = [
   "I002",
   "D100",
