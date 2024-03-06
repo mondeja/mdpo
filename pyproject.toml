@@ -1,11 +1,11 @@
 [project]
 name = "mdpo"
-version = "1.1.6"
+version = "2.0.0"
 description = "Markdown files translation using PO files."
 readme = "README.md"
 license = "BSD-3-Clause"
 authors = [{ name = "Álvaro Mondéjar Rubio", email = "mondejar1994@gmail.com" }]
-requires-python = ">=3.7,<3.13"
+requires-python = ">=3.8,<3.13"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Operating System :: OS Independent",
@@ -15,7 +15,6 @@ classifiers = [
   "Topic :: Text Processing",
   "Topic :: Text Processing :: Markup :: Markdown",
   "Environment :: Console",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -83,7 +82,7 @@ cov = [
 ]
 
 [[tool.hatch.envs.tests.matrix]]
-python = ["py37", "py38", "py39", "py310", "py311", "py312"]
+python = ["py38", "py39", "py310", "py311", "py312"]
 
 [tool.hatch.envs.docs]
 python = "3.10"
@@ -131,7 +130,7 @@ exclude_lines = [
 
 [tool.ruff]
 line-length = 80
-target-version = "py37"
+target-version = "py38"
 
 [tool.ruff.lint]
 select = [
