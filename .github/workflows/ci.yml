@@ -32,9 +32,6 @@ jobs:
       matrix:
         include:
           - platform: ubuntu-latest
-            python-version: 3.7
-            py: py37
-          - platform: ubuntu-latest
             python-version: 3.8
             py: py38
           - platform: ubuntu-latest
@@ -46,9 +43,6 @@ jobs:
           - platform: ubuntu-latest
             python-version: "3.11"
             py: py311
-          - platform: macos-latest
-            python-version: 3.7
-            py: py37
           - platform: macos-latest
             python-version: 3.9
             py: py39
