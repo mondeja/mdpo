@@ -128,8 +128,8 @@ def add_common_cli_first_arguments(parser, quiet=True):
     )
     parser.add_argument(
         '-v', '--version', action=ImportlibMetadataVersionAction,
+        version_from='mdpo',
         version='%(prog)s %(version)s',
-        importlib_metadata_version_from='mdpo',
         help='Show program version number and exit.',
     )
     if quiet:
