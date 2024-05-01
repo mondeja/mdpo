@@ -870,10 +870,13 @@ class Md2Po:
                             self.code_start_string,
                             text,
                         ) - 1
-                        self.current_msgid = '{}{}{}'.format(
-                            self.current_msgid[:self._codespan_start_index],
-                            self._codespan_backticks * self.code_start_string,
-                            self.current_msgid[self._codespan_start_index:],
+                        backticks = (
+                            self._codespan_backticks * self.code_start_string
+                        )
+                        self.current_msgid = (
+                            f'{self.current_msgid[:self._codespan_start_index]}'
+                            f'{backticks}'
+                            f'{self.current_msgid[self._codespan_start_index:]}'
                         )
                         if self._inside_aspan:
                             self._current_aspan_text += text
