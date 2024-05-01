@@ -22,10 +22,7 @@
 </h2>
 
 <p align="center">
-Complies with <a href="https://spec.commonmark.org/">CommonMark Specification</a>
-<a href="https://spec.commonmark.org/0.29">v0.29</a> and
-<a href="https://spec.commonmark.org/0.30">v0.30</a>, supporting additional features.
-</p>
+Complies with the <a href="https://spec.commonmark.org/">CommonMark Specification</a>, supporting some additional features.</p>
 
 ## Status
 
