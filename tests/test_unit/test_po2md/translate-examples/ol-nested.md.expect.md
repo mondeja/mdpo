@@ -16,6 +16,7 @@
       + Otro elemento de lista desordenada anidado después de bloque de código
 
 1. Elemento de lista ordenada
+
    > Bloque de cita dentro de elemento de lista ordenada
 
    > Otro bloque de cita dentro de elemento de lista ordenada
@@ -30,6 +31,7 @@
    | Párrafo | Texto | Bar es | C es |
 
    1. Elemento de lista ordenada anidado
+
       > Otro bloque de cita anidado más dentro de elemento de lista ordenada anidado
 
       > | Sintaxis | Descripción | Estilo | D es |

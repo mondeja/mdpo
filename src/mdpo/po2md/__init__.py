@@ -586,15 +586,12 @@ class Po2Md:
                 if self._inside_quoteblock:
                     indent = '   ' * len(self._current_list_type)
                     self.current_line = f'{indent}{self.current_line}'
-                    self._save_current_line()
                 elif self._inside_liblock_first_p:
                     self._inside_liblock_first_p = False
                 else:
                     indent = '   ' * len(self._current_list_type)
                     self.current_line = f'\n{indent}{self.current_line}'
-                    self._save_current_line()
-            else:
-                self._save_current_line()
+            self._save_current_line()
 
             self._inside_pblock = False
             if self._inside_quoteblock:
