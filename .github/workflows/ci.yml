@@ -71,6 +71,8 @@ jobs:
           coverage xml
       - name: Upload coverage
         uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   test-docs:
     name: Build documentation
