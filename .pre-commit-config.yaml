@@ -40,7 +40,7 @@ repos:
         files: \.bat$
         name: "*.bat end of lines"
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.2
+    rev: v0.5.0
     hooks:
       - id: ruff
         args:
@@ -61,7 +61,7 @@ repos:
         name: editorconfig-checker
         alias: ec
   - repo: https://github.com/tcort/markdown-link-check
-    rev: v3.12.1
+    rev: v3.12.2
     hooks:
       - id: markdown-link-check
         name: markdown-link-check
