@@ -15,3 +15,9 @@ indent_size = 2
 
 [*.css]
 indent_size = 2
+
+[Makefile]
+indent_style = tab
+
+[make.bat]
+indent_style = tab

@@ -1,6 +1,6 @@
 repos:
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v4.0.0-alpha.8
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.3.3
     hooks:
       - id: prettier
         types_or:
@@ -14,9 +14,13 @@ repos:
           - prettier
           - prettier-plugin-toml
         minimum_pre_commit_version: 2.9.0
+        args:
+          - --cache
+          - --cache-location=.prettier-cache
+          - --ignore-path=.gitignore
         exclude: ^tests
   - repo: https://github.com/mondeja/project-config
-    rev: v0.9.5
+    rev: v0.9.6
     hooks:
       - id: project-config
   - repo: meta
@@ -26,7 +30,7 @@ repos:
       - id: check-useless-excludes
         name: check-useless-excludes
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
         name: trailing-whitespace
@@ -39,8 +43,15 @@ repos:
       - id: remove-crlf
         files: \.bat$
         name: "*.bat end of lines"
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.29.4
+    hooks:
+      - id: check-github-workflows
+        name: check-github-workflows
+        args:
+          - --verbose
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.2
+    rev: v0.6.9
     hooks:
       - id: ruff
         args:
@@ -55,19 +66,13 @@ repos:
     hooks:
       - id: yamllint
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 2.7.3
+    rev: 3.0.3
     hooks:
       - id: editorconfig-checker
         name: editorconfig-checker
         alias: ec
-  - repo: https://github.com/tcort/markdown-link-check
-    rev: v3.12.1
-    hooks:
-      - id: markdown-link-check
-        name: markdown-link-check
-        files: ^README\.md$
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.13.0
+    rev: v0.14.0
     hooks:
       - id: markdownlint-cli2
         name: markdownlint-po2md-tests
@@ -77,3 +82,7 @@ repos:
         types:
           - markdown
         files: ^tests/test_unit/test_po2md/
+  - repo: https://github.com/mondeja/rust-pc-hooks
+    rev: v1.3.0
+    hooks:
+      - id: lychee
