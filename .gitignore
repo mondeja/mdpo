@@ -15,3 +15,4 @@ docs/_build/
 /temp/
 docs/dev/reference/
 .ruff_cache/
+.prettier-cache

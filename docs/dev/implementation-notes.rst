@@ -12,8 +12,8 @@ Implementation notes
 Autolink vs link clash
 ======================
 
-An autolink is something like ``<https://foo.bar>`` and a link is something
-like ``[foo](https://foo.bar)``.
+An autolink is something like ``<https://github.com>`` and a link is something
+like ``[title](https://github.com)``.
 
 MD4C parser doesn't distinguish between an autolink and a link whose text and
 destination is the same. So, mdpo will treat all links whose text and

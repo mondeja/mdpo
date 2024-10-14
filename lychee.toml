@@ -1,0 +1,8 @@
+exclude = [
+  '^http://127\.0\.0\.1:8088/$',
+  '^http://127\.0\.0\.1:8089/$',
+  '^https://github.com/user/repo/',
+]
+exclude_path = [
+  "tests/",
+]
