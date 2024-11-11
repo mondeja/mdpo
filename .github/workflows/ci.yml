@@ -149,6 +149,12 @@ jobs:
       - name: Compress with UPX
         if: matrix.runs-on != 'macos-13' && matrix.runs-on != 'macos-14'
         run: upx -f --best -9 dist/*
+      - if: matrix.runs-on == 'windows-latest'
+        run: |
+          mv dist/md2po.exe dist/md2po
+          mv dist/po2md.exe dist/po2md
+          mv dist/md2po2md.exe dist/md2po2md
+          mv dist/mdpo2html.exe dist/mdpo2html
       - name: Prepare upload
         run: |
           mv dist/md2po dist/md2po-${{ matrix.runs-on }}
