@@ -88,8 +88,7 @@ jobs:
         with:
           path: docs/_build/html/*
 
-  build-dist:
-    if: startsWith(github.ref, 'refs/tags/')
+  build-wheel-sdist:
     needs:
       - lint
       - test
@@ -109,9 +108,132 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: dist/*
-          name: distribution
+          name: wheel-sdist
+
+  build-standalone-dist:
+    name: Build standalone
+    needs: build-wheel-sdist
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on:
+          - ubuntu-latest
+          # ARM
+          - macos-14
+          # X86
+          - macos-13
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install -U pyinstaller
+          sudo apt install upx
+      - name: Install package
+        run: pip install .
+      - name: Build standalone distribution
+        shell: bash
+        run: sh scripts/build.sh
+      - name: Compress with UPX
+        run: |
+          upx --best -9 dist/md2po
+          upx --best -9 dist/po2md
+          upx --best -9 dist/md2po2md
+          upx --best -9 dist/mdpo2html
+      - name: Prepare upload
+        run: |
+          mv dist/md2po dist/md2po-${{ matrix.runs-on }}
+          mv dist/po2md dist/po2md-${{ matrix.runs-on }}
+          mv dist/md2po2md dist/md2po2md-${{ matrix.runs-on }}
+          mv dist/mdpo2html dist/mdpo2html-${{ matrix.runs-on }}
+      - uses: actions/upload-artifact@v4
+        with:
+          path: dist/*
+          name: ${{ matrix.runs-on }}-build
+          if-no-files-found: error
+          overwrite: true
+
+  build-dist:
+    name: Build final distribution
+    runs-on: ubuntu-latest
+    needs:
+      - build-wheel-sdist
+      - build-standalone-dist
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: wheel-sdist
+          path: dist
+      - name: Download MacOS ARM artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-14-build
+          path: ./build/mac-arm64
+      - name: Download MacOS X86 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-13-build
+          path: ./build/mac-x64
+      - name: Download Linux artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ubuntu-latest-build
+          path: ./build/linux
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-latest-build
+          path: ./build/windows
+      - name: Create Linux tarball
+        run: |
+          cd build/linux
+          mv md2po-ubuntu-latest md2po
+          mv po2md-ubuntu-latest po2md
+          mv md2po2md-ubuntu-latest md2po2md
+          mv mdpo2html-ubuntu-latest mdpo2html
+          cd ../..
+          tar -czf dist/mdpo-linux-x64.tar.gz -C build/linux \
+            md2po po2md md2po2md mdpo2html
+      - name: Create MacOS tarballs
+        run: |
+          cd build
+          mv mac-x64/md2po-macos-13 mac-x64/md2po
+          mv mac-arm64/md2po-macos-14 mac-arm64/md2po
+          mv mac-x64/po2md-macos-13 mac-x64/po2md
+          mv mac-arm64/po2md-macos-14 mac-arm64/po2md
+          mv mac-x64/md2po2md-macos-13 mac-x64/md2po2md
+          mv mac-arm64/md2po2md-macos-14 mac-arm64/md2po2md
+          mv mac-x64/mdpo2html-macos-13 mac-x64/mdpo2html
+          mv mac-arm64/mdpo2html-macos-14 mac-arm64/mdpo2html
+          tar -czf ../dist/mdpo-mac-x64.tar.gz -C mac-x64 \
+            md2po po2md md2po2md mdpo2html
+          tar -czf ../dist/mdpo-mac-arm64.tar.gz -C mac-arm64 \
+            md2po po2md md2po2md mdpo2html
+      - name: Create Windows zip
+        run: |
+          cd build/windows
+          mv md2po-windows-latest md2po.exe
+          mv po2md-windows-latest po2md.exe
+          mv md2po2md-windows-latest md2po2md.exe
+          mv mdpo2html-windows-latest mdpo2html.exe
+          7z a -tzip ../../dist/mdpo-windows-x64.zip \
+            md2po.exe po2md.exe md2po2md.exe mdpo2html.exe
+      - name: Remove build directories
+        run: rm -rf build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: ./dist
 
   pypi-upload:
+    if: startsWith(github.ref, 'refs/tags/')
     name: Upload to PyPI
     needs: build-dist
     runs-on: ubuntu-latest
@@ -128,6 +250,7 @@ jobs:
           skip-existing: true
 
   release:
+    if: startsWith(github.ref, 'refs/tags/')
     name: Release
     needs: build-dist
     runs-on: ubuntu-latest
@@ -158,8 +281,8 @@ jobs:
       - uses: actions/download-artifact@v4
         name: Download builds
         with:
-          name: distribution
-          path: dist
+          name: dist
+          path: ./dist
       - uses: shogo82148/actions-upload-release-asset@v1
         name: Upload release assets
         with:
