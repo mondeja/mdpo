@@ -56,7 +56,7 @@ jobs:
           with codecs.open(os.environ["GITHUB_OUTPUT"], "a", "utf-8") as file_handler:
               file_handler.write(env)
       - name: Install MD4C from source
-        if: matrix.py == '3.12' && runner.os == 'Linux'
+        if: matrix.py == '3.12' && matrix.platform == 'ubuntu-latest'
         shell: sh
         run: |
           git clone --depth=1 https://github.com/mity/md4c
