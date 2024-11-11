@@ -863,7 +863,7 @@ class Po2Md:
             self._inside_latexmath_display = False
             self.current_line += self.latexmath_display_start_string
             self._save_current_line()
-            self.current_msgid = self.current_msgid.rstrip()
+            self.current_msgid = self.current_msgid.strip()
             self._save_current_msgid()
             self.current_line += self.latexmath_display_end_string
             self._save_current_line()
