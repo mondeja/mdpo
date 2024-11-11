@@ -12,7 +12,7 @@ create a documentation translated by PO files using ``mdpo``.
 
    <center>
      <bold>
-       <h3><a href="https://mkdocs-mdpo.ga">See the full documentation here</a></h3>
+       <h3><a href="https://mondeja.github.io/mkdocs-mdpo-plugin/">See the full documentation here</a></h3>
      </bold>
    </center>
 
@@ -33,6 +33,6 @@ process to check the content of the PO files.
    </center>
 
 .. _Mkdocs: https://www.mkdocs.org
-.. _mkdocs-mdpo-plugin: https://mkdocs-mdpo.ga
+.. _mkdocs-mdpo-plugin: https://mondeja.github.io/mkdocs-mdpo-plugin/
 .. _some of these hooks: https://github.com/mondeja/pre-commit-po-hooks
 .. _pre-commit: https://pre-commit.com

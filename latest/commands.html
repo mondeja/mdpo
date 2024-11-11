@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Customizing extraction &mdash; mdpo 1.1.4 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/override-styles.css" type="text/css" />
+  <title>Customizing extraction &mdash; mdpo 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/override-styles.css?v=70cd355a" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=20623aea"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,7 +40,7 @@
               <img src="_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.1
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -103,7 +105,7 @@
            <div itemprop="articleBody">
              
   <section id="customizing-extraction">
-<h1>Customizing extraction<a class="headerlink" href="#customizing-extraction" title="Permalink to this headline"></a></h1>
+<h1>Customizing extraction<a class="headerlink" href="#customizing-extraction" title="Link to this heading"></a></h1>
 <p>You can customize the string extraction process using HTML comments in
 your Markdown files.</p>
 <div class="admonition tip">
@@ -113,7 +115,7 @@ argument <a class="reference internal" href="cli.html#md2po---command-alias"><sp
 optional parameter <code class="docutils literal notranslate"><span class="pre">command_aliases</span></code> of the <a class="reference internal" href="api.html"><span class="doc">programmatic APIs</span></a>.</p>
 </div>
 <section id="disabling-extraction">
-<h2>Disabling extraction<a class="headerlink" href="#disabling-extraction" title="Permalink to this headline"></a></h2>
+<h2>Disabling extraction<a class="headerlink" href="#disabling-extraction" title="Link to this heading"></a></h2>
 <p>You can disable and enable the extraction of certain strings using
 the next HTML commments:</p>
 <ul class="simple">
@@ -168,7 +170,7 @@ the next HTML commments:</p>
 </div>
 </section>
 <section id="including-comments-for-translators">
-<h2>Including comments for translators<a class="headerlink" href="#including-comments-for-translators" title="Permalink to this headline"></a></h2>
+<h2>Including comments for translators<a class="headerlink" href="#including-comments-for-translators" title="Link to this heading"></a></h2>
 <p>You can include comments for translators using the next line in the
 line before the message:</p>
 <ul class="simple">
@@ -197,7 +199,7 @@ line before the message:</p>
 </div>
 </section>
 <section id="contextual-markers">
-<h2>Contextual markers<a class="headerlink" href="#contextual-markers" title="Permalink to this headline"></a></h2>
+<h2>Contextual markers<a class="headerlink" href="#contextual-markers" title="Link to this heading"></a></h2>
 <p>You can specify contexts for msgids using next command:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-context</span> <span class="pre">Context</span> <span class="pre">for</span> <span class="pre">your</span> <span class="pre">string</span> <span class="pre">--&gt;</span></code></p></li>
@@ -227,7 +229,7 @@ line before the message:</p>
 </div>
 </section>
 <section id="code-blocks-extraction">
-<span id="include-codeblock-command"></span><h2>Code blocks extraction<a class="headerlink" href="#code-blocks-extraction" title="Permalink to this headline"></a></h2>
+<span id="include-codeblock-command"></span><h2>Code blocks extraction<a class="headerlink" href="#code-blocks-extraction" title="Link to this heading"></a></h2>
 <p>You can enable and disable code blocks extraction inside the PO file using
 the next commands:</p>
 <ul class="simple">
@@ -289,7 +291,7 @@ after this command.</p></li>
 </div>
 </section>
 <section id="extracting-comments-itself">
-<h2>Extracting comments itself<a class="headerlink" href="#extracting-comments-itself" title="Permalink to this headline"></a></h2>
+<h2>Extracting comments itself<a class="headerlink" href="#extracting-comments-itself" title="Link to this heading"></a></h2>
 <p>You can extract comments inside the PO file, but don’t ask me why you need
 this:</p>
 <ul class="simple">
@@ -363,7 +365,7 @@ this:</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

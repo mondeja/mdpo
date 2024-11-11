@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mdpo.md4c module &mdash; mdpo 1.1.4 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/override-styles.css" type="text/css" />
+  <title>mdpo.md4c module &mdash; mdpo 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/override-styles.css?v=70cd355a" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=20623aea"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -38,7 +40,7 @@
               <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.1
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -117,16 +119,16 @@
            <div itemprop="articleBody">
              
   <section id="module-mdpo.md4c">
-<span id="mdpo-md4c-module"></span><h1>mdpo.md4c module<a class="headerlink" href="#module-mdpo.md4c" title="Permalink to this headline"></a></h1>
+<span id="mdpo-md4c-module"></span><h1>mdpo.md4c module<a class="headerlink" href="#module-mdpo.md4c" title="Link to this heading"></a></h1>
 <p>md4c related stuff for mdpo.</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="mdpo.md4c.READABLE_BLOCK_NAMES">
-<span class="sig-prename descclassname"><span class="pre">mdpo.md4c.</span></span><span class="sig-name descname"><span class="pre">READABLE_BLOCK_NAMES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{1:</span> <span class="pre">'quote',</span> <span class="pre">2:</span> <span class="pre">'unordered</span> <span class="pre">list',</span> <span class="pre">3:</span> <span class="pre">'ordered</span> <span class="pre">list',</span> <span class="pre">6:</span> <span class="pre">'header',</span> <span class="pre">7:</span> <span class="pre">'code',</span> <span class="pre">8:</span> <span class="pre">'html',</span> <span class="pre">9:</span> <span class="pre">'paragraph',</span> <span class="pre">10:</span> <span class="pre">'table'}</span></em><a class="headerlink" href="#mdpo.md4c.READABLE_BLOCK_NAMES" title="Permalink to this definition"></a></dt>
-<dd><p>mapping from <a class="reference external" href="https://github.com/dominickpastore/pymd4c">pymd4c</a>
+<span class="sig-prename descclassname"><span class="pre">mdpo.md4c.</span></span><span class="sig-name descname"><span class="pre">READABLE_BLOCK_NAMES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{1:</span> <span class="pre">'quote',</span> <span class="pre">2:</span> <span class="pre">'unordered</span> <span class="pre">list',</span> <span class="pre">3:</span> <span class="pre">'ordered</span> <span class="pre">list',</span> <span class="pre">6:</span> <span class="pre">'header',</span> <span class="pre">7:</span> <span class="pre">'code',</span> <span class="pre">8:</span> <span class="pre">'html',</span> <span class="pre">9:</span> <span class="pre">'paragraph',</span> <span class="pre">10:</span> <span class="pre">'table'}</span></em><a class="headerlink" href="#mdpo.md4c.READABLE_BLOCK_NAMES" title="Link to this definition"></a></dt>
+<dd><p>mapping from <a class="reference external" href="https://pymd4c.dcpx.org/">pymd4c</a>
 block type values to block readable names</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -144,7 +146,7 @@ block type values to block readable names</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mdpo’s rationale &mdash; mdpo 1.1.4 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/override-styles.css" type="text/css" />
+  <title>mdpo’s rationale &mdash; mdpo 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/override-styles.css?v=70cd355a" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=20623aea"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,7 +40,7 @@
               <img src="_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.1
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -107,11 +109,11 @@
            <div itemprop="articleBody">
              
   <section id="mdpo-s-rationale">
-<h1>mdpo’s rationale<a class="headerlink" href="#mdpo-s-rationale" title="Permalink to this headline"></a></h1>
+<h1>mdpo’s rationale<a class="headerlink" href="#mdpo-s-rationale" title="Link to this heading"></a></h1>
 <section id="are-markup-characters-part-of-a-translation">
-<h2>Are markup characters part of a translation?<a class="headerlink" href="#are-markup-characters-part-of-a-translation" title="Permalink to this headline"></a></h2>
+<h2>Are markup characters part of a translation?<a class="headerlink" href="#are-markup-characters-part-of-a-translation" title="Link to this heading"></a></h2>
 <section id="infinite-state-machine-approach">
-<h3>Infinite state machine approach<a class="headerlink" href="#infinite-state-machine-approach" title="Permalink to this headline"></a></h3>
+<h3>Infinite state machine approach<a class="headerlink" href="#infinite-state-machine-approach" title="Link to this heading"></a></h3>
 <p>A long time ago I read on StackOverflow that a good translation process is one
 that does not include markup characters inside source and target languages.
 I partially agree with that statement, but it implies the existence of an ideal
@@ -135,7 +137,7 @@ procedures.</p>
 to have acceptable translations? Personally I don’t.</p>
 </section>
 <section id="do-the-markup-characters-express-meaning">
-<h3>Do the markup characters express meaning?<a class="headerlink" href="#do-the-markup-characters-express-meaning" title="Permalink to this headline"></a></h3>
+<h3>Do the markup characters express meaning?<a class="headerlink" href="#do-the-markup-characters-express-meaning" title="Link to this heading"></a></h3>
 <p>In one language could be a sentence with bold characters in a part of a
 sentence that could express meaning. This meaning could be expressed in another
 way in other language. So I declare that a good translation process is one that
@@ -147,7 +149,7 @@ this thing doesn’t exists currently.</p>
 </section>
 </section>
 <section id="mdpo-approach">
-<h2>mdpo approach<a class="headerlink" href="#mdpo-approach" title="Permalink to this headline"></a></h2>
+<h2>mdpo approach<a class="headerlink" href="#mdpo-approach" title="Link to this heading"></a></h2>
 <p>The solution proposed by this library is to extract from Markdown files only
 the text that needs to be translated, including markdown characters:</p>
 <ul class="simple">
@@ -184,7 +186,7 @@ specification in the affected files.</p>
 </ul>
 </div>
 <section id="advantages">
-<h3>Advantages<a class="headerlink" href="#advantages" title="Permalink to this headline"></a></h3>
+<h3>Advantages<a class="headerlink" href="#advantages" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Updates into source files are synchronized. A change in one string declares
 the old one obsolete and the translation can be updated quickly.</p></li>
@@ -209,7 +211,7 @@ markup failures in translations.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

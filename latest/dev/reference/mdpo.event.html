@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mdpo.event module &mdash; mdpo 1.1.4 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/override-styles.css" type="text/css" />
+  <title>mdpo.event module &mdash; mdpo 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/override-styles.css?v=70cd355a" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=20623aea"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -38,7 +40,7 @@
               <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.1
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -117,23 +119,23 @@
            <div itemprop="articleBody">
              
   <section id="module-mdpo.event">
-<span id="mdpo-event-module"></span><h1>mdpo.event module<a class="headerlink" href="#module-mdpo.event" title="Permalink to this headline"></a></h1>
+<span id="mdpo-event-module"></span><h1>mdpo.event module<a class="headerlink" href="#module-mdpo.event" title="Link to this heading"></a></h1>
 <p>Custom events executed during the parsing process of an implementation.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="mdpo.event._block_msg">
-<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">_block_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event._block_msg" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">_block_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event._block_msg" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mdpo.event.add_debug_events">
-<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">add_debug_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">implementation_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.add_debug_events" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">add_debug_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">implementation_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.add_debug_events" title="Link to this definition"></a></dt>
 <dd><p>Add debugging events to an events dict.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>implementation_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Implementation name, shown when
+<li><p><strong>implementation_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Implementation name, shown when
 printing debugging events.</p></li>
-<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Events dictionary.</p></li>
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Events dictionary.</p></li>
 </ul>
 </dd>
 </dl>
@@ -141,61 +143,61 @@ printing debugging events.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mdpo.event.debug_events">
-<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">debug_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.debug_events" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">debug_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.debug_events" title="Link to this definition"></a></dt>
 <dd><p>Debugging events for interfaces. Displays in STDOUT all event targets.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>program</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Command line interface name, to display it at the
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>program</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Command line interface name, to display it at the
 beginning of the output.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Event target printing functions.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mdpo.event.parse_events_kwarg">
-<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">parse_events_kwarg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events_kwarg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.parse_events_kwarg" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">parse_events_kwarg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events_kwarg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.parse_events_kwarg" title="Link to this definition"></a></dt>
 <dd><p>Parse <code class="docutils literal notranslate"><span class="pre">events</span></code> kwarg passed to implementations.</p>
 <p>Each event can be a function or a path to a function inside a file
 using the syntax <code class="docutils literal notranslate"><span class="pre">path/to/file.py::function</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>events_kwarg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Dictionary of event names and their location.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>events_kwarg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary of event names and their location.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Event names mapping to a list of functions to execute.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mdpo.event.raise_skip_event">
-<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">raise_skip_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">event_args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.raise_skip_event" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mdpo.event.</span></span><span class="sig-name descname"><span class="pre">raise_skip_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">event_args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.event.raise_skip_event" title="Link to this definition"></a></dt>
 <dd><p>Execute all functions defined for an event of a parser.</p>
 <p>If a function returns <code class="docutils literal notranslate"><span class="pre">False</span></code>, this function will return <code class="docutils literal notranslate"><span class="pre">True</span></code> meaning
 that an event is trying to skip the associated function.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Dictionary with all events defined.</p></li>
-<li><p><strong>event_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the event whose functions will be executed.</p></li>
+<li><p><strong>events</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dictionary with all events defined.</p></li>
+<li><p><strong>event_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the event whose functions will be executed.</p></li>
 <li><p><strong>*event_args</strong> – Arguments propagated to the events functions.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if an event function returns <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code>
 otherwise.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)">bool</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -213,7 +215,7 @@ otherwise.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

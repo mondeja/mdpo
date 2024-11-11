@@ -48,4 +48,4 @@ Disadvantages
   hidden to the translator.
 
 .. _jekyll-multiple-languages-plugin: https://github.com/kurtsson/jekyll-multiple-languages-plugin
-.. _mkdocs-static-i18n-plugin: https://ultrabug.github.io/mkdocs-static-i18n/en/
+.. _mkdocs-static-i18n-plugin: https://ultrabug.github.io/mkdocs-static-i18n/

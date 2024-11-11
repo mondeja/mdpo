@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Installation &mdash; mdpo 1.1.4 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/override-styles.css" type="text/css" />
+  <title>Installation &mdash; mdpo 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/override-styles.css?v=70cd355a" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=20623aea"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,7 +40,7 @@
               <img src="_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.1
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -50,7 +52,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#standalone-pre-built-binaries">Standalone pre-built binaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-package">Python package</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="traditional-approach.html">Traditional approach</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rationale.html">mdpo’s rationale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
@@ -96,12 +102,24 @@
            <div itemprop="articleBody">
              
   <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<section id="standalone-pre-built-binaries">
+<h2>Standalone pre-built binaries<a class="headerlink" href="#standalone-pre-built-binaries" title="Link to this heading"></a></h2>
+<p>Standalone pre-built binaries are provided for Linux, Windows and macOS
+from <a class="reference external" href="https://github.com/mondeja/mdpo/releases">releases page</a>.</p>
+</section>
+<section id="python-package">
+<h2>Python package<a class="headerlink" href="#python-package" title="Link to this heading"></a></h2>
+<p>MDPO is available on <a class="reference external" href="https://pypi.org/project/mdpo/">PyPI</a>. You can install it using pip:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>mdpo
 </pre></div>
 </div>
-<p>On some weird architectures MD4C must be compiled
-from source code. See <a class="reference external" href="https://pymd4c.dcpx.org/installation.html#build-and-install-from-source">PyMD4C - Build and install from source</a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>On some weird architectures and newer versions of Python MD4C must
+be compiled from source code. See <a class="reference external" href="https://pymd4c.dcpx.org/installation.html#build-and-install-from-source">PyMD4C - Build and install from source</a>.</p>
+</div>
+</section>
 </section>
 
 
@@ -115,7 +133,7 @@ from source code. See <a class="reference external" href="https://pymd4c.dcpx.or
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

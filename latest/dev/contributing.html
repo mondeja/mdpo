@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contributing &mdash; mdpo 1.1.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/override-styles.css" type="text/css" />
+  <title>Contributing &mdash; mdpo 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/override-styles.css?v=70cd355a" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=20623aea"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -38,7 +40,7 @@
               <img src="../_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.1
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -103,9 +105,9 @@
            <div itemprop="articleBody">
              
   <section id="contributing">
-<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline"></a></h1>
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h1>
 <section id="development-install">
-<h2>Development install<a class="headerlink" href="#development-install" title="Permalink to this headline"></a></h2>
+<h2>Development install<a class="headerlink" href="#development-install" title="Link to this heading"></a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mondeja/mdpo
 <span class="nb">cd</span><span class="w"> </span>mdpo
 pip<span class="w"> </span>install<span class="w"> </span>hatch
@@ -113,7 +115,7 @@ pip<span class="w"> </span>install<span class="w"> </span>hatch
 </div>
 </section>
 <section id="run-tests">
-<h2>Run tests<a class="headerlink" href="#run-tests" title="Permalink to this headline"></a></h2>
+<h2>Run tests<a class="headerlink" href="#run-tests" title="Link to this heading"></a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>run<span class="w"> </span>tests:unit
 <span class="c1"># hatch run tests:all</span>
 <span class="c1"># hatch run tests:cov</span>
@@ -121,20 +123,20 @@ pip<span class="w"> </span>install<span class="w"> </span>hatch
 </div>
 </section>
 <section id="linting-and-formatting">
-<h2>Linting and formatting<a class="headerlink" href="#linting-and-formatting" title="Permalink to this headline"></a></h2>
+<h2>Linting and formatting<a class="headerlink" href="#linting-and-formatting" title="Link to this heading"></a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>run<span class="w"> </span>style:lint
 </pre></div>
 </div>
 </section>
 <section id="build-documentation">
-<h2>Build documentation<a class="headerlink" href="#build-documentation" title="Permalink to this headline"></a></h2>
+<h2>Build documentation<a class="headerlink" href="#build-documentation" title="Link to this heading"></a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>run<span class="w"> </span>docs:build
 <span class="c1"># hatch run docs:serve</span>
 </pre></div>
 </div>
 </section>
 <section id="release">
-<h2>Release<a class="headerlink" href="#release" title="Permalink to this headline"></a></h2>
+<h2>Release<a class="headerlink" href="#release" title="Link to this heading"></a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>hatch<span class="w"> </span>run<span class="w"> </span>bump<span class="w"> </span>&lt;major/minor/patch&gt;<span class="k">)</span><span class="s2">&quot;</span>
 git<span class="w"> </span>add<span class="w"> </span>.
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Bump version&quot;</span>
@@ -157,7 +159,7 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

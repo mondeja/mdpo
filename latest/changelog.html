@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; mdpo 1.1.4 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/override-styles.css" type="text/css" />
+  <title>Changelog &mdash; mdpo 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/override-styles.css?v=70cd355a" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=20623aea"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,7 +40,7 @@
               <img src="_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.1
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -63,6 +65,10 @@
 <li class="toctree-l1"><a class="reference internal" href="api.html">Public mdpo APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pre-commit-hooks.html">pre-commit hooks</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#release-v2-1-0">v2.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-v2-0-1">v2.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-v2-0-0">v2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-v1-1-5">v1.1.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#release-v1-1-4">v1.1.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#release-v1-1-3">v1.1.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#release-v1-1-2">v1.1.2</a></li>
@@ -194,23 +200,61 @@
            <div itemprop="articleBody">
              
   <section id="changelog">
-<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h1>
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading"></a></h1>
+<section id="release-v2-1-0">
+<h2>v2.1.0<a class="headerlink" href="#release-v2-1-0" title="Link to this heading"></a></h2>
+<p><em>Released on 2024-11-11 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v2.1.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v2.1.0/">PyPI</a></em></p>
+<h2>Bug fixes</h2>
+<p>Fixed support for LaTeX math spans. Now LaTeX display math blocks will be parsed correctly to PO files.</p>
+<div class="highlight highlight-text-md notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="$$
+a^2 + b^2 = c^2
+$$"><pre><span class="pl-s">$$</span><span class="pl-c1"></span>
+<span class="pl-c1">a^2 + b^2 = c^2</span>
+<span class="pl-c1"></span><span class="pl-s">$$</span></pre></div>
+<div class="highlight highlight-source-po notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="msgid &quot;a^2 + b^2 = c^2&quot;
+msgstr &quot;&quot;"><pre><span class="pl-k">msgid</span> <span class="pl-s">"a^2 + b^2 = c^2"</span>
+<span class="pl-k">msgstr</span> <span class="pl-s">""</span></pre></div>
+<h2>Enhancements</h2>
+<p>Standalone pre-built binaries are now provided for most common architectures. Download all <code>md2po</code>, <code>po2md</code>, <code>md2po2md</code> and <code>mdpo2html</code> standalone binaries executable from release assets below.</p></section>
+<section id="release-v2-0-1">
+<h2>v2.0.1<a class="headerlink" href="#release-v2-0-1" title="Link to this heading"></a></h2>
+<p><em>Released on 2024-05-01 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v2.0.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v2.0.1/">PyPI</a></em></p>
+<h2>Bug fixes</h2>
+<ul>
+<li>Fixed <code>po2md</code> not adding newline before first nested list lines.</li>
+</ul></section>
+<section id="release-v2-0-0">
+<h2>v2.0.0<a class="headerlink" href="#release-v2-0-0" title="Link to this heading"></a></h2>
+<p><em>Released on 2024-03-06 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v2.0.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v2.0.0/">PyPI</a></em></p>
+<h2><g-emoji class="g-emoji" alias="warning">⚠️</g-emoji> Breaking changes</h2>
+<ul>
+<li><code>mdpo</code> is no longer installable on Python3.7</li>
+</ul>
+<h3>Note about v1.1.5</h3>
+<p>Probably you're experiencing an error when calling the CLI after reinstalling v1.1.5. This can be solved by pinning <code>importlib-metadata-argparse-version</code> to &lt;2, but the upgrade of mdpo to v2 is recommended. Sorry for the inconveniences that you could have experienced.</p></section>
+<section id="release-v1-1-5">
+<h2>v1.1.5<a class="headerlink" href="#release-v1-1-5" title="Link to this heading"></a></h2>
+<p><em>Released on 2024-02-16 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.1.5">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.1.5/">PyPI</a></em></p>
+<h2>Enhancements</h2>
+<ul>
+<li>Added <code>--include-codeblocks</code> option to <code>md2po2md</code>.</li>
+</ul></section>
 <section id="release-v1-1-4">
-<h2>v1.1.4<a class="headerlink" href="#release-v1-1-4" title="Permalink to this headline"></a></h2>
+<h2>v1.1.4<a class="headerlink" href="#release-v1-1-4" title="Link to this heading"></a></h2>
 <p><em>Released on 2023-08-10 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.1.4">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.1.4/">PyPI</a></em></p>
 <p>Chore:</p>
 <ul>
 <li>Added initial support for Python 3.12</li>
 </ul></section>
 <section id="release-v1-1-3">
-<h2>v1.1.3<a class="headerlink" href="#release-v1-1-3" title="Permalink to this headline"></a></h2>
+<h2>v1.1.3<a class="headerlink" href="#release-v1-1-3" title="Link to this heading"></a></h2>
 <p><em>Released on 2023-03-04 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.1.3">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.1.3/">PyPI</a></em></p>
 <p>Bug fixes:</p>
 <ul>
 <li>Fixed error when passing <code>0</code> or <code>inf</code> as <code>--wrapwidth</code> argument to po2md (regression by v1.1.2).</li>
 </ul></section>
 <section id="release-v1-1-2">
-<h2>v1.1.2<a class="headerlink" href="#release-v1-1-2" title="Permalink to this headline"></a></h2>
+<h2>v1.1.2<a class="headerlink" href="#release-v1-1-2" title="Link to this heading"></a></h2>
 <p><em>Released on 2023-02-19 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.1.2">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.1.2/">PyPI</a></em></p>
 <p>Bug fixes:</p>
 <ul>
@@ -221,21 +265,21 @@
 <li>Improved performance of po2md as the wrapping algorithm is executed at CPython extension level.</li>
 </ul></section>
 <section id="release-v1-1-1">
-<h2>v1.1.1<a class="headerlink" href="#release-v1-1-1" title="Permalink to this headline"></a></h2>
+<h2>v1.1.1<a class="headerlink" href="#release-v1-1-1" title="Link to this heading"></a></h2>
 <p><em>Released on 2023-02-10 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.1.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.1.1/">PyPI</a></em></p>
 <p>Bug fixes:</p>
 <ul>
 <li>Fix <code>wrapwidth</code> argument not being applied using <code>po2md</code> to render scriptio languages Markdown output.</li>
 </ul></section>
 <section id="release-v1-1-0">
-<h2>v1.1.0<a class="headerlink" href="#release-v1-1-0" title="Permalink to this headline"></a></h2>
+<h2>v1.1.0<a class="headerlink" href="#release-v1-1-0" title="Link to this heading"></a></h2>
 <p><em>Released on 2022-12-15 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.1.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.1.0/">PyPI</a></em></p>
 <ul>
 <li>Added support for Python3.11</li>
 <li>Now mdpo can be installed without manual compilation of md4c on a lot of more platforms.</li>
 </ul></section>
 <section id="release-v1-0-3">
-<h2>v1.0.3<a class="headerlink" href="#release-v1-0-3" title="Permalink to this headline"></a></h2>
+<h2>v1.0.3<a class="headerlink" href="#release-v1-0-3" title="Link to this heading"></a></h2>
 <p><em>Released on 2022-09-20 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.0.3">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.0.3/">PyPI</a></em></p>
 <p>Bug fixes:</p>
 <ul>
@@ -243,21 +287,21 @@
 <li>Fixed edge case encoding bug in Windows when decoding PO files with md2po.</li>
 </ul></section>
 <section id="release-v1-0-2">
-<h2>v1.0.2<a class="headerlink" href="#release-v1-0-2" title="Permalink to this headline"></a></h2>
+<h2>v1.0.2<a class="headerlink" href="#release-v1-0-2" title="Link to this heading"></a></h2>
 <p><em>Released on 2022-09-20 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.0.2">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.0.2/">PyPI</a></em></p>
 <p>Bug fixes:</p>
 <ul>
 <li>Fixed some edge case errors related to memory management.</li>
 </ul></section>
 <section id="release-v1-0-1">
-<h2>v1.0.1<a class="headerlink" href="#release-v1-0-1" title="Permalink to this headline"></a></h2>
+<h2>v1.0.1<a class="headerlink" href="#release-v1-0-1" title="Link to this heading"></a></h2>
 <p><em>Released on 2022-09-19 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.0.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.0.1/">PyPI</a></em></p>
 <p>Bug fixes:</p>
 <ul>
 <li>Add missing information to project metadata to fix some installations not discovering entry points.</li>
 </ul></section>
 <section id="release-v1-0-0">
-<h2>v1.0.0<a class="headerlink" href="#release-v1-0-0" title="Permalink to this headline"></a></h2>
+<h2>v1.0.0<a class="headerlink" href="#release-v1-0-0" title="Link to this heading"></a></h2>
 <p><em>Released on 2022-07-20 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v1.0.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v1.0.0/">PyPI</a></em></p>
 <p>Breaking changes:</p>
 <ul>
@@ -293,28 +337,28 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 </li>
 </ul></section>
 <section id="release-v0-3-86">
-<h2>v0.3.86<a class="headerlink" href="#release-v0-3-86" title="Permalink to this headline"></a></h2>
+<h2>v0.3.86<a class="headerlink" href="#release-v0-3-86" title="Link to this heading"></a></h2>
 <p><em>Released on 2022-05-25 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.86">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.86/">PyPI</a></em></p>
 <p>Bug fixes:</p>
 <ul>
 <li>Do not allow <code>nan</code> value for <code>-w/--wrapwidth</code> arguments.</li>
 </ul></section>
 <section id="release-v0-3-85">
-<h2>v0.3.85<a class="headerlink" href="#release-v0-3-85" title="Permalink to this headline"></a></h2>
+<h2>v0.3.85<a class="headerlink" href="#release-v0-3-85" title="Link to this heading"></a></h2>
 <p><em>Released on 2022-02-28 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.85">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.85/">PyPI</a></em></p>
 <p>Enhancements:</p>
 <ul>
 <li>Allow to pass languages with <code>-l es fr de</code> to <code>md2po2md</code> CLI.</li>
 </ul></section>
 <section id="release-v0-3-84">
-<h2>v0.3.84<a class="headerlink" href="#release-v0-3-84" title="Permalink to this headline"></a></h2>
+<h2>v0.3.84<a class="headerlink" href="#release-v0-3-84" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-12-18 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.84">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.84/">PyPI</a></em></p>
 <p>Enhancements</p>
 <ul>
 <li>Made public some parsers state properties and documented them.</li>
 </ul></section>
 <section id="release-v0-3-83">
-<h2>v0.3.83<a class="headerlink" href="#release-v0-3-83" title="Permalink to this headline"></a></h2>
+<h2>v0.3.83<a class="headerlink" href="#release-v0-3-83" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-12-18 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.83">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.83/">PyPI</a></em></p>
 <p>Enhancements</p>
 <ul>
@@ -322,21 +366,21 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Added <code>--event</code> CLI optional argument to <code>md2po</code> and <code>po2md</code> CLIs.</li>
 </ul></section>
 <section id="release-v0-3-82">
-<h2>v0.3.82<a class="headerlink" href="#release-v0-3-82" title="Permalink to this headline"></a></h2>
+<h2>v0.3.82<a class="headerlink" href="#release-v0-3-82" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-12-17 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.82">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.82/">PyPI</a></em></p>
 <p>Enhancements</p>
 <ul>
 <li>Add command aliases <code>disable-next-block</code> and <code>enable-next-block</code> for <code>disable-next-line</code> and <code>enable-next-line</code>.</li>
 </ul></section>
 <section id="release-v0-3-81">
-<h2>v0.3.81<a class="headerlink" href="#release-v0-3-81" title="Permalink to this headline"></a></h2>
+<h2>v0.3.81<a class="headerlink" href="#release-v0-3-81" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-29 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.81">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.81/">PyPI</a></em></p>
 <p>Bug fixes</p>
 <ul>
 <li>Fixed bug removing obsolete messages from PO files</li>
 </ul></section>
 <section id="release-v0-3-80">
-<h2>v0.3.80<a class="headerlink" href="#release-v0-3-80" title="Permalink to this headline"></a></h2>
+<h2>v0.3.80<a class="headerlink" href="#release-v0-3-80" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-18 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.80">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.80/">PyPI</a></em></p>
 <p>Bug fixes</p>
 <ul>
@@ -345,7 +389,7 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li><code>--remove-not-found</code> <code>md2po</code> option not working if <code>--merge-po-files</code> option is not passed</li>
 </ul></section>
 <section id="release-v0-3-79">
-<h2>v0.3.79<a class="headerlink" href="#release-v0-3-79" title="Permalink to this headline"></a></h2>
+<h2>v0.3.79<a class="headerlink" href="#release-v0-3-79" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-16 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.79">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.79/">PyPI</a></em></p>
 <p>Bug fixes</p>
 <ul>
@@ -353,7 +397,7 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Fixed bug rendering tables that include <code>|</code> characters in cells.</li>
 </ul></section>
 <section id="release-v0-3-78">
-<h2>v0.3.78<a class="headerlink" href="#release-v0-3-78" title="Permalink to this headline"></a></h2>
+<h2>v0.3.78<a class="headerlink" href="#release-v0-3-78" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-15 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.78">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.78/">PyPI</a></em></p>
 <p>Enhancements</p>
 <ul>
@@ -365,7 +409,7 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Fixed errors extracting and translating link and image titles with escaped characters.</li>
 </ul></section>
 <section id="release-v0-3-77">
-<h2>v0.3.77<a class="headerlink" href="#release-v0-3-77" title="Permalink to this headline"></a></h2>
+<h2>v0.3.77<a class="headerlink" href="#release-v0-3-77" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-14 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.77">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.77/">PyPI</a></em></p>
 <p>Bug fixes</p>
 <ul>
@@ -373,7 +417,7 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Don't include trailing whitespaces in <code>comment</code> arguments of custom <code>command</code> events.</li>
 </ul></section>
 <section id="release-v0-3-76">
-<h2>v0.3.76<a class="headerlink" href="#release-v0-3-76" title="Permalink to this headline"></a></h2>
+<h2>v0.3.76<a class="headerlink" href="#release-v0-3-76" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-12 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.76">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.76/">PyPI</a></em></p>
 <p>Enhancements</p>
 <ul>
@@ -385,7 +429,7 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Fixed bug handling <code>wrapwidth</code> arguments parsing errors</li>
 </ul></section>
 <section id="release-v0-3-75">
-<h2>v0.3.75<a class="headerlink" href="#release-v0-3-75" title="Permalink to this headline"></a></h2>
+<h2>v0.3.75<a class="headerlink" href="#release-v0-3-75" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-11 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.75">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.75/">PyPI</a></em></p>
 <ul>
 <li>Big documentation refactor and bug fixes <a href="https://github.com/mondeja/mdpo/issues/184" data-hovercard-type="issue" data-hovercard-url="/mondeja/mdpo/issues/184/hovercard">#184</a></li>
@@ -393,28 +437,28 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Update <code>pymd4c</code> dependency to <a href="https://github.com/dominickpastore/pymd4c/releases/tag/v1.1.2">v1.1.2</a>.</li>
 </ul></section>
 <section id="release-v0-3-74">
-<h2>v0.3.74<a class="headerlink" href="#release-v0-3-74" title="Permalink to this headline"></a></h2>
+<h2>v0.3.74<a class="headerlink" href="#release-v0-3-74" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-09 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.74">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.74/">PyPI</a></em></p>
 <p>New features</p>
 <ul>
 <li>Added <code>mdpo2html</code> pre-commit hook</li>
 </ul></section>
 <section id="release-v0-3-73">
-<h2>v0.3.73<a class="headerlink" href="#release-v0-3-73" title="Permalink to this headline"></a></h2>
+<h2>v0.3.73<a class="headerlink" href="#release-v0-3-73" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-07 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.73">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.73/">PyPI</a></em></p>
 <p>Enhancement</p>
 <ul>
 <li><code>md2po</code> accepts multiple files and globs.</li>
 </ul></section>
 <section id="release-v0-3-72">
-<h2>v0.3.72<a class="headerlink" href="#release-v0-3-72" title="Permalink to this headline"></a></h2>
+<h2>v0.3.72<a class="headerlink" href="#release-v0-3-72" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-07 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.72">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.72/">PyPI</a></em></p>
 <p>Bugfix</p>
 <ul>
 <li>Fix file comparison logic used in pre-commit hooks (regression from <a href="https://github.com/mondeja/mdpo/releases/tag/v0.3.71">v0.3.71</a>).</li>
 </ul></section>
 <section id="release-v0-3-71">
-<h2>v0.3.71<a class="headerlink" href="#release-v0-3-71" title="Permalink to this headline"></a></h2>
+<h2>v0.3.71<a class="headerlink" href="#release-v0-3-71" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-07 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.71">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.71/">PyPI</a></em></p>
 <p>Bug fixes</p>
 <ul>
@@ -435,27 +479,27 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Added more tests.</li>
 </ul></section>
 <section id="release-v0-3-70">
-<h2>v0.3.70<a class="headerlink" href="#release-v0-3-70" title="Permalink to this headline"></a></h2>
+<h2>v0.3.70<a class="headerlink" href="#release-v0-3-70" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-11-05 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.70">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.70/">PyPI</a></em></p>
 <ul>
 <li>Added support for Python 3.10 bumping <a href="https://github.com/dominickpastore/pymd4c/releases/tag/v1.1.1">pymd4c to 1.1.1</a>.</li>
 </ul></section>
 <section id="release-v0-3-69">
-<h2>v0.3.69<a class="headerlink" href="#release-v0-3-69" title="Permalink to this headline"></a></h2>
+<h2>v0.3.69<a class="headerlink" href="#release-v0-3-69" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-09-06 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.69">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.69/">PyPI</a></em></p>
 <ul>
 <li>Fixed mdpo2html not handling link references.</li>
 </ul></section>
 <section id="release-v0-3-68">
-<h2>v0.3.68<a class="headerlink" href="#release-v0-3-68" title="Permalink to this headline"></a></h2>
+<h2>v0.3.68<a class="headerlink" href="#release-v0-3-68" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-08-30 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.68">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.68/">PyPI</a></em></p>
 <p>Fixed uniformity problems translating some normal links and autolinks.</p></section>
 <section id="release-v0-3-67">
-<h2>v0.3.67<a class="headerlink" href="#release-v0-3-67" title="Permalink to this headline"></a></h2>
+<h2>v0.3.67<a class="headerlink" href="#release-v0-3-67" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-08-18 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.67">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.67/">PyPI</a></em></p>
 <p>Upgraded <code>pymd4c</code> dependency to v1.0.0</p></section>
 <section id="release-v0-3-66">
-<h2>v0.3.66<a class="headerlink" href="#release-v0-3-66" title="Permalink to this headline"></a></h2>
+<h2>v0.3.66<a class="headerlink" href="#release-v0-3-66" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-19 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.66">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.66/">PyPI</a></em></p>
 <ul>
 <li>Fixed error running <code>md2po2md</code> pre-commit hook.</li>
@@ -463,71 +507,71 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Added <code>--md-encoding</code> and <code>--po-encoding</code> arguments to <code>md2po2md</code> CLI.</li>
 </ul></section>
 <section id="release-v0-3-65">
-<h2>v0.3.65<a class="headerlink" href="#release-v0-3-65" title="Permalink to this headline"></a></h2>
+<h2>v0.3.65<a class="headerlink" href="#release-v0-3-65" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-19 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.65">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.65/">PyPI</a></em></p>
 <ul>
 <li>Added new command line interface <a href="https://mdpo.readthedocs.io/en/master/cli.html#md2po2md" rel="nofollow"><code>md2po2md</code></a>.</li>
 </ul></section>
 <section id="release-v0-3-64">
-<h2>v0.3.64<a class="headerlink" href="#release-v0-3-64" title="Permalink to this headline"></a></h2>
+<h2>v0.3.64<a class="headerlink" href="#release-v0-3-64" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-16 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.64">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.64/">PyPI</a></em></p>
 <ul>
 <li>Allow to pass <code>--wrapwidth inf</code> or <code>--wrapwidth 0</code> as CLIs arguments to disable wrapping. From programming API, you can use <code>wrapwidth=0</code> or <code>wrapwidth=math.inf</code>.</li>
 <li>Exit with code 1 instead of 0 when <code>-h/--help</code> option is explicitly passed to CLIs.</li>
 </ul></section>
 <section id="release-v0-3-63">
-<h2>v0.3.63<a class="headerlink" href="#release-v0-3-63" title="Permalink to this headline"></a></h2>
+<h2>v0.3.63<a class="headerlink" href="#release-v0-3-63" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-16 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.63">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.63/">PyPI</a></em></p>
 <ul>
 <li>Rewritten <code>po2md</code> wrapping logic using PyMD4C instead of Python <code>textwrap</code> (fixed some rendering bugs like <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="944783900" data-permission-text="Title is private" data-url="https://github.com/mondeja/mdpo/issues/155" data-hovercard-type="issue" data-hovercard-url="/mondeja/mdpo/issues/155/hovercard" href="https://github.com/mondeja/mdpo/issues/155">#155</a>).</li>
 </ul></section>
 <section id="release-v0-3-62">
-<h2>v0.3.62<a class="headerlink" href="#release-v0-3-62" title="Permalink to this headline"></a></h2>
+<h2>v0.3.62<a class="headerlink" href="#release-v0-3-62" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-15 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.62">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.62/">PyPI</a></em></p>
 <ul>
 <li>Fix error with md2po <code>--save</code> option doing nothing when the specified PO file doesn't exists before run.</li>
 </ul></section>
 <section id="release-v0-3-61">
-<h2>v0.3.61<a class="headerlink" href="#release-v0-3-61" title="Permalink to this headline"></a></h2>
+<h2>v0.3.61<a class="headerlink" href="#release-v0-3-61" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-14 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.61">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.61/">PyPI</a></em></p>
 <ul>
 <li>Fixed wrapping problems with po2md (thanks for report <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/dingyifei/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/dingyifei">@dingyifei</a> in <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="941931745" data-permission-text="Title is private" data-url="https://github.com/mondeja/mdpo/issues/153" data-hovercard-type="issue" data-hovercard-url="/mondeja/mdpo/issues/153/hovercard" href="https://github.com/mondeja/mdpo/issues/153">#153</a>).</li>
 </ul></section>
 <section id="release-v0-3-60">
-<h2>v0.3.60<a class="headerlink" href="#release-v0-3-60" title="Permalink to this headline"></a></h2>
+<h2>v0.3.60<a class="headerlink" href="#release-v0-3-60" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-14 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.60">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.60/">PyPI</a></em></p>
 <ul>
 <li>Fixed error wrapping lines with po2md (thanks for report <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/dingyifei/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/dingyifei">@dingyifei</a> in <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="941931745" data-permission-text="Title is private" data-url="https://github.com/mondeja/mdpo/issues/153" data-hovercard-type="issue" data-hovercard-url="/mondeja/mdpo/issues/153/hovercard" href="https://github.com/mondeja/mdpo/issues/153">#153</a>).</li>
 <li>Added <code>command</code> mdpo event to po2md.</li>
 </ul></section>
 <section id="release-v0-3-59">
-<h2>v0.3.59<a class="headerlink" href="#release-v0-3-59" title="Permalink to this headline"></a></h2>
+<h2>v0.3.59<a class="headerlink" href="#release-v0-3-59" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-10 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.59">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.59/">PyPI</a></em></p>
 <ul>
 <li>Added mdpo events <code>text</code>, <code>msgid</code>, <code>enter_block</code>, <code>leave_block</code>, <code>enter_span</code> and <code>leave_span</code> to <code>po2md</code>.</li>
 <li>Added debug option <code>--debug/-D</code> to po2md CLI.</li>
 </ul></section>
 <section id="release-v0-3-58">
-<h2>v0.3.58<a class="headerlink" href="#release-v0-3-58" title="Permalink to this headline"></a></h2>
+<h2>v0.3.58<a class="headerlink" href="#release-v0-3-58" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-10 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.58">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.58/">PyPI</a></em></p>
 <ul>
 <li>Added <code>debug/--debug/-D</code> option to md2po for events targets displaying in extraction process.</li>
 </ul></section>
 <section id="release-v0-3-57">
-<h2>v0.3.57<a class="headerlink" href="#release-v0-3-57" title="Permalink to this headline"></a></h2>
+<h2>v0.3.57<a class="headerlink" href="#release-v0-3-57" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-10 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.57">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.57/">PyPI</a></em></p>
 <ul>
 <li>Fixed relative paths input error in <code>po2md</code> and <code>mdpo2html</code> CLIs (thanks for report <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/dingyifei/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/dingyifei">@dingyifei</a>)</li>
 </ul></section>
 <section id="release-v0-3-56">
-<h2>v0.3.56<a class="headerlink" href="#release-v0-3-56" title="Permalink to this headline"></a></h2>
+<h2>v0.3.56<a class="headerlink" href="#release-v0-3-56" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-09 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.56">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.56/">PyPI</a></em></p>
 <ul>
 <li>Fixed error with CLI files passed to <code>md2po</code> (thanks for report <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/dingyifei/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/dingyifei">@dingyifei</a> in <a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="940727209" data-permission-text="Title is private" data-url="https://github.com/mondeja/mdpo/issues/150" data-hovercard-type="issue" data-hovercard-url="/mondeja/mdpo/issues/150/hovercard" href="https://github.com/mondeja/mdpo/issues/150">#150</a>).</li>
 <li>Added CLI argument name variant <code>--nolocation</code>.</li>
 </ul></section>
 <section id="release-v0-3-55">
-<h2>v0.3.55<a class="headerlink" href="#release-v0-3-55" title="Permalink to this headline"></a></h2>
+<h2>v0.3.55<a class="headerlink" href="#release-v0-3-55" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-08 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.55">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.55/">PyPI</a></em></p>
 <ul>
 <li>Passing <code>--save</code> without <code>--po-filepath</code> now raises an error before execution using <code>md2po</code>.</li>
@@ -535,153 +579,153 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Removed unused function <code>mdpo.text::striplastline</code> from source code.</li>
 </ul></section>
 <section id="release-v0-3-54">
-<h2>v0.3.54<a class="headerlink" href="#release-v0-3-54" title="Permalink to this headline"></a></h2>
+<h2>v0.3.54<a class="headerlink" href="#release-v0-3-54" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-07-08 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.54">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.54/">PyPI</a></em></p>
 <ul>
 <li>Fixed long links being wrapped into multiple lines with <code>po2md</code> (thanks for report <a class="user-mention notranslate" data-hovercard-type="user" data-hovercard-url="/users/EuAndreh/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/EuAndreh">@EuAndreh</a>)</li>
 </ul></section>
 <section id="release-v0-3-53">
-<h2>v0.3.53<a class="headerlink" href="#release-v0-3-53" title="Permalink to this headline"></a></h2>
+<h2>v0.3.53<a class="headerlink" href="#release-v0-3-53" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-06-06 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.53">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.53/">PyPI</a></em></p>
 <ul>
 <li>Fix CLI help formatting.</li>
 </ul></section>
 <section id="release-v0-3-52">
-<h2>v0.3.52<a class="headerlink" href="#release-v0-3-52" title="Permalink to this headline"></a></h2>
+<h2>v0.3.52<a class="headerlink" href="#release-v0-3-52" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-06-04 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.52">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.52/">PyPI</a></em></p>
 <ul>
 <li>Fixed error in <code>md2po</code> CLI help.</li>
 </ul></section>
 <section id="release-v0-3-51">
-<h2>v0.3.51<a class="headerlink" href="#release-v0-3-51" title="Permalink to this headline"></a></h2>
+<h2>v0.3.51<a class="headerlink" href="#release-v0-3-51" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-19 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.51">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.51/">PyPI</a></em></p>
 <ul>
 <li>Allow to pass multiple functions to custom parsing events.</li>
 <li><strong>msgid</strong> event of <code>md2po</code> now takes <em>msgstr</em>, <em>msgctxt</em>, <em>tcomment</em> and <em>flag</em> optional arguments.</li>
 </ul></section>
 <section id="release-v0-3-50">
-<h2>v0.3.50<a class="headerlink" href="#release-v0-3-50" title="Permalink to this headline"></a></h2>
+<h2>v0.3.50<a class="headerlink" href="#release-v0-3-50" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-19 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.50">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.50/">PyPI</a></em></p>
 <ul>
 <li>Changed md2po CLI <code>--extensions</code> argument by <code>--extension</code> allowing to pass it multiple times.</li>
 </ul></section>
 <section id="release-v0-3-49">
-<h2>v0.3.49<a class="headerlink" href="#release-v0-3-49" title="Permalink to this headline"></a></h2>
+<h2>v0.3.49<a class="headerlink" href="#release-v0-3-49" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-19 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.49">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.49/">PyPI</a></em></p>
 <ul>
 <li><code>--ignore</code> arguments can be passed multiple times to CLIs.</li>
 </ul></section>
 <section id="release-v0-3-48">
-<h2>v0.3.48<a class="headerlink" href="#release-v0-3-48" title="Permalink to this headline"></a></h2>
+<h2>v0.3.48<a class="headerlink" href="#release-v0-3-48" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-19 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.48">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.48/">PyPI</a></em></p>
 <ul>
 <li>Added automatic translation of new discovered link references definition messages marking them as fuzzy with <code>md2po</code>.</li>
 </ul></section>
 <section id="release-v0-3-47">
-<h2>v0.3.47<a class="headerlink" href="#release-v0-3-47" title="Permalink to this headline"></a></h2>
+<h2>v0.3.47<a class="headerlink" href="#release-v0-3-47" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-18 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.47">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.47/">PyPI</a></em></p>
 <ul>
 <li>Fixed error marking not found messages as obsoletes with <code>md2po</code>.</li>
 <li>Bump minimum required <code>polib</code> version.</li>
 </ul></section>
 <section id="release-v0-3-46">
-<h2>v0.3.46<a class="headerlink" href="#release-v0-3-46" title="Permalink to this headline"></a></h2>
+<h2>v0.3.46<a class="headerlink" href="#release-v0-3-46" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-18 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.46">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.46/">PyPI</a></em></p>
 <ul>
 <li>Fixed error discovering locations with <code>md2po</code>.</li>
 </ul></section>
 <section id="release-v0-3-45">
-<h2>v0.3.45<a class="headerlink" href="#release-v0-3-45" title="Permalink to this headline"></a></h2>
+<h2>v0.3.45<a class="headerlink" href="#release-v0-3-45" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-14 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.45">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.45/">PyPI</a></em></p>
 <ul>
 <li>Added md2po event to control link references extraction.</li>
 </ul></section>
 <section id="release-v0-3-44">
-<h2>v0.3.44<a class="headerlink" href="#release-v0-3-44" title="Permalink to this headline"></a></h2>
+<h2>v0.3.44<a class="headerlink" href="#release-v0-3-44" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-14 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.44">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.44/">PyPI</a></em></p>
 <ul>
 <li>Added <code>po2md</code> event to control link references translation.</li>
 </ul></section>
 <section id="release-v0-3-43">
-<h2>v0.3.43<a class="headerlink" href="#release-v0-3-43" title="Permalink to this headline"></a></h2>
+<h2>v0.3.43<a class="headerlink" href="#release-v0-3-43" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-07 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.43">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.43/">PyPI</a></em></p>
 <ul>
 <li>Added support for link references with <code>md2po</code> and <code>po2md</code>.</li>
 </ul></section>
 <section id="release-v0-3-42">
-<h2>v0.3.42<a class="headerlink" href="#release-v0-3-42" title="Permalink to this headline"></a></h2>
+<h2>v0.3.42<a class="headerlink" href="#release-v0-3-42" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-06 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.42">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.42/">PyPI</a></em></p>
 <ul>
 <li>Accept multiple <code>--pofiles</code> arguments (CLI) or list of globs in <code>pofiles</code> parameter (API) with <code>po2md</code> and <code>mdpo2html</code>.</li>
 </ul></section>
 <section id="release-v0-3-41">
-<h2>v0.3.41<a class="headerlink" href="#release-v0-3-41" title="Permalink to this headline"></a></h2>
+<h2>v0.3.41<a class="headerlink" href="#release-v0-3-41" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-06 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.41">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.41/">PyPI</a></em></p>
 <ul>
 <li>Fixed error extracting ordered list item messages located inside unordered lists with <code>md2po</code>.</li>
 <li>Fixed errors rendering tables inside lists with <code>po2md</code>.</li>
 </ul></section>
 <section id="release-v0-3-40">
-<h2>v0.3.40<a class="headerlink" href="#release-v0-3-40" title="Permalink to this headline"></a></h2>
+<h2>v0.3.40<a class="headerlink" href="#release-v0-3-40" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-06 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.40">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.40/">PyPI</a></em></p>
 <ul>
 <li>Add message references extraction with <code>md2po</code>. Use <code>--no-location</code> (CLI) or <code>location=False</code> (API) to disable it.</li>
 <li>Fixed error extracting nested items from ordered lists with <code>md2po</code>.</li>
 </ul></section>
 <section id="release-v0-3-39">
-<h2>v0.3.39<a class="headerlink" href="#release-v0-3-39" title="Permalink to this headline"></a></h2>
+<h2>v0.3.39<a class="headerlink" href="#release-v0-3-39" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-05 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.39">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.39/">PyPI</a></em></p>
 <ul>
 <li>Added <code>msgid</code> event to md2po programatic interface.</li>
 </ul></section>
 <section id="release-v0-3-38">
-<h2>v0.3.38<a class="headerlink" href="#release-v0-3-38" title="Permalink to this headline"></a></h2>
+<h2>v0.3.38<a class="headerlink" href="#release-v0-3-38" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-05 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.38">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.38/">PyPI</a></em></p>
 <ul>
 <li>Fix escapes not being properly handled with po2md.</li>
 </ul></section>
 <section id="release-v0-3-37">
-<h2>v0.3.37<a class="headerlink" href="#release-v0-3-37" title="Permalink to this headline"></a></h2>
+<h2>v0.3.37<a class="headerlink" href="#release-v0-3-37" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-05 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.37">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.37/">PyPI</a></em></p>
 <ul>
 <li>Expose translated entries from Po2Md class.</li>
 <li>Support 'mdpo-translator' command with <code>po2md</code> for exposed entries.</li>
 </ul></section>
 <section id="release-v0-3-36">
-<h2>v0.3.36<a class="headerlink" href="#release-v0-3-36" title="Permalink to this headline"></a></h2>
+<h2>v0.3.36<a class="headerlink" href="#release-v0-3-36" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-04 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.36">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.36/">PyPI</a></em></p>
 <ul>
 <li>Added argument <code>--remove-not-found</code> for <code>md2po</code> to remove messages stored in passed pofile which are not found in Markdown input.</li>
 </ul></section>
 <section id="release-v0-3-35">
-<h2>v0.3.35<a class="headerlink" href="#release-v0-3-35" title="Permalink to this headline"></a></h2>
+<h2>v0.3.35<a class="headerlink" href="#release-v0-3-35" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-03 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.35">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.35/">PyPI</a></em></p>
 <ul>
 <li>Added MD4C events preprocessing system for programatic <code>md2po</code> interface.</li>
 </ul></section>
 <section id="release-v0-3-34">
-<h2>v0.3.34<a class="headerlink" href="#release-v0-3-34" title="Permalink to this headline"></a></h2>
+<h2>v0.3.34<a class="headerlink" href="#release-v0-3-34" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-03 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.34">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.34/">PyPI</a></em></p>
 <ul>
 <li>Fixed bug extracting quoteblocks placed inside lists with <code>md2po</code>.</li>
 <li>Fixed bug rendering paragraphs placed inside lists with <code>po2md</code>.</li>
 </ul></section>
 <section id="release-v0-3-33">
-<h2>v0.3.33<a class="headerlink" href="#release-v0-3-33" title="Permalink to this headline"></a></h2>
+<h2>v0.3.33<a class="headerlink" href="#release-v0-3-33" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-03 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.33">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.33/">PyPI</a></em></p>
 <ul>
 <li>Fixed bug rendering unordered lists inside ordered lists with <code>po2md</code>.</li>
 <li>Fixed bugs rendering quote blocks inside unordered lists with <code>po2md</code>.</li>
 </ul></section>
 <section id="release-v0-3-32">
-<h2>v0.3.32<a class="headerlink" href="#release-v0-3-32" title="Permalink to this headline"></a></h2>
+<h2>v0.3.32<a class="headerlink" href="#release-v0-3-32" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-03 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.32">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.32/">PyPI</a></em></p>
 <ul>
 <li>Produce markdownlint-compatible output with <code>po2md</code>.</li>
 <li>Fixed bug rendering horizontal separators inside list items with <code>po2md</code>.</li>
 </ul></section>
 <section id="release-v0-3-31">
-<h2>v0.3.31<a class="headerlink" href="#release-v0-3-31" title="Permalink to this headline"></a></h2>
+<h2>v0.3.31<a class="headerlink" href="#release-v0-3-31" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-03 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.31">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.31/">PyPI</a></em></p>
 <p>Added new commands to allow more control of codeblocks extraction:</p>
 <ul>
@@ -690,13 +734,13 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li><code>&lt;!-- mdpo-disable-codeblock --&gt;</code>: Does not include next codeblock placed after this command.</li>
 </ul></section>
 <section id="release-v0-3-30">
-<h2>v0.3.30<a class="headerlink" href="#release-v0-3-30" title="Permalink to this headline"></a></h2>
+<h2>v0.3.30<a class="headerlink" href="#release-v0-3-30" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-02 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.30">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.30/">PyPI</a></em></p>
 <ul>
 <li>Added <code>-d/--metadata</code> parameter to define produced PO file metadata content with <code>md2po</code>.</li>
 </ul></section>
 <section id="release-v0-3-29">
-<h2>v0.3.29<a class="headerlink" href="#release-v0-3-29" title="Permalink to this headline"></a></h2>
+<h2>v0.3.29<a class="headerlink" href="#release-v0-3-29" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-02 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.29">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.29/">PyPI</a></em></p>
 <ul>
 <li>Fixed <code>po2md</code> rendering two newlines after indented codeblocks.</li>
@@ -704,7 +748,7 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Fixed <code>po2md</code> rendering two newlines added after blockquotes ending with tables.</li>
 </ul></section>
 <section id="release-v0-3-28">
-<h2>v0.3.28<a class="headerlink" href="#release-v0-3-28" title="Permalink to this headline"></a></h2>
+<h2>v0.3.28<a class="headerlink" href="#release-v0-3-28" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-02 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.28">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.28/">PyPI</a></em></p>
 <ul>
 <li>Fixed bugs in <code>po2md</code> rendering codeblocks inside list items.</li>
@@ -712,7 +756,7 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Added wrapping formatting improvements in <code>po2md</code> rendering ordered and task lists.</li>
 </ul></section>
 <section id="release-v0-3-27">
-<h2>v0.3.27<a class="headerlink" href="#release-v0-3-27" title="Permalink to this headline"></a></h2>
+<h2>v0.3.27<a class="headerlink" href="#release-v0-3-27" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-01 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.27">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.27/">PyPI</a></em></p>
 <ul>
 <li>Added <code>wrapwidth</code> parameter for <code>po2md</code> to specify maximum width of Markdown output.</li>
@@ -721,13 +765,13 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Fixed <code>po2md</code> bug rendering tables inside blockquotes.</li>
 </ul></section>
 <section id="release-v0-3-26">
-<h2>v0.3.26<a class="headerlink" href="#release-v0-3-26" title="Permalink to this headline"></a></h2>
+<h2>v0.3.26<a class="headerlink" href="#release-v0-3-26" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-05-01 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.26">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.26/">PyPI</a></em></p>
 <ul>
 <li>Implemented custom HTML command names as aliases: new parameter <code>--command-alias</code> added for CLIs and <code>command_aliases</code> for APIs.</li>
 </ul></section>
 <section id="release-v0-3-25">
-<h2>v0.3.25<a class="headerlink" href="#release-v0-3-25" title="Permalink to this headline"></a></h2>
+<h2>v0.3.25<a class="headerlink" href="#release-v0-3-25" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-29 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.25">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.25/">PyPI</a></em></p>
 <p>Nested lists formatting improvements for <code>po2md</code>:</p>
 <ul>
@@ -735,104 +779,104 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Use 4 spaces for nested lists indentation.</li>
 </ul></section>
 <section id="release-v0-3-24">
-<h2>v0.3.24<a class="headerlink" href="#release-v0-3-24" title="Permalink to this headline"></a></h2>
+<h2>v0.3.24<a class="headerlink" href="#release-v0-3-24" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-29 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.24">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.24/">PyPI</a></em></p>
 <ul>
 <li>Added new argument <code>--ignore-msgids</code> (CLI) and <code>ignore_msgids</code> (API) for <code>md2po</code> to ignore msgids from being extracted.</li>
 </ul></section>
 <section id="release-v0-3-23">
-<h2>v0.3.23<a class="headerlink" href="#release-v0-3-23" title="Permalink to this headline"></a></h2>
+<h2>v0.3.23<a class="headerlink" href="#release-v0-3-23" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-28 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.23">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.23/">PyPI</a></em></p>
 <ul>
 <li>Fixed extra espace error wrapping paragraphs which include codespans.</li>
 </ul></section>
 <section id="release-v0-3-22">
-<h2>v0.3.22<a class="headerlink" href="#release-v0-3-22" title="Permalink to this headline"></a></h2>
+<h2>v0.3.22<a class="headerlink" href="#release-v0-3-22" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-28 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.22">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.22/">PyPI</a></em></p>
 <ul>
 <li>Fixed extra newline rendered by <code>po2md</code> before indented code blocks.</li>
 </ul></section>
 <section id="release-v0-3-21">
-<h2>v0.3.21<a class="headerlink" href="#release-v0-3-21" title="Permalink to this headline"></a></h2>
+<h2>v0.3.21<a class="headerlink" href="#release-v0-3-21" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-28 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.21">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.21/">PyPI</a></em></p>
 <ul>
 <li>Added <code>disabled_entries</code> properties to extractor and translators classes which expose disabled messages via commands.</li>
 </ul></section>
 <section id="release-v0-3-20">
-<h2>v0.3.20<a class="headerlink" href="#release-v0-3-20" title="Permalink to this headline"></a></h2>
+<h2>v0.3.20<a class="headerlink" href="#release-v0-3-20" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-28 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.20">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.20/">PyPI</a></em></p>
 <ul>
 <li>Fixed <code>po2md</code> ignoring rendering when using <code>disable</code> commands.</li>
 </ul></section>
 <section id="release-v0-3-19">
-<h2>v0.3.19<a class="headerlink" href="#release-v0-3-19" title="Permalink to this headline"></a></h2>
+<h2>v0.3.19<a class="headerlink" href="#release-v0-3-19" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-27 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.19">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.19/">PyPI</a></em></p>
 <ul>
 <li>Fixed encoding problem in <code>po2md</code>.</li>
 <li>Added encoding parameters to <code>mdpo2html</code>.</li>
 </ul></section>
 <section id="release-v0-3-18">
-<h2>v0.3.18<a class="headerlink" href="#release-v0-3-18" title="Permalink to this headline"></a></h2>
+<h2>v0.3.18<a class="headerlink" href="#release-v0-3-18" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-27 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.18">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.18/">PyPI</a></em></p>
 <ul>
 <li>Self-referenced links must be valid link addresses.</li>
 </ul></section>
 <section id="release-v0-3-17">
-<h2>v0.3.17<a class="headerlink" href="#release-v0-3-17" title="Permalink to this headline"></a></h2>
+<h2>v0.3.17<a class="headerlink" href="#release-v0-3-17" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-27 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.17">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.17/">PyPI</a></em></p>
 <ul>
 <li>Separated <code>md2po</code> Markdown and PO files input encoding definition in two arguments: <code>-e/--encoding</code> -&gt; <code>--po-encoding</code></li>
 </ul></section>
 <section id="release-v0-3-16">
-<h2>v0.3.16<a class="headerlink" href="#release-v0-3-16" title="Permalink to this headline"></a></h2>
+<h2>v0.3.16<a class="headerlink" href="#release-v0-3-16" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-27 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.16">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.16/">PyPI</a></em></p>
 <ul>
 <li>Fixed typo in <code>md2po</code> argument name <code>mark_not_found_as_absolete</code> -&gt; <code>mark_not_found_as_obsolete</code>.</li>
 </ul></section>
 <section id="release-v0-3-15">
-<h2>v0.3.15<a class="headerlink" href="#release-v0-3-15" title="Permalink to this headline"></a></h2>
+<h2>v0.3.15<a class="headerlink" href="#release-v0-3-15" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-27 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.15">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.15/">PyPI</a></em></p>
 <ul>
 <li>Added arguments to <code>po2md</code> for input files encoding definition.</li>
 </ul></section>
 <section id="release-v0-3-14">
-<h2>v0.3.14<a class="headerlink" href="#release-v0-3-14" title="Permalink to this headline"></a></h2>
+<h2>v0.3.14<a class="headerlink" href="#release-v0-3-14" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-27 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.14">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.14/">PyPI</a></em></p>
 <ul>
 <li>Fixed <code>po2md</code> error parsing nested ordered lists.</li>
 </ul></section>
 <section id="release-v0-3-13">
-<h2>v0.3.13<a class="headerlink" href="#release-v0-3-13" title="Permalink to this headline"></a></h2>
+<h2>v0.3.13<a class="headerlink" href="#release-v0-3-13" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-27 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.13">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.13/">PyPI</a></em></p>
 <ul>
 <li>Fixed error reading bad glob character ranges.</li>
 </ul></section>
 <section id="release-v0-3-12">
-<h2>v0.3.12<a class="headerlink" href="#release-v0-3-12" title="Permalink to this headline"></a></h2>
+<h2>v0.3.12<a class="headerlink" href="#release-v0-3-12" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-12 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.12">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.12/">PyPI</a></em></p>
 <ul>
 <li>Multiple improvements and fixes for documentation.</li>
 </ul></section>
 <section id="release-v0-3-11">
-<h2>v0.3.11<a class="headerlink" href="#release-v0-3-11" title="Permalink to this headline"></a></h2>
+<h2>v0.3.11<a class="headerlink" href="#release-v0-3-11" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-04-05 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.11">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.11/">PyPI</a></em></p>
 <ul>
 <li>Fixed documentation inconsistencies.</li>
 </ul></section>
 <section id="release-v0-3-10">
-<h2>v0.3.10<a class="headerlink" href="#release-v0-3-10" title="Permalink to this headline"></a></h2>
+<h2>v0.3.10<a class="headerlink" href="#release-v0-3-10" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-03-31 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.10">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.10/">PyPI</a></em></p>
 <ul>
 <li>Fixed compatibility issue with polib v1.1.1</li>
 </ul></section>
 <section id="release-v0-3-9">
-<h2>v0.3.9<a class="headerlink" href="#release-v0-3-9" title="Permalink to this headline"></a></h2>
+<h2>v0.3.9<a class="headerlink" href="#release-v0-3-9" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-03-22 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.9">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.9/">PyPI</a></em></p>
 <ul>
 <li>Fixed packaging error in installation config.</li>
 </ul></section>
 <section id="release-v0-3-8">
-<h2>v0.3.8<a class="headerlink" href="#release-v0-3-8" title="Permalink to this headline"></a></h2>
+<h2>v0.3.8<a class="headerlink" href="#release-v0-3-8" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-02-06 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.8">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.8/">PyPI</a></em></p>
 <ul>
 <li>Added developers reference in documentation.</li>
@@ -840,46 +884,46 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
 <li>Documented all public functions.</li>
 </ul></section>
 <section id="release-v0-3-7">
-<h2>v0.3.7<a class="headerlink" href="#release-v0-3-7" title="Permalink to this headline"></a></h2>
+<h2>v0.3.7<a class="headerlink" href="#release-v0-3-7" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-02-05 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.7">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.7/">PyPI</a></em></p>
 <ul>
 <li>Added improvements for CLIs documentation.</li>
 </ul></section>
 <section id="release-v0-3-6">
-<h2>v0.3.6<a class="headerlink" href="#release-v0-3-6" title="Permalink to this headline"></a></h2>
+<h2>v0.3.6<a class="headerlink" href="#release-v0-3-6" title="Link to this heading"></a></h2>
 <p><em>Released on 2021-02-01 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.6">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.6/">PyPI</a></em></p>
 </section>
 <section id="release-v0-3-5">
-<h2>v0.3.5<a class="headerlink" href="#release-v0-3-5" title="Permalink to this headline"></a></h2>
+<h2>v0.3.5<a class="headerlink" href="#release-v0-3-5" title="Link to this heading"></a></h2>
 <p><em>Released on 2020-11-07 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.5">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.5/">PyPI</a></em></p>
 <ul>
 <li>Improve obsolete msgstr fallback with fuzzy and translator comments flags.</li>
 </ul></section>
 <section id="release-v0-3-4">
-<h2>v0.3.4<a class="headerlink" href="#release-v0-3-4" title="Permalink to this headline"></a></h2>
+<h2>v0.3.4<a class="headerlink" href="#release-v0-3-4" title="Link to this heading"></a></h2>
 <p><em>Released on 2020-11-06 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.4">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.4/">PyPI</a></em></p>
 <ul>
 <li>If an obsolete translated message is found with same 'msgid' of another found by current extraction, that will be used directly translating the new pofile in md2po.</li>
 </ul></section>
 <section id="release-v0-3-3">
-<h2>v0.3.3<a class="headerlink" href="#release-v0-3-3" title="Permalink to this headline"></a></h2>
+<h2>v0.3.3<a class="headerlink" href="#release-v0-3-3" title="Link to this heading"></a></h2>
 <p><em>Released on 2020-11-06 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.3">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.3/">PyPI</a></em></p>
 <ul>
 <li>Fix bug dealing with previous obsolete entries in md2po.</li>
 </ul></section>
 <section id="release-v0-3-2">
-<h2>v0.3.2<a class="headerlink" href="#release-v0-3-2" title="Permalink to this headline"></a></h2>
+<h2>v0.3.2<a class="headerlink" href="#release-v0-3-2" title="Link to this heading"></a></h2>
 <p><em>Released on 2020-11-05 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.2">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.2/">PyPI</a></em></p>
 <ul>
 <li>Fix bug in <code>mdpo2html</code> implementation with non-markdown attributes of links.</li>
 <li>Optimize a bit.</li>
 </ul></section>
 <section id="release-v0-3-1">
-<h2>v0.3.1<a class="headerlink" href="#release-v0-3-1" title="Permalink to this headline"></a></h2>
+<h2>v0.3.1<a class="headerlink" href="#release-v0-3-1" title="Link to this heading"></a></h2>
 <p><em>Released on 2020-11-05 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.1">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.1/">PyPI</a></em></p>
 <p>Read input from STDIN in CLI interfaces.</p></section>
 <section id="release-v0-3-0">
-<h2>v0.3.0<a class="headerlink" href="#release-v0-3-0" title="Permalink to this headline"></a></h2>
+<h2>v0.3.0<a class="headerlink" href="#release-v0-3-0" title="Link to this heading"></a></h2>
 <p><em>Released on 2020-11-04 - <a class="reference external" href="https://github.com/mondeja/mdpo/releases/tag/v0.3.0">GitHub</a> - <a class="reference external" href="https://pypi.org/project/mdpo/v0.3.0/">PyPI</a></em></p>
 <p>First beta release.</p></section>
 </section>
@@ -895,7 +939,7 @@ __description__ = metadata[&quot;summary&quot;]"><pre><span class="pl-k">import<
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

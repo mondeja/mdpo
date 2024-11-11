@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Command line interfaces &mdash; mdpo 1.1.4 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/override-styles.css" type="text/css" />
+  <title>Command line interfaces &mdash; mdpo 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/override-styles.css?v=70cd355a" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=20623aea"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,7 +40,7 @@
               <img src="_static/mdpo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.1
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -105,7 +107,7 @@
            <div itemprop="articleBody">
              
   <section id="command-line-interfaces">
-<h1>Command line interfaces<a class="headerlink" href="#command-line-interfaces" title="Permalink to this headline"></a></h1>
+<h1>Command line interfaces<a class="headerlink" href="#command-line-interfaces" title="Link to this heading"></a></h1>
 <p>mdpo installation includes four command line interfaces:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#md2po"><span class="std std-ref">md2po</span></a> is used to dump strings from Markdown files into PO files as
@@ -119,7 +121,7 @@ HTML file produced from Markdown file using a Markdown-to-HTML converter, and
 a PO file of reference for strings.</p></li>
 </ul>
 <hr><section id="md2po">
-<h2>md2po<a class="headerlink" href="#md2po" title="Permalink to this headline"></a></h2>
+<h2>md2po<a class="headerlink" href="#md2po" title="Link to this heading"></a></h2>
 <p><p>Utility like xgettext to extract Markdown contents dumping them inside PO files.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">md2po</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">q</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="n">OUTPUT_PO_FILEPATH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">]</span>
       <span class="p">[</span><span class="o">--</span><span class="n">mo</span><span class="o">-</span><span class="n">filepath</span> <span class="n">OUTPUT_MO_FILEPATH</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">plaintext</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">wrapwidth</span> <span class="n">N</span><span class="o">/</span><span class="n">inf</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">m</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">r</span><span class="p">]</span>
@@ -131,13 +133,13 @@ a PO file of reference for strings.</p></li>
 </pre></div>
 </div>
 <section id="md2po-positional-arguments">
-<h3>md2po positional arguments<a class="headerlink" href="#md2po-positional-arguments" title="Permalink to this headline"></a></h3>
+<h3>md2po positional arguments<a class="headerlink" href="#md2po-positional-arguments" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p id="md2po-GLOBS_FILES_OR_CONTENT"><a class="reference internal" href="#md2po-GLOBS_FILES_OR_CONTENT" title="md2po GLOBS_FILES_OR_CONTENT"><strong><code class="docutils literal notranslate"><span class="pre">GLOBS_FILES_OR_CONTENT</span></code></strong></a> - Globs to markdown input files, paths to files or Markdown content. If not provided, will be read from STDIN. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
 </ul>
 </section>
 <section id="md2po-options">
-<h3>md2po options<a class="headerlink" href="#md2po-options" title="Permalink to this headline"></a></h3>
+<h3>md2po options<a class="headerlink" href="#md2po-options" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p id="md2po--h"><span id="md2po---help"></span><a class="reference internal" href="#md2po--h" title="md2po -h"><strong><code class="docutils literal notranslate"><span class="pre">-h</span></code></strong></a>, <a class="reference internal" href="#md2po---help" title="md2po --help"><strong><code class="docutils literal notranslate"><span class="pre">--help</span></code></strong></a> - Show this help message and exit.</p></li>
 <li><p id="md2po--v"><span id="md2po---version"></span><a class="reference internal" href="#md2po--v" title="md2po -v"><strong><code class="docutils literal notranslate"><span class="pre">-v</span></code></strong></a>, <a class="reference internal" href="#md2po---version" title="md2po --version"><strong><code class="docutils literal notranslate"><span class="pre">--version</span></code></strong></a> - Show program version number and exit.</p></li>
@@ -167,10 +169,12 @@ a PO file of reference for strings.</p></li>
 </p>
 <hr></section>
 <section id="po2md">
-<h2>po2md<a class="headerlink" href="#po2md" title="Permalink to this headline"></a></h2>
-<p><p>Markdown file translator using PO files as reference.
+<h2>po2md<a class="headerlink" href="#po2md" title="Link to this heading"></a></h2>
+<p><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Markdown file translator using PO files as reference.
 
-This implementation reproduces the same valid Markdown output, given the provided content, with translations replaced, but does not produces the same input format.</p>
+This implementation reproduces the same valid Markdown output, given the provided content, with translations replaced, but does not produces the same input format.
+</pre></div>
+</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">po2md</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">q</span><span class="p">]</span> <span class="o">-</span><span class="n">p</span> <span class="p">[</span><span class="n">POFILES</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">wrapwidth</span> <span class="n">N</span><span class="o">/</span><span class="n">inf</span><span class="p">]</span>
       <span class="p">[</span><span class="o">--</span><span class="n">md</span><span class="o">-</span><span class="n">encoding</span> <span class="n">ENCODING</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">po</span><span class="o">-</span><span class="n">encoding</span> <span class="n">ENCODING</span><span class="p">]</span>
       <span class="p">[</span><span class="o">--</span><span class="n">command</span><span class="o">-</span><span class="n">alias</span> <span class="n">CUSTOM</span><span class="o">-</span><span class="n">COMMAND</span><span class="p">:</span><span class="n">MDPO</span><span class="o">-</span><span class="n">COMMAND</span><span class="p">]</span>
@@ -179,13 +183,13 @@ This implementation reproduces the same valid Markdown output, given the provide
 </pre></div>
 </div>
 <section id="po2md-positional-argument">
-<h3>po2md positional argument<a class="headerlink" href="#po2md-positional-argument" title="Permalink to this headline"></a></h3>
+<h3>po2md positional argument<a class="headerlink" href="#po2md-positional-argument" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p id="po2md-FILEPATH_OR_CONTENT"><a class="reference internal" href="#po2md-FILEPATH_OR_CONTENT" title="po2md FILEPATH_OR_CONTENT"><strong><code class="docutils literal notranslate"><span class="pre">FILEPATH_OR_CONTENT</span></code></strong></a> - Markdown filepath or content to translate. If not provided, will be read from STDIN. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
 </ul>
 </section>
 <section id="po2md-options">
-<h3>po2md options<a class="headerlink" href="#po2md-options" title="Permalink to this headline"></a></h3>
+<h3>po2md options<a class="headerlink" href="#po2md-options" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p id="po2md--h"><span id="po2md---help"></span><a class="reference internal" href="#po2md--h" title="po2md -h"><strong><code class="docutils literal notranslate"><span class="pre">-h</span></code></strong></a>, <a class="reference internal" href="#po2md---help" title="po2md --help"><strong><code class="docutils literal notranslate"><span class="pre">--help</span></code></strong></a> - Show this help message and exit.</p></li>
 <li><p id="po2md--v"><span id="po2md---version"></span><a class="reference internal" href="#po2md--v" title="po2md -v"><strong><code class="docutils literal notranslate"><span class="pre">-v</span></code></strong></a>, <a class="reference internal" href="#po2md---version" title="po2md --version"><strong><code class="docutils literal notranslate"><span class="pre">--version</span></code></strong></a> - Show program version number and exit.</p></li>
@@ -204,7 +208,7 @@ This implementation reproduces the same valid Markdown output, given the provide
 </section>
 </p>
 <section id="markdownlint-compatible-configuration">
-<h3>markdownlint compatible configuration<a class="headerlink" href="#markdownlint-compatible-configuration" title="Permalink to this headline"></a></h3>
+<h3>markdownlint compatible configuration<a class="headerlink" href="#markdownlint-compatible-configuration" title="Link to this heading"></a></h3>
 <p>The output produced by <a class="reference internal" href="#po2md"><span class="std std-ref">po2md</span></a> is compatible with the following
 <a class="reference external" href="https://github.com/DavidAnson/markdownlint#configuration">Markdownlint configuration</a>:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -220,23 +224,23 @@ This implementation reproduces the same valid Markdown output, given the provide
 <hr></section>
 </section>
 <section id="md2po2md">
-<h2>md2po2md<a class="headerlink" href="#md2po2md" title="Permalink to this headline"></a></h2>
+<h2>md2po2md<a class="headerlink" href="#md2po2md" title="Link to this heading"></a></h2>
 <p><p>Translates Markdown files using PO files for a set of predefined language codes creating multiple directories, one for each language.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">md2po2md</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span> <span class="o">-</span><span class="n">l</span> <span class="p">[</span><span class="n">LANG</span> <span class="o">...</span><span class="p">]</span> <span class="o">-</span><span class="n">o</span> <span class="n">PATH_SCHEMA</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">location</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">x</span> <span class="n">EXTENSION</span><span class="p">]</span>
          <span class="p">[</span><span class="o">--</span><span class="n">command</span><span class="o">-</span><span class="n">alias</span> <span class="n">CUSTOM</span><span class="o">-</span><span class="n">COMMAND</span><span class="p">:</span><span class="n">MDPO</span><span class="o">-</span><span class="n">COMMAND</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">po</span><span class="o">-</span><span class="n">wrapwidth</span> <span class="n">N</span><span class="o">/</span><span class="n">inf</span><span class="p">]</span>
-         <span class="p">[</span><span class="o">--</span><span class="n">md</span><span class="o">-</span><span class="n">wrapwidth</span> <span class="n">N</span><span class="o">/</span><span class="n">inf</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">md</span><span class="o">-</span><span class="n">encoding</span> <span class="n">ENCODING</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">po</span><span class="o">-</span><span class="n">encoding</span> <span class="n">ENCODING</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span>
+         <span class="p">[</span><span class="o">--</span><span class="n">md</span><span class="o">-</span><span class="n">wrapwidth</span> <span class="n">N</span><span class="o">/</span><span class="n">inf</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">md</span><span class="o">-</span><span class="n">encoding</span> <span class="n">ENCODING</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">po</span><span class="o">-</span><span class="n">encoding</span> <span class="n">ENCODING</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span>
          <span class="p">[</span><span class="o">--</span><span class="n">check</span><span class="p">]</span>
          <span class="p">[</span><span class="n">GLOB</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
 <section id="md2po2md-positional-arguments">
-<h3>md2po2md positional arguments<a class="headerlink" href="#md2po2md-positional-arguments" title="Permalink to this headline"></a></h3>
+<h3>md2po2md positional arguments<a class="headerlink" href="#md2po2md-positional-arguments" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p id="md2po2md-GLOB"><a class="reference internal" href="#md2po2md-GLOB" title="md2po2md GLOB"><strong><code class="docutils literal notranslate"><span class="pre">GLOB</span></code></strong></a> - Glob to markdown input files to translate. If not provided, will be read from STDIN. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
 </ul>
 </section>
 <section id="md2po2md-options">
-<h3>md2po2md options<a class="headerlink" href="#md2po2md-options" title="Permalink to this headline"></a></h3>
+<h3>md2po2md options<a class="headerlink" href="#md2po2md-options" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p id="md2po2md--h"><span id="md2po2md---help"></span><a class="reference internal" href="#md2po2md--h" title="md2po2md -h"><strong><code class="docutils literal notranslate"><span class="pre">-h</span></code></strong></a>, <a class="reference internal" href="#md2po2md---help" title="md2po2md --help"><strong><code class="docutils literal notranslate"><span class="pre">--help</span></code></strong></a> - Show this help message and exit.</p></li>
 <li><p id="md2po2md--v"><span id="md2po2md---version"></span><a class="reference internal" href="#md2po2md--v" title="md2po2md -v"><strong><code class="docutils literal notranslate"><span class="pre">-v</span></code></strong></a>, <a class="reference internal" href="#md2po2md---version" title="md2po2md --version"><strong><code class="docutils literal notranslate"><span class="pre">--version</span></code></strong></a> - Show program version number and exit.</p></li>
@@ -247,6 +251,7 @@ This implementation reproduces the same valid Markdown output, given the provide
 <li><p id="md2po2md---command-alias"><a class="reference internal" href="#md2po2md---command-alias" title="md2po2md --command-alias"><strong><code class="docutils literal notranslate"><span class="pre">--command-alias</span></code></strong></a> <code class="docutils literal notranslate"><span class="pre">CUSTOM-COMMAND:MDPO-COMMAND</span></code> - Aliases to use custom mdpo command names in comments. This argument can be passed multiple times in the form <code class="docutils literal notranslate"><span class="pre">&quot;&lt;custom-command&gt;:&lt;mdpo-command&gt;&quot;</span></code>. The <code class="docutils literal notranslate"><span class="pre">'mdpo-'</span></code> prefix in command names resolution is optional. For example, if you want to use <code class="docutils literal notranslate"><span class="pre">&quot;&lt;!--</span> <span class="pre">mdpo-on</span> <span class="pre">--&gt;&quot;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&quot;&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;&quot;</span></code>, you can pass either <code class="docutils literal notranslate"><span class="pre">--command-alias</span> <span class="pre">”mdpo-on:mdpo-enable”</span></code> or <code class="docutils literal notranslate"><span class="pre">--command-alias</span> <span class="pre">”mdpo-on:enable”</span></code> arguments. (default: <code class="docutils literal notranslate"><span class="pre">[]</span></code>)</p></li>
 <li><p id="md2po2md---po-wrapwidth"><a class="reference internal" href="#md2po2md---po-wrapwidth" title="md2po2md --po-wrapwidth"><strong><code class="docutils literal notranslate"><span class="pre">--po-wrapwidth</span></code></strong></a> <code class="docutils literal notranslate"><span class="pre">N/INF</span></code> - Maximum width rendering PO files. If negative, <code class="docutils literal notranslate"><span class="pre">'0'</span></code> or <code class="docutils literal notranslate"><span class="pre">'inf'</span></code>, the content will not be wrapped. (default: <code class="docutils literal notranslate"><span class="pre">78</span></code>)</p></li>
 <li><p id="md2po2md---md-wrapwidth"><a class="reference internal" href="#md2po2md---md-wrapwidth" title="md2po2md --md-wrapwidth"><strong><code class="docutils literal notranslate"><span class="pre">--md-wrapwidth</span></code></strong></a> <code class="docutils literal notranslate"><span class="pre">N/INF</span></code> - Maximum width rendering the Markdown output, when possible. If negative, <code class="docutils literal notranslate"><span class="pre">'0'</span></code> or <code class="docutils literal notranslate"><span class="pre">'inf'</span></code>, the content will not be wrapped. (default: <code class="docutils literal notranslate"><span class="pre">80</span></code>)</p></li>
+<li><p id="md2po2md--c"><span id="md2po2md---include-codeblocks"></span><a class="reference internal" href="#md2po2md--c" title="md2po2md -c"><strong><code class="docutils literal notranslate"><span class="pre">-c</span></code></strong></a>, <a class="reference internal" href="#md2po2md---include-codeblocks" title="md2po2md --include-codeblocks"><strong><code class="docutils literal notranslate"><span class="pre">--include-codeblocks</span></code></strong></a> - Include all code blocks found inside PO file result. This is useful if you want to translate all your blocks of code. Equivalent to append <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-include-codeblock</span> <span class="pre">--&gt;</span></code> command before each code block.</p></li>
 <li><p id="md2po2md---md-encoding"><a class="reference internal" href="#md2po2md---md-encoding" title="md2po2md --md-encoding"><strong><code class="docutils literal notranslate"><span class="pre">--md-encoding</span></code></strong></a> <code class="docutils literal notranslate"><span class="pre">ENCODING</span></code> - Markdown content encoding. (default: <code class="docutils literal notranslate"><span class="pre">utf-8</span></code>)</p></li>
 <li><p id="md2po2md---po-encoding"><a class="reference internal" href="#md2po2md---po-encoding" title="md2po2md --po-encoding"><strong><code class="docutils literal notranslate"><span class="pre">--po-encoding</span></code></strong></a> <code class="docutils literal notranslate"><span class="pre">ENCODING</span></code> - PO files encoding. If you need different encodings for each file, you must define them in the <code class="docutils literal notranslate"><span class="pre">&quot;Content-Type&quot;</span></code> field of each PO file metadata, in the form <code class="docutils literal notranslate"><span class="pre">'Content-Type:</span> <span class="pre">text/plain;</span> <span class="pre">charset=&lt;ENCODING&gt;'</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
 <li><p id="md2po2md--D"><span id="md2po2md---debug"></span><a class="reference internal" href="#md2po2md--D" title="md2po2md -D"><strong><code class="docutils literal notranslate"><span class="pre">-D</span></code></strong></a>, <a class="reference internal" href="#md2po2md---debug" title="md2po2md --debug"><strong><code class="docutils literal notranslate"><span class="pre">--debug</span></code></strong></a> - Print useful messages in the parsing process showing the contents of all Markdown elements.</p></li>
@@ -256,7 +261,7 @@ This implementation reproduces the same valid Markdown output, given the provide
 </p>
 <hr></section>
 <section id="mdpo2html">
-<h2>mdpo2html<a class="headerlink" href="#mdpo2html" title="Permalink to this headline"></a></h2>
+<h2>mdpo2html<a class="headerlink" href="#mdpo2html" title="Link to this heading"></a></h2>
 <p><p>HTML-produced-from-Markdown file translator using PO files.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mdpo2html</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">q</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="p">[</span><span class="n">POFILES</span> <span class="o">...</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">html</span><span class="o">-</span><span class="n">encoding</span> <span class="n">ENCODING</span><span class="p">]</span>
           <span class="p">[</span><span class="o">--</span><span class="n">po</span><span class="o">-</span><span class="n">encoding</span> <span class="n">ENCODING</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">command</span><span class="o">-</span><span class="n">alias</span> <span class="n">CUSTOM</span><span class="o">-</span><span class="n">COMMAND</span><span class="p">:</span><span class="n">MDPO</span><span class="o">-</span><span class="n">COMMAND</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">check</span><span class="p">]</span>
@@ -264,13 +269,13 @@ This implementation reproduces the same valid Markdown output, given the provide
 </pre></div>
 </div>
 <section id="mdpo2html-positional-arguments">
-<h3>mdpo2html positional arguments<a class="headerlink" href="#mdpo2html-positional-arguments" title="Permalink to this headline"></a></h3>
+<h3>mdpo2html positional arguments<a class="headerlink" href="#mdpo2html-positional-arguments" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p id="mdpo2html-FILEPATH_OR_CONTENT"><a class="reference internal" href="#mdpo2html-FILEPATH_OR_CONTENT" title="mdpo2html FILEPATH_OR_CONTENT"><strong><code class="docutils literal notranslate"><span class="pre">FILEPATH_OR_CONTENT</span></code></strong></a> - HTML file path or content to translate. If not provided, will be read from STDIN. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
 </ul>
 </section>
 <section id="mdpo2html-options">
-<h3>mdpo2html options<a class="headerlink" href="#mdpo2html-options" title="Permalink to this headline"></a></h3>
+<h3>mdpo2html options<a class="headerlink" href="#mdpo2html-options" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p id="mdpo2html--h"><span id="mdpo2html---help"></span><a class="reference internal" href="#mdpo2html--h" title="mdpo2html -h"><strong><code class="docutils literal notranslate"><span class="pre">-h</span></code></strong></a>, <a class="reference internal" href="#mdpo2html---help" title="mdpo2html --help"><strong><code class="docutils literal notranslate"><span class="pre">--help</span></code></strong></a> - Show this help message and exit.</p></li>
 <li><p id="mdpo2html--v"><span id="mdpo2html---version"></span><a class="reference internal" href="#mdpo2html--v" title="mdpo2html -v"><strong><code class="docutils literal notranslate"><span class="pre">-v</span></code></strong></a>, <a class="reference internal" href="#mdpo2html---version" title="mdpo2html --version"><strong><code class="docutils literal notranslate"><span class="pre">--version</span></code></strong></a> - Show program version number and exit.</p></li>
@@ -307,7 +312,7 @@ for (let i=0; i<argumentsSubsectionTitles.length; i++) {
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020-2023, Álvaro Mondéjar Rubio.</p>
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
