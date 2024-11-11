@@ -152,7 +152,7 @@ jobs:
         shell: bash
         run: sh scripts/build.sh
       - name: Compress with UPX
-        if: matrix.runs-on != 'macos-latest'
+        if: matrix.runs-on != 'macos-13' && matrix.runs-on != 'macos-14'
         run: upx -f --best -9 dist/*
       - name: Prepare upload
         run: |
