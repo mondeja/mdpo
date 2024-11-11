@@ -15,7 +15,7 @@ DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS = [
     'wikilinks',
 ]
 
-#: :dict: mapping from `pymd4c <https://github.com/dominickpastore/pymd4c>`_
+#: :dict: mapping from `pymd4c <https://pymd4c.dcpx.org/>`_
 #: block type values to block readable names
 READABLE_BLOCK_NAMES = {
     1: 'quote',

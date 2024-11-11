@@ -80,6 +80,10 @@ class Po2Md:
         'code_end_string_escaped',
         'wikilink_start_string',
         'wikilink_end_string',
+        'latexmath_start_string',
+        'latexmath_end_string',
+        'latexmath_display_start_string',
+        'latexmath_display_end_string',
 
         # Public class properties
         'current_msgid',
@@ -105,6 +109,7 @@ class Po2Md:
         '_inside_hblock',
         '_inside_aspan',
         '_inside_codespan',
+        '_inside_latexmath_display',
         '_codespan_start_index',
         '_codespan_backticks',
         '_codespan_inside_current_msgid',
@@ -252,6 +257,20 @@ class Po2Md:
                 self.wikilink_start_string
             self._leavespan_replacer[md4c.SpanType.WIKILINK.value] = \
                 self.wikilink_end_string
+
+        if 'latex_math_spans' in self.extensions:
+            self._inside_latexmath_display = False
+
+            self.latexmath_start_string = kwargs.get('latexmath_start_string', '$')
+            self.latexmath_end_string = kwargs.get('latexmath_end_string', '$')
+            self.latexmath_display_start_string = kwargs.get(
+                'latexmath_display_start_string',
+                '$$',
+            )
+            self.latexmath_display_end_string = kwargs.get(
+                'latexmath_display_end_string',
+                '$$',
+            )
 
         self._inside_htmlblock = [
             False,  # the parser is inside an HTML block
@@ -700,13 +719,10 @@ class Po2Md:
         ):
             return
 
-        if self._inside_aspan:  # span inside link text
-            with contextlib.suppress(KeyError):
-                self._current_aspan_text += self._enterspan_replacer[
-                    span.value
-                ]
-        else:
-            with contextlib.suppress(KeyError):
+        with contextlib.suppress(KeyError):
+            if self._inside_aspan:  # span inside link text
+                self._current_aspan_text += self._enterspan_replacer[span.value]
+            else:
                 self.current_msgid += self._enterspan_replacer[span.value]
 
         if span is md4c.SpanType.A:
@@ -746,6 +762,10 @@ class Po2Md:
             self._current_imgspan['text'] = ''
         elif span is md4c.SpanType.WIKILINK:
             self._current_wikilink_target = details['target'][0][1]
+        elif span is md4c.SpanType.LATEXMATH:
+            self.current_msgid += self.latexmath_start_string
+        elif span is md4c.SpanType.LATEXMATH_DISPLAY:
+            self._inside_latexmath_display = True
 
     def leave_span(self, span, details):
         # raise 'leave_span' event
@@ -767,7 +787,7 @@ class Po2Md:
                 self._current_aspan_text += self._leavespan_replacer[
                     span.value
                 ]
-        else:
+        elif not self._inside_latexmath_display:
             with contextlib.suppress(KeyError):
                 self.current_msgid += self._leavespan_replacer[span.value]
 
@@ -836,6 +856,16 @@ class Po2Md:
                 self.current_msgid += img_markup
 
             self._current_imgspan = {}
+        elif span is md4c.SpanType.LATEXMATH:
+            self.current_msgid += self.latexmath_end_string
+        elif span is md4c.SpanType.LATEXMATH_DISPLAY:
+            self._inside_latexmath_display = False
+            self.current_line += self.latexmath_display_start_string
+            self._save_current_line()
+            self.current_msgid = self.current_msgid.rstrip()
+            self._save_current_msgid()
+            self.current_line += self.latexmath_display_end_string
+            self._save_current_line()
 
     def text(self, block, text):
         # raise 'text' event
