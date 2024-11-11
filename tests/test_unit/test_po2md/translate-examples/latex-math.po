@@ -3,10 +3,10 @@ msgid ""
 msgstr ""
 
 msgid "Math with $x^2$ and $y^2$."
-msgstr ""
+msgstr "Matemáticas con $a^2$ y $b^2$."
 
 msgid "Block math:"
-msgstr ""
+msgstr "Bloque de matemáticas:"
 
 msgid "x^2 + y^2 = z^2"
-msgstr ""
+msgstr "a^2 + b^2 = c^2"

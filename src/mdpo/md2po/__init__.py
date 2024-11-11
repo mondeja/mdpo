@@ -132,6 +132,8 @@ class Md2Po:
         '_current_aspan_text',
         '_current_aspan_ref_target',
         '_current_wikilink_target',
+        '_inside_latexmath_display',
+        '_inside_latexmath_display_text',
         '_current_imgspan',
         '_uls_deep',
     }
@@ -245,6 +247,7 @@ class Md2Po:
         self._current_top_level_block_number = 0
         self._current_top_level_block_type = None
         self._current_markdown_filepath = None
+        self._inside_latexmath_display = False
 
         if not self.plaintext:
             self.bold_start_string = kwargs.get('bold_start_string', '**')
@@ -330,6 +333,8 @@ class Md2Po:
                 self._leavespan_replacer[
                     md4c.SpanType.LATEXMATH_DISPLAY.value
                 ] = self.latexmathdisplay_end_string
+
+                self._inside_latexmath_display_text = ''
 
             if 'wikilinks' in self.extensions:
                 self.wikilink_start_string = kwargs.get(
@@ -698,7 +703,7 @@ class Md2Po:
                     self._current_aspan_text += self._enterspan_replacer[
                         span.value
                     ]
-            else:
+            elif span is not md4c.SpanType.LATEXMATH_DISPLAY:
                 with contextlib.suppress(KeyError):
                     self.current_msgid += (
                         self._enterspan_replacer[span.value]
@@ -750,6 +755,8 @@ class Md2Po:
             self._inside_uspan = True
         elif span is md4c.SpanType.WIKILINK:
             self._current_wikilink_target = details['target'][0][1]
+        elif span is md4c.SpanType.LATEXMATH_DISPLAY:
+            self._inside_latexmath_display = True
 
     def leave_span(self, span, details):
         # raise 'leave_span' event
@@ -770,7 +777,7 @@ class Md2Po:
                     self._current_aspan_text += self._leavespan_replacer[
                         span.value
                     ]
-            else:
+            elif not self._inside_latexmath_display:
                 with contextlib.suppress(KeyError):
                     self.current_msgid += (
                         self._leavespan_replacer[span.value]
@@ -847,6 +854,11 @@ class Md2Po:
                 self.current_msgid += img_markup
         elif span is md4c.SpanType.U:
             self._inside_uspan = False
+        elif span is md4c.SpanType.LATEXMATH_DISPLAY:
+            self._inside_latexmath_display = False
+            self.current_msgid += self._inside_latexmath_display_text
+            self._inside_latexmath_display_text = ''
+            self._save_current_msgid()
 
     def text(self, block, text):
         # raise 'text' event
@@ -900,6 +912,9 @@ class Md2Po:
                         self._current_wikilink_target = (
                             f'{self._current_wikilink_target}|{text}'
                         )
+                    return
+                if self._inside_latexmath_display:
+                    self._inside_latexmath_display_text += text.strip()
                     return
                 self.current_msgid += text
             elif not self.disable_next_codeblock and (
@@ -1108,8 +1123,8 @@ def markdown_to_pofile(
             found the messages in PO file `#: reference` comments.
         extensions (list): md4c extensions used to parse markdown content,
             formatted as a list of 'pymd4c' keyword arguments. You can see all
-            available at `pymd4c repository <https://github.com/dominickpastore
-            /pymd4c#parser-option-flags>`_.
+            available at `pymd4c documentation <https://pymd4c.dcpx.org
+            /api.html#option-flags>`_.
         po_encoding (str): Resulting PO file encoding.
         md_encoding (str): Markdown content encoding.
         xheader (bool): Indicates if the resulting PO file will have the mdpo

@@ -48,8 +48,8 @@ def markdown_to_pofile_to_markdown(
             have to prepare the output directories before the execution.
         extensions (list): md4c extensions used to parse markdown content,
             formatted as a list of 'pymd4c' keyword arguments. You can see all
-            available at `pymd4c repository <https://github.com/dominickpastore
-            /pymd4c#parser-option-flags>`_.
+            available at `pymd4c documentation <https://pymd4c.dcpx.org/
+            api.html#option-flags>`_.
         command_aliases (dict): Mapping of aliases to use custom mdpo command
             names in comments. The ``mdpo-`` prefix in command names resolution
             is optional. For example, if you want to use ``<!-- mdpo-on -->``

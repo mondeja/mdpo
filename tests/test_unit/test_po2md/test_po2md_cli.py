@@ -39,7 +39,6 @@ def test_stdin(capsys, monkeypatch, tmp_file):
 @pytest.mark.parametrize('arg', ('-q', '--quiet'))
 def test_quiet(capsys, arg, tmp_file):
     with tmp_file(EXAMPLE['pofile'], '.po') as po_filepath:
-
         output, exitcode = run([
             EXAMPLE['markdown-input'],
             '-p', po_filepath, arg,
