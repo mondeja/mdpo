@@ -66,7 +66,7 @@ jobs:
           cmake ..
           make
           sudo make install
-          sudo ldconfig
+          sudo ldconfig || true
       - name: Install Hatch
         run: pip install -U hatch
       - name: Run tests
