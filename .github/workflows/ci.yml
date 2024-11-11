@@ -133,19 +133,14 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install PyInstaller
-        if: matrix.runs-on == 'macos-13' || matrix.runs-on == 'macos-14'
         run: pip install -U pyinstaller
-      - name: Install dependencies
+      - name: Install UPX
         if: matrix.runs-on == 'windows-latest'
         shell: bash
-        run: |
-          pip install -U pyinstaller
-          choco install -y upx
-      - name: Install dependencies
+        run: choco install -y upx
+      - name: Install UPX
         if: matrix.runs-on == 'ubuntu-latest'
-        run: |
-          pip install -U pyinstaller
-          sudo apt-get install -y upx-ucl
+        run: sudo apt-get install -y upx-ucl
       - name: Install package
         run: pip install .
       - name: Build standalone distribution
