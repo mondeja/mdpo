@@ -32,9 +32,15 @@ Complies with the <a href="https://spec.commonmark.org/">CommonMark Specificatio
 
 ## Installation
 
+### Python package
+
 ```bash
 pip install mdpo
 ```
+
+### Standalone pre-built binaries
+
+Download latest binaries for each CLI tool from [releases].
 
 [tests-image]: https://img.shields.io/github/actions/workflow/status/mondeja/mdpo/ci.yml?logo=github&label=tests&branch=master
 [tests-link]: https://github.com/mondeja/mdpo/actions?query=workflow%3ACI
@@ -42,3 +48,4 @@ pip install mdpo
 [coverage-link]: https://app.codecov.io/gh/mondeja/mdpo
 [docs-image]: https://img.shields.io/github/actions/workflow/status/mondeja/mdpo/ci.yml?label=docs&logo=readthedocs&logoColor=white&branch=master
 [docs-link]: https://mondeja.github.io/mdpo/
+[releases]: https://github.com/mondeja/mdpo/releases
