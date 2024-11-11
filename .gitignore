@@ -16,3 +16,5 @@ docs/_build/
 docs/dev/reference/
 .ruff_cache/
 .prettier-cache
+*.spec
+temp/
