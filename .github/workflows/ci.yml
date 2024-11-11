@@ -141,11 +141,7 @@ jobs:
         shell: bash
         run: sh scripts/build.sh
       - name: Compress with UPX
-        # optimizes binary size
-        #
-        # The option `--best` incompletes with an error:
-        #   terminate called after throwing an instance of '13InternalError'
-        run: upx -9 dist/project-config
+        run: upx --best -9 dist/project-config
       - name: Prepare upload
         run: mv dist/project-config dist/project-config-${{ matrix.runs-on }}
       - uses: actions/upload-artifact@v4
