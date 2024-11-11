@@ -59,14 +59,13 @@ jobs:
         if: matrix.py == '3.12'
         shell: sh
         run: |
-          git clone --depth 1 https://github.com/mity/md4c
+          git clone --depth=1 https://github.com/mity/md4c
           cd md4c
           mkdir build
           cd build
           cmake ..
           make
-          # Do as root:
-          make install
+          sudo make install
       - name: Install Hatch
         run: pip install -U hatch
       - name: Run tests
