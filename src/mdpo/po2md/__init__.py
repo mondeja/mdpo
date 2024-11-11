@@ -261,7 +261,8 @@ class Po2Md:
         if 'latex_math_spans' in self.extensions:
             self._inside_latexmath_display = False
 
-            self.latexmath_start_string = kwargs.get('latexmath_start_string', '$')
+            self.latexmath_start_string = kwargs.get(
+                'latexmath_start_string', '$')
             self.latexmath_end_string = kwargs.get('latexmath_end_string', '$')
             self.latexmath_display_start_string = kwargs.get(
                 'latexmath_display_start_string',
