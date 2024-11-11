@@ -140,9 +140,17 @@ jobs:
         shell: bash
         run: sh scripts/build.sh
       - name: Compress with UPX
-        run: upx --best -9 dist/project-config
+        run: |
+          upx --best -9 dist/md2po
+          upx --best -9 dist/po2md
+          upx --best -9 dist/md2po2md
+          upx --best -9 dist/mdpo2html
       - name: Prepare upload
-        run: mv dist/project-config dist/project-config-${{ matrix.runs-on }}
+        run: |
+          mv dist/md2po dist/md2po-${{ matrix.runs-on }}
+          mv dist/po2md dist/po2md-${{ matrix.runs-on }}
+          mv dist/md2po2md dist/md2po2md-${{ matrix.runs-on }}
+          mv dist/mdpo2html dist/mdpo2html-${{ matrix.runs-on }}
       - uses: actions/upload-artifact@v4
         with:
           path: dist/*
