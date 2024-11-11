@@ -35,7 +35,6 @@ jobs:
           - 3.9
           - "3.10"
           - "3.11"
-          - "3.12"
         platform:
           - ubuntu-latest
           - macos-latest
@@ -55,18 +54,6 @@ jobs:
           print(f"Picked {env.split('=')[1].strip()} for {sys.version}")
           with codecs.open(os.environ["GITHUB_OUTPUT"], "a", "utf-8") as file_handler:
               file_handler.write(env)
-      - name: Install MD4C from source
-        if: matrix.py == '3.12' && matrix.platform == 'ubuntu-latest'
-        shell: sh
-        run: |
-          git clone --depth=1 https://github.com/mity/md4c
-          cd md4c
-          mkdir build
-          cd build
-          cmake ..
-          make
-          sudo make install
-          sudo ldconfig
       - name: Install Hatch
         run: pip install -U hatch
       - name: Run tests
