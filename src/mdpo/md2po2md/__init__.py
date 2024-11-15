@@ -154,6 +154,8 @@ def markdown_to_pofile_to_markdown(
             if _check_saved_files_changed and _saved_files_changed is False:
                 _saved_files_changed = md2po._saved_files_changed
 
+            obsoletes = md2po.obsoletes
+
             # po2md
             po2md = Po2Md(
                 [po_filepath],
@@ -172,4 +174,13 @@ def markdown_to_pofile_to_markdown(
             if _check_saved_files_changed and _saved_files_changed is False:
                 _saved_files_changed = po2md._saved_files_changed
 
-    return _saved_files_changed
+            if not obsoletes:
+                for pofile in po2md.pofiles:
+                    for entry in pofile:
+                        if entry.obsolete:
+                            obsoletes = True
+                            break
+                    if obsoletes:
+                        break
+
+    return (_saved_files_changed, obsoletes)

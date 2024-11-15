@@ -61,10 +61,13 @@ jobs:
       - name: Run tests
         run: hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
+        # not currently installable on Python 3.9
+        if: matrix.py != '3.9'
         run: |
           pip install coverage covdefaults
           coverage xml
       - name: Upload coverage
+        if: matrix.py != '3.9'
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

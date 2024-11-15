@@ -16,6 +16,7 @@ from mdpo.cli import (
     add_debug_option,
     add_encoding_arguments,
     add_event_argument,
+    add_no_obsolete_option,
     add_wrapwidth_argument,
     cli_codespan,
     parse_command_aliases_cli_arguments,
@@ -71,6 +72,7 @@ def build_parser():
     add_event_argument(parser)
     add_debug_option(parser)
     add_check_option(parser)
+    add_no_obsolete_option(parser)
     return parser
 
 
@@ -132,7 +134,29 @@ def run(args=frozenset()):
         if opts.check_saved_files_changed and po2md._saved_files_changed:
             return (output, 1)
 
+        if opts.no_obsolete and get_obsoletes(po2md.pofiles):
+            if not opts.quiet:
+                sys.stderr.write(
+
+                    "Obsolete messages found at PO files and passed"
+                    " '--no-obsolete'\n",
+
+                )
+            return (output, 1)
+
     return (output, 0)
+
+
+def get_obsoletes(pofiles):
+    result = False
+    for pofile in pofiles:
+        for entry in pofile:
+            if entry.obsolete:
+                result = True
+                break
+        if result:
+            break
+    return result
 
 
 def main():

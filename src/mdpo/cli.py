@@ -117,8 +117,7 @@ def add_common_cli_first_arguments(parser, quiet=True):
     """Add common mdpo arguments to an argument parser at the beginning.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
         quiet (bool): Include the argument ``-q/--quiet``.
     """
     parser.add_argument(
@@ -143,8 +142,7 @@ def add_command_alias_argument(parser):
     """Add the ``--command-alias`` argument to an argument parser.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
     """
     mdpo_on_mdpo_enable = cli_codespan(
         f'--command-alias {OPEN_QUOTE_CHAR}mdpo-on:mdpo-enable'
@@ -174,8 +172,7 @@ def add_extensions_argument(parser):
     """Add the ``-x/--extension`` argument to an argument parser.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
     """
     parser.add_argument(
         '-x', '--extension', '--ext', dest='extensions', action='append',
@@ -194,8 +191,7 @@ def add_debug_option(parser):
     """Add the ``-D/--debug`` option to an argument parser.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
     """
     parser.add_argument(
         '-D', '--debug', dest='debug', action='store_true',
@@ -208,8 +204,7 @@ def add_nolocation_option(parser):
     """Add the ``--no-location/--nolocation`` option to an argument parser.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
     """
     parser.add_argument(
         '--no-location', '--nolocation', dest='location', action='store_false',
@@ -228,8 +223,7 @@ def add_encoding_arguments(
     """Add ``--po-encoding`` ``--md-encoding`` arguments to an argument parser.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
         po_encoding_help (str): Help text for the ``--po-encoding`` argument.
         markup_encoding (str): Type of markup encoding, can be ``"md"`` or
             ``"html"``.
@@ -266,8 +260,7 @@ def add_wrapwidth_argument(
     """Add a ``--wrapwidth`` argument to an argument parser.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
         markup (str): For which type of files the argument will affect. Either
             ``"md"`` for Markdown or ``"po"`` for PO files.
         markup_prefix (bool): Add the ``markup`` prefix in the argument using
@@ -306,8 +299,7 @@ def add_check_option(parser):
     """Add the ``--check`` option to an argument parser.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
     """
     parser.add_argument(
         '--check', dest='check_saved_files_changed', action='store_true',
@@ -320,8 +312,7 @@ def add_event_argument(parser):
     """Add the ``--event`` optional argument to an argument parser.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
     """
     parser.add_argument(
         '-e', '--event', dest='events', default=[], action='append',
@@ -336,8 +327,7 @@ def add_include_codeblocks_option(parser):
     """Add the ``--include-codeblocks`` option to an argument parser.
 
     Args:
-        parser (:py:class:`argparse.ArgumentParser`): Arguments parser to
-            extend.
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
     """
     parser.add_argument(
         '-c', '--include-codeblocks',
@@ -347,6 +337,21 @@ def add_include_codeblocks_option(parser):
              ' Equivalent to append'
              f' {cli_codespan("<!-- mdpo-include-codeblock -->")} command'
              ' before each code block.',
+    )
+
+
+def add_no_obsolete_option(parser):
+    """Add the ``--no-obsolete`` option to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
+    """
+    parser.add_argument(
+        '--no-obsolete', dest='no_obsolete', action='store_true',
+        help=(
+            'Do not include obsolete messages in PO files. If found,'
+            ' it will exit with non zero code.'
+        ),
     )
 
 
