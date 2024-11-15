@@ -746,7 +746,7 @@ msgstr ""
         pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Bye'])
     stdout, stderr = capsys.readouterr()
 
-    assert exitcode == 1
+    assert exitcode == 3
     assert f'{pofile}\n' == expected_output
     assert stdout == expected_output
     assert stderr == (
@@ -771,9 +771,50 @@ msgstr ""
         pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Bye'])
     stdout, stderr = capsys.readouterr()
 
-    assert exitcode == 1
+    assert exitcode == 3
     assert f'{pofile}\n' == expected_output
     assert stdout == expected_output
     assert stderr == (
         f"Obsolete messages found at {filename} and passed '--no-obsolete'\n"
     )
+
+
+@pytest.mark.parametrize('arg', ('--no-empty-msgstr',))
+def test_no_empty_mgstr(capsys, arg, tmp_file):
+    po_input = '''#
+msgid ""
+msgstr ""
+
+msgid "Hello"
+msgstr ""
+
+'''
+
+    with tmp_file(po_input, '.po') as filename:
+        pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Hello'])
+    stdout, stderr = capsys.readouterr()
+
+    assert exitcode == 4
+    assert f'{pofile}\n' == po_input
+    assert stdout == po_input
+    assert stderr == (
+        f"Empty msgstr found at {filename} and passed '--no-empty-msgstr'\n"
+    )
+
+    po_input = '''#
+msgid ""
+msgstr ""
+
+msgid "Hello"
+msgstr "Hola"
+
+'''
+
+    with tmp_file(po_input, '.po') as filename:
+        pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Hello'])
+    stdout, stderr = capsys.readouterr()
+
+    assert exitcode == 0
+    assert f'{pofile}\n' == po_input
+    assert stdout == po_input
+    assert stderr == ''

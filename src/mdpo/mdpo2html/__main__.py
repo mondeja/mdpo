@@ -14,6 +14,8 @@ from mdpo.cli import (
     add_command_alias_argument,
     add_common_cli_first_arguments,
     add_encoding_arguments,
+    add_no_empty_msgstr_option,
+    add_no_obsolete_option,
     cli_codespan,
     parse_command_aliases_cli_arguments,
 )
@@ -54,6 +56,8 @@ def build_parser():
     add_encoding_arguments(parser, markup_encoding='html')
     add_command_alias_argument(parser)
     add_check_option(parser)
+    add_no_obsolete_option(parser)
+    add_no_empty_msgstr_option(parser)
     return parser
 
 
@@ -107,7 +111,30 @@ def run(args=frozenset()):
             sys.stdout.write(f'{output}\n')
 
         if opts.check_saved_files_changed and mdpo2html._saved_files_changed:
-            return (output, 1)
+            return (output, 2)
+
+        if opts.no_obsolete:
+            for pofile in mdpo2html.pofiles:
+                for entry in pofile:
+                    if entry.obsolete:
+                        if not opts.quiet:
+                            sys.stderr.write(
+                                "Obsolete messages found at PO files and"
+                                " passed '--no-obsolete'\n",
+                            )
+                        return (output, 3)
+
+        if opts.no_empty_msgstr:
+            for pofile in mdpo2html.pofiles:
+                for entry in pofile:
+                    if not entry.msgstr:
+                        if not opts.quiet:
+                            sys.stderr.write(
+                                f"Empty msgstr for msgid '{entry.msgid}'"
+                                " found at PO files and"
+                                " passed '--no-empty-msgstr'\n",
+                            )
+                        return (output, 4)
 
     return (output, 0)
 
