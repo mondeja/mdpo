@@ -234,7 +234,7 @@ def run(args=frozenset()):
                 sys.stderr.write(
                     (
                         f"Obsolete messages found at {opts.po_filepath}"
-                        " and passed '--no-obsolete'\n",
+                        " and passed '--no-obsolete'\n"
                     ),
                 )
             return (pofile, 1)
