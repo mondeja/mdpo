@@ -114,7 +114,11 @@ def parse_metadata_cli_arguments(metadata):
 
 
 def add_common_cli_first_arguments(parser):
-    """Add common mdpo arguments to an argument parser at the beginning."""
+    """Add common mdpo arguments to an argument parser at the beginning.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
+    """
     parser.add_argument(
         '-h', '--help', action='help',
         help='Show this help message and exit.',
