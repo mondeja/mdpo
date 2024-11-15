@@ -19,6 +19,7 @@ from mdpo.cli import (
     add_event_argument,
     add_extensions_argument,
     add_include_codeblocks_option,
+    add_no_empty_msgstr_option,
     add_no_obsolete_option,
     add_nolocation_option,
     add_wrapwidth_argument,
@@ -146,6 +147,7 @@ def build_parser():
     add_debug_option(parser)
     add_check_option(parser)
     add_no_obsolete_option(parser)
+    add_no_empty_msgstr_option(parser)
     return parser
 
 
@@ -221,13 +223,14 @@ def run(args=frozenset()):
 
         md2po = Md2Po(opts.files_or_content, **init_kwargs)
         pofile = md2po.extract(**extract_kwargs)
+        exitcode = 0
 
         if not opts.quiet:
             sys.stdout.write(f'{pofile.__unicode__()}\n')
 
         # pre-commit mode
         if opts.check_saved_files_changed and md2po._saved_files_changed:
-            return (pofile, 1)
+            exitcode = 2
 
         if opts.no_obsolete and md2po.obsoletes:
             if not opts.quiet:
@@ -237,9 +240,22 @@ def run(args=frozenset()):
                         " and passed '--no-obsolete'\n"
                     ),
                 )
-            return (pofile, 1)
+            exitcode = 3
 
-    return (pofile, 0)
+        if opts.no_empty_msgstr:
+            for entry in pofile:
+                if not entry.msgstr:
+                    if not opts.quiet:
+                        sys.stderr.write(
+                            (
+                                f"Empty msgstr found at {opts.po_filepath}"
+                                " and passed '--no-empty-msgstr'\n"
+                            ),
+                        )
+                        exitcode = 4
+                    break
+
+    return (pofile, exitcode)
 
 
 def main():

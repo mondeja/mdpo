@@ -113,12 +113,11 @@ def parse_metadata_cli_arguments(metadata):
     )
 
 
-def add_common_cli_first_arguments(parser, quiet=True):
+def add_common_cli_first_arguments(parser):
     """Add common mdpo arguments to an argument parser at the beginning.
 
     Args:
         parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
-        quiet (bool): Include the argument ``-q/--quiet``.
     """
     parser.add_argument(
         '-h', '--help', action='help',
@@ -131,11 +130,10 @@ def add_common_cli_first_arguments(parser, quiet=True):
         version='%(prog)s %(version)s',
         help='Show program version number and exit.',
     )
-    if quiet:
-        parser.add_argument(
-            '-q', '--quiet', action='store_true',
-            help='Do not print output to STDOUT.',
-        )
+    parser.add_argument(
+        '-q', '--quiet', action='store_true',
+        help='Do not print output to STDOUT.',
+    )
 
 
 def add_command_alias_argument(parser):
@@ -303,7 +301,7 @@ def add_check_option(parser):
     """
     parser.add_argument(
         '--check', dest='check_saved_files_changed', action='store_true',
-        help='Run in check mode, which returns code 1 at exit when a file'
+        help='Run in check mode, which returns code 2 at exit when a file'
              ' has been changed or previously did not exist.',
     )
 
@@ -349,8 +347,22 @@ def add_no_obsolete_option(parser):
     parser.add_argument(
         '--no-obsolete', dest='no_obsolete', action='store_true',
         help=(
-            'Do not include obsolete messages in PO files. If found,'
-            ' it will exit with non zero code.'
+            'If obsolete entries found in PO files exit with non'
+            ' zero code.'
+        ),
+    )
+
+
+def add_no_empty_msgstr_option(parser):
+    """Add the ``--no-empty-msgstr`` option to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
+    """
+    parser.add_argument(
+        '--no-empty-msgstr', dest='no_empty_msgstr', action='store_true',
+        help=(
+            'If empty msgstrs found in PO files exit with non zero code.'
         ),
     )
 

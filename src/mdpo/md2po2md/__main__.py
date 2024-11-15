@@ -18,6 +18,7 @@ from mdpo.cli import (
     add_encoding_arguments,
     add_extensions_argument,
     add_include_codeblocks_option,
+    add_no_empty_msgstr_option,
     add_no_obsolete_option,
     add_nolocation_option,
     add_wrapwidth_argument,
@@ -89,6 +90,7 @@ def build_parser():
     add_debug_option(parser)
     add_check_option(parser)
     add_no_obsolete_option(parser)
+    add_no_empty_msgstr_option(parser)
     return parser
 
 
@@ -140,24 +142,35 @@ def run(args=frozenset()):
             '_check_saved_files_changed': opts.check_saved_files_changed,
         }
 
-        (_saved_files_changed, obsoletes) = markdown_to_pofile_to_markdown(
+        (
+            _saved_files_changed,
+            obsoletes,
+            empty,
+        ) = markdown_to_pofile_to_markdown(
             opts.langs,
             opts.input_paths_glob,
             opts.output_paths_schema,
             **kwargs,
         )
         if opts.check_saved_files_changed and _saved_files_changed:
-            exitcode = 1
+            exitcode = 2
 
         if opts.no_obsolete and obsoletes:
-            exitcode = 1
+            exitcode = 3
 
             if not opts.quiet:
                 sys.stderr.write(
-
                     "Obsolete messages found at PO files and"
                     " passed '--no-obsolete'\n",
+                )
 
+        if opts.no_empty_msgstr and empty:
+            exitcode = 4
+
+            if not opts.quiet:
+                sys.stderr.write(
+                    "Empty msgstr found at PO files and"
+                    " passed '--no-empty-msgstr'\n",
                 )
 
     return exitcode
