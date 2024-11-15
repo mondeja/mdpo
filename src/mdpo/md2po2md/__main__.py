@@ -18,6 +18,7 @@ from mdpo.cli import (
     add_encoding_arguments,
     add_extensions_argument,
     add_include_codeblocks_option,
+    add_no_obsolete_option,
     add_nolocation_option,
     add_wrapwidth_argument,
     cli_codespan,
@@ -36,7 +37,7 @@ DESCRIPTION = (
 
 def build_parser():
     parser = argparse.ArgumentParser(description=DESCRIPTION, add_help=False)
-    add_common_cli_first_arguments(parser, quiet=False)
+    add_common_cli_first_arguments(parser)
     parser.add_argument(
         'input_paths_glob', metavar='GLOB', nargs='*',
         help='Glob to markdown input files to translate.'
@@ -87,6 +88,7 @@ def build_parser():
     add_encoding_arguments(parser)
     add_debug_option(parser)
     add_check_option(parser)
+    add_no_obsolete_option(parser)
     return parser
 
 
@@ -138,7 +140,7 @@ def run(args=frozenset()):
             '_check_saved_files_changed': opts.check_saved_files_changed,
         }
 
-        _saved_files_changed = markdown_to_pofile_to_markdown(
+        (_saved_files_changed, obsoletes) = markdown_to_pofile_to_markdown(
             opts.langs,
             opts.input_paths_glob,
             opts.output_paths_schema,
@@ -146,6 +148,18 @@ def run(args=frozenset()):
         )
         if opts.check_saved_files_changed and _saved_files_changed:
             exitcode = 1
+
+        if opts.no_obsolete and obsoletes:
+            exitcode = 1
+
+            if not opts.quiet:
+                sys.stderr.write(
+
+                    "Obsolete messages found at PO files and"
+                    " passed '--no-obsolete'\n",
+
+                )
+
     return exitcode
 
 

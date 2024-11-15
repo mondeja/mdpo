@@ -19,6 +19,7 @@ from mdpo.cli import (
     add_event_argument,
     add_extensions_argument,
     add_include_codeblocks_option,
+    add_no_obsolete_option,
     add_nolocation_option,
     add_wrapwidth_argument,
     cli_codespan,
@@ -144,6 +145,7 @@ def build_parser():
     add_event_argument(parser)
     add_debug_option(parser)
     add_check_option(parser)
+    add_no_obsolete_option(parser)
     return parser
 
 
@@ -225,6 +227,16 @@ def run(args=frozenset()):
 
         # pre-commit mode
         if opts.check_saved_files_changed and md2po._saved_files_changed:
+            return (pofile, 1)
+
+        if opts.no_obsolete and md2po.obsoletes:
+            if not opts.quiet:
+                sys.stderr.write(
+                    (
+                        f"Obsolete messages found at {opts.po_filepath}"
+                        " and passed '--no-obsolete'\n",
+                    ),
+                )
             return (pofile, 1)
 
     return (pofile, 0)

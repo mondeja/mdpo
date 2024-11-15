@@ -74,6 +74,7 @@ class Md2Po:
         'include_codeblocks',
         'metadata',
         'events',
+        'obsoletes',
 
         'location',
         '_current_top_level_block_number',
@@ -181,6 +182,10 @@ class Md2Po:
         self.events = parse_events_kwarg(kwargs.get('events') or {})
         if kwargs.get('debug'):
             add_debug_events('md2po', self.events)
+
+        #: bool: If there are entries in the PO file that
+        #: are obsolete and not found in the current extraction.
+        self.obsoletes = False
 
         #: str: The msgid being currently built for the next
         #: message entry. Keep in mind that, if you are executing
@@ -987,6 +992,10 @@ class Md2Po:
             wrapwidth=parse_wrapwidth_argument(wrapwidth),
             **pofile_kwargs,
         )
+        for entry in self.pofile:
+            if entry.obsolete:
+                self.obsoletes = True
+                break
 
         parser = md4c.GenericParser(
             0,
@@ -1039,6 +1048,7 @@ class Md2Po:
                 self.pofile,
                 self.found_entries,
             )
+            self.obsoletes = True
 
         if self.metadata:
             self.pofile.metadata.update(self.metadata)

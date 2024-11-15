@@ -718,3 +718,62 @@ def test_md2po_save_without_po_filepath():
 
     with pytest.raises(ValueError, match=expected_msg):
         run([EXAMPLE['input'], '--save'])
+
+
+@pytest.mark.parametrize('arg', ('--no-obsolete',))
+def test_no_obsolete(capsys, arg, tmp_file):
+    po_input = '''#
+msgid ""
+msgstr ""
+
+#~ msgid "Hello"
+#~ msgstr "Hola"
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "Bye"
+msgstr ""
+
+#~ msgid "Hello"
+#~ msgstr "Hola"
+
+'''
+
+    with tmp_file(po_input, '.po') as filename:
+        pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Bye'])
+    stdout, stderr = capsys.readouterr()
+
+    assert exitcode == 1
+    assert f'{pofile}\n' == expected_output
+    assert stdout == expected_output
+    assert stderr == (
+        f"Obsolete messages found at {filename} and passed '--no-obsolete'\n"
+    )
+
+    po_input = '''#
+msgid ""
+msgstr ""
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "Bye"
+msgstr ""
+
+'''
+
+    with tmp_file(po_input, '.po') as filename:
+        pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Bye'])
+    stdout, stderr = capsys.readouterr()
+
+    assert exitcode == 1
+    assert f'{pofile}\n' == expected_output
+    assert stdout == expected_output
+    assert stderr == (
+        f"Obsolete messages found at {filename} and passed '--no-obsolete'\n"
+    )
