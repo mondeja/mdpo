@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdpo.io module &mdash; mdpo 2.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/override-styles.css?v=70cd355a" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=b3e23499"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="mdpo.md module" href="mdpo.md.html" />
+    <link rel="prev" title="mdpo.event module" href="mdpo.event.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mdpo.html">mdpo package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mdpo.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="mdpo.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html">mdpo.cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.command.html">mdpo.command module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.compat.html">mdpo.compat module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.event.html">mdpo.event module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mdpo.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md.html">mdpo.md module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md4c.html">mdpo.md4c module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html">mdpo.po module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.polib.html">mdpo.polib module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html">mdpo.text module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="mdpo.html">mdpo package</a></li>
+      <li class="breadcrumb-item active">mdpo.io module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/dev/reference/mdpo.io.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo.io">
+<span id="mdpo-io-module"></span><h1>mdpo.io module<a class="headerlink" href="#module-mdpo.io" title="Link to this heading"></a></h1>
+<p>mdpo I/O utilities.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.io.environ">
+<span class="sig-prename descclassname"><span class="pre">mdpo.io.</span></span><span class="sig-name descname"><span class="pre">environ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.io.environ" title="Link to this definition"></a></dt>
+<dd><p>Overwrite temporarily some environment variables.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.io.filter_paths">
+<span class="sig-prename descclassname"><span class="pre">mdpo.io.</span></span><span class="sig-name descname"><span class="pre">filter_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepaths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({})</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.io.filter_paths" title="Link to this definition"></a></dt>
+<dd><p>Filter a list of paths removing those defined in other list of paths.</p>
+<p>The paths to filter can be defined in the list of paths to ignore in
+several forms:</p>
+<ul class="simple">
+<li><p>The same string.</p></li>
+<li><p>Only the file name.</p></li>
+<li><p>Only their direct directory name.</p></li>
+<li><p>Their direct directory full path.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepaths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Set of source paths to filter.</p></li>
+<li><p><strong>ignore_paths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Paths that must not be included in the response.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Non filtered paths ordered alphabetically.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.io.flatten">
+<span class="sig-prename descclassname"><span class="pre">mdpo.io.</span></span><span class="sig-name descname"><span class="pre">flatten</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xss</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.io.flatten" title="Link to this definition"></a></dt>
+<dd><p>Flatten a iterable of iterables.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.io.save_file_checking_file_changed">
+<span class="sig-prename descclassname"><span class="pre">mdpo.io.</span></span><span class="sig-name descname"><span class="pre">save_file_checking_file_changed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.io.save_file_checking_file_changed" title="Link to this definition"></a></dt>
+<dd><p>Save a file checking if the content has changed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POFile</span></code></a>) – Path to the file to save.</p></li>
+<li><p><strong>content</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Content to save.</p></li>
+<li><p><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Encoding to use when saving the file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If the PO file content has been changed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.io.to_file_content_if_is_file">
+<span class="sig-prename descclassname"><span class="pre">mdpo.io.</span></span><span class="sig-name descname"><span class="pre">to_file_content_if_is_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.io.to_file_content_if_is_file" title="Link to this definition"></a></dt>
+<dd><p>Check if the value passed is a file path or string content.</p>
+<p>If is a file, reads its content and returns it, otherwise returns
+the string passed as is.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Value to check if is a filepath or content.</p></li>
+<li><p><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Expected file encoding, if is a file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>File content if <code class="docutils literal notranslate"><span class="pre">value</span></code> is an existing file or <code class="docutils literal notranslate"><span class="pre">value</span></code> as is.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.io.to_files_or_content">
+<span class="sig-prename descclassname"><span class="pre">mdpo.io.</span></span><span class="sig-name descname"><span class="pre">to_files_or_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.io.to_files_or_content" title="Link to this definition"></a></dt>
+<dd><p>File path/glob/content disambiguator.</p>
+<p>Check if the value passed is a glob, a set of files in a list or is string
+content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Value to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Two values being the first a boolean that indicates if <code class="docutils literal notranslate"><span class="pre">value</span></code>
+is a list of files (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or string content (<code class="docutils literal notranslate"><span class="pre">False</span></code>) and the
+second value is the content, which could be an iterator (if a glob or
+a list of files is passed or a string).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mdpo.event.html" class="btn btn-neutral float-left" title="mdpo.event module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.md.html" class="btn btn-neutral float-right" title="mdpo.md module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

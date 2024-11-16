@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdpo package &mdash; mdpo 2.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/override-styles.css?v=70cd355a" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=b3e23499"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="mdpo.md2po package" href="mdpo.md2po.html" />
+    <link rel="prev" title="Reference" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mdpo package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.html">mdpo.md2po package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po2md.html">mdpo.md2po2md package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.html">mdpo.mdpo2html package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.html">mdpo.po2md package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html">mdpo.cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.command.html">mdpo.command module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.compat.html">mdpo.compat module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.event.html">mdpo.event module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.io.html">mdpo.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md.html">mdpo.md module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md4c.html">mdpo.md4c module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html">mdpo.po module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.polib.html">mdpo.polib module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html">mdpo.text module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Reference</a></li>
+      <li class="breadcrumb-item active">mdpo package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/dev/reference/mdpo.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo">
+<span id="mdpo-package"></span><h1>mdpo package<a class="headerlink" href="#module-mdpo" title="Link to this heading"></a></h1>
+<p>mdpo package.</p>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.md2po.html">mdpo.md2po package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po"><code class="docutils literal notranslate"><span class="pre">Md2Po</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._codespan_backticks"><code class="docutils literal notranslate"><span class="pre">Md2Po._codespan_backticks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._codespan_start_index"><code class="docutils literal notranslate"><span class="pre">Md2Po._codespan_start_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._current_aspan_ref_target"><code class="docutils literal notranslate"><span class="pre">Md2Po._current_aspan_ref_target</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._current_aspan_text"><code class="docutils literal notranslate"><span class="pre">Md2Po._current_aspan_text</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._current_imgspan"><code class="docutils literal notranslate"><span class="pre">Md2Po._current_imgspan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._current_markdown_filepath"><code class="docutils literal notranslate"><span class="pre">Md2Po._current_markdown_filepath</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._current_top_level_block_number"><code class="docutils literal notranslate"><span class="pre">Md2Po._current_top_level_block_number</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._current_top_level_block_type"><code class="docutils literal notranslate"><span class="pre">Md2Po._current_top_level_block_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._current_wikilink_target"><code class="docutils literal notranslate"><span class="pre">Md2Po._current_wikilink_target</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._dump_link_references"><code class="docutils literal notranslate"><span class="pre">Md2Po._dump_link_references()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._enterspan_replacer"><code class="docutils literal notranslate"><span class="pre">Md2Po._enterspan_replacer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_aspan"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_aspan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_codeblock"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_codeblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_codespan"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_codespan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_hblock"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_hblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_htmlblock"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_htmlblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_latexmath_display"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_latexmath_display</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_latexmath_display_text"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_latexmath_display_text</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_liblock"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_liblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_olblock"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_olblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_pblock"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_pblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._inside_uspan"><code class="docutils literal notranslate"><span class="pre">Md2Po._inside_uspan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._leavespan_replacer"><code class="docutils literal notranslate"><span class="pre">Md2Po._leavespan_replacer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._process_command"><code class="docutils literal notranslate"><span class="pre">Md2Po._process_command()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._quoteblocks_deep"><code class="docutils literal notranslate"><span class="pre">Md2Po._quoteblocks_deep</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._save_current_msgid"><code class="docutils literal notranslate"><span class="pre">Md2Po._save_current_msgid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._save_msgid"><code class="docutils literal notranslate"><span class="pre">Md2Po._save_msgid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._saved_files_changed"><code class="docutils literal notranslate"><span class="pre">Md2Po._saved_files_changed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po._uls_deep"><code class="docutils literal notranslate"><span class="pre">Md2Po._uls_deep</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.bold_end_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.bold_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.bold_start_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.bold_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.code_end_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.code_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.code_end_string_escaped"><code class="docutils literal notranslate"><span class="pre">Md2Po.code_end_string_escaped</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.code_start_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.code_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.code_start_string_escaped"><code class="docutils literal notranslate"><span class="pre">Md2Po.code_start_string_escaped</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.command"><code class="docutils literal notranslate"><span class="pre">Md2Po.command()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.command_aliases"><code class="docutils literal notranslate"><span class="pre">Md2Po.command_aliases</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.content"><code class="docutils literal notranslate"><span class="pre">Md2Po.content</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.current_msgctxt"><code class="docutils literal notranslate"><span class="pre">Md2Po.current_msgctxt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.current_msgid"><code class="docutils literal notranslate"><span class="pre">Md2Po.current_msgid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.current_tcomment"><code class="docutils literal notranslate"><span class="pre">Md2Po.current_tcomment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.disable"><code class="docutils literal notranslate"><span class="pre">Md2Po.disable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.disable_next_block"><code class="docutils literal notranslate"><span class="pre">Md2Po.disable_next_block</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.disable_next_codeblock"><code class="docutils literal notranslate"><span class="pre">Md2Po.disable_next_codeblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.disabled_entries"><code class="docutils literal notranslate"><span class="pre">Md2Po.disabled_entries</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.enable_next_block"><code class="docutils literal notranslate"><span class="pre">Md2Po.enable_next_block</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.enter_block"><code class="docutils literal notranslate"><span class="pre">Md2Po.enter_block()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.enter_span"><code class="docutils literal notranslate"><span class="pre">Md2Po.enter_span()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.events"><code class="docutils literal notranslate"><span class="pre">Md2Po.events</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.extensions"><code class="docutils literal notranslate"><span class="pre">Md2Po.extensions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.extract"><code class="docutils literal notranslate"><span class="pre">Md2Po.extract()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.filepaths"><code class="docutils literal notranslate"><span class="pre">Md2Po.filepaths</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.found_entries"><code class="docutils literal notranslate"><span class="pre">Md2Po.found_entries</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.ignore_msgids"><code class="docutils literal notranslate"><span class="pre">Md2Po.ignore_msgids</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.include_codeblocks"><code class="docutils literal notranslate"><span class="pre">Md2Po.include_codeblocks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.include_next_codeblock"><code class="docutils literal notranslate"><span class="pre">Md2Po.include_next_codeblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.italic_end_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.italic_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.italic_end_string_escaped"><code class="docutils literal notranslate"><span class="pre">Md2Po.italic_end_string_escaped</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.italic_start_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.italic_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.italic_start_string_escaped"><code class="docutils literal notranslate"><span class="pre">Md2Po.italic_start_string_escaped</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.latexmath_end_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.latexmath_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.latexmath_start_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.latexmath_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.latexmathdisplay_end_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.latexmathdisplay_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.latexmathdisplay_start_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.latexmathdisplay_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.leave_block"><code class="docutils literal notranslate"><span class="pre">Md2Po.leave_block()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.leave_span"><code class="docutils literal notranslate"><span class="pre">Md2Po.leave_span()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.link_references"><code class="docutils literal notranslate"><span class="pre">Md2Po.link_references</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.location"><code class="docutils literal notranslate"><span class="pre">Md2Po.location</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.mark_not_found_as_obsolete"><code class="docutils literal notranslate"><span class="pre">Md2Po.mark_not_found_as_obsolete</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.metadata"><code class="docutils literal notranslate"><span class="pre">Md2Po.metadata</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.msgstr"><code class="docutils literal notranslate"><span class="pre">Md2Po.msgstr</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.not_plaintext_enter_span"><code class="docutils literal notranslate"><span class="pre">Md2Po.not_plaintext_enter_span()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.not_plaintext_leave_span"><code class="docutils literal notranslate"><span class="pre">Md2Po.not_plaintext_leave_span()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.plaintext"><code class="docutils literal notranslate"><span class="pre">Md2Po.plaintext</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.po_filepath"><code class="docutils literal notranslate"><span class="pre">Md2Po.po_filepath</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.pofile"><code class="docutils literal notranslate"><span class="pre">Md2Po.pofile</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.preserve_not_found"><code class="docutils literal notranslate"><span class="pre">Md2Po.preserve_not_found</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.strikethrough_end_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.strikethrough_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.strikethrough_start_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.strikethrough_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.text"><code class="docutils literal notranslate"><span class="pre">Md2Po.text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.underline_end_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.underline_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.underline_start_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.underline_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.wikilink_end_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.wikilink_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po.wikilink_start_string"><code class="docutils literal notranslate"><span class="pre">Md2Po.wikilink_start_string</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.markdown_to_pofile"><code class="docutils literal notranslate"><span class="pre">markdown_to_pofile()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md2po.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.__main__.html">mdpo.md2po.__main__ module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.__main__.html#mdpo.md2po.__main__.build_parser"><code class="docutils literal notranslate"><span class="pre">build_parser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.__main__.html#mdpo.md2po.__main__.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.__main__.html#mdpo.md2po.__main__.parse_options"><code class="docutils literal notranslate"><span class="pre">parse_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.__main__.html#mdpo.md2po.__main__.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.md2po2md.html">mdpo.md2po2md package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md2po2md.html#mdpo.md2po2md.markdown_to_pofile_to_markdown"><code class="docutils literal notranslate"><span class="pre">markdown_to_pofile_to_markdown()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md2po2md.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po2md.__main__.html">mdpo.md2po2md.__main__ module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po2md.__main__.html#mdpo.md2po2md.__main__.build_parser"><code class="docutils literal notranslate"><span class="pre">build_parser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po2md.__main__.html#mdpo.md2po2md.__main__.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po2md.__main__.html#mdpo.md2po2md.__main__.parse_options"><code class="docutils literal notranslate"><span class="pre">parse_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po2md.__main__.html#mdpo.md2po2md.__main__.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.mdpo2html.html">mdpo.mdpo2html package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML._merge_adyacent_tags"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML._merge_adyacent_tags()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML._process_replacer"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML._process_replacer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML._remove_lastline_from_output_if_empty"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML._remove_lastline_from_output_if_empty()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML.handle_comment"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML.handle_comment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML.handle_data"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML.handle_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML.handle_endtag"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML.handle_endtag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML.handle_startendtag"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML.handle_startendtag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML.handle_starttag"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML.handle_starttag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML.translate"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML.translate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html._html_attrs_to_str"><code class="docutils literal notranslate"><span class="pre">_html_attrs_to_str()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.markdown_pofile_to_html"><code class="docutils literal notranslate"><span class="pre">markdown_pofile_to_html()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.mdpo2html.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.__main__.html">mdpo.mdpo2html.__main__ module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.__main__.html#mdpo.mdpo2html.__main__.build_parser"><code class="docutils literal notranslate"><span class="pre">build_parser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.__main__.html#mdpo.mdpo2html.__main__.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.__main__.html#mdpo.mdpo2html.__main__.parse_options"><code class="docutils literal notranslate"><span class="pre">parse_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.__main__.html#mdpo.mdpo2html.__main__.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.po2md.html">mdpo.po2md package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md"><code class="docutils literal notranslate"><span class="pre">Po2Md</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._aimg_title_inside_current_msgid"><code class="docutils literal notranslate"><span class="pre">Po2Md._aimg_title_inside_current_msgid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._append_link_references"><code class="docutils literal notranslate"><span class="pre">Po2Md._append_link_references()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._codespan_backticks"><code class="docutils literal notranslate"><span class="pre">Po2Md._codespan_backticks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._codespan_inside_current_msgid"><code class="docutils literal notranslate"><span class="pre">Po2Md._codespan_inside_current_msgid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._codespan_start_index"><code class="docutils literal notranslate"><span class="pre">Po2Md._codespan_start_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._current_aspan_href"><code class="docutils literal notranslate"><span class="pre">Po2Md._current_aspan_href</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._current_aspan_ref_target"><code class="docutils literal notranslate"><span class="pre">Po2Md._current_aspan_ref_target</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._current_aspan_text"><code class="docutils literal notranslate"><span class="pre">Po2Md._current_aspan_text</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._current_imgspan"><code class="docutils literal notranslate"><span class="pre">Po2Md._current_imgspan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._current_list_type"><code class="docutils literal notranslate"><span class="pre">Po2Md._current_list_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._current_thead_aligns"><code class="docutils literal notranslate"><span class="pre">Po2Md._current_thead_aligns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._current_wikilink_target"><code class="docutils literal notranslate"><span class="pre">Po2Md._current_wikilink_target</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._enterspan_replacer"><code class="docutils literal notranslate"><span class="pre">Po2Md._enterspan_replacer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._escape_translation"><code class="docutils literal notranslate"><span class="pre">Po2Md._escape_translation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_aspan"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_aspan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_codeblock"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_codeblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_codespan"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_codespan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_hblock"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_hblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_htmlblock"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_htmlblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_indented_codeblock"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_indented_codeblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_latexmath_display"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_latexmath_display</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_liblock"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_liblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_liblock_first_p"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_liblock_first_p</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_pblock"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_pblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._inside_quoteblock"><code class="docutils literal notranslate"><span class="pre">Po2Md._inside_quoteblock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._leavespan_replacer"><code class="docutils literal notranslate"><span class="pre">Po2Md._leavespan_replacer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._ol_marks"><code class="docutils literal notranslate"><span class="pre">Po2Md._ol_marks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._process_command"><code class="docutils literal notranslate"><span class="pre">Po2Md._process_command()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._save_current_line"><code class="docutils literal notranslate"><span class="pre">Po2Md._save_current_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._save_current_msgid"><code class="docutils literal notranslate"><span class="pre">Po2Md._save_current_msgid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._saved_files_changed"><code class="docutils literal notranslate"><span class="pre">Po2Md._saved_files_changed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._translate_msgid"><code class="docutils literal notranslate"><span class="pre">Po2Md._translate_msgid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md._ul_marks"><code class="docutils literal notranslate"><span class="pre">Po2Md._ul_marks</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.bold_end_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.bold_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.bold_start_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.bold_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.code_end_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.code_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.code_end_string_escaped"><code class="docutils literal notranslate"><span class="pre">Po2Md.code_end_string_escaped</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.code_start_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.code_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.code_start_string_escaped"><code class="docutils literal notranslate"><span class="pre">Po2Md.code_start_string_escaped</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.command"><code class="docutils literal notranslate"><span class="pre">Po2Md.command()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.command_aliases"><code class="docutils literal notranslate"><span class="pre">Po2Md.command_aliases</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.content"><code class="docutils literal notranslate"><span class="pre">Po2Md.content</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.current_line"><code class="docutils literal notranslate"><span class="pre">Po2Md.current_line</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.current_msgctxt"><code class="docutils literal notranslate"><span class="pre">Po2Md.current_msgctxt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.current_msgid"><code class="docutils literal notranslate"><span class="pre">Po2Md.current_msgid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.current_tcomment"><code class="docutils literal notranslate"><span class="pre">Po2Md.current_tcomment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.disable"><code class="docutils literal notranslate"><span class="pre">Po2Md.disable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.disable_next_block"><code class="docutils literal notranslate"><span class="pre">Po2Md.disable_next_block</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.disabled_entries"><code class="docutils literal notranslate"><span class="pre">Po2Md.disabled_entries</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.enable_next_block"><code class="docutils literal notranslate"><span class="pre">Po2Md.enable_next_block</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.enter_block"><code class="docutils literal notranslate"><span class="pre">Po2Md.enter_block()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.enter_span"><code class="docutils literal notranslate"><span class="pre">Po2Md.enter_span()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.events"><code class="docutils literal notranslate"><span class="pre">Po2Md.events</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.extensions"><code class="docutils literal notranslate"><span class="pre">Po2Md.extensions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.italic_end_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.italic_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.italic_end_string_escaped"><code class="docutils literal notranslate"><span class="pre">Po2Md.italic_end_string_escaped</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.italic_start_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.italic_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.italic_start_string_escaped"><code class="docutils literal notranslate"><span class="pre">Po2Md.italic_start_string_escaped</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.latexmath_display_end_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.latexmath_display_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.latexmath_display_start_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.latexmath_display_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.latexmath_end_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.latexmath_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.latexmath_start_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.latexmath_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.leave_block"><code class="docutils literal notranslate"><span class="pre">Po2Md.leave_block()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.leave_span"><code class="docutils literal notranslate"><span class="pre">Po2Md.leave_span()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.link_references"><code class="docutils literal notranslate"><span class="pre">Po2Md.link_references</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.output"><code class="docutils literal notranslate"><span class="pre">Po2Md.output</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.outputlines"><code class="docutils literal notranslate"><span class="pre">Po2Md.outputlines</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.pofiles"><code class="docutils literal notranslate"><span class="pre">Po2Md.pofiles</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.text"><code class="docutils literal notranslate"><span class="pre">Po2Md.text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.translate"><code class="docutils literal notranslate"><span class="pre">Po2Md.translate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.translated_entries"><code class="docutils literal notranslate"><span class="pre">Po2Md.translated_entries</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.translations"><code class="docutils literal notranslate"><span class="pre">Po2Md.translations</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.translations_with_msgctxt"><code class="docutils literal notranslate"><span class="pre">Po2Md.translations_with_msgctxt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.wikilink_end_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.wikilink_end_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.wikilink_start_string"><code class="docutils literal notranslate"><span class="pre">Po2Md.wikilink_start_string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md.wrapwidth"><code class="docutils literal notranslate"><span class="pre">Po2Md.wrapwidth</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.pofile_to_markdown"><code class="docutils literal notranslate"><span class="pre">pofile_to_markdown()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po2md.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.__main__.html">mdpo.po2md.__main__ module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.__main__.html#mdpo.po2md.__main__.build_parser"><code class="docutils literal notranslate"><span class="pre">build_parser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.__main__.html#mdpo.po2md.__main__.get_obsoletes"><code class="docutils literal notranslate"><span class="pre">get_obsoletes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.__main__.html#mdpo.po2md.__main__.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.__main__.html#mdpo.po2md.__main__.parse_options"><code class="docutils literal notranslate"><span class="pre">parse_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.__main__.html#mdpo.po2md.__main__.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.cli.html">mdpo.cli module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_check_option"><code class="docutils literal notranslate"><span class="pre">add_check_option()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_command_alias_argument"><code class="docutils literal notranslate"><span class="pre">add_command_alias_argument()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_common_cli_first_arguments"><code class="docutils literal notranslate"><span class="pre">add_common_cli_first_arguments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_debug_option"><code class="docutils literal notranslate"><span class="pre">add_debug_option()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_encoding_arguments"><code class="docutils literal notranslate"><span class="pre">add_encoding_arguments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_event_argument"><code class="docutils literal notranslate"><span class="pre">add_event_argument()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_extensions_argument"><code class="docutils literal notranslate"><span class="pre">add_extensions_argument()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_include_codeblocks_option"><code class="docutils literal notranslate"><span class="pre">add_include_codeblocks_option()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_no_empty_msgstr_option"><code class="docutils literal notranslate"><span class="pre">add_no_empty_msgstr_option()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_no_fuzzy_option"><code class="docutils literal notranslate"><span class="pre">add_no_fuzzy_option()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_no_obsolete_option"><code class="docutils literal notranslate"><span class="pre">add_no_obsolete_option()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_nolocation_option"><code class="docutils literal notranslate"><span class="pre">add_nolocation_option()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_wrapwidth_argument"><code class="docutils literal notranslate"><span class="pre">add_wrapwidth_argument()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.cli_codespan"><code class="docutils literal notranslate"><span class="pre">cli_codespan()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.parse_command_aliases_cli_arguments"><code class="docutils literal notranslate"><span class="pre">parse_command_aliases_cli_arguments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.parse_escaped_pairs_cli_argument"><code class="docutils literal notranslate"><span class="pre">parse_escaped_pairs_cli_argument()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.parse_event_argument"><code class="docutils literal notranslate"><span class="pre">parse_event_argument()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.parse_metadata_cli_arguments"><code class="docutils literal notranslate"><span class="pre">parse_metadata_cli_arguments()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.command.html">mdpo.command module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.command.html#mdpo.command.get_valid_mdpo_command_names"><code class="docutils literal notranslate"><span class="pre">get_valid_mdpo_command_names()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.command.html#mdpo.command.normalize_mdpo_command"><code class="docutils literal notranslate"><span class="pre">normalize_mdpo_command()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.command.html#mdpo.command.normalize_mdpo_command_aliases"><code class="docutils literal notranslate"><span class="pre">normalize_mdpo_command_aliases()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.command.html#mdpo.command.parse_mdpo_html_command"><code class="docutils literal notranslate"><span class="pre">parse_mdpo_html_command()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.compat.html">mdpo.compat module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.event.html">mdpo.event module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.event.html#mdpo.event._block_msg"><code class="docutils literal notranslate"><span class="pre">_block_msg()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.event.html#mdpo.event.add_debug_events"><code class="docutils literal notranslate"><span class="pre">add_debug_events()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.event.html#mdpo.event.debug_events"><code class="docutils literal notranslate"><span class="pre">debug_events()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.event.html#mdpo.event.parse_events_kwarg"><code class="docutils literal notranslate"><span class="pre">parse_events_kwarg()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.event.html#mdpo.event.raise_skip_event"><code class="docutils literal notranslate"><span class="pre">raise_skip_event()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.io.html">mdpo.io module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.io.html#mdpo.io.environ"><code class="docutils literal notranslate"><span class="pre">environ()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.io.html#mdpo.io.filter_paths"><code class="docutils literal notranslate"><span class="pre">filter_paths()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.io.html#mdpo.io.flatten"><code class="docutils literal notranslate"><span class="pre">flatten()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.io.html#mdpo.io.save_file_checking_file_changed"><code class="docutils literal notranslate"><span class="pre">save_file_checking_file_changed()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.io.html#mdpo.io.to_file_content_if_is_file"><code class="docutils literal notranslate"><span class="pre">to_file_content_if_is_file()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.io.html#mdpo.io.to_files_or_content"><code class="docutils literal notranslate"><span class="pre">to_files_or_content()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.md.html">mdpo.md module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md.html#mdpo.md.parse_link_references"><code class="docutils literal notranslate"><span class="pre">parse_link_references()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md.html#mdpo.md.solve_link_reference_targets"><code class="docutils literal notranslate"><span class="pre">solve_link_reference_targets()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.md4c.html">mdpo.md4c module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md4c.html#mdpo.md4c.READABLE_BLOCK_NAMES"><code class="docutils literal notranslate"><span class="pre">READABLE_BLOCK_NAMES</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.po.html">mdpo.po module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.check_empty_msgstrs_in_filepaths"><code class="docutils literal notranslate"><span class="pre">check_empty_msgstrs_in_filepaths()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.check_fuzzy_entries_in_filepaths"><code class="docutils literal notranslate"><span class="pre">check_fuzzy_entries_in_filepaths()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.check_obsolete_entries_in_filepaths"><code class="docutils literal notranslate"><span class="pre">check_obsolete_entries_in_filepaths()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.find_entry_in_entries"><code class="docutils literal notranslate"><span class="pre">find_entry_in_entries()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.mark_not_found_entries_as_obsoletes"><code class="docutils literal notranslate"><span class="pre">mark_not_found_entries_as_obsoletes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.parse_empty_msgstr_from_content_lines"><code class="docutils literal notranslate"><span class="pre">parse_empty_msgstr_from_content_lines()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.parse_fuzzy_from_content_lines"><code class="docutils literal notranslate"><span class="pre">parse_fuzzy_from_content_lines()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.parse_obsoletes_from_content_lines"><code class="docutils literal notranslate"><span class="pre">parse_obsoletes_from_content_lines()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.paths_or_globs_to_unique_pofiles"><code class="docutils literal notranslate"><span class="pre">paths_or_globs_to_unique_pofiles()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.po_escaped_string"><code class="docutils literal notranslate"><span class="pre">po_escaped_string()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.pofiles_to_unique_translations_dicts"><code class="docutils literal notranslate"><span class="pre">pofiles_to_unique_translations_dicts()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.po.html#mdpo.po.remove_not_found_entries"><code class="docutils literal notranslate"><span class="pre">remove_not_found_entries()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.polib.html">mdpo.polib module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.polib.html#mdpo.polib.poentry__cmp__"><code class="docutils literal notranslate"><span class="pre">poentry__cmp__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.text.html">mdpo.text module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.text.html#mdpo.text.and_join"><code class="docutils literal notranslate"><span class="pre">and_join()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.text.html#mdpo.text.min_not_max_chars_in_a_row"><code class="docutils literal notranslate"><span class="pre">min_not_max_chars_in_a_row()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.text.html#mdpo.text.parse_escaped_pair"><code class="docutils literal notranslate"><span class="pre">parse_escaped_pair()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.text.html#mdpo.text.parse_escaped_pairs"><code class="docutils literal notranslate"><span class="pre">parse_escaped_pairs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.text.html#mdpo.text.parse_strint_0_inf"><code class="docutils literal notranslate"><span class="pre">parse_strint_0_inf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.text.html#mdpo.text.parse_wrapwidth_argument"><code class="docutils literal notranslate"><span class="pre">parse_wrapwidth_argument()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.md2po.html" class="btn btn-neutral float-right" title="mdpo.md2po package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

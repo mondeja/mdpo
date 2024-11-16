@@ -1,0 +1,8 @@
+mdpo.text module
+================
+
+.. automodule:: mdpo.text
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

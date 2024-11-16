@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reference &mdash; mdpo 2.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/override-styles.css?v=70cd355a" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=b3e23499"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="mdpo package" href="mdpo.html" />
+    <link rel="prev" title="Implementation notes" href="../implementation-notes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.html">mdpo package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/dev/reference/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.html">mdpo package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po.html">mdpo.md2po package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.Md2Po"><code class="docutils literal notranslate"><span class="pre">Md2Po</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.html#mdpo.md2po.markdown_to_pofile"><code class="docutils literal notranslate"><span class="pre">markdown_to_pofile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md2po2md.html">mdpo.md2po2md package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po2md.html#mdpo.md2po2md.markdown_to_pofile_to_markdown"><code class="docutils literal notranslate"><span class="pre">markdown_to_pofile_to_markdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po2md.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.mdpo2html.html">mdpo.mdpo2html package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.MdPo2HTML"><code class="docutils literal notranslate"><span class="pre">MdPo2HTML</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html._html_attrs_to_str"><code class="docutils literal notranslate"><span class="pre">_html_attrs_to_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.html#mdpo.mdpo2html.markdown_pofile_to_html"><code class="docutils literal notranslate"><span class="pre">markdown_pofile_to_html()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po2md.html">mdpo.po2md package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.Po2Md"><code class="docutils literal notranslate"><span class="pre">Po2Md</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.html#mdpo.po2md.pofile_to_markdown"><code class="docutils literal notranslate"><span class="pre">pofile_to_markdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.cli.html">mdpo.cli module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_check_option"><code class="docutils literal notranslate"><span class="pre">add_check_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_command_alias_argument"><code class="docutils literal notranslate"><span class="pre">add_command_alias_argument()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_common_cli_first_arguments"><code class="docutils literal notranslate"><span class="pre">add_common_cli_first_arguments()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_debug_option"><code class="docutils literal notranslate"><span class="pre">add_debug_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_encoding_arguments"><code class="docutils literal notranslate"><span class="pre">add_encoding_arguments()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_event_argument"><code class="docutils literal notranslate"><span class="pre">add_event_argument()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_extensions_argument"><code class="docutils literal notranslate"><span class="pre">add_extensions_argument()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_include_codeblocks_option"><code class="docutils literal notranslate"><span class="pre">add_include_codeblocks_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_no_empty_msgstr_option"><code class="docutils literal notranslate"><span class="pre">add_no_empty_msgstr_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_no_fuzzy_option"><code class="docutils literal notranslate"><span class="pre">add_no_fuzzy_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_no_obsolete_option"><code class="docutils literal notranslate"><span class="pre">add_no_obsolete_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_nolocation_option"><code class="docutils literal notranslate"><span class="pre">add_nolocation_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.add_wrapwidth_argument"><code class="docutils literal notranslate"><span class="pre">add_wrapwidth_argument()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.cli_codespan"><code class="docutils literal notranslate"><span class="pre">cli_codespan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.parse_command_aliases_cli_arguments"><code class="docutils literal notranslate"><span class="pre">parse_command_aliases_cli_arguments()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.parse_escaped_pairs_cli_argument"><code class="docutils literal notranslate"><span class="pre">parse_escaped_pairs_cli_argument()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.parse_event_argument"><code class="docutils literal notranslate"><span class="pre">parse_event_argument()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.cli.html#mdpo.cli.parse_metadata_cli_arguments"><code class="docutils literal notranslate"><span class="pre">parse_metadata_cli_arguments()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.command.html">mdpo.command module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.command.html#mdpo.command.get_valid_mdpo_command_names"><code class="docutils literal notranslate"><span class="pre">get_valid_mdpo_command_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.command.html#mdpo.command.normalize_mdpo_command"><code class="docutils literal notranslate"><span class="pre">normalize_mdpo_command()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.command.html#mdpo.command.normalize_mdpo_command_aliases"><code class="docutils literal notranslate"><span class="pre">normalize_mdpo_command_aliases()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.command.html#mdpo.command.parse_mdpo_html_command"><code class="docutils literal notranslate"><span class="pre">parse_mdpo_html_command()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.compat.html">mdpo.compat module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.event.html">mdpo.event module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.event.html#mdpo.event._block_msg"><code class="docutils literal notranslate"><span class="pre">_block_msg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.event.html#mdpo.event.add_debug_events"><code class="docutils literal notranslate"><span class="pre">add_debug_events()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.event.html#mdpo.event.debug_events"><code class="docutils literal notranslate"><span class="pre">debug_events()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.event.html#mdpo.event.parse_events_kwarg"><code class="docutils literal notranslate"><span class="pre">parse_events_kwarg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.event.html#mdpo.event.raise_skip_event"><code class="docutils literal notranslate"><span class="pre">raise_skip_event()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.io.html">mdpo.io module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.io.html#mdpo.io.environ"><code class="docutils literal notranslate"><span class="pre">environ()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.io.html#mdpo.io.filter_paths"><code class="docutils literal notranslate"><span class="pre">filter_paths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.io.html#mdpo.io.flatten"><code class="docutils literal notranslate"><span class="pre">flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.io.html#mdpo.io.save_file_checking_file_changed"><code class="docutils literal notranslate"><span class="pre">save_file_checking_file_changed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.io.html#mdpo.io.to_file_content_if_is_file"><code class="docutils literal notranslate"><span class="pre">to_file_content_if_is_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.io.html#mdpo.io.to_files_or_content"><code class="docutils literal notranslate"><span class="pre">to_files_or_content()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md.html">mdpo.md module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md.html#mdpo.md.parse_link_references"><code class="docutils literal notranslate"><span class="pre">parse_link_references()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md.html#mdpo.md.solve_link_reference_targets"><code class="docutils literal notranslate"><span class="pre">solve_link_reference_targets()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.md4c.html">mdpo.md4c module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md4c.html#mdpo.md4c.READABLE_BLOCK_NAMES"><code class="docutils literal notranslate"><span class="pre">READABLE_BLOCK_NAMES</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.po.html">mdpo.po module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.check_empty_msgstrs_in_filepaths"><code class="docutils literal notranslate"><span class="pre">check_empty_msgstrs_in_filepaths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.check_fuzzy_entries_in_filepaths"><code class="docutils literal notranslate"><span class="pre">check_fuzzy_entries_in_filepaths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.check_obsolete_entries_in_filepaths"><code class="docutils literal notranslate"><span class="pre">check_obsolete_entries_in_filepaths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.find_entry_in_entries"><code class="docutils literal notranslate"><span class="pre">find_entry_in_entries()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.mark_not_found_entries_as_obsoletes"><code class="docutils literal notranslate"><span class="pre">mark_not_found_entries_as_obsoletes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.parse_empty_msgstr_from_content_lines"><code class="docutils literal notranslate"><span class="pre">parse_empty_msgstr_from_content_lines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.parse_fuzzy_from_content_lines"><code class="docutils literal notranslate"><span class="pre">parse_fuzzy_from_content_lines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.parse_obsoletes_from_content_lines"><code class="docutils literal notranslate"><span class="pre">parse_obsoletes_from_content_lines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.paths_or_globs_to_unique_pofiles"><code class="docutils literal notranslate"><span class="pre">paths_or_globs_to_unique_pofiles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.po_escaped_string"><code class="docutils literal notranslate"><span class="pre">po_escaped_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.pofiles_to_unique_translations_dicts"><code class="docutils literal notranslate"><span class="pre">pofiles_to_unique_translations_dicts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po.html#mdpo.po.remove_not_found_entries"><code class="docutils literal notranslate"><span class="pre">remove_not_found_entries()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.polib.html">mdpo.polib module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.polib.html#mdpo.polib.poentry__cmp__"><code class="docutils literal notranslate"><span class="pre">poentry__cmp__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.text.html">mdpo.text module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html#mdpo.text.and_join"><code class="docutils literal notranslate"><span class="pre">and_join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html#mdpo.text.min_not_max_chars_in_a_row"><code class="docutils literal notranslate"><span class="pre">min_not_max_chars_in_a_row()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html#mdpo.text.parse_escaped_pair"><code class="docutils literal notranslate"><span class="pre">parse_escaped_pair()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html#mdpo.text.parse_escaped_pairs"><code class="docutils literal notranslate"><span class="pre">parse_escaped_pairs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html#mdpo.text.parse_strint_0_inf"><code class="docutils literal notranslate"><span class="pre">parse_strint_0_inf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.text.html#mdpo.text.parse_wrapwidth_argument"><code class="docutils literal notranslate"><span class="pre">parse_wrapwidth_argument()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../implementation-notes.html" class="btn btn-neutral float-left" title="Implementation notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.html" class="btn btn-neutral float-right" title="mdpo package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

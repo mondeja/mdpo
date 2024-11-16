@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdpo.md2po2md package &mdash; mdpo 2.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/override-styles.css?v=70cd355a" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=b3e23499"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="mdpo.md2po2md.__main__ module" href="mdpo.md2po2md.__main__.html" />
+    <link rel="prev" title="mdpo.md2po.__main__ module" href="mdpo.md2po.__main__.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/mdpo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../traditional-approach.html">Traditional approach</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rationale.html">mdpo’s rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands.html">Customizing extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../related-utilities.html">Related utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command line interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Public mdpo APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre-commit-hooks.html">pre-commit hooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation-notes.html">Implementation notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mdpo.html">mdpo package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="mdpo.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mdpo.md2po.html">mdpo.md2po package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mdpo.md2po2md package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.mdpo2html.html">mdpo.mdpo2html package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdpo.po2md.html">mdpo.po2md package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mdpo.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mdpo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="mdpo.html">mdpo package</a></li>
+      <li class="breadcrumb-item active">mdpo.md2po2md package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/dev/reference/mdpo.md2po2md.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mdpo.md2po2md">
+<span id="mdpo-md2po2md-package"></span><h1>mdpo.md2po2md package<a class="headerlink" href="#module-mdpo.md2po2md" title="Link to this heading"></a></h1>
+<p>Markdown to PO file to Markdown translator.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.md2po2md.markdown_to_pofile_to_markdown">
+<span class="sig-prename descclassname"><span class="pre">mdpo.md2po2md.</span></span><span class="sig-name descname"><span class="pre">markdown_to_pofile_to_markdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">langs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_paths_glob</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_paths_schema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['collapse_whitespace',</span> <span class="pre">'tables',</span> <span class="pre">'strikethrough',</span> <span class="pre">'tasklists',</span> <span class="pre">'latex_math_spans',</span> <span class="pre">'wikilinks']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command_aliases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po_wrapwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">78</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md_wrapwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">80</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md_encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_codeblocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md2po_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">po2md_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_check_saved_files_changed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_obsolete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_fuzzy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_empty_msgstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.md2po2md.markdown_to_pofile_to_markdown" title="Link to this definition"></a></dt>
+<dd><p>Translate a set of Markdown files using PO files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>langs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – List of languages used to build the output directories.</p></li>
+<li><p><strong>input_paths_glob</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Glob covering Markdown files to translate.</p></li>
+<li><p><strong>output_paths_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – <p>Path schema for outputs, built using
+placeholders. There is a mandatory placeholder for languages:
+<code class="docutils literal notranslate"><span class="pre">{lang}</span></code>; and one optional for output basename: <code class="docutils literal notranslate"><span class="pre">{basename}</span></code>.
+For example, for the schema <code class="docutils literal notranslate"><span class="pre">locale/{lang}</span></code>, the languages
+<code class="docutils literal notranslate"><span class="pre">['es',</span> <span class="pre">'fr']</span></code> and a <code class="docutils literal notranslate"><span class="pre">README.md</span></code> as input, the next files will
+be written:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">locale/es/README.po</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">locale/es/README.md</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">locale/fr/README.po</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">locale/fr/README.md</span></code></p></li>
+</ul>
+<p>Note that you can omit <code class="docutils literal notranslate"><span class="pre">{basename}</span></code>, specifying a directory for
+each language with <code class="docutils literal notranslate"><span class="pre">locale/{lang}</span></code> for this example.
+Unexistent directories and files will be created, so you don’t
+have to prepare the output directories before the execution.</p>
+</p></li>
+<li><p><strong>extensions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – md4c extensions used to parse markdown content,
+formatted as a list of ‘pymd4c’ keyword arguments. You can see all
+available at <a class="reference external" href="https://pymd4c.dcpx.org/api.html#option-flags">pymd4c documentation</a>.</p></li>
+<li><p><strong>command_aliases</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Mapping of aliases to use custom mdpo command
+names in comments. The <code class="docutils literal notranslate"><span class="pre">mdpo-</span></code> prefix in command names resolution
+is optional. For example, if you want to use <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-on</span> <span class="pre">--&gt;</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">mdpo-enable</span> <span class="pre">--&gt;</span></code>, you can pass the dictionaries
+<code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;mdpo-enable&quot;}</span></code> or <code class="docutils literal notranslate"><span class="pre">{&quot;mdpo-on&quot;:</span> <span class="pre">&quot;enable&quot;}</span></code> to this
+parameter.</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Store references of top-level blocks in which are
+found the messages in PO file <code class="docutils literal notranslate"><span class="pre">#:</span> <span class="pre">reference</span></code> comments.</p></li>
+<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Add events displaying all parsed elements in the
+extraction process.</p></li>
+<li><p><strong>po_wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Maximum width for PO files.</p></li>
+<li><p><strong>md_wrapwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Maximum width for produced Markdown contents, when
+possible.</p></li>
+<li><p><strong>po_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – PO files encoding.</p></li>
+<li><p><strong>md_encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Markdown files encoding.</p></li>
+<li><p><strong>include_codeblocks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Include codeblocks in the extraction process.</p></li>
+<li><p><strong>md2po_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Additional optional arguments passed to
+<code class="docutils literal notranslate"><span class="pre">markdown_to_pofile</span></code> function.</p></li>
+<li><p><strong>po2md_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Additional optional arguments passed to
+<code class="docutils literal notranslate"><span class="pre">pofile_to_markdown</span></code> function.</p></li>
+<li><p><strong>no_obsolete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, check for obsolete entries in PO files.</p></li>
+<li><p><strong>no_fuzzy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, check for fuzzy entries in PO files.</p></li>
+<li><p><strong>no_empty_msgstr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, check for empty <code class="docutils literal notranslate"><span class="pre">msgstr</span></code> entries.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mdpo.md2po2md.__main__.html">mdpo.md2po2md.__main__ module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md2po2md.__main__.html#mdpo.md2po2md.__main__.build_parser"><code class="docutils literal notranslate"><span class="pre">build_parser()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md2po2md.__main__.html#mdpo.md2po2md.__main__.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md2po2md.__main__.html#mdpo.md2po2md.__main__.parse_options"><code class="docutils literal notranslate"><span class="pre">parse_options()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdpo.md2po2md.__main__.html#mdpo.md2po2md.__main__.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mdpo.md2po.__main__.html" class="btn btn-neutral float-left" title="mdpo.md2po.__main__ module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mdpo.md2po2md.__main__.html" class="btn btn-neutral float-right" title="mdpo.md2po2md.__main__ module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2024, Álvaro Mondéjar Rubio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
