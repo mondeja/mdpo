@@ -190,7 +190,7 @@ def run(args=frozenset()):
             exitcode = 4
 
         if opts.no_empty_msgstr and empty:
-            exitcode = 4
+            exitcode = 5
 
             if not opts.quiet:
                 sys.stderr.write(
