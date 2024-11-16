@@ -353,6 +353,21 @@ def add_no_obsolete_option(parser):
     )
 
 
+def add_no_fuzzy_option(parser):
+    """Add the ``--no-fuzzy`` option to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
+    """
+    parser.add_argument(
+        '--no-fuzzy', dest='no_fuzzy', action='store_true',
+        help=(
+            'If fuzzy entries found in PO files exit with non'
+            ' zero code.'
+        ),
+    )
+
+
 def add_no_empty_msgstr_option(parser):
     """Add the ``--no-empty-msgstr`` option to an argument parser.
 

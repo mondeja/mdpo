@@ -825,6 +825,61 @@ msgstr ""
         )
 
 
+@pytest.mark.parametrize('arg', ('--no-fuzzy',))
+def test_no_fuzzy_multiple(capsys, arg, tmp_file):
+    po_input = '''#
+msgid ""
+msgstr ""
+
+#, fuzzy
+msgid "Foo"
+msgstr "Foo lang"
+
+#, foo fuzzy
+msgid "Bar"
+msgstr "Bar lang"
+
+#, foo fuzzy bar
+msgid "Baz"
+msgstr "Baz lang"
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "Bye"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Foo"
+#~ msgstr "Foo lang"
+
+#, foo fuzzy
+#~ msgid "Bar"
+#~ msgstr "Bar lang"
+
+#, foo fuzzy bar
+#~ msgid "Baz"
+#~ msgstr "Baz lang"
+
+'''
+
+    with tmp_file(po_input, '.po') as filename:
+        pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Bye'])
+        stdout, stderr = capsys.readouterr()
+
+        assert exitcode == 4
+        assert f'{pofile}\n' == expected_output
+        assert stdout == expected_output
+        assert stderr == (
+            'Found 3 fuzzy entries:\n'
+            f'{filename}:5\n'
+            f'{filename}:9\n'
+            f'{filename}:13\n'
+        )
+
+
 @pytest.mark.parametrize('arg', ('--no-empty-msgstr',))
 def test_no_empty_mgstr(capsys, arg, tmp_file):
     po_input = '''#
@@ -840,7 +895,7 @@ msgstr ""
         pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Hello'])
     stdout, stderr = capsys.readouterr()
 
-    assert exitcode == 4
+    assert exitcode == 5
     assert f'{pofile}\n' == po_input
     assert stdout == po_input
     assert stderr == (

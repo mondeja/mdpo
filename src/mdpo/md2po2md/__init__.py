@@ -5,7 +5,10 @@ import os
 
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-from mdpo.po import check_obsolete_entries_in_filepaths
+from mdpo.po import (
+    check_fuzzy_entries_in_filepaths,
+    check_obsolete_entries_in_filepaths,
+)
 from mdpo.po2md import Po2Md
 
 
@@ -26,6 +29,7 @@ def markdown_to_pofile_to_markdown(
     po2md_kwargs=None,
     _check_saved_files_changed=False,
     no_obsolete=False,
+    no_fuzzy=False,
 ):
     """Translate a set of Markdown files using PO files.
 
@@ -73,6 +77,7 @@ def markdown_to_pofile_to_markdown(
         po2md_kwargs (dict): Additional optional arguments passed to
             ``pofile_to_markdown`` function.
         no_obsolete (bool): If ``True``, check for obsolete entries in PO files.
+        no_fuzzy (bool): If ``True``, check for fuzzy entries in PO files.
     """
     if '{lang}' not in output_paths_schema:
         raise ValueError(
@@ -101,6 +106,7 @@ def markdown_to_pofile_to_markdown(
 
     _saved_files_changed = None if not _check_saved_files_changed else False
     obsoletes = []
+    fuzzies = []
     empty = False
 
     for filepath in input_paths_glob_:
@@ -187,6 +193,12 @@ def markdown_to_pofile_to_markdown(
                 obsoletes.extend(check_obsolete_entries_in_filepaths(
                     [po_filepath],
                 ))
+
+            if no_fuzzy:
+                fuzzies.extend(
+                    check_fuzzy_entries_in_filepaths([po_filepath]),
+                )
+
             if not empty:
                 for pofile in po2md.pofiles:
                     for entry in pofile:
@@ -196,4 +208,4 @@ def markdown_to_pofile_to_markdown(
                     if empty:
                         break
 
-    return (_saved_files_changed, obsoletes, empty)
+    return (_saved_files_changed, obsoletes, fuzzies, empty)

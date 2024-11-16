@@ -19,6 +19,7 @@ from mdpo.cli import (
     add_extensions_argument,
     add_include_codeblocks_option,
     add_no_empty_msgstr_option,
+    add_no_fuzzy_option,
     add_no_obsolete_option,
     add_nolocation_option,
     add_wrapwidth_argument,
@@ -90,6 +91,7 @@ def build_parser():
     add_debug_option(parser)
     add_check_option(parser)
     add_no_obsolete_option(parser)
+    add_no_fuzzy_option(parser)
     add_no_empty_msgstr_option(parser)
     return parser
 
@@ -141,11 +143,13 @@ def run(args=frozenset()):
             'include_codeblocks': opts.include_codeblocks,
             '_check_saved_files_changed': opts.check_saved_files_changed,
             'no_obsolete': opts.no_obsolete,
+            'no_fuzzy': opts.no_fuzzy,
         }
 
         (
             _saved_files_changed,
             obsoletes,
+            fuzzies,
             empty,
         ) = markdown_to_pofile_to_markdown(
             opts.langs,
@@ -169,7 +173,23 @@ def run(args=frozenset()):
                         f'Found obsolete entry at {location}\n',
                     )
             exitcode = 3
-        elif opts.no_empty_msgstr and empty:
+
+        if fuzzies:
+            if len(fuzzies) > 2:  # noqa PLR2004
+                sys.stderr.write(
+                    f'Found {len(fuzzies)} fuzzy entries:\n',
+                )
+                for location in fuzzies:
+                    sys.stderr.write(f'{location}\n')
+            else:
+                for location in fuzzies:
+                    sys.stderr.write(
+                        f'Found fuzzy entry at {location}\n',
+                    )
+
+            exitcode = 4
+
+        if opts.no_empty_msgstr and empty:
             exitcode = 4
 
             if not opts.quiet:
