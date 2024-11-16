@@ -170,13 +170,11 @@ def paths_or_globs_to_unique_pofiles(pofiles_globs, ignore, po_encoding=None):
     return pofiles
 
 
-def check_obsolete_entries_in_filepaths(filenames, quiet=False):
+def check_obsolete_entries_in_filepaths(filenames):
     """Warns about all obsolete entries found in a set of PO files.
 
     Args:
         filenames (list): Set of file names to check.
-        quiet (bool, optional): Enabled, don't print output to stderr when an
-            obsolete entry is found.
 
     Returns:
         list(str): error messages produced.
@@ -187,22 +185,18 @@ def check_obsolete_entries_in_filepaths(filenames, quiet=False):
 
         yield from parse_obsoletes_from_content_lines(
             content_lines,
-            quiet=quiet,
             location_prefix=f'{filename}:',
         )
 
 
 def parse_obsoletes_from_content_lines(
     content_lines,
-    quiet=False,
     location_prefix='line ',
 ):
     """Warns about all obsolete entries found in a set of PO files.
 
     Args:
         content_lines (list): Set of content lines to check.
-        quiet (bool, optional): Enabled, don't print output to stderr when an
-            obsolete entry is found.
         location_prefix (str, optional): Prefix to use in the location message.
 
     Returns:
@@ -213,7 +207,6 @@ def parse_obsoletes_from_content_lines(
         if not inside_obsolete_message and line[0:3] == b'#~ ':
             inside_obsolete_message = True
 
-            if not quiet:
-                yield f'{location_prefix}{i + 1}'
+            yield f'{location_prefix}{i + 1}'
         elif inside_obsolete_message and line[0:3] != b'#~ ':
             inside_obsolete_message = False

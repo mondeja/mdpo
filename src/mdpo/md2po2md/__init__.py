@@ -25,7 +25,6 @@ def markdown_to_pofile_to_markdown(
     md2po_kwargs=None,
     po2md_kwargs=None,
     _check_saved_files_changed=False,
-    quiet=False,
     no_obsolete=False,
 ):
     """Translate a set of Markdown files using PO files.
@@ -187,7 +186,7 @@ def markdown_to_pofile_to_markdown(
 
             if no_obsolete:
                 obsoletes.extend(check_obsolete_entries_in_filepaths(
-                    [po_filepath], quiet=quiet,
+                    [po_filepath],
                 ))
             if not empty:
                 for pofile in po2md.pofiles:

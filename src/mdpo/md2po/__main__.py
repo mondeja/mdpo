@@ -235,10 +235,10 @@ def run(args=frozenset()):
 
         if opts.no_obsolete:
             locations = list(check_obsolete_entries_in_filepaths(
-                (opts.po_filepath,), quiet=opts.quiet,
+                (opts.po_filepath,),
             ))
             if locations:
-                if not opts.quiet and len(locations) > 2:  # noqa PLR2004
+                if len(locations) > 2:  # noqa PLR2004
                     sys.stderr.write(
                         f'Found {len(locations)} obsolete entries:\n',
                     )

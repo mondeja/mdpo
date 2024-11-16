@@ -147,10 +147,10 @@ def run(args=frozenset()):
                 po_encoding=opts.po_encoding,
             )
             locations = list(check_obsolete_entries_in_filepaths(
-                pofiles, quiet=opts.quiet,
+                pofiles,
             ))
             if locations:
-                if not opts.quiet and len(locations) > 2:  # noqa PLR2004
+                if len(locations) > 2:  # noqa PLR2004
                     sys.stderr.write(
                         f'Found {len(locations)} obsolete entries:\n',
                     )

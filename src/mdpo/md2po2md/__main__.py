@@ -140,7 +140,6 @@ def run(args=frozenset()):
             'md_encoding': opts.md_encoding,
             'include_codeblocks': opts.include_codeblocks,
             '_check_saved_files_changed': opts.check_saved_files_changed,
-            'quiet': opts.quiet,
             'no_obsolete': opts.no_obsolete,
         }
 
@@ -158,7 +157,7 @@ def run(args=frozenset()):
             exitcode = 2
 
         if obsoletes:
-            if not opts.quiet and len(obsoletes) > 2:  # noqa PLR2004
+            if len(obsoletes) > 2:  # noqa PLR2004
                 sys.stderr.write(
                     f'Found {len(obsoletes)} obsolete entries:\n',
                 )
