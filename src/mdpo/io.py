@@ -133,12 +133,5 @@ def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
 
 
 def flatten(xss):
-    """Flatten a list of lists.
-
-    Args:
-        xss (list): List of lists to flatten.
-
-    Returns:
-        list: Flattened list.
-    """
+    """Flatten a iterable of iterables."""
     return (x for xs in xss for x in xs)
