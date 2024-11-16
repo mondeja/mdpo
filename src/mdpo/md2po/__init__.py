@@ -14,6 +14,7 @@ from mdpo.command import (
 from mdpo.event import add_debug_events, parse_events_kwarg, raise_skip_event
 from mdpo.io import (
     filter_paths,
+    flatten,
     save_file_checking_file_changed,
     to_files_or_content,
 )
@@ -74,7 +75,6 @@ class Md2Po:
         'include_codeblocks',
         'metadata',
         'events',
-        'obsoletes',
 
         'location',
         '_current_top_level_block_number',
@@ -142,11 +142,8 @@ class Md2Po:
     def __init__(self, files_or_content, **kwargs):
         is_glob, files_or_content = to_files_or_content(files_or_content)
         if is_glob:
-            filepaths = []
-            for globpath in files_or_content:
-                filepaths.extend(glob.glob(globpath))
             self.filepaths = filter_paths(
-                filepaths,
+                flatten(glob.glob(globpath) for globpath in files_or_content),
                 ignore_paths=kwargs.get('ignore', []),
             )
         else:
@@ -182,10 +179,6 @@ class Md2Po:
         self.events = parse_events_kwarg(kwargs.get('events') or {})
         if kwargs.get('debug'):
             add_debug_events('md2po', self.events)
-
-        #: bool: If there are entries in the PO file that
-        #: are obsolete and not found in the current extraction.
-        self.obsoletes = False
 
         #: str: The msgid being currently built for the next
         #: message entry. Keep in mind that, if you are executing
@@ -992,10 +985,6 @@ class Md2Po:
             wrapwidth=parse_wrapwidth_argument(wrapwidth),
             **pofile_kwargs,
         )
-        for entry in self.pofile:
-            if entry.obsolete:
-                self.obsoletes = True
-                break
 
         parser = md4c.GenericParser(
             0,
@@ -1044,12 +1033,10 @@ class Md2Po:
                 self.found_entries,
             )
         elif self.mark_not_found_as_obsolete:
-            obsoletes = mark_not_found_entries_as_obsoletes(
+            mark_not_found_entries_as_obsoletes(
                 self.pofile,
                 self.found_entries,
             )
-            if not self.obsoletes:
-                self.obsoletes = obsoletes
 
         if self.metadata:
             self.pofile.metadata.update(self.metadata)

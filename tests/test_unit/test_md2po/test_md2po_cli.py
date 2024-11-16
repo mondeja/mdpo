@@ -744,14 +744,14 @@ msgstr ""
 
     with tmp_file(po_input, '.po') as filename:
         pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Bye'])
-    stdout, stderr = capsys.readouterr()
+        stdout, stderr = capsys.readouterr()
 
-    assert exitcode == 3
-    assert f'{pofile}\n' == expected_output
-    assert stdout == expected_output
-    assert stderr == (
-        f"Obsolete messages found at {filename} and passed '--no-obsolete'\n"
-    )
+        assert exitcode == 3
+        assert f'{pofile}\n' == expected_output
+        assert stdout == expected_output
+        assert stderr == (
+            f'Found obsolete entry at {filename}:5\n'
+        )
 
     po_input = '''#
 msgid ""
@@ -774,6 +774,55 @@ msgstr ""
     assert exitcode == 0
     assert f'{pofile}\n' == expected_output
     assert stdout == expected_output
+
+
+@pytest.mark.parametrize('arg', ('--no-obsolete',))
+def test_no_obsolete_multiple(capsys, arg, tmp_file):
+    po_input = '''#
+msgid ""
+msgstr ""
+
+#~ msgid "Foo"
+#~ msgstr "Foo lang"
+
+#~ msgid "Bar"
+#~ msgstr "Bar lang"
+
+#~ msgid "Baz"
+#~ msgstr "Baz lang"
+'''
+
+    expected_output = '''#
+msgid ""
+msgstr ""
+
+msgid "Bye"
+msgstr ""
+
+#~ msgid "Foo"
+#~ msgstr "Foo lang"
+
+#~ msgid "Bar"
+#~ msgstr "Bar lang"
+
+#~ msgid "Baz"
+#~ msgstr "Baz lang"
+
+'''
+
+    with tmp_file(po_input, '.po') as filename:
+        pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Bye'])
+        stdout, stderr = capsys.readouterr()
+
+        assert exitcode == 3
+        assert f'{pofile}\n' == expected_output
+        assert stdout == expected_output
+        assert stderr == (
+            'Found 3 obsolete entries:\n'
+            f'{filename}:5\n'
+            f'{filename}:8\n'
+            f'{filename}:11\n'
+        )
 
 
 @pytest.mark.parametrize('arg', ('--no-empty-msgstr',))

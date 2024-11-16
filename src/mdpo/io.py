@@ -130,3 +130,8 @@ def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
         with open(filepath, 'w', encoding=encoding) as f:
             f.write(content)
     return changed
+
+
+def flatten(xss):
+    """Flatten a iterable of iterables."""
+    return (x for xs in xss for x in xs)

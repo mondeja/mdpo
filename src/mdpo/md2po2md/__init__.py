@@ -5,6 +5,7 @@ import os
 
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
+from mdpo.po import check_obsolete_entries_in_filepaths
 from mdpo.po2md import Po2Md
 
 
@@ -24,6 +25,7 @@ def markdown_to_pofile_to_markdown(
     md2po_kwargs=None,
     po2md_kwargs=None,
     _check_saved_files_changed=False,
+    no_obsolete=False,
 ):
     """Translate a set of Markdown files using PO files.
 
@@ -70,6 +72,7 @@ def markdown_to_pofile_to_markdown(
             ``markdown_to_pofile`` function.
         po2md_kwargs (dict): Additional optional arguments passed to
             ``pofile_to_markdown`` function.
+        no_obsolete (bool): If ``True``, check for obsolete entries in PO files.
     """
     if '{lang}' not in output_paths_schema:
         raise ValueError(
@@ -97,7 +100,7 @@ def markdown_to_pofile_to_markdown(
             )
 
     _saved_files_changed = None if not _check_saved_files_changed else False
-    obsoletes = False
+    obsoletes = []
     empty = False
 
     for filepath in input_paths_glob_:
@@ -156,8 +159,6 @@ def markdown_to_pofile_to_markdown(
             if _check_saved_files_changed and _saved_files_changed is False:
                 _saved_files_changed = md2po._saved_files_changed
 
-            if not obsoletes:
-                obsoletes = md2po.obsoletes
             if not empty:
                 for entry in md2po.pofile:
                     if not entry.msgstr:
@@ -182,15 +183,10 @@ def markdown_to_pofile_to_markdown(
             if _check_saved_files_changed and _saved_files_changed is False:
                 _saved_files_changed = po2md._saved_files_changed
 
-            if not obsoletes:
-                for pofile in po2md.pofiles:
-                    for entry in pofile:
-                        if entry.obsolete:
-                            obsoletes = True
-                            break
-                    if obsoletes:
-                        break
-
+            if no_obsolete:
+                obsoletes.extend(check_obsolete_entries_in_filepaths(
+                    [po_filepath],
+                ))
             if not empty:
                 for pofile in po2md.pofiles:
                     for entry in pofile:
