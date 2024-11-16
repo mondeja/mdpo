@@ -130,3 +130,15 @@ def save_file_checking_file_changed(filepath, content, encoding='utf-8'):
         with open(filepath, 'w', encoding=encoding) as f:
             f.write(content)
     return changed
+
+
+def flatten(xss):
+    """Flatten a list of lists.
+
+    Args:
+        xss (list): List of lists to flatten.
+
+    Returns:
+        list: Flattened list.
+    """
+    return [x for xs in xss for x in xs]

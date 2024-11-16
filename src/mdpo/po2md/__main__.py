@@ -24,6 +24,10 @@ from mdpo.cli import (
     parse_event_argument,
 )
 from mdpo.io import environ
+from mdpo.po import (
+    check_obsolete_entries_in_filepaths,
+    paths_or_globs_to_unique_pofiles,
+)
 from mdpo.po2md import Po2Md
 
 
@@ -136,15 +140,28 @@ def run(args=frozenset()):
         if opts.check_saved_files_changed and po2md._saved_files_changed:
             return (output, 2)
 
-        if opts.no_obsolete and get_obsoletes(po2md.pofiles):
-            if not opts.quiet:
-                sys.stderr.write(
-
-                    "Obsolete messages found at PO files and passed"
-                    " '--no-obsolete'\n",
-
-                )
-            return (output, 3)
+        if opts.no_obsolete:
+            pofiles = paths_or_globs_to_unique_pofiles(
+                opts.pofiles,
+                opts.ignore or [],
+                po_encoding=opts.po_encoding,
+            )
+            locations = list(check_obsolete_entries_in_filepaths(
+                pofiles, quiet=opts.quiet,
+            ))
+            if locations:
+                if not opts.quiet and len(locations) > 2:  # noqa PLR2004
+                    sys.stderr.write(
+                        f'Found {len(locations)} obsolete entries:\n',
+                    )
+                    for location in locations:
+                        sys.stderr.write(f'{location}\n')
+                else:
+                    for location in locations:
+                        sys.stderr.write(
+                            f'Found obsolete entry at {location}\n',
+                        )
+                return (output, 3)
 
         if opts.no_empty_msgstr:
             for pofile in po2md.pofiles:

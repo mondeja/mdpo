@@ -140,6 +140,8 @@ def run(args=frozenset()):
             'md_encoding': opts.md_encoding,
             'include_codeblocks': opts.include_codeblocks,
             '_check_saved_files_changed': opts.check_saved_files_changed,
+            'quiet': opts.quiet,
+            'no_obsolete': opts.no_obsolete,
         }
 
         (
@@ -155,16 +157,20 @@ def run(args=frozenset()):
         if opts.check_saved_files_changed and _saved_files_changed:
             exitcode = 2
 
-        if opts.no_obsolete and obsoletes:
-            exitcode = 3
-
-            if not opts.quiet:
+        if obsoletes:
+            if not opts.quiet and len(obsoletes) > 2:  # noqa PLR2004
                 sys.stderr.write(
-                    "Obsolete messages found at PO files and"
-                    " passed '--no-obsolete'\n",
+                    f'Found {len(obsoletes)} obsolete entries:\n',
                 )
-
-        if opts.no_empty_msgstr and empty:
+                for location in obsoletes:
+                    sys.stderr.write(f'{location}\n')
+            else:
+                for location in obsoletes:
+                    sys.stderr.write(
+                        f'Found obsolete entry at {location}\n',
+                    )
+            exitcode = 3
+        elif opts.no_empty_msgstr and empty:
             exitcode = 4
 
             if not opts.quiet:

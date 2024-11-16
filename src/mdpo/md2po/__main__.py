@@ -31,6 +31,7 @@ from mdpo.cli import (
 from mdpo.io import environ
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
+from mdpo.po import check_obsolete_entries_in_filepaths
 
 
 DESCRIPTION = (
@@ -232,17 +233,23 @@ def run(args=frozenset()):
         if opts.check_saved_files_changed and md2po._saved_files_changed:
             exitcode = 2
 
-        if opts.no_obsolete and md2po.obsoletes:
-            if not opts.quiet:
-                sys.stderr.write(
-                    (
-                        f"Obsolete messages found at {opts.po_filepath}"
-                        " and passed '--no-obsolete'\n"
-                    ),
-                )
-            exitcode = 3
-
-        if opts.no_empty_msgstr:
+        if opts.no_obsolete:
+            locations = list(check_obsolete_entries_in_filepaths(
+                (opts.po_filepath,), quiet=opts.quiet,
+            ))
+            if locations:
+                if not opts.quiet and len(locations) > 2:  # noqa PLR2004
+                    sys.stderr.write(
+                        f'Found {len(locations)} obsolete entries:\n',
+                    )
+                    for location in locations:
+                        sys.stderr.write(f'{location}\n')
+                else:
+                    for location in locations:
+                        sys.stderr.write(
+                            f'Found obsolete entry at {location}\n')
+                exitcode = 3
+        elif opts.no_empty_msgstr:
             for entry in pofile:
                 if not entry.msgstr:
                     if not opts.quiet:
