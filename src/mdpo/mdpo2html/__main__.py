@@ -156,14 +156,14 @@ def run(args=frozenset()):
             if locations:
                 if len(locations) > 2:  # noqa PLR2004
                     sys.stderr.write(
-                        f'Found {len(locations)} obsolete entries:\n',
+                        f'Found {len(locations)} fuzzy entries:\n',
                     )
                     for location in locations:
                         sys.stderr.write(f'{location}\n')
                 else:
                     for location in locations:
                         sys.stderr.write(
-                            f'Found obsolete entry at {location}\n',
+                            f'Found fuzzy entry at {location}\n',
                         )
                 exitcode = 4
 
