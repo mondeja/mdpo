@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mdpo.po module &mdash; mdpo 2.1.0 documentation</title>
+  <title>mdpo.po module &mdash; mdpo 2.1.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
@@ -17,7 +17,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=20623aea"></script>
+        <script src="../../_static/documentation_options.js?v=b3e23499"></script>
         <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -122,6 +122,57 @@
 <span id="mdpo-po-module"></span><h1>mdpo.po module<a class="headerlink" href="#module-mdpo.po" title="Link to this heading"></a></h1>
 <p>PO files related stuff.</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="mdpo.po.check_empty_msgstrs_in_filepaths">
+<span class="sig-prename descclassname"><span class="pre">mdpo.po.</span></span><span class="sig-name descname"><span class="pre">check_empty_msgstrs_in_filepaths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po.check_empty_msgstrs_in_filepaths" title="Link to this definition"></a></dt>
+<dd><p>Warns about all empty msgstr found in a set of PO files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filenames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Set of file names to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>error messages produced.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.po.check_fuzzy_entries_in_filepaths">
+<span class="sig-prename descclassname"><span class="pre">mdpo.po.</span></span><span class="sig-name descname"><span class="pre">check_fuzzy_entries_in_filepaths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po.check_fuzzy_entries_in_filepaths" title="Link to this definition"></a></dt>
+<dd><p>Warns about all fuzzy entries found in a set of PO files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filenames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Set of file names to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>error messages produced.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.po.check_obsolete_entries_in_filepaths">
+<span class="sig-prename descclassname"><span class="pre">mdpo.po.</span></span><span class="sig-name descname"><span class="pre">check_obsolete_entries_in_filepaths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po.check_obsolete_entries_in_filepaths" title="Link to this definition"></a></dt>
+<dd><p>Warns about all obsolete entries found in a set of PO files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filenames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Set of file names to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>error messages produced.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="mdpo.po.find_entry_in_entries">
 <span class="sig-prename descclassname"><span class="pre">mdpo.po.</span></span><span class="sig-name descname"><span class="pre">find_entry_in_entries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entries</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po.find_entry_in_entries" title="Link to this definition"></a></dt>
 <dd><p>Return an equal entry in a set of <a class="reference external" href="https://polib.readthedocs.io/en/latest/api.html#polib.POEntry" title="(in polib v1.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">polib.POEntry</span></code></a> entries.</p>
@@ -160,6 +211,66 @@ as no obsolete.</p>
 will be marked as obsoletes.</p></li>
 <li><p><strong>entries</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Entries to search against.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.po.parse_empty_msgstr_from_content_lines">
+<span class="sig-prename descclassname"><span class="pre">mdpo.po.</span></span><span class="sig-name descname"><span class="pre">parse_empty_msgstr_from_content_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'line</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po.parse_empty_msgstr_from_content_lines" title="Link to this definition"></a></dt>
+<dd><p>Warns about all empty msgstr found in a set of PO files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_lines</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Set of content lines to check.</p></li>
+<li><p><strong>location_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Prefix to use in the location message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>error locations found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.po.parse_fuzzy_from_content_lines">
+<span class="sig-prename descclassname"><span class="pre">mdpo.po.</span></span><span class="sig-name descname"><span class="pre">parse_fuzzy_from_content_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'line</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po.parse_fuzzy_from_content_lines" title="Link to this definition"></a></dt>
+<dd><p>Warns about all fuzzy entries found in a set of PO files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_lines</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Set of content lines to check.</p></li>
+<li><p><strong>location_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Prefix to use in the location message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>error locations found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdpo.po.parse_obsoletes_from_content_lines">
+<span class="sig-prename descclassname"><span class="pre">mdpo.po.</span></span><span class="sig-name descname"><span class="pre">parse_obsoletes_from_content_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'line</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdpo.po.parse_obsoletes_from_content_lines" title="Link to this definition"></a></dt>
+<dd><p>Warns about all obsolete entries found in a set of PO files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_lines</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Set of content lines to check.</p></li>
+<li><p><strong>location_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Prefix to use in the location message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>error locations found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>)</p>
 </dd>
 </dl>
 </dd></dl>
