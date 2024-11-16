@@ -20,6 +20,7 @@ from mdpo.cli import (
     add_extensions_argument,
     add_include_codeblocks_option,
     add_no_empty_msgstr_option,
+    add_no_fuzzy_option,
     add_no_obsolete_option,
     add_nolocation_option,
     add_wrapwidth_argument,
@@ -31,7 +32,10 @@ from mdpo.cli import (
 from mdpo.io import environ
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-from mdpo.po import check_obsolete_entries_in_filepaths
+from mdpo.po import (
+    check_fuzzy_entries_in_filepaths,
+    check_obsolete_entries_in_filepaths,
+)
 
 
 DESCRIPTION = (
@@ -148,6 +152,7 @@ def build_parser():
     add_debug_option(parser)
     add_check_option(parser)
     add_no_obsolete_option(parser)
+    add_no_fuzzy_option(parser)
     add_no_empty_msgstr_option(parser)
     return parser
 
@@ -249,7 +254,26 @@ def run(args=frozenset()):
                         sys.stderr.write(
                             f'Found obsolete entry at {location}\n')
                 exitcode = 3
-        elif opts.no_empty_msgstr:
+
+        if opts.no_fuzzy:
+            locations = list(check_fuzzy_entries_in_filepaths(
+                (opts.po_filepath,),
+            ))
+            if locations:
+                if len(locations) > 2:  # noqa PLR2004
+                    sys.stderr.write(
+                        f'Found {len(locations)} fuzzy entries:\n',
+                    )
+                    for location in locations:
+                        sys.stderr.write(f'{location}\n')
+                else:
+                    for location in locations:
+                        sys.stderr.write(
+                            f'Found fuzzy entry at {location}\n',
+                        )
+                exitcode = 4
+
+        if opts.no_empty_msgstr:
             for entry in pofile:
                 if not entry.msgstr:
                     if not opts.quiet:
@@ -259,7 +283,7 @@ def run(args=frozenset()):
                                 " and passed '--no-empty-msgstr'\n"
                             ),
                         )
-                        exitcode = 4
+                        exitcode = 5
                     break
 
     return (pofile, exitcode)

@@ -189,6 +189,25 @@ def check_obsolete_entries_in_filepaths(filenames):
         )
 
 
+def check_fuzzy_entries_in_filepaths(filenames):
+    """Warns about all fuzzy entries found in a set of PO files.
+
+    Args:
+        filenames (list): Set of file names to check.
+
+    Returns:
+        list(str): error messages produced.
+    """
+    for filename in filenames:
+        with open(filename, 'rb') as f:
+            content_lines = f.readlines()
+
+        yield from parse_fuzzy_from_content_lines(
+            content_lines,
+            location_prefix=f'{filename}:',
+        )
+
+
 def parse_obsoletes_from_content_lines(
     content_lines,
     location_prefix='line ',
@@ -210,3 +229,21 @@ def parse_obsoletes_from_content_lines(
             yield f'{location_prefix}{i + 1}'
         elif inside_obsolete_message and line[0:3] != b'#~ ':
             inside_obsolete_message = False
+
+
+def parse_fuzzy_from_content_lines(
+    content_lines,
+    location_prefix='line ',
+):
+    """Warns about all fuzzy entries found in a set of PO files.
+
+    Args:
+        content_lines (list): Set of content lines to check.
+        location_prefix (str): Prefix to use in the location message.
+
+    Returns:
+        list(str): error locations found.
+    """
+    for i, line in enumerate(content_lines):
+        if line.startswith(b'#,') and b'fuzzy' in line:
+            yield f'{location_prefix}{i + 1}'

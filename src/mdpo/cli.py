@@ -321,6 +321,23 @@ def add_event_argument(parser):
     )
 
 
+def parse_event_argument(value):
+    """Parse ``--event`` CLI argument values.
+
+    Args:
+        value (list): Event names and function paths in the form
+            ``event_name: path/to/file.py::func``.
+
+    Returns:
+        dict: Mapping of event names and `file::function` paths.
+    """
+    events = {}
+    for event_name_filefunc in value:
+        event_name, filefunc = event_name_filefunc.split(':', maxsplit=1)
+        events[event_name.strip()] = filefunc.strip()
+    return events
+
+
 def add_include_codeblocks_option(parser):
     """Add the ``--include-codeblocks`` option to an argument parser.
 
@@ -353,6 +370,21 @@ def add_no_obsolete_option(parser):
     )
 
 
+def add_no_fuzzy_option(parser):
+    """Add the ``--no-fuzzy`` option to an argument parser.
+
+    Args:
+        parser (:py:class:`argparse.ArgumentParser`): Parser to extend.
+    """
+    parser.add_argument(
+        '--no-fuzzy', dest='no_fuzzy', action='store_true',
+        help=(
+            'If fuzzy entries found in PO files exit with non'
+            ' zero code.'
+        ),
+    )
+
+
 def add_no_empty_msgstr_option(parser):
     """Add the ``--no-empty-msgstr`` option to an argument parser.
 
@@ -365,20 +397,3 @@ def add_no_empty_msgstr_option(parser):
             'If empty msgstrs found in PO files exit with non zero code.'
         ),
     )
-
-
-def parse_event_argument(value):
-    """Parse ``--event`` CLI argument values.
-
-    Args:
-        value (list): Event names and function paths in the form
-            ``event_name: path/to/file.py::func``.
-
-    Returns:
-        dict: Mapping of event names and `file::function` paths.
-    """
-    events = {}
-    for event_name_filefunc in value:
-        event_name, filefunc = event_name_filefunc.split(':', maxsplit=1)
-        events[event_name.strip()] = filefunc.strip()
-    return events

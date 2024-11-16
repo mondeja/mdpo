@@ -17,6 +17,7 @@ from mdpo.cli import (
     add_encoding_arguments,
     add_event_argument,
     add_no_empty_msgstr_option,
+    add_no_fuzzy_option,
     add_no_obsolete_option,
     add_wrapwidth_argument,
     cli_codespan,
@@ -25,6 +26,7 @@ from mdpo.cli import (
 )
 from mdpo.io import environ
 from mdpo.po import (
+    check_fuzzy_entries_in_filepaths,
     check_obsolete_entries_in_filepaths,
     paths_or_globs_to_unique_pofiles,
 )
@@ -78,6 +80,7 @@ def build_parser():
     add_debug_option(parser)
     add_check_option(parser)
     add_no_obsolete_option(parser)
+    add_no_fuzzy_option(parser)
     add_no_empty_msgstr_option(parser)
     return parser
 
@@ -113,6 +116,8 @@ def parse_options(args):
 
 
 def run(args=frozenset()):
+    exitcode = 0
+
     with environ(_MDPO_RUNNING='true'):
         opts = parse_options(args)
 
@@ -138,7 +143,7 @@ def run(args=frozenset()):
 
         # pre-commit mode
         if opts.check_saved_files_changed and po2md._saved_files_changed:
-            return (output, 2)
+            exitcode = 2
 
         if opts.no_obsolete:
             pofiles = paths_or_globs_to_unique_pofiles(
@@ -161,7 +166,30 @@ def run(args=frozenset()):
                         sys.stderr.write(
                             f'Found obsolete entry at {location}\n',
                         )
-                return (output, 3)
+                exitcode = 3
+
+        if opts.no_fuzzy:
+            pofiles = paths_or_globs_to_unique_pofiles(
+                opts.pofiles,
+                opts.ignore or [],
+                po_encoding=opts.po_encoding,
+            )
+            locations = list(check_fuzzy_entries_in_filepaths(
+                pofiles,
+            ))
+            if locations:
+                if len(locations) > 2:  # noqa PLR2004
+                    sys.stderr.write(
+                        f'Found {len(locations)} fuzzy entries:\n',
+                    )
+                    for location in locations:
+                        sys.stderr.write(f'{location}\n')
+                else:
+                    for location in locations:
+                        sys.stderr.write(
+                            f'Found fuzzy entry at {location}\n',
+                        )
+                exitcode = 4
 
         if opts.no_empty_msgstr:
             for pofile in po2md.pofiles:
@@ -174,9 +202,9 @@ def run(args=frozenset()):
                                     " and passed '--no-empty-msgstr'\n"
                                 ),
                             )
-                        return (output, 4)
+                        exitcode = 5
 
-    return (output, 0)
+    return (output, exitcode)
 
 
 def get_obsoletes(pofiles):
