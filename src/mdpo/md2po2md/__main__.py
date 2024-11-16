@@ -190,7 +190,7 @@ def run(args=frozenset()):
 
             exitcode = 4
 
-        if opts.no_empty_msgstr:
+        if empties:
             if len(empties) > 2:  # noqa PLR2004
                 sys.stderr.write(
                     f'Found {len(empties)} empty msgstrs:\n',
