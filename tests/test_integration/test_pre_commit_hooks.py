@@ -213,7 +213,7 @@ def test_md2po2md_pre_commit_hook(tmp_dir, git_init, git_add_commit):
 
         proc = pre_commit_run_all_files(cwd=filesdir)
         assert proc.returncode == 1
-        assert proc.stdout.decode('utf-8').splitlines()[-1] == '- exit code: 1'
+        assert proc.stdout.decode('utf-8').splitlines()[-1] == '- exit code: 2'
 
         locale_dir = os.path.join(filesdir, 'locale')
         assert os.path.isdir(locale_dir)
