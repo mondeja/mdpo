@@ -6,6 +6,7 @@ import os
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import (
+    check_empty_msgstrs_in_filepaths,
     check_fuzzy_entries_in_filepaths,
     check_obsolete_entries_in_filepaths,
 )
@@ -30,6 +31,7 @@ def markdown_to_pofile_to_markdown(
     _check_saved_files_changed=False,
     no_obsolete=False,
     no_fuzzy=False,
+    no_empty_msgstr=False,
 ):
     """Translate a set of Markdown files using PO files.
 
@@ -78,6 +80,7 @@ def markdown_to_pofile_to_markdown(
             ``pofile_to_markdown`` function.
         no_obsolete (bool): If ``True``, check for obsolete entries in PO files.
         no_fuzzy (bool): If ``True``, check for fuzzy entries in PO files.
+        no_empty_msgstr (bool): If ``True``, check for empty ``msgstr`` entries.
     """
     if '{lang}' not in output_paths_schema:
         raise ValueError(
@@ -107,7 +110,7 @@ def markdown_to_pofile_to_markdown(
     _saved_files_changed = None if not _check_saved_files_changed else False
     obsoletes = []
     fuzzies = []
-    empty = False
+    empties = []
 
     for filepath in input_paths_glob_:
         for lang in langs:
@@ -165,12 +168,6 @@ def markdown_to_pofile_to_markdown(
             if _check_saved_files_changed and _saved_files_changed is False:
                 _saved_files_changed = md2po._saved_files_changed
 
-            if not empty:
-                for entry in md2po.pofile:
-                    if not entry.msgstr:
-                        empty = True
-                        break
-
             # po2md
             po2md = Po2Md(
                 [po_filepath],
@@ -199,13 +196,9 @@ def markdown_to_pofile_to_markdown(
                     check_fuzzy_entries_in_filepaths([po_filepath]),
                 )
 
-            if not empty:
-                for pofile in po2md.pofiles:
-                    for entry in pofile:
-                        if not entry.msgstr:
-                            empty = True
-                            break
-                    if empty:
-                        break
+            if no_empty_msgstr:
+                empties.extend(
+                    check_empty_msgstrs_in_filepaths([po_filepath]),
+                )
 
-    return (_saved_files_changed, obsoletes, fuzzies, empty)
+    return (_saved_files_changed, obsoletes, fuzzies, empties)

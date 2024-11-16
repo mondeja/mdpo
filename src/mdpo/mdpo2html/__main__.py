@@ -23,6 +23,7 @@ from mdpo.cli import (
 from mdpo.io import environ
 from mdpo.mdpo2html import MdPo2HTML
 from mdpo.po import (
+    check_empty_msgstrs_in_filepaths,
     check_fuzzy_entries_in_filepaths,
     check_obsolete_entries_in_filepaths,
     paths_or_globs_to_unique_pofiles,
@@ -168,16 +169,22 @@ def run(args=frozenset()):
                 exitcode = 4
 
         if opts.no_empty_msgstr:
-            for pofile in mdpo2html.pofiles:
-                for entry in pofile:
-                    if not entry.msgstr:
-                        if not opts.quiet:
-                            sys.stderr.write(
-                                f"Empty msgstr for msgid '{entry.msgid}'"
-                                " found at PO files and"
-                                " passed '--no-empty-msgstr'\n",
-                            )
-                        exitcode = 5
+            locations = list(check_empty_msgstrs_in_filepaths(
+                (opts.po_filepath,),
+            ))
+            if locations:
+                if len(locations) > 2:  # noqa PLR2004
+                    sys.stderr.write(
+                        f'Found {len(locations)} empty msgstrs:\n',
+                    )
+                    for location in locations:
+                        sys.stderr.write(f'{location}\n')
+                else:
+                    for location in locations:
+                        sys.stderr.write(
+                            f'Found empty msgstr at {location}\n',
+                        )
+                exitcode = 5
 
     return (output, exitcode)
 
