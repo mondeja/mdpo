@@ -254,6 +254,7 @@ def run(args=frozenset()):
                         sys.stderr.write(
                             f'Found obsolete entry at {location}\n')
                 exitcode = 3
+
         if opts.no_fuzzy:
             locations = list(check_fuzzy_entries_in_filepaths(
                 (opts.po_filepath,),
@@ -271,6 +272,7 @@ def run(args=frozenset()):
                             f'Found fuzzy entry at {location}\n',
                         )
                 exitcode = 4
+
         if opts.no_empty_msgstr:
             for entry in pofile:
                 if not entry.msgstr:
