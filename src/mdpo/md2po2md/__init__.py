@@ -72,7 +72,6 @@ def markdown_to_pofile_to_markdown(
             ``markdown_to_pofile`` function.
         po2md_kwargs (dict): Additional optional arguments passed to
             ``pofile_to_markdown`` function.
-        quiet (bool): If ``True``, don't print output to STDOUT nor STDERR.
         no_obsolete (bool): If ``True``, check for obsolete entries in PO files.
     """
     if '{lang}' not in output_paths_schema:
