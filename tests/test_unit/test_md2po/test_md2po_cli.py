@@ -771,12 +771,9 @@ msgstr ""
         pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Bye'])
     stdout, stderr = capsys.readouterr()
 
-    assert exitcode == 3
+    assert exitcode == 0
     assert f'{pofile}\n' == expected_output
     assert stdout == expected_output
-    assert stderr == (
-        f"Obsolete messages found at {filename} and passed '--no-obsolete'\n"
-    )
 
 
 @pytest.mark.parametrize('arg', ('--no-empty-msgstr',))

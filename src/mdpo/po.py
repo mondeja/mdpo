@@ -62,6 +62,7 @@ def mark_not_found_entries_as_obsoletes(
             will be marked as obsoletes.
         entries (list): Entries to search against.
     """
+    obsolete = False
     for entry in pofile:
         if not find_entry_in_entries(
             entry,
@@ -78,8 +79,10 @@ def mark_not_found_entries_as_obsoletes(
                 pofile.remove(entry)
             else:
                 entry.obsolete = True
+                obsolete = True
         else:
             entry.obsolete = False
+    return obsolete
 
 
 def remove_not_found_entries(pofile, entries):

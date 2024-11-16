@@ -1044,11 +1044,12 @@ class Md2Po:
                 self.found_entries,
             )
         elif self.mark_not_found_as_obsolete:
-            mark_not_found_entries_as_obsoletes(
+            obsoletes = mark_not_found_entries_as_obsoletes(
                 self.pofile,
                 self.found_entries,
             )
-            self.obsoletes = True
+            if not self.obsoletes:
+                self.obsoletes = obsoletes
 
         if self.metadata:
             self.pofile.metadata.update(self.metadata)
