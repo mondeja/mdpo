@@ -197,7 +197,7 @@ def parse_obsoletes_from_content_lines(
 
     Args:
         content_lines (list): Set of content lines to check.
-        location_prefix (str, optional): Prefix to use in the location message.
+        location_prefix (str): Prefix to use in the location message.
 
     Returns:
         list(str): error locations found.
