@@ -141,4 +141,4 @@ def flatten(xss):
     Returns:
         list: Flattened list.
     """
-    return [x for xs in xss for x in xs]
+    return (x for xs in xss for x in xs)
