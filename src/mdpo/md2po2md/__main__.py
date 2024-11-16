@@ -144,13 +144,14 @@ def run(args=frozenset()):
             '_check_saved_files_changed': opts.check_saved_files_changed,
             'no_obsolete': opts.no_obsolete,
             'no_fuzzy': opts.no_fuzzy,
+            'no_empty_msgstr': opts.no_empty_msgstr,
         }
 
         (
             _saved_files_changed,
             obsoletes,
             fuzzies,
-            empty,
+            empties,
         ) = markdown_to_pofile_to_markdown(
             opts.langs,
             opts.input_paths_glob,
@@ -189,14 +190,19 @@ def run(args=frozenset()):
 
             exitcode = 4
 
-        if opts.no_empty_msgstr and empty:
-            exitcode = 5
-
-            if not opts.quiet:
+        if opts.no_empty_msgstr:
+            if len(empties) > 2:  # noqa PLR2004
                 sys.stderr.write(
-                    "Empty msgstr found at PO files and"
-                    " passed '--no-empty-msgstr'\n",
+                    f'Found {len(empties)} empty msgstrs:\n',
                 )
+                for location in empties:
+                    sys.stderr.write(f'{location}\n')
+            else:
+                for location in empties:
+                    sys.stderr.write(
+                        f'Found empty msgstr at {location}\n',
+                    )
+            exitcode = 5
 
     return exitcode
 

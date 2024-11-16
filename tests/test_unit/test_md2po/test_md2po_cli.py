@@ -893,14 +893,14 @@ msgstr ""
 
     with tmp_file(po_input, '.po') as filename:
         pofile, exitcode = run([arg, '-p', filename, '--no-location', 'Hello'])
-    stdout, stderr = capsys.readouterr()
+        stdout, stderr = capsys.readouterr()
 
-    assert exitcode == 5
-    assert f'{pofile}\n' == po_input
-    assert stdout == po_input
-    assert stderr == (
-        f"Empty msgstr found at {filename} and passed '--no-empty-msgstr'\n"
-    )
+        assert exitcode == 5
+        assert f'{pofile}\n' == po_input
+        assert stdout == po_input
+        assert stderr == (
+            f'Found empty msgstr at {filename}:6\n'
+        )
 
     po_input = '''#
 msgid ""

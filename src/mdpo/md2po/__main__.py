@@ -33,6 +33,7 @@ from mdpo.io import environ
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po import (
+    check_empty_msgstrs_in_filepaths,
     check_fuzzy_entries_in_filepaths,
     check_obsolete_entries_in_filepaths,
 )
@@ -274,17 +275,22 @@ def run(args=frozenset()):
                 exitcode = 4
 
         if opts.no_empty_msgstr:
-            for entry in pofile:
-                if not entry.msgstr:
-                    if not opts.quiet:
+            locations = list(check_empty_msgstrs_in_filepaths(
+                (opts.po_filepath,),
+            ))
+            if locations:
+                if len(locations) > 2:  # noqa PLR2004
+                    sys.stderr.write(
+                        f'Found {len(locations)} empty msgstrs:\n',
+                    )
+                    for location in locations:
+                        sys.stderr.write(f'{location}\n')
+                else:
+                    for location in locations:
                         sys.stderr.write(
-                            (
-                                f"Empty msgstr found at {opts.po_filepath}"
-                                " and passed '--no-empty-msgstr'\n"
-                            ),
+                            f'Found empty msgstr at {location}\n',
                         )
-                        exitcode = 5
-                    break
+                exitcode = 5
 
     return (pofile, exitcode)
 
