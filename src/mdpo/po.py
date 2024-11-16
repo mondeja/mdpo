@@ -288,4 +288,4 @@ def parse_empty_msgstr_from_content_lines(
         ) and not content_lines[i - 1].startswith(b'msgid ""'):
             next_i = i + 1
             if next_i == n_lines or not content_lines[next_i].strip():
-                yield f'{location_prefix}{i + 1}'
+                yield f'{location_prefix}{next_i}'
