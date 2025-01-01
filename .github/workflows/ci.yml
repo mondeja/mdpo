@@ -68,7 +68,7 @@ jobs:
           coverage xml
       - name: Upload coverage
         if: matrix.py != '3.9'
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5.1.2
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -87,7 +87,7 @@ jobs:
         run: hatch run docs:build
         env:
           SPHINX_GITHUB_CHANGELOG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4.5.0
         with:
           path: docs/_build/html/*
           name: docs
@@ -108,7 +108,7 @@ jobs:
         run: pip install -U hatch
       - name: Build package
         run: hatch build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4.5.0
         with:
           path: dist/*
           name: wheel-sdist
@@ -164,7 +164,7 @@ jobs:
           mv dist/po2md dist/po2md-${{ matrix.runs-on }}
           mv dist/md2po2md dist/md2po2md-${{ matrix.runs-on }}
           mv dist/mdpo2html dist/mdpo2html-${{ matrix.runs-on }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4.5.0
         with:
           path: dist/*
           name: ${{ matrix.runs-on }}-build
@@ -241,7 +241,7 @@ jobs:
       - name: Remove build directories
         run: rm -rf build
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: dist
           path: ./dist
