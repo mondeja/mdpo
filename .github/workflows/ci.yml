@@ -97,7 +97,6 @@ jobs:
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Run tests on Windows
         if: matrix.platform == 'windows-latest'
-        shell: bash
         run: |
           # Windows
           set PATH=C:\Program Files\MD4C;%PATH%
