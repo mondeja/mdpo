@@ -45,6 +45,12 @@ jobs:
           - windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up MD4C
+        if: matrix.platform != 'windows-latest'
+        run: sudo apt-get install libmd4c-html0 libmd4c-html0-dev libmd4c-dev
+      - name: Set up MD4C
+        if: matrix.platform == 'windows-latest'
+        run: choco install -y md4c
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
