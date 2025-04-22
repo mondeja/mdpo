@@ -68,7 +68,7 @@ jobs:
         shell: bash
         run: |
           cd md4c/build
-          cmake --install . --prefix C:/Program Files/MD4C
+          cmake --install .
           cd ../..
           rm -rf md4c
       - name: Set up Python
@@ -99,7 +99,7 @@ jobs:
         if: matrix.platform == 'windows-latest'
         run: |
           # Windows
-          set PATH=C:\Program Files\MD4C;%PATH%
+          $env:PATH
           # Run tests
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
