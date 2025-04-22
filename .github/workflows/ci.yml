@@ -92,8 +92,8 @@ jobs:
         if: matrix.platform == 'windows-latest'
         run: |
           # Windows
-          $env:CFLAGS += '-ID:/a/mdpo/mdpo/md4c/src/'
-          Get-ChildItem -Recurse D:/a/mdpo/mdpo/md4c
+          $env:INCLUDE += ';D:/a/mdpo/mdpo/md4c/src/'
+          Get-ChildItem -Recurse D:/a/mdpo/mdpo/md4c | Where-Object { $_.Name -like '*.h' }
           # Run tests
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
