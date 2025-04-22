@@ -64,6 +64,15 @@ jobs:
           sudo cmake --install .
           cd ../..
           rm -rf md4c
+      - name: Debug Windows
+        if: matrix.platform == 'windows-latest' && (matrix.py == '3.12' || matrix.py == '3.13')
+        shell: bash
+        run: |
+          ls -la D:/a/mdpo/mdpo/md4c/build/src/Release/
+          echo "___________________________________"
+          ls -la D:/a/mdpo/mdpo/md4c/build/src/
+          echo "___________________________________"
+          ls -la D:/a/mdpo/mdpo/md4c/build/
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
