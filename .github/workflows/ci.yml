@@ -50,7 +50,7 @@ jobs:
         if: matrix.py == '3.12' || matrix.py == '3.13'
         shell: bash
         run: |
-          git clone https://github.com/mity/md4c.git
+          git clone https://github.com/mity/md4c.git --depth 1
           cd md4c
           cmake -B build
           cmake --build build
@@ -79,9 +79,13 @@ jobs:
       - name: Install Hatch
         run: pip install -U hatch
       - name: Run tests
+        shell: bash
         run: |
+          # Linux
           export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-          echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+          # MacOS
+          export DYLD_LIBRARY_PATH=/usr/local/lib:$DYLD_LIBRARY_PATH
+          # Run tests
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
         # not currently installable on Python 3.9
