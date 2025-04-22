@@ -46,6 +46,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up MD4C
+        # pymd4c requires MD4C installation from source on Python >= 3.12
+        if: matrix.py == '3.12' || matrix.py == '3.13'
         shell: bash
         run: |
           git clone https://github.com/mity/md4c.git
@@ -53,7 +55,7 @@ jobs:
           cmake -B build
           cmake --build build
           cd build
-          sudo make install
+          cmake --install .
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
