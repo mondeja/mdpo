@@ -46,11 +46,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up MD4C
-        if: matrix.platform != 'windows-latest'
-        run: apt install libmd4c-html0 libmd4c-html0-dev libmd4c-dev
-      - name: Set up MD4C
-        if: matrix.platform == 'windows-latest'
-        run: choco install -y md4c
+        shell: bash
+        run: |
+          git clone https://github.com/mity/md4c.git
+          cd md4c
+          cmake -B build
+          cmake --build buil
+          make install
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
