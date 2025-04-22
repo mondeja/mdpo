@@ -56,6 +56,9 @@ jobs:
           cmake --build build
           cd build
           sudo cmake --install .
+          cd ../..
+          rm -rf md4c
+          echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
