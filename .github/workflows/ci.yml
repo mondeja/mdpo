@@ -64,11 +64,6 @@ jobs:
           sudo cmake --install .
           cd ../..
           rm -rf md4c
-      - name: Install MD4C on Windows
-        if: matrix.platform == 'windows-latest' && (matrix.py == '3.12' || matrix.py == '3.13')
-        shell: bash
-        run: |
-          ls -la D:/a/mdpo/mdpo/md4c/build/src/Debug/
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -97,7 +92,7 @@ jobs:
         if: matrix.platform == 'windows-latest'
         run: |
           # Windows
-          $env:CFLAGS += '-ID:/a/mdpo/mdpo/md4c/include/'
+          $env:CFLAGS += '-ID:/a/mdpo/mdpo/md4c/src/'
           # Run tests
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
