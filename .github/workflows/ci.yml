@@ -56,19 +56,12 @@ jobs:
           cmake --build build
           cd build
       - name: Install MD4C
+        # On Windows we're using the built files
         if: (matrix.py == '3.12' || matrix.py == '3.13') && matrix.platform != 'windows-latest'
         shell: bash
         run: |
           cd md4c/build
           sudo cmake --install .
-          cd ../..
-          rm -rf md4c
-      - name: Install MD4C on Windows
-        if: (matrix.py == '3.12' || matrix.py == '3.13') && matrix.platform == 'windows-latest'
-        shell: bash
-        run: |
-          cd md4c/build
-          cmake --install .
           cd ../..
           rm -rf md4c
       - name: Set up Python
@@ -99,7 +92,7 @@ jobs:
         if: matrix.platform == 'windows-latest'
         run: |
           # Windows
-          $env:PATH
+          set PATH=D:/a/mdpo/mdpo/md4c/build/src/Release/;%PATH%
           # Run tests
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
