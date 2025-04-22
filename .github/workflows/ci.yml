@@ -79,12 +79,9 @@ jobs:
       - name: Install Hatch
         run: pip install -U hatch
       - name: Run tests
-        env:
-          LD_LIBRARY_PATH: /usr/local/lib:$LD_LIBRARY_PATH
         run: |
+          export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
-          echo "PATH: $PATH"
-          echo "PYTHONPATH: $PYTHONPATH"
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
         # not currently installable on Python 3.9
