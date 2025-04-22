@@ -51,7 +51,7 @@ jobs:
           git clone https://github.com/mity/md4c.git
           cd md4c
           cmake -B build
-          cmake --build buil
+          cmake --build build
           make install
       - name: Set up Python
         uses: actions/setup-python@v5
