@@ -92,7 +92,7 @@ jobs:
         if: matrix.platform == 'windows-latest'
         run: |
           # Windows
-          set PATH=D:/a/mdpo/mdpo/md4c/build/src/Release/;%PATH%
+          $env:Path += ';D:/a/mdpo/mdpo/md4c/build/src/Release/'
           # Run tests
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
