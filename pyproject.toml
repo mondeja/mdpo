@@ -72,7 +72,7 @@ dependencies = [
 ]
 
 [tool.hatch.envs.tests.scripts]
-all = "coverage run -m pytest"
+all = "coverage run -m pytest -svv"
 unit = "coverage run -m pytest tests/test_unit"
 integration = "coverage run -m pytest tests/test_integration --override-ini addopts=-svv"
 cov = [
