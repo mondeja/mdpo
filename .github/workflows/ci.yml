@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set up MD4C
         if: matrix.platform != 'windows-latest'
-        run: sudo apt-get install libmd4c-html0 libmd4c-html0-dev libmd4c-dev
+        run: apt install libmd4c-html0 libmd4c-html0-dev libmd4c-dev
       - name: Set up MD4C
         if: matrix.platform == 'windows-latest'
         run: choco install -y md4c
