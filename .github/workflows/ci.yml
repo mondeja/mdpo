@@ -99,7 +99,7 @@ jobs:
         if: matrix.platform == 'windows-latest'
         run: |
           # Windows
-          $env:CFLAGS += ';D:/a/mdpo/mdpo/md4c/build/src/Debug/'
+          $env:CFLAGS += '-ID:/a/mdpo/mdpo/md4c/build/src/Debug/'
           # Run tests
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
