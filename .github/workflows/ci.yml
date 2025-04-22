@@ -92,8 +92,9 @@ jobs:
         if: matrix.platform == 'windows-latest'
         run: |
           # Windows
-          $env:INCLUDE += ';D:\a\mdpo\mdpo\md4c\src\;D:\a\mdpo\mdpo\md4c\build\src\Debug\'
-          # Get-ChildItem -Recurse D:/a/mdpo/mdpo/md4c
+          $env:INCLUDE += ';D:\a\mdpo\mdpo\md4c\src\'
+          $env:LIBPATH += ';D:\a\mdpo\mdpo\md4c\build\src\Debug\'
+          # Get-ChildItem -Recurse D:\a\mdpo\mdpo\md4c
           # Run tests
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
