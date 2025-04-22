@@ -63,10 +63,6 @@ jobs:
           sudo cmake --install .
           cd ../..
           rm -rf md4c
-          export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-          echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
-          echo "PATH: $PATH"
-          echo "PYTHONPATH: $PYTHONPATH"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -83,6 +79,8 @@ jobs:
       - name: Install Hatch
         run: pip install -U hatch
       - name: Run tests
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib:$LD_LIBRARY_PATH
         run: |
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
           echo "PATH: $PATH"
