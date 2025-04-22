@@ -79,7 +79,7 @@ jobs:
               file_handler.write(env)
       - name: Install Hatch
         run: pip install -U hatch
-      - name: Run tests
+      - name: Run tests on MacOS and Linux
         if: matrix.platform != 'windows-latest'
         run: |
           # Linux
@@ -94,7 +94,7 @@ jobs:
           # Windows
           $env:INCLUDE += ';D:\a\mdpo\mdpo\md4c\src\'
           $env:LIB += ';D:\a\mdpo\mdpo\md4c\build\src\Debug\'
-          # Get-ChildItem -Recurse D:\a\mdpo\mdpo\md4c\build\src
+          # Get-ChildItem -Recurse D:\a\mdpo\mdpo\md4c
           hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
         # not currently installable on Python 3.9
