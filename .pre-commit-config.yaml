@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.3.3
+    rev: v3.5.3
     hooks:
       - id: prettier
         types_or:
@@ -20,7 +20,7 @@ repos:
           - --ignore-path=.gitignore
         exclude: ^tests
   - repo: https://github.com/mondeja/project-config
-    rev: v0.9.6
+    rev: v0.9.7
     hooks:
       - id: project-config
   - repo: meta
@@ -44,14 +44,14 @@ repos:
         files: \.bat$
         name: "*.bat end of lines"
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.29.4
+    rev: 0.33.0
     hooks:
       - id: check-github-workflows
         name: check-github-workflows
         args:
           - --verbose
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
+    rev: v0.11.6
     hooks:
       - id: ruff
         args:
@@ -62,17 +62,17 @@ repos:
     hooks:
       - id: autopep8
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
+    rev: v1.37.0
     hooks:
       - id: yamllint
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 3.0.3
+    rev: 3.2.1
     hooks:
       - id: editorconfig-checker
         name: editorconfig-checker
         alias: ec
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.14.0
+    rev: v0.17.2
     hooks:
       - id: markdownlint-cli2
         name: markdownlint-po2md-tests

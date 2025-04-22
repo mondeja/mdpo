@@ -988,7 +988,7 @@ class Md2Po:
 
         parser = md4c.GenericParser(
             0,
-            **{ext: True for ext in self.extensions},
+            **dict.fromkeys(self.extensions, True),
         )
 
         def _parse(content):

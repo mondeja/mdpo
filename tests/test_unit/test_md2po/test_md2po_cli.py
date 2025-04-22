@@ -70,7 +70,7 @@ def test_stdin_subprocess_input(tmp_file):
 )
 def test_pipe_redirect_file_stdin(tmp_file):
     with tmp_file(EXAMPLE['input'], '.md') as mdfile_path:
-        proc = subprocess.run(  # noqa: DUO116
+        proc = subprocess.run(
             f'< {mdfile_path} md2po',
             text=True,
             input=EXAMPLE['input'],

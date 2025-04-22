@@ -1,11 +1,11 @@
 [project]
 name = "mdpo"
-version = "2.1.3"
+version = "2.1.4"
 description = "Markdown files translation using PO files."
 readme = "README.md"
 license = "BSD-3-Clause"
 authors = [{ name = "Álvaro Mondéjar Rubio", email = "mondejar1994@gmail.com" }]
-requires-python = ">=3.8,<3.13"
+requires-python = ">=3.8,<3.14"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Operating System :: OS Independent",
@@ -20,6 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
 ]
 keywords = ["markdown", "pofile", "translation", "html", "po", "i18n"]
 dependencies = [
@@ -82,7 +83,7 @@ cov = [
 ]
 
 [[tool.hatch.envs.tests.matrix]]
-python = ["py38", "py39", "py310", "py311", "py312"]
+python = ["py38", "py39", "py310", "py311", "py312", "py313"]
 
 [tool.hatch.envs.docs]
 python = "3.10"
@@ -108,9 +109,9 @@ targets = [{ file = "pyproject.toml" }, { file = "docs/pre-commit-hooks.rst" }]
 [tool.project-config]
 cache = "2 days"
 style = [
-  "gh://mondeja/project-config-styles@v5.4/python/base.json5",
-  "gh://mondeja/project-config-styles@v5.4/python/sphinx.json5",
-  "gh://mondeja/project-config-styles@v5.4/python/readthedocs.json5",
+  "gh://mondeja/project-config-styles@v5.5/python/base.json5",
+  "gh://mondeja/project-config-styles@v5.5/python/sphinx.json5",
+  "gh://mondeja/project-config-styles@v5.5/python/readthedocs.json5",
 ]
 
 [tool.pytest.ini_options]

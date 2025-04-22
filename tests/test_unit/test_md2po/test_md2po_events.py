@@ -27,7 +27,7 @@ def test_enter_leave_block_event(abort_event):
         content,
         events={
             'enter_block': print_is_task_list_item,
-            'leave_block': lambda *_: not abort_event,  # noqa: U101
+            'leave_block': lambda *_: not abort_event,
         },
     )
 
@@ -46,7 +46,7 @@ def test_enter_block_event(abort_event):
     md2po = Md2Po(
         content,
         events={
-            'enter_block': lambda *_: not abort_event,  # noqa: U101
+            'enter_block': lambda *_: not abort_event,
         },
     )
 
@@ -70,8 +70,8 @@ def test_enter_leave_span_event(abort_event, expected_msgid):
     pofile = markdown_to_pofile(
         content,
         events={
-            'enter_span': lambda *_: not abort_event,  # noqa: U101
-            'leave_span': lambda *_: not abort_event,  # noqa: U101
+            'enter_span': lambda *_: not abort_event,
+            'leave_span': lambda *_: not abort_event,
         },
     )
 
@@ -85,7 +85,7 @@ def test_text_event(abort_event):
     md2po = Md2Po(
         content,
         events={
-            'text': lambda *_: abort_event,  # noqa: U101
+            'text': lambda *_: abort_event,
         },
         include_codeblocks=True,
     )
