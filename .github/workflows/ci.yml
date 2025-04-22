@@ -64,15 +64,13 @@ jobs:
           sudo cmake --install .
           cd ../..
           rm -rf md4c
-      - name: Debug Windows
+      - name: Install MD4C on Windows
         if: matrix.platform == 'windows-latest' && (matrix.py == '3.12' || matrix.py == '3.13')
         shell: bash
+        # We need to copy header files to the directory included in PATH
         run: |
+          cp -r md4c/src/*.h D:/a/mdpo/mdpo/md4c/build/src/Debug/
           ls -la D:/a/mdpo/mdpo/md4c/build/src/Debug/
-          echo "___________________________________"
-          ls -la D:/a/mdpo/mdpo/md4c/build/src/
-          echo "___________________________________"
-          ls -la D:/a/mdpo/mdpo/md4c/build/
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
