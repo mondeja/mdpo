@@ -52,7 +52,8 @@ jobs:
           cd md4c
           cmake -B build
           cmake --build build
-          make install
+          make
+          sudo make install
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
