@@ -37,12 +37,33 @@ jobs:
           - 3.9
           - "3.10"
           - "3.11"
+          - "3.12"
+          - "3.13"
         platform:
           - ubuntu-latest
           - macos-latest
           - windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Build MD4C
+        # pymd4c requires MD4C installation from source on Python >= 3.12
+        if: matrix.py == '3.12' || matrix.py == '3.13'
+        shell: bash
+        run: |
+          git clone https://github.com/mity/md4c.git --depth 1
+          cd md4c
+          cmake -B build
+          cmake --build build
+          cd build
+      - name: Install MD4C
+        # On Windows we're using the built files
+        if: (matrix.py == '3.12' || matrix.py == '3.13') && matrix.platform != 'windows-latest'
+        shell: bash
+        run: |
+          cd md4c/build
+          sudo cmake --install .
+          cd ../..
+          rm -rf md4c
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -58,8 +79,23 @@ jobs:
               file_handler.write(env)
       - name: Install Hatch
         run: pip install -U hatch
-      - name: Run tests
-        run: hatch run +py=${{ steps.env.outputs.py }} tests:all
+      - name: Run tests on MacOS and Linux
+        if: matrix.platform != 'windows-latest'
+        run: |
+          # Linux
+          export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+          # MacOS
+          export DYLD_LIBRARY_PATH=/usr/local/lib:$DYLD_LIBRARY_PATH
+          # Run tests
+          hatch run +py=${{ steps.env.outputs.py }} tests:all
+      - name: Run tests on Windows
+        if: matrix.platform == 'windows-latest'
+        run: |
+          # Windows
+          $env:INCLUDE += ';D:\a\mdpo\mdpo\md4c\src\'
+          $env:LIB += ';D:\a\mdpo\mdpo\md4c\build\src\Debug\'
+          # Get-ChildItem -Recurse D:\a\mdpo\mdpo\md4c
+          hatch run +py=${{ steps.env.outputs.py }} tests:all
       - name: Convert coverage to XML
         # not currently installable on Python 3.9
         if: matrix.py != '3.9'

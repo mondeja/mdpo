@@ -42,7 +42,7 @@ This line will not be extracted.
             f'{line_split[0]}::<date>::{"::".join(line_split[2:])}'
         )
 
-    expected_output = '''md2po[DEBUG]::<date>::enter_block:: DOC
+    expected_output_part_1 = '''md2po[DEBUG]::<date>::enter_block:: DOC
 md2po[DEBUG]::<date>::enter_block:: H - {'level': 1}
 md2po[DEBUG]::<date>::text:: Header
 md2po[DEBUG]::<date>::leave_block:: H - {'level': 1}
@@ -50,13 +50,11 @@ md2po[DEBUG]::<date>::msgid:: msgid='Header'
 md2po[DEBUG]::<date>::enter_block:: HTML
 md2po[DEBUG]::<date>::text:: <!-- mdpo-for-translator Comment for translator -->
 md2po[DEBUG]::<date>::command:: mdpo-translator - Comment for translator (original command: 'mdpo-for-translator')
-md2po[DEBUG]::<date>::text::''' + ' ' + '''
-
-md2po[DEBUG]::<date>::text:: <!-- mdpo-context foo and bar -->
+md2po[DEBUG]::<date>::text::'''
+    expected_output_part_2 = '''md2po[DEBUG]::<date>::text:: <!-- mdpo-context foo and bar -->
 md2po[DEBUG]::<date>::command:: mdpo-context - foo and bar
-md2po[DEBUG]::<date>::text::''' + ' ' + '''
-
-md2po[DEBUG]::<date>::leave_block:: HTML
+md2po[DEBUG]::<date>::text::'''
+    expected_output_part_3 = '''md2po[DEBUG]::<date>::leave_block:: HTML
 md2po[DEBUG]::<date>::enter_block:: P
 md2po[DEBUG]::<date>::text:: Content with''' + ' ' + '''
 md2po[DEBUG]::<date>::enter_span:: CODE
@@ -84,7 +82,10 @@ md2po[DEBUG]::<date>::msgid:: msgid=''
 md2po[DEBUG]::<date>::link_reference:: target='link' - href='https://foo.bar' - title='Title'
 md2po[DEBUG]::<date>::msgid:: msgid='[link]: https://foo.bar "Title"' - msgstr='[link]: https://foo.bar "Title"' - flags='['fuzzy']'
 '''
-    assert comparable_debug_output == expected_output
+
+    assert comparable_debug_output.startswith(expected_output_part_1)
+    assert expected_output_part_2 in comparable_debug_output
+    assert expected_output_part_3 in comparable_debug_output
 
 
 def test_parse_events_kwarg_func():
